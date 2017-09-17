@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['darkmattercuts',['darkMatterCuts',['../classXeRun.html#a44a1a3f4a967172bcd098f2f72ac34a5',1,'XeRun']]],
+  ['darkmatternormalization',['DarkMatterNormalization',['../classXeRun.html#a4bbc49cf879ae6a1417d2ff4b6fda3fe',1,'XeRun']]],
+  ['databand',['DataBand',['../classS1S2PL.html#a9d1c829450ca2c6228264b21e45f6383',1,'S1S2PL']]],
+  ['databandsarebuilt',['dataBandsAreBuilt',['../classXeRun.html#a1d7e84da704c291a852f54685bc839cf',1,'XeRun']]],
+  ['datas1bins',['dataS1Bins',['../classS1S2PL.html#a233aa408ebcf75bf4e83e267632c39b4',1,'S1S2PL']]],
+  ['datatype',['dataType',['../classXeRun.html#a1a17439afe5eea1bd219e0031c7c8754',1,'XeRun']]],
+  ['default_5fxsectionnorm',['Default_XsectionNorm',['../classSignalModel.html#a81c63d9967fa71e99248635ea3c5ae44',1,'SignalModel']]],
+  ['defaulterrange',['defaultErRange',['../classXeRange.html#a33b880faf4e410fe4d1f92bababf13ca',1,'XeRange']]],
+  ['defaulteventrange',['defaultEventRange',['../classXeRange.html#a5ffd740dd17cabdd61e3bcb9031341b0',1,'XeRange']]],
+  ['defaultmassrange',['defaultMassRange',['../classXeRange.html#a982b78ee001c02b8f62d8cb77dc5b9dc',1,'XeRange']]],
+  ['defaults1range',['defaultS1Range',['../classXeRange.html#a81ba42354921e6bf053ff06d11cec9c6',1,'XeRange']]],
+  ['defaultsigmarange',['defaultSigmaRange',['../classXeRange.html#a3c0ac91230e2ecaf418816337f4d626d',1,'XeRange']]],
+  ['defaulttvaluerange',['defaultTValueRange',['../classXeRange.html#a0673627185a2aacbd4c4d594d23fd57c',1,'XeRange']]],
+  ['defaultvescrange',['defaultVEscRange',['../classXeRange.html#ab18d6f65d16af51182429dfdf4954823',1,'XeRange']]],
+  ['defaultyrange',['defaultYRange',['../classXeRange.html#a6d6968a5eecae7b5e78ecc823c7880fa',1,'XeRange']]],
+  ['dist',['dist',['../classXeTest.html#abb313dee0a0d284e4ec136b20fe1225f',1,'XeTest']]],
+  ['dlefftvalueforexclusion',['DLEffTValueForExclusion',['../classS1S2PL.html#a5a289111af6ae494302537eb79b9616d',1,'S1S2PL']]],
+  ['doapplycls',['doApplyCLs',['../classExclusion.html#ab0a4070643210c20a19ae4e7d11764e9',1,'Exclusion']]],
+  ['domcsignalband',['DoMCSignalBand',['../classXeRun.html#aa9dde63d274a5cc0478da386ccb7295f',1,'XeRun']]],
+  ['downs',['downs',['../classXeObject.html#a7da7e06105ac8da47defc63578558e59',1,'XeObject']]],
+  ['dqytvalueforexclusion',['DQyTValueForExclusion',['../classS1S2PL.html#a2bf59beb40ff2fc609584b8a02f1ce44',1,'S1S2PL']]],
+  ['dstatbkgtvalueforexclusion',['DStatBkgTValueForExclusion',['../classS1S2PL.html#a274964737da46fc3595a9028dd67bc04',1,'S1S2PL']]],
+  ['dsystbkgtvalueforexclusion',['DSystBkgTValueForExclusion',['../classS1S2PL.html#a22e6c95f9e2d48fc5993c1320a3ce4ab',1,'S1S2PL']]]
+];
