@@ -26,7 +26,10 @@ class shapeSys : public LKParameter {
 
    public:
 
-	//! @param name, name of the sys as appears in histogram name, see pdfComponent for a detailed use case.
+	/** 
+	 * Constructor for class shapeSys.
+	 * @param name: Name of the sys as appears in histogram name, see pdfComponent for a detailed use case.
+	 */
 	shapeSys(TString name);
 
 
