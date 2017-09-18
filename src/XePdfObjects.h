@@ -17,8 +17,9 @@ using namespace std;
 
 
 /**
- * Class representing a Shape Systematic, it inherits from LKParameter.
- * here you can use the LKParameter functions to set initial val,
+ * \class shapeSys 
+ * \brief it represents a Shape Systematic. 
+ * It inherits from LKParameter. Here you can use the LKParameter functions to set initial val,
  * min, max and setp
 */
 class shapeSys : public LKParameter {
