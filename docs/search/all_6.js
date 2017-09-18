@@ -144,6 +144,8 @@ var searchData=
   ['getncolumns',['getNColumns',['../classDataSet.html#a02955db5f561509c6a33540ea3fe732b',1,'DataSet']]],
   ['getncuts',['getNCuts',['../classXeSetOfCuts.html#abe45e0b145abf42c7840e8e5395a9d92',1,'XeSetOfCuts']]],
   ['getndowns',['getNDowns',['../classXeObject.html#a5a64db57a876d4c52f52226fdce841ad',1,'XeObject']]],
+  ['getnearesthigh',['getNearestHigh',['../classshapeSys.html#ad714bd659d2bb09766e98aa6d1783665',1,'shapeSys']]],
+  ['getnearestlow',['getNearestLow',['../classshapeSys.html#a038f0ce002fa203699b241c83559f3dd',1,'shapeSys']]],
   ['getnentries',['getNEntries',['../classXeValues.html#a1c3ddd7a0df42c54311d84ff481028c9',1,'XeValues']]],
   ['getneutronbackgroundmodel',['getNeutronBackgroundModel',['../classXeRun.html#a30b6637e2406aa08b379602a6c49a123',1,'XeRun']]],
   ['getnevents',['getNEvents',['../classS1S2Data.html#ada4d4a5cb0242dad586e6f3a72e1e49c',1,'S1S2Data::getNEvents()'],['../classDataSet.html#aca7df75f73ede74b69e5be1614017b3b',1,'DataSet::getNEvents()']]],

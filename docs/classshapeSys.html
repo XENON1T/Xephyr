@@ -89,6 +89,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">shapeSys Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="XePdfObjects_8h_source.html">XePdfObjects.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for shapeSys:</div>
 <div class="dyncontent">
@@ -106,14 +108,15 @@ Inheritance diagram for shapeSys:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1816a4031694074a2734f73a57eb93c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1816a4031694074a2734f73a57eb93c1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>shapeSys</b> (TString name)</td></tr>
+<tr class="memitem:a1816a4031694074a2734f73a57eb93c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classshapeSys.html#a1816a4031694074a2734f73a57eb93c1">shapeSys</a> (TString name)</td></tr>
 <tr class="separator:a1816a4031694074a2734f73a57eb93c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a038f0ce002fa203699b241c83559f3dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a038f0ce002fa203699b241c83559f3dd"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getNearestLow</b> ()</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classshapeSys.html#a038f0ce002fa203699b241c83559f3dd">getNearestLow</a> ()</td></tr>
+<tr class="memdesc:a038f0ce002fa203699b241c83559f3dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the nearest HISTOGRAM value in the grid, lower edge <br/></td></tr>
 <tr class="separator:a038f0ce002fa203699b241c83559f3dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad714bd659d2bb09766e98aa6d1783665"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad714bd659d2bb09766e98aa6d1783665"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getNearestHigh</b> ()</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classshapeSys.html#ad714bd659d2bb09766e98aa6d1783665">getNearestHigh</a> ()</td></tr>
+<tr class="memdesc:ad714bd659d2bb09766e98aa6d1783665"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the nearest HISTOGRAM value in the grid, upper edge <br/></td></tr>
 <tr class="separator:ad714bd659d2bb09766e98aa6d1783665"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classLKParameter"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classLKParameter')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classLKParameter.html">LKParameter</a></td></tr>
 <tr class="memitem:ac0cb3973da5e05303a9f7e444fa7e8db inherit pub_methods_classLKParameter"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLKParameter.html#ac0cb3973da5e05303a9f7e444fa7e8db">LKParameter</a> ()</td></tr>
@@ -739,6 +742,31 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>resultsDirec
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>showReference</b> = false</td></tr>
 <tr class="separator:a77dd420f3efa9017becd6970480adfd7 inherit pro_static_attribs_classXeObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class representing a Shape Systematic, it inherits from <a class="el" href="classLKParameter.html">LKParameter</a>. here you can use the <a class="el" href="classLKParameter.html">LKParameter</a> functions to set initial val, min, max and setp </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a1816a4031694074a2734f73a57eb93c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">shapeSys::shapeSys </td>
+          <td>(</td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name,name</td><td>of the sys as appears in histogram name, see <a class="el" href="classpdfComponent.html">pdfComponent</a> for a detailed use case. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="XePdfObjects_8h_source.html">XePdfObjects.h</a></li>
 <li>src/XePdfObjects.cxx</li>

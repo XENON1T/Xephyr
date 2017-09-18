@@ -164,7 +164,7 @@ var searchData=
   ['setxsecmultiplier',['setXsecMultiplier',['../classSignalModel.html#a227905df468190f19a25ddaf59b7d02c',1,'SignalModel']]],
   ['setxylabels',['setXYLabels',['../classXeStylized.html#afb1d6dfac53bff7e0cbed8eafea4b5a7',1,'XeStylized']]],
   ['shapelikelihood',['shapeLikelihood',['../classLikelihood.html#a16aa8d6eac1baa5a8fea404cbc7b9282',1,'Likelihood::shapeLikelihood(vector&lt; double &gt; *values, XeDist *dist)'],['../classLikelihood.html#a917799bc03adec7491ac3290928d2d1b',1,'Likelihood::shapeLikelihood(vector&lt; double &gt; *values, vector&lt; XeDist * &gt; &amp;dists, vector&lt; double &gt; &amp;weights)'],['../classLikelihood.html#a856d5173eb9fbaa9483eef20df30d33e',1,'Likelihood::shapeLikelihood(vector&lt; int &gt; *bins, int nDist, double **dists, double *norm)']]],
-  ['shapesys',['shapeSys',['../classshapeSys.html',1,'']]],
+  ['shapesys',['shapeSys',['../classshapeSys.html',1,'shapeSys'],['../classshapeSys.html#a1816a4031694074a2734f73a57eb93c1',1,'shapeSys::shapeSys()']]],
   ['showrundata',['showRunData',['../classXeTest.html#a30a59058ad8daaf3a150912c11593907',1,'XeTest']]],
   ['showthereferences',['showTheReferences',['../classXeCore.html#a5fe8c14920db216c017107f993b30b3b',1,'XeCore']]],
   ['showwarnings',['showWarnings',['../classXeCore.html#a269a038400f9ae7413e940f32e78de48',1,'XeCore']]],

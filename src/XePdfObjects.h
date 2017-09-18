@@ -16,21 +16,23 @@
 using namespace std;
 
 
+/**
+ * Class representing a Shape Systematic, it inherits from LKParameter.
+ * here you can use the LKParameter functions to set initial val,
+ * min, max and setp
+*/
 class shapeSys : public LKParameter {
 
    public:
 
+	//! @param name, name of the sys as appears in histogram name, see pdfComponent for a detailed use case.
 	shapeSys(TString name);
-//	~shapeSys();
-	//here you can use the LKParameter functions to set initial val,
-	//min, max and setp
 
-	//getCurrentValue()  //is a method of LKParameter	
 
-	//returns the nearest HISTOGRAM value in the grid, lower edge
+	//! returns the nearest HISTOGRAM value in the grid, lower edge
 	double getNearestLow(); 
 
-	//returns the nearest HISTOGRAM value in the grid, upper edge
+	//! returns the nearest HISTOGRAM value in the grid, upper edge
 	double getNearestHigh();
 	
     ClassDef(shapeSys,1)
