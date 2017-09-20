@@ -65,7 +65,7 @@ enum displayType { UNKNOWN_DISPLAY    = -1
                  , CURRENT_DISPLAY    =  N_DISPLAYS
                  } ;
 
-STATIC_CONST  double VERY_LARGE =                  1.E19
+static const  double VERY_LARGE =                  1.E19
                   , TINY            =             1.E-99
                   , VERY_SMALL      =        -VERY_LARGE
                   , VERY_SMALL_LOG  =            -10000.
@@ -107,7 +107,7 @@ enum styleDefault { DEFAULT_LINE_COLOR   = kBlue
                   , CUT_FILL_STYLE       = 3001
                   } ;
 
-STATIC_CONST  double DEFAULT_MARKER_SIZE=1.; // no effect on markers style 1,6,7   
+static const  double DEFAULT_MARKER_SIZE=1.; // no effect on markers style 1,6,7   
 
 enum legendMode     {WITH_LEGEND, NO_LEGEND};
 
@@ -161,7 +161,7 @@ const string LABEL_BAND            = "Band number"
                   , LABEL_Y_UOVER2        = "y=u/2"
                   ;
 
-STATIC_CONST  int  DEFAULT_N_BANDS         = 12  
+static const  int  DEFAULT_N_BANDS         = 12  
                ,  DEFAULT_N_SLICES        =  27
                ;
 
@@ -994,7 +994,7 @@ class XeObject : virtual public XeCore, virtual public TObject {
    * XeTopObject : the top object to which everything is attached
 */
 
-XeTopObject* top=NULL;
+static XeTopObject* top=NULL;
 
 class XeTopObject : public XeObject {
 

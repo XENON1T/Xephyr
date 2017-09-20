@@ -8,6 +8,7 @@ var searchData=
   ['plexclusioncomputedbackground',['PLexclusionComputedBackground',['../classXeTest.html#a6422cb59a81ac8db44f544d2a9ca4aca',1,'XeTest']]],
   ['plotacceptance',['plotAcceptance',['../classXeTest.html#acfe9878f1c2a6f71144dfa6e26ce5e02',1,'XeTest']]],
   ['plotffsd',['plotFFSD',['../classXeTest.html#ab7b4abf194358ec27cd2975ab89db63d',1,'XeTest']]],
+  ['plotinterpolatedspace',['plotInterpolatedSpace',['../classpdfComponent.html#a4c038ac161d51842244da34f56f88379',1,'pdfComponent']]],
   ['plotlimitssd',['plotLimitsSD',['../classXeTest.html#a8e252502b27db74a7fe305188bdbfc2c',1,'XeTest']]],
   ['plotlimitssi',['plotLimitsSI',['../classXeTest.html#aa07acb0231f8ff369f668ba7452bcfb0',1,'XeTest']]],
   ['plotlogll',['plotLogLL',['../classXeTest.html#a9e080acb4b58e1527ad2e28dfda2e0ae',1,'XeTest']]],

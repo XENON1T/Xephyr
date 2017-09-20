@@ -47,6 +47,7 @@ var searchData=
   ['statbkgsigmas',['StatBkgSigmas',['../classS1S2PL.html#ad5089e1a06cdd8075309078780119edc',1,'S1S2PL']]],
   ['statbkgtvalueforexclusion',['StatBkgTValueForExclusion',['../classS1S2PL.html#ac4a86b3ee0b02e13aa13f2f1be0dfa0d',1,'S1S2PL']]],
   ['step',['step',['../classXeRange.html#a76ccb3d6e13d8e94109d796f75784d08',1,'XeRange']]],
+  ['suffix',['suffix',['../classpdfComponent.html#ab7700cf9bb9fa3561407171b57778639',1,'pdfComponent']]],
   ['systbkgsigma',['SystBkgSigma',['../classS1S2PL.html#ac9b6a8c605ee59d5d5cc0f9b5176dd98',1,'S1S2PL']]],
   ['systbkgtvalueforexclusion',['SystBkgTValueForExclusion',['../classS1S2PL.html#af37a2a7c75c13efe86d8ad06027189dc',1,'S1S2PL']]]
 ];

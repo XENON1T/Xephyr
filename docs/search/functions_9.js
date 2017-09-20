@@ -12,6 +12,8 @@ var searchData=
   ['linkup',['linkUp',['../classXeObject.html#a8e11ba93601f08cb70d713abf85fa79c',1,'XeObject']]],
   ['list',['list',['../classMethodCounter.html#ae4e329504201956ace78c22df0a95e20',1,'MethodCounter']]],
   ['lkparameter',['LKParameter',['../classLKParameter.html#ac0cb3973da5e05303a9f7e444fa7e8db',1,'LKParameter::LKParameter()'],['../classLKParameter.html#a219fe5fad55f88bd051c973fbe131b3f',1,'LKParameter::LKParameter(int id, int type, string nam, double initial, double step, double min, double max)']]],
+  ['loaddefaulthisto',['loadDefaultHisto',['../classpdfComponent.html#a7dbaeac3232f82180aa12b909ba257fe',1,'pdfComponent']]],
+  ['loadhistos',['loadHistos',['../classpdfComponent.html#afed7a84482dd4f1783cf351bff865acc',1,'pdfComponent']]],
   ['logpdf',['logPdf',['../classXeDist.html#acc946baaa65ed63e3dfe2d25d4395914',1,'XeDist::logPdf()'],['../classExponentialDist.html#a8fc6947ea885bf04240d03fb4a912133',1,'ExponentialDist::logPdf()'],['../classGaussianDist.html#a2fb8eed4411251e96a441c5ab7f2ecb8',1,'GaussianDist::logPdf()'],['../classPoissonDist.html#a9a9084e3901047bbf845593ba38a96ed',1,'PoissonDist::logPdf()']]],
   ['logrange',['LogRange',['../classLogRange.html#adfa4cf13c1503ae6fff15a386e0931dc',1,'LogRange::LogRange(string what, int n, double a, double b)'],['../classLogRange.html#a41ec4a80aa2eb9ef6cd30ca9cb328b63',1,'LogRange::LogRange()']]]
 ];

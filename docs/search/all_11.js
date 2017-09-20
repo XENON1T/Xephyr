@@ -17,6 +17,8 @@ var searchData=
   ['tgaussparameter',['TGaussParameter',['../classTGaussParameter.html',1,'']]],
   ['thefunction',['theFunction',['../classsolvable.html#a138e81de14bc520a7abe858baf6894ac',1,'solvable']]],
   ['thelegends',['theLegends',['../classXeMultiGraph.html#a58808bc010abc8e15d79fc7dd91f943d',1,'XeMultiGraph']]],
+  ['this',['This',['../classhistoCompare_1_1This.html',1,'histoCompare']]],
+  ['titlex',['titleX',['../classhistoCompare.html#a567502d3ebb06ab07768435e5a31e70f',1,'histoCompare']]],
   ['tleffparameter',['TLEffParameter',['../classTLEffParameter.html',1,'']]],
   ['totalcontent',['TotalContent',['../classXeRun.html#a30d470886599203e77f127b01ac796b8',1,'XeRun']]],
   ['tqyparameter',['TQyParameter',['../classTQyParameter.html',1,'']]],

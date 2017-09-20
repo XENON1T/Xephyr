@@ -7,6 +7,7 @@ var searchData=
   ['addcuts',['addCuts',['../classXeSetOfCuts.html#af2c57c2e5cfaf0311dadf14887120478',1,'XeSetOfCuts']]],
   ['adddelta',['addDelta',['../classTabulatedDist.html#a9868a4d0bb7aa813620460ff3b426718',1,'TabulatedDist']]],
   ['addentry',['addEntry',['../classDataSet.html#af1ffe0e05e826334031d5850ceeacca7',1,'DataSet']]],
+  ['addhistotolist',['addHistoToList',['../classhistoCompare.html#a69f4191f10e6f0c49866f4a34537a24a',1,'histoCompare']]],
   ['addlegend',['addLegend',['../classXeMultiGraph.html#a9ac382eb6bfab08467ef8e348189ff0c',1,'XeMultiGraph']]],
   ['addparameter',['addParameter',['../classLikelihood.html#a060dec430dc3e4463d5601abeebcb464',1,'Likelihood::addParameter(int id, int type, string nam, double initialVal, double step, double mi, double ma)'],['../classLikelihood.html#a4c58d7bd2df6694eaba78f54061ca86d',1,'Likelihood::addParameter(LKParameter *param, int id=SAME)']]],
   ['addparametertolerant',['addParameterTolerant',['../classLikelihood.html#a5fcf9b9a0f2eacf4a9459d8402f3f10d',1,'Likelihood']]],

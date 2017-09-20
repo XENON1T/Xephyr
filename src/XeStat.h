@@ -72,13 +72,13 @@ enum   ciMode        { CI_UP
 enum sigmaModes   { ESTIMATED, UPPER_LIMIT };
 enum sigmaUnits   { SIGMA_UNIT     , EVENT_UNIT };
 
-STATIC_CONST  double DEFAULT_CL                    =            0.9 ;
-STATIC_CONST  double DEFAULT_SIMULATED_X0          =            0.1 ;  
-STATIC_CONST  double DEFAULT_SIMULATED_SIGMA       =            0.1 ;  
-STATIC_CONST  double DEFAULT_SIMULATED_MU_GAUSS    =            0.5 ;  
-STATIC_CONST  double DEFAULT_SIMULATED_XMAX_B      =            1.0 ;
-STATIC_CONST  double LOGSQR2PI                     = 0.918938533205 ;
-STATIC_CONST  double DEFAULT_EVENT_UPPER_LIMIT     =           20.0 ;
+static const  double DEFAULT_CL                    =            0.9 ;
+static const  double DEFAULT_SIMULATED_X0          =            0.1 ;  
+static const  double DEFAULT_SIMULATED_SIGMA       =            0.1 ;  
+static const  double DEFAULT_SIMULATED_MU_GAUSS    =            0.5 ;  
+static const  double DEFAULT_SIMULATED_XMAX_B      =            1.0 ;
+static const  double LOGSQR2PI                     = 0.918938533205 ;
+static const  double DEFAULT_EVENT_UPPER_LIMIT     =           20.0 ;
 
 typedef double (*func_d)(double);
 

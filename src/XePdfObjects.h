@@ -80,65 +80,72 @@ class pdfComponent :errorHandler{
 
 	void addShapeSys(shapeSys *addMe) { myShapeUnc.push_back(addMe); };
 
-	//load histogram according to the current value of the parameters
+	//! load histogram according to the current value of the parameters
 	void loadHistos();
 
-	//load default histogram, no sys.
+	//! load default histogram, no sys.
 	void loadDefaultHisto();
 
-	// returns the interpolated pdf over shape sys computed in (s1,s2),
-	// it is normalized to number of events and scale uncertainty are also 
-	// taken into account
+	//! returns the interpolated pdf over shape sys computed in (s1,s2).
+	/** 
+	 * it is normalized to number of events and scale uncertainty are also taken into account
+	 */
 	double getNormalizedDensity(double s1, double s2);
 
-	// returns the (s1,s2) bin content of the default histo, no shape nor scale sys is applied
+	//! returns the (s1,s2) bin content of the default histo, no shape nor scale sys is applied
 	double getDefaultDensity(double s1, double s2);
 
-	// Returns the total integrated number of events taking into account shape sys
-	// and scale sys.
+	//! Returns the total integrated number of events taking into account shape sys and scale sys.
 	double getNormalizedEvents();
 	
-	// returns total integral of the default histo, no shape nor scale sys is applied
+	//! returns total integral of the default histo, no shape nor scale sys is applied
 	double getDefaultEvents();
 
-	// Returns a copy of the interpolated histogram according to the "currentValue" of the
-	// shapeSys associated with it. The current value of each uncertainty can
-	// be set simply by shapeSys::setCurrentValue(val) method.
+	//!Returns a copy of the interpolated histogram according to the "currentValue" of the shapeSys associated with it.
+	/** 
+	 * The current value of each uncertainty can
+	 * be set simply by shapeSys::setCurrentValue(val) method.
+	 */
 	TH2F  getInterpolatedHisto();
 
-	// Returns a copy of the default histogram, no shape nor scale sys is applied
+	//! Returns a copy of the default histogram, no shape nor scale sys is applied
 	TH2F  getDefaultHisto();
 
-	// returns the grid points in histogram space that needs to be loaded
-	// this method need to be modified for arbitrary number of shape sys 
+	//! returns the grid points in histogram space that needs to be loaded. this method need to be modified for arbitrary number of shape sys.
 	TString getNearestHistoName(vector<bool> setOfVal);
 
-	// returns the default name of the histogram
+	//! returns the default name of the histogram
 	TString getDefaultHistoName();
 
-	// returns a string with current values of parameters
+	//! returns a string with current values of parameters
 	TString getParamValueString();
 
 	TString getParamValueWritable();
 
-	// returns the integral of the square between points (not bins), linearly interpolates
-	// the area if desn't correspond to an integer number of bins.
-	// Uses the default histo, does not consider shape or scale uncertainty.
+	//! returns the integral of the square between points (not bins).
+	/**
+	 * linearly interpolates the area if desn't correspond to an integer number of bins.
+	 * Uses the default histo, does not consider shape or scale uncertainty.
+	 */
 	double getDefaultPdfIntegral(double s1_min, double s1_max, double s2_min, double s2_max);
 
-	//This scans the parameter space given a number of steps for each parameter
-	//produce a projection given min and max, produce a PDF file for comparison
-	//of all interpolation and saves also the TH2F to file.
+	//! This scans the parameter space given a number of steps for each parameter
+	/** 
+	 * produce a projection given min and max, produce a PDF file for comparison
+	 * of all interpolation and saves also the TH2F to file.
+	 */
 	void plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps);
-	//scale the pdf by VAL, this happend for the methods:
-	//getDefaultHisto, getInterpolatedHisto, getNormalizedDensity, 
-	//getDefaultDensity, getNormalizedEvents, getDefaultEvents
+
+	//! scale the pdf by VAL, this happend for the methods:
+	/* getDefaultHisto, getInterpolatedHisto, getNormalizedDensity, 
+	 * getDefaultDensity, getNormalizedEvents, getDefaultEvents
+	 */
 	void setScaleFactor(double val) {scaleFactor = val;};	
 
 	TString getName()  {return pdf_name;};
 
-	vector<scaleSys*> 		myScaleUnc; //container of scale sys
-	vector<shapeSys*> 		myShapeUnc; //container of shape sys
+	vector<scaleSys*> 		myScaleUnc; //! container of scale sys
+	vector<shapeSys*> 		myShapeUnc; //! container of shape sys
 
 	TString                         suffix;
 	bool                            doExtend;
@@ -146,10 +153,10 @@ class pdfComponent :errorHandler{
    private:
 	TFile	          		*file;
 	TH2F                            *defaultDistro;
-  	vector<TH2F*>			histos;	       // contains the 2^N histo for the hyperplane interpolation of shapeSys
-  	vector<double>		InterpFactors;  // contains the 2^N interpolation factors for the hyperplane interpolation of shapeSys	
+  	vector<TH2F*>			histos;	       /** contains the 2^N histo for the hyperplane interpolation of shapeSys */
+  	vector<double>		InterpFactors;  /** contains the 2^N interpolation factors for the hyperplane interpolation of shapeSys	*/
 	TString 			pdf_name;
-	vector<double>			old_t_val;    //contains the last value interpolated, the interpolation is lazy, doesn't ricompute it if is for the same set of values.
+	vector<double>			old_t_val;    /** contains the last value interpolated, the interpolation is lazy, doesn't ricompute it if is for the same set of values.*/
 	double                          scaleFactor;
 
 
@@ -160,14 +167,15 @@ class pdfComponent :errorHandler{
 
 
 
-
+/**
+ * \class histoCompare.
+ * This class is supposed to compare a "base" histo 
+ * with a set of other histogram. One can choose for ratio plot,
+ * stack plot of different component, one can set the projected axis
+ * and the slice on which do the projection, one can also rebin the histo.
+ * the histo are supposed to be TH2F.
+ */
 class histoCompare :errorHandler{
-
-    // This class is supposed to compare a "base" histo 
-    // with a set of other histogram. One can choose for ratio plot,
-    // stack plot of different component, one can set the projected axis
-    // and the slice on which do the projection, one can also rebin the histo.
-    // the histo are supposed to be TH2F.
 
     public:
 
@@ -178,24 +186,24 @@ class histoCompare :errorHandler{
 	    int      rebinX;
 	    int      rebinY;
 	    bool     projectionX;
-	    double   projectionMin;    // minimum value on the projected axis
-	    double   projectionMax;    // maximum value on the projected axis
-	    int      binMin;		// same but in bin nuber
+	    double   projectionMin;    /** minimum value on the projected axis */
+	    double   projectionMax;    /** maximum value on the projected axis */
+	    int      binMin;		/** same but in bin nuber */
 	    int      binMax;            
-	    bool     doStack;   // True if you want to sum up histo in compareList
+	    bool     doStack;   /** True if you want to sum up histo in compareList */
 	    TString  titleX;
 	    TString  titleY;
        //---------------------------//
 
-	    // set histo with wich one one to compare the rest
+	    //! set histo with wich one one to compare the rest
 	    void setBaseHisto(TH2F b, TString n=""){base = b; names[0] = n;};
-	    // set the comparison histos
+	    //! set the comparison histos
 	    void addHistoToList(TH2F h, TString n ="") {compareList.push_back(h); names.push_back(n);};
-	    //set Name of component
+	    //! set Name of component
 	    void setNameofComponent(unsigned int i, TString n);
-	    // draw just a normal comparison plot
+	    //! draw just a normal comparison plot
 	    void compare();
-	    // add a ratio plot to compare()
+	    //! add a ratio plot to compare()
 	    void compareWithRatio();
 
 	    void drawLegend(TH1D *baseH, vector <TH1D*> list );
@@ -214,7 +222,7 @@ class histoCompare :errorHandler{
      private:
 
 	    void setOptions(TH1D *h, bool dataLike = true, bool isBottom = false);
-	    void project(); // push histo into the TH1D
+	    void project(); /** push histo into the TH1D*/
 
 
     ClassDef(histoCompare,1)

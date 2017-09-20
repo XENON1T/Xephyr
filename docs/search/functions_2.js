@@ -15,6 +15,8 @@ var searchData=
   ['classdef',['ClassDef',['../classNeutronBackgroundModel.html#a64d1224efa377bfee7000332ebdd7090',1,'NeutronBackgroundModel']]],
   ['clear',['clear',['../classDataSet.html#a26aba451d80b3f13ad2815ff65d1f8f7',1,'DataSet']]],
   ['combineruns',['combineRuns',['../classXeTest.html#a5e3692f91883673da54fbdf8758ff3bd',1,'XeTest']]],
+  ['compare',['compare',['../classhistoCompare.html#a288e3fffb7714ba6cad7370a25b4c08b',1,'histoCompare']]],
+  ['comparewithratio',['compareWithRatio',['../classhistoCompare.html#acf81c4912c052c1fb92fd1d4efa1ced9',1,'histoCompare']]],
   ['completerange',['completeRange',['../classXeRange.html#a501a1502275ae0ff60b02be7b93eecdc',1,'XeRange']]],
   ['compute',['compute',['../classS1S2Bands.html#ace49732781e2ad16abe3d4edd0c88c5c',1,'S1S2Bands::compute(S1S2Data *reference)'],['../classS1S2Bands.html#a3da5f3d211629b7d50ccce713c7c8d4a',1,'S1S2Bands::compute(TH2F reference, bool isLog=true)']]],
   ['compute_5fpval_5fs_5fplus_5fb',['compute_pval_s_plus_b',['../classAsymptoticExclusion.html#a5ac063d3b254a7240a6c7e927dd635f9',1,'AsymptoticExclusion']]],

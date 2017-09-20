@@ -26,5 +26,6 @@ var searchData=
   ['miny',['minY',['../classXeCut.html#ab56eca07f401f85b165c05704a3bd2ce',1,'XeCut::minY()'],['../classXeSetOfCuts.html#aee89c0962060ee3397d1d601389e10f0',1,'XeSetOfCuts::minY()'],['../classS1S2Data.html#a40628f73bfd296d71e6077a08fd31198',1,'S1S2Data::minY()'],['../classS1Slice.html#aeb15d461ee1fbef3a0b7686d1b1ab1b2',1,'S1Slice::minY()'],['../classS2Band.html#a065b6ff488743de17d80aea2b897cc27',1,'S2Band::minY()'],['../classS1S2Bands.html#a2f548108be65026407df9556691a3f25',1,'S1S2Bands::minY()'],['../classXeRun.html#a4553899e50951d9295cf6f8ea43aefd8',1,'XeRun::minY()'],['../classXeRun.html#af8c54f9388d1a850463dcdda0bfc1ac6',1,'XeRun::minY(int type)'],['../classS1S2Object.html#a3c4ea39a707ee4bf378aacdc69cf9d56',1,'S1S2Object::minY()']]],
   ['mode',['mode',['../classXeRange.html#a8794afb850815cb451b1f813c69f4616',1,'XeRange']]],
   ['modelimporter',['ModelImporter',['../classModelImporter.html',1,'ModelImporter'],['../classModelImporter.html#ae6037cac7f5440416112eb2289df7d84',1,'ModelImporter::ModelImporter()']]],
-  ['mother',['mother',['../classS1Slice.html#ae64becd6a78d1fa61100d75f147b5c85',1,'S1Slice::mother()'],['../classS2Band.html#a87be0ca6200077113d228e0dcc5e2e05',1,'S2Band::mother()']]]
+  ['mother',['mother',['../classS1Slice.html#ae64becd6a78d1fa61100d75f147b5c85',1,'S1Slice::mother()'],['../classS2Band.html#a87be0ca6200077113d228e0dcc5e2e05',1,'S2Band::mother()']]],
+  ['myshapeunc',['myShapeUnc',['../classpdfComponent.html#aad97c48b86745672f396a9cced85efe3',1,'pdfComponent']]]
 ];

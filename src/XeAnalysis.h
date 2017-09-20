@@ -4,6 +4,7 @@
 #include "TF1.h"
 #include "XeCore.h"
 #include "XeStat.h"
+#include "XePhys.h"
 #include <cmath>
 #include <csignal>
 #include <iostream>
@@ -16,7 +17,7 @@ enum RunNumber { RUN_08 =  8
                } ;
 
 
-STATIC_CONST int N_MAX_BANDS            = 20      // Maximum number of Bands
+static const int N_MAX_BANDS            = 20      // Maximum number of Bands
                , DEFAULT_N_BANDS_RUN_10 = 12
                , DEFAULT_N_BANDS_RUN_8  = 12
 	       , DEFAULT_N_SLICES_RUN_8 = 27
@@ -56,11 +57,11 @@ enum   LEffTabulation { SIDE_LEFF_TABULATED = 25
                       , N_LEFF_TABULATED   =  2*SIDE_LEFF_TABULATED +1
                       } ;
 
-STATIC_CONST  double LEFF_TVALUE_STEP=.1
+static const  double LEFF_TVALUE_STEP=.1
                   , LEFF_TVALUE_MAX=SIDE_LEFF_TABULATED*LEFF_TVALUE_STEP
                   ;
 
-STATIC_CONST  bool DEFAULT_EQUALLY_FILLED_S1_SLICES  = false
+static const  bool DEFAULT_EQUALLY_FILLED_S1_SLICES  = false
 		, DEFAULT_DOMCSIGNALBAND             = false
                 , DEFAULT_SPREAD_LEAKAGE_OVER_BANDS = true
                 , DEFAULT_ER_GAUSSIAN_FLAT_IN_S1    = false
@@ -126,8 +127,8 @@ enum S1S2_COLUMNS {
 
 // For cuts
 
-STATIC_CONST  double        S2_MIN_RUN_8  = 300. ;
-STATIC_CONST  double        S2_MIN_RUN_10 = 150. ;
+static const  double        S2_MIN_RUN_8  = 300. ;
+static const  double        S2_MIN_RUN_10 = 150. ;
 
 enum  cutMode            { CUT_UNKNOWN
                          , CUT_BELOW
@@ -660,9 +661,9 @@ class XeCut :  virtual public S1S2Object, virtual public RunComponent {
      TF1     *cutFunction;
      double   overallAcceptance;
     
-     STATIC_CONST   int    N_PE   = 40 ;
-     STATIC_CONST   double PE_MIN =  1.;
-     STATIC_CONST   double PE_MAX = 40.;
+     static constexpr   int    N_PE   = 40 ;
+     static constexpr   double PE_MIN =  1.;
+     static constexpr   double PE_MAX = 40.;
 
       ClassDef(XeCut,1)
 };
@@ -5913,11 +5914,11 @@ class S1S2PL : virtual public ProfileLikelihood, virtual public RunComponent {
 
   public :
 
-    STATIC_CONST  bool DEFAULT_PAR_STAT_BKG_FIT=false;
-    STATIC_CONST  bool DEFAULT_PAR_SYST_BKG_FIT=false;
-    STATIC_CONST  bool DEFAULT_PAR_LEFF_TVALUE_FIT=true;
-    STATIC_CONST  bool DEFAULT_PAR_QY_TVALUE_FIT=false;
-    STATIC_CONST  bool DEFAULT_S1_LIKELIHOOD=true;
+    static constexpr  bool DEFAULT_PAR_STAT_BKG_FIT=false;
+    static constexpr  bool DEFAULT_PAR_SYST_BKG_FIT=false;
+    static constexpr  bool DEFAULT_PAR_LEFF_TVALUE_FIT=true;
+    static constexpr  bool DEFAULT_PAR_QY_TVALUE_FIT=false;
+    static constexpr  bool DEFAULT_S1_LIKELIHOOD=true;
 
    ~S1S2PL();
  /**

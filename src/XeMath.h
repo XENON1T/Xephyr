@@ -903,7 +903,7 @@ class PRLMassRange : public  GeneralRange {
 
    public :
   
-     STATIC_CONST  int    N_PRL_MASSES=38;
+     static constexpr  int    N_PRL_MASSES=38;
 
 /**
  * Destructor
@@ -933,10 +933,10 @@ class MassRange : public  LogRange {
      *                     Basic methods 
      * ------------------------------------------------------------*/
                     
-   STATIC_CONST   int    DEFAULT_NM   =   25;
-   STATIC_CONST   double DEFAULT_MMIN =    6;
-   STATIC_CONST   double DEFAULT_MASS =   50;
-   STATIC_CONST   double DEFAULT_MMAX = 1000;
+   static constexpr   int    DEFAULT_NM   =   25;
+   static constexpr   double DEFAULT_MMIN =    6;
+   static constexpr   double DEFAULT_MASS =   50;
+   static constexpr   double DEFAULT_MMAX = 1000;
    public :
      MassRange(int n=DEFAULT_NM,double m0=DEFAULT_MMIN,double m1=DEFAULT_MMAX);
 
@@ -959,9 +959,9 @@ class S1Range : public LinearRange {
      *                     Basic methods 
      * ------------------------------------------------------------*/
                     
-   STATIC_CONST   int    DEFAULT_N_PE   = 201;
-   STATIC_CONST   double DEFAULT_PE_MIN =  0.;
-   STATIC_CONST   double DEFAULT_PE_MAX = 50.;
+   static constexpr   int    DEFAULT_N_PE   = 201;
+   static constexpr   double DEFAULT_PE_MIN =  0.;
+   static constexpr   double DEFAULT_PE_MAX = 50.;
    public :
      S1Range(int n=DEFAULT_N_PE,double p0=DEFAULT_PE_MIN,double p1=DEFAULT_PE_MAX);
 
@@ -979,10 +979,10 @@ class S1Range : public LinearRange {
 */
 class VEscRange : public LinearRange {
 
-   STATIC_CONST   int    DEFAULT_NVESC   =  11;
-   STATIC_CONST   double DEFAULT_VESCMIN = 500.;
-   STATIC_CONST   double DEFAULT_VESC    = 544.;
-   STATIC_CONST   double DEFAULT_VESCMAX=  600.;
+   static constexpr   int    DEFAULT_NVESC   =  11;
+   static constexpr   double DEFAULT_VESCMIN = 500.;
+   static constexpr   double DEFAULT_VESC    = 544.;
+   static constexpr   double DEFAULT_VESCMAX=  600.;
   
  public :
 
@@ -1003,10 +1003,10 @@ class VEscRange : public LinearRange {
 */
 class tValueRange : public LinearRange {
 
-   STATIC_CONST   int    DEFAULT_NTVAL   =   9 ;
-   STATIC_CONST   double DEFAULT_TVALMIN = -2.0;
-   STATIC_CONST   double DEFAULT_TVAL    =   0.;
-   STATIC_CONST   double DEFAULT_TVALMAX=   2.0;
+   static constexpr   int    DEFAULT_NTVAL   =   9 ;
+   static constexpr   double DEFAULT_TVALMIN = -2.0;
+   static constexpr   double DEFAULT_TVAL    =   0.;
+   static constexpr   double DEFAULT_TVALMAX=   2.0;
   
  public :
 
@@ -1033,9 +1033,9 @@ class ErRange : public LinearRange {
      *                     Basic methods 
      * ------------------------------------------------------------*/
                     
-   STATIC_CONST   int    DEFAULT_NER   =  201;
-   STATIC_CONST   double DEFAULT_ERMIN =   0.;
-   STATIC_CONST   double DEFAULT_ERMAX=  100.;
+   static constexpr   int    DEFAULT_NER   =  201;
+   static constexpr   double DEFAULT_ERMIN =   0.;
+   static constexpr   double DEFAULT_ERMAX=  100.;
    public :
      ErRange(int n=DEFAULT_NER,double e0=DEFAULT_ERMIN,double e1=DEFAULT_ERMAX);
 
@@ -1058,10 +1058,10 @@ class SigmaRange : public LogRange {
      *                     Basic methods 
      * ------------------------------------------------------------*/
                     
-   STATIC_CONST   int    DEFAULT_NS    =     61;
-   STATIC_CONST   double DEFAULT_SMIN  = 1.E-46;
-   STATIC_CONST   double DEFAULT_SIGMA = 1.E-45;
-   STATIC_CONST   double DEFAULT_SMAX  = 1.E-40;
+   static constexpr   int    DEFAULT_NS    =     61;
+   static constexpr   double DEFAULT_SMIN  = 1.E-46;
+   static constexpr   double DEFAULT_SIGMA = 1.E-45;
+   static constexpr   double DEFAULT_SMAX  = 1.E-40;
    public :
      SigmaRange(int n=DEFAULT_NS,double s0=DEFAULT_SMIN,double s1=DEFAULT_SMAX);
 
@@ -1084,9 +1084,9 @@ class EventRange : public LinearRange {
      *                        Basic methods 
      * -----------------------------------------------------------*/
                     
-   STATIC_CONST   int    DEFAULT_NS   =   51;
-   STATIC_CONST   double DEFAULT_SMIN =   0.;
-   STATIC_CONST   double DEFAULT_SMAX =  10.;
+   static constexpr   int    DEFAULT_NS   =   51;
+   static constexpr   double DEFAULT_SMIN =   0.;
+   static constexpr   double DEFAULT_SMAX =  10.;
    public :
      EventRange(int n=DEFAULT_NS,double s0=DEFAULT_SMIN
                      ,double s1=DEFAULT_SMAX);
@@ -1112,9 +1112,9 @@ class YRange : public LinearRange {
      *                     Basic methods 
      * ------------------------------------------------------------*/
                     
-   STATIC_CONST   int    DEFAULT_NY   =  51;
-   STATIC_CONST   double DEFAULT_YMIN =  0.;
-   STATIC_CONST   double DEFAULT_YMAX=  10.;
+   static constexpr   int    DEFAULT_NY   =  51;
+   static constexpr   double DEFAULT_YMIN =  0.;
+   static constexpr   double DEFAULT_YMAX=  10.;
    public :
      YRange(int n=DEFAULT_NY,double y0=DEFAULT_YMIN,double y1=DEFAULT_YMAX);
 
