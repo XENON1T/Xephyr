@@ -213,7 +213,6 @@ class XeStat : virtual public XeMath , virtual public XeObject {
     static int    printLevel; 
     static int    analysisMode;
 
-    ClassDef(XeStat,1)
 } ;
 
 
@@ -320,7 +319,6 @@ class XeValues : public map<double,int>, public XeObject {
 
     int      nEntries;
 
-     ClassDef(XeValues,1)
 
 };
 
@@ -645,7 +643,6 @@ class XeSpectrum : virtual public XeGraphics, virtual public XeStat{
     LinearRange *  range;   /*!< pointer to the XeRange (actually LinearRange)*/
     vector<double> spectrum;                                /*!< the values   */
 
-    ClassDef(XeSpectrum,1)
 };
 
 class XeDist : virtual public XeStat  {
@@ -753,7 +750,6 @@ class XeDist : virtual public XeStat  {
  
      static TRandom3 random;                            /*!< random generator */
 
-     ClassDef(XeDist,1)
 
 };
 
@@ -968,7 +964,6 @@ class TabulatedDist : public XeSpectrum, public XeDist {
     vector<double>  cdfVector;  /*!< List of cumulated probabilities */
     map<double,int> cdfMap;   /*!< Used for generating according to this dist.*/
 
-    ClassDef(TabulatedDist,1)
 
 };
 
@@ -1024,7 +1019,6 @@ class UniformDist : public XeDist {
     double x1;
     double onew;
      
-     ClassDef(UniformDist,1)
 
 };
 
@@ -1076,7 +1070,6 @@ class ExponentialDist : public XeDist {
     double x0; 
      
      
-     ClassDef(ExponentialDist,1)
 
 };
 
@@ -1162,7 +1155,6 @@ class Chi2Dist : public XeDist {
    
     int    ndof;
      
-     ClassDef(Chi2Dist,1)
 
 };
 
@@ -1248,7 +1240,6 @@ class GaussianDist : public XeDist {
     double sigma;
      
      
-     ClassDef(GaussianDist,1)
 
 };
 
@@ -1306,7 +1297,6 @@ class PoissonDist : public XeDist {
     double mu;
 
 
-     ClassDef(PoissonDist,1)
 
 };
 
@@ -1402,7 +1392,6 @@ class XeSigma : public XeObject {
  */ 
     static string getTheName(double mass,string eTitle);
 
-    ClassDef(XeSigma,1)
 };
 
 /**
@@ -1521,7 +1510,6 @@ class XeLimit : public XeStat {
     XeSigma estimated;                            /*!< Estimated cross section*/
     XeSigma limit;                              /*!< Upper limit cross section*/
 
-    ClassDef(XeLimit,1)
 };
 
 
@@ -1593,7 +1581,6 @@ class XeSigmas : public map<double, XeSigma*> , public XeStat  {
  */
       XeGraph*      newGraph(int unit,int plot=NONE);
 
-    ClassDef(XeSigmas,1)
  
 };
 
@@ -1692,7 +1679,6 @@ class XeLimits : public map<double, XeLimit*>,  public XeStat  {
  */
    XeGraph* newGraph(int mode, int unit, int plot=NONE);
 
-    ClassDef(XeLimits,1)
  
 };
 
@@ -1784,7 +1770,6 @@ class XeSensitivity :  public XeStat {
      double signalPerCm2;                 /*!<conversion factor cm^2->events  */
      double limits[N_SENSITIVITY_MODES];      /*!< limits in SIGMA_UNIT (cm^2)*/
 
-     ClassDef(XeSensitivity,1)
 };
 
 typedef map<double, XeSensitivity*>::iterator SensitivityIterator;
@@ -1909,7 +1894,6 @@ class SensitivityBands : public XeStat
  */
       TPolyLine*    newPolygon(int low, int high, int unit);
 
-      ClassDef(SensitivityBands,1)
 };
 
 /**
@@ -2031,7 +2015,6 @@ class DataSet : public XeStat   {
      int                      nColumns;  /*!< Number of columns*/
      int                      nEvents;  /*!< Number of entries=events*/
      
-      ClassDef(DataSet,1)
 };
 
 /**
@@ -2065,7 +2048,6 @@ class SimulatedDataSet : public DataSet {
 
      vector<double> transient;
      
-      ClassDef(SimulatedDataSet,1)
 
 };
 
@@ -2107,7 +2089,6 @@ class OneDimSimulatedDataSet : public SimulatedDataSet {
     XeDist* signal;
     XeDist* background;    
  
-      ClassDef(OneDimSimulatedDataSet,1)
 
 };
 
@@ -2145,7 +2126,6 @@ class SimulatedExponentAndBackground : public OneDimSimulatedDataSet {
     ExponentialDist *exp;
     UniformDist     *uni;    
    
-      ClassDef(SimulatedExponentAndBackground,1)
 
 
 };
@@ -2187,7 +2167,6 @@ class SimulatedGaussianAndBackground : public OneDimSimulatedDataSet {
     GaussianDist *gau;
     UniformDist  *uni;    
 
-      ClassDef(SimulatedGaussianAndBackground,1)
 };
 
 /**
@@ -2256,7 +2235,6 @@ class SignalAndBackground :  virtual public XeStat {
     double   background;
     double   dBackground;
 
-      ClassDef(SignalAndBackground,1)
 };
 
 
@@ -2349,7 +2327,6 @@ class PoissonCI : public CI {
       bool                 deleteSB;
       int                  currentMode;
       SignalAndBackground* SB;
-      ClassDef(PoissonCI,1)
 };
 
 
@@ -2376,7 +2353,6 @@ class Rejection : virtual  public XeStat {
   protected :
 
     static double rejections[N_REJECTION_MODES];
-    ClassDef(Rejection,1)
 
 };
 
@@ -2556,7 +2532,6 @@ class PValue : virtual public XeStat {
    double          lowerLimit;  /*!<Lower number of events in fit*/
    double          upperLimit;  /*!<Upper number of events in fit*/
 
-   ClassDef(PValue,1)
 };
 
 
@@ -2599,7 +2574,6 @@ class PVcountingSB :public PValue, public SignalAndBackground {
     double  eventsUpperLimit();
     double  getSigmaHut();   
  
-    ClassDef(PVcountingSB,1)
 
 };
 
@@ -2650,7 +2624,6 @@ class YellinPValue : public PValue {
     DataSet*   dataSet;
     XeDist*    signal;
 
-    ClassDef(YellinPValue,1)
      
 };
 
@@ -2980,7 +2953,6 @@ class Exclusion : public XeStat, public solvable {
  */
     double   computePB();
 
-    ClassDef(Exclusion,1)
      
 } ;
 
@@ -3109,7 +3081,6 @@ class LKParameter :  public XeStat {
     double  initialSigma;
     double  MinuitUnit;
 
-    ClassDef(LKParameter,1)
      
 } ;
 
@@ -3121,7 +3092,6 @@ class SigmaParameter : public LKParameter {
     SigmaParameter();
    ~SigmaParameter();
 
-    ClassDef(SigmaParameter,1)
      
 } ;
 
@@ -3135,7 +3105,6 @@ class TSystBkgParameter : public LKParameter {
 
   static string getTheName(int run);
 
-    ClassDef(TSystBkgParameter,1)
 } ;
 
 class TGaussParameter : public LKParameter {
@@ -3150,7 +3119,6 @@ class TGaussParameter : public LKParameter {
 
     double uncertainty;
 
-    ClassDef(TGaussParameter,1)
 } ;
 
 /**
@@ -3163,7 +3131,6 @@ class TStatBkgParameter : public LKParameter {
     TStatBkgParameter(int band, int run);
    ~TStatBkgParameter();
 
-    ClassDef(TStatBkgParameter,1)
 
     void setStatError(double err);
     void printCurrent(bool withError);
@@ -3183,7 +3150,6 @@ class TLEffParameter : public LKParameter {
     TLEffParameter();
    ~TLEffParameter();
 
-    ClassDef(TLEffParameter,1)
 
 } ;
 
@@ -3195,7 +3161,6 @@ class TQyParameter : public LKParameter {
     TQyParameter();
    ~TQyParameter();
 
-    ClassDef(TQyParameter,1)
 
 } ;
 
@@ -3208,7 +3173,6 @@ class TEfficiencyParameter : public LKParameter {
     TEfficiencyParameter();
    ~TEfficiencyParameter();
 
-    ClassDef(TEfficiencyParameter,1)
 
 } ;
 
@@ -3415,7 +3379,6 @@ class Likelihood :  virtual public XeStat {
      void                  clear();
      bool                  checkParameter(int p, bool shouldExist);
 
-    ClassDef(Likelihood,1)
 
 } ;
 
@@ -3451,7 +3414,6 @@ class LikelihoodFromDataSet :  public Likelihood {
     vector<double>  values;
     static string   getTheName(DataSet* data);
 
-    ClassDef(LikelihoodFromDataSet,1)
 
 } ;
 
@@ -3572,7 +3534,6 @@ class ProfileLikelihood : virtual public Likelihood, virtual public PValue {
                  
     LKParameter *sigPar;  /*!< Pointer to main parameter of interest */
 
-    ClassDef(ProfileLikelihood,1)
 
 } ;
 
@@ -3635,7 +3596,6 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
     int                          nCommon;
     double                       sigToEvents;
 
-    ClassDef(CombinedProfileLikelihood,1)
 
 };
 
@@ -3688,7 +3648,6 @@ class PLcountingSB : virtual public SignalAndBackground,
     double  eventsUpperLimit();
 
 
-    ClassDef(PLcountingSB,1)
 
 };
 #endif

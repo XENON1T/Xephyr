@@ -223,7 +223,6 @@ class RunComponent : virtual public XeObject {
     XeRun* run;
     int    runNumber;
 
-   ClassDef(RunComponent,1)
 
 };
 
@@ -251,7 +250,6 @@ class DetectorComponent : virtual public XeMath, virtual public XeObject {
  */
    virtual ~DetectorComponent();
 
-   ClassDef(DetectorComponent,1)
 };
 
 class Qy :  public DetectorComponent {
@@ -420,7 +418,6 @@ class LEff : public DetectorComponent {
     double     maxTval;
     double     TvalStepSize;
 
-    ClassDef(LEff,1)
 
 };
 
@@ -447,7 +444,6 @@ class LEff2011 : public LEff {
     double getLEffFromTable(double Er,int mode=CENTRAL);
     static double  _leff[N_ER_POINTS][N_SIGMA_MODES];
 
-    ClassDef(LEff2011,1)
 
 };
 
@@ -475,7 +471,6 @@ class LEffRuns8And10 : public LEff {
     static double  _leff[N_SIGMA_MODES][N_LEFF_RUNS_8_AND_10];
     static double  _er[N_LEFF_RUNS_8_AND_10];
 
-    ClassDef(LEffRuns8And10,1)
 
 };
 
@@ -532,7 +527,6 @@ class RunFlattener : virtual public Flattener, virtual public RunComponent {
     TF1*   eBandFlat;
 
 
-    ClassDef(RunFlattener,1)
 };
 
 /**
@@ -665,7 +659,6 @@ class XeCut :  virtual public S1S2Object, virtual public RunComponent {
      static constexpr   double PE_MIN =  1.;
      static constexpr   double PE_MAX = 40.;
 
-      ClassDef(XeCut,1)
 };
 
 /**
@@ -846,7 +839,6 @@ class XeSetOfCuts : public S1S2Object, public vector<XeCut*>
      void            init();
      bool            checkIndex(int i);
 
-      ClassDef(XeSetOfCuts,1)
 };
 
 /**
@@ -965,7 +957,6 @@ class SelectionCut : public XeCut{
     double           getAcceptance(double S1,int mode);
     virtual double   computeAcceptance(double S1,int mode)=0;
 
-      ClassDef(SelectionCut,1)
  
 };
 
@@ -991,7 +982,6 @@ class SelectionCutS1 : public SelectionCut {
              SelectionCutS1(XeRun* run, bool variable);
 
  
-      ClassDef(SelectionCutS1,1)
 };
 
 /**
@@ -1015,7 +1005,6 @@ class SelectionCutUnsmearedS1 : public SelectionCut {
  */
              SelectionCutUnsmearedS1(XeRun* run, bool variable);
 
-      ClassDef(SelectionCutUnsmearedS1,1)
 
 };
 
@@ -1112,7 +1101,6 @@ class s1sTotCut : public SelectionCutS1 {
     LEff    *leff;
 
 
-      ClassDef(s1sTotCut,1)
 
 };
 
@@ -1180,7 +1168,6 @@ class s2peaks0Cut : public SelectionCutUnsmearedS1 {
     double   computeAcceptance(double uS1,int mode);
     void     setTheName();
 
-      ClassDef(s2peaks0Cut,1)
 
 };
 
@@ -1231,7 +1218,6 @@ class S1coin2Cut : public SelectionCutS1 {
  */
     double  computeAcceptance(double S1, int mode);
 
-      ClassDef(S1coin2Cut,1)
 
 };
 
@@ -1270,7 +1256,6 @@ class OtherSelectionCutsS1 : public SelectionCutS1 {
  */
     double  computeAcceptance(double S1,int mode);
 
-      ClassDef(OtherSelectionCutsS1,1)
 
 } ;
 
@@ -1316,7 +1301,6 @@ class AllSelectionCutsS1 : public SelectionCutS1 {
  */
     double  computeAcceptance(double S1,int mode);
 
-      ClassDef(AllSelectionCutsS1,1)
 
 } ;
 
@@ -1423,7 +1407,6 @@ class XeSetOfSelectionCuts : public XeSetOfCuts  {
  
      int            mode;
 
-      ClassDef(XeSetOfSelectionCuts,1)
 } ;
 
 
@@ -1473,7 +1456,6 @@ class DarkMatterCut : public XeCut {
     static   string getTheName(string name,int mode);
     static   string getTheName(string name,double efficiency);
 
-      ClassDef(DarkMatterCut,1)
 
 };
 
@@ -1553,7 +1535,6 @@ class S1S2SingleCut : public DarkMatterCut {
     int        spaceMode;
     Flattener* flattener;
 
-      ClassDef(S1S2SingleCut,1)
 
 };
 
@@ -1632,7 +1613,6 @@ class S1OverS2Cut : public S1S2SingleCut {
     int      rejectionMode;
     static   string getOfficialName(int run); 
 
-      ClassDef(S1OverS2Cut,1)
 
 };
 
@@ -2075,7 +2055,6 @@ class S1S2Data : virtual public S1S2Object, virtual public DataSet
     int               band;
     int               slice;
 
-      ClassDef(S1S2Data,1)
 
 };
 
@@ -2279,7 +2258,6 @@ class S1Slice : virtual public DetectorComponent, virtual public S1S2Object
     vector<double>  counts;                              /*!< getContents per band */
 
 
-      ClassDef(S1Slice,1)
 
 } ;
 
@@ -2639,7 +2617,6 @@ class S2Band : virtual public DetectorComponent, virtual public S1S2Object
    vector<double> S2overS1Min;                       /*!<lower limits if S2/S1*/
    vector<double> S2overS1Max;                       /*!<upper limits if S2/S1*/
 
-      ClassDef(S2Band,1)
 
 
 };
@@ -3368,7 +3345,6 @@ class S1S2Bands : virtual public DetectorComponent, virtual public S1S2Object
 
      TF1 *fBottom;
      
-     ClassDef(S1S2Bands,1)
 
 } ;
 
@@ -3433,7 +3409,6 @@ class XeBackgroundModel : virtual public DetectorComponent
      double   dayKg;
      double   expected;
 
-     ClassDef(XeBackgroundModel,1)
 };
 
 
@@ -3478,7 +3453,6 @@ class NeutronBackgroundModel : public XeBackgroundModel {
  */
     static NeutronBackgroundModel* newDefault(XeRun* run);
 
-      ClassDef(NeutronBackgroundModel,1)
  /**
      * print details of background estimation
      * @param level  detail level
@@ -3531,7 +3505,6 @@ class NeutronBackgroundModelRun10 : public NeutronBackgroundModel {
 
     static double  _integrated[N_PE_NR_BACKGROUND];
 
-      ClassDef(NeutronBackgroundModelRun10,1)
 
 };
 
@@ -3576,7 +3549,6 @@ class NeutronBackgroundModelRun8 : public NeutronBackgroundModel {
   bool isRunCompatible(int runNumber);
 
 
-      ClassDef(NeutronBackgroundModelRun8,1)
 
 };
 
@@ -3676,7 +3648,6 @@ class ElectronBackgroundModel : public XeBackgroundModel {
     double anomalousExpected;                  /*!< Expected anomalous leakage*/
     double anomalousSlope;                  /*!< S1 slope of anomalous leakage*/
 
-    ClassDef(ElectronBackgroundModel,1)
 
 };
 
@@ -3735,7 +3706,6 @@ class SimplisticERBackground : public ElectronBackgroundModel {
 
     bool   doSpreadLeakageOverBands ;
 
-      ClassDef(SimplisticERBackground,1)
 
 };
 
@@ -3847,7 +3817,6 @@ class SimpleERBackground : public ElectronBackgroundModel {
     double flattenedAnomalousMin ; 
     double flattenedAnomalousMax ;  
 
-    ClassDef(SimpleERBackground,1)
 
 };
 
@@ -3913,7 +3882,6 @@ class PublishedElectronBackgroundRun10 : public ElectronBackgroundModel {
     vector<double> bkgs;
     vector<double> anomalousBkgs;
 
-    ClassDef(PublishedElectronBackgroundRun10,1)
 
 };
 
@@ -3988,7 +3956,6 @@ class PublishedElectronBackgroundRun8 : public ElectronBackgroundModel {
     bool 	isLeakComputed;
     bool	isGausComputed;
 
-    ClassDef(PublishedElectronBackgroundRun8,1)
 
 };
 
@@ -5832,7 +5799,6 @@ class XeRun : public integrable , public S1S2Object {
     TFile	*dataFile;     /*pointer to the stored data root file*/
     TFile	*signalFile;   /*pointer to the stored MC signal root file*/
 
-      ClassDef(XeRun,1)
 };
 
 /**
@@ -5870,7 +5836,6 @@ class S1S2PValue : virtual public PValue, virtual public RunComponent {
 
      bool           checkEverything();
 
-      ClassDef(S1S2PValue,1)
 
 } ;
 
@@ -5898,7 +5863,6 @@ class S1S2CLs : public S1S2PValue {
      double         bkg;
      int            nEvents;
 
-      ClassDef(S1S2CLs,1)
 
 
 };
@@ -6166,7 +6130,6 @@ class S1S2PL : virtual public ProfileLikelihood, virtual public RunComponent {
 
     int 	    data_type;
 
-    ClassDef(S1S2PL,1)
 
 };
 
@@ -6243,7 +6206,6 @@ class ImportedElectronBackground : public ElectronBackgroundModel {
     ModelImporter  gaussBkg;	/*<!gauss bkg importer*/
     ModelImporter  leakageBkg;  /*<!leakage bkg importer*/
 
-    ClassDef(ImportedElectronBackground,1)
 
 };
 
@@ -6302,7 +6264,6 @@ class ImportedNeutronBackgroundModel : public NeutronBackgroundModel {
 
     ModelImporter  neutronBkg;/*<!neutron bkg importer*/
 
-      ClassDef(ImportedNeutronBackgroundModel,1)
 
 };
 

@@ -15,7 +15,6 @@ var searchData=
   ['defaulttvaluerange',['defaultTValueRange',['../classXeRange.html#a0673627185a2aacbd4c4d594d23fd57c',1,'XeRange']]],
   ['defaultvescrange',['defaultVEscRange',['../classXeRange.html#ab18d6f65d16af51182429dfdf4954823',1,'XeRange']]],
   ['defaultyrange',['defaultYRange',['../classXeRange.html#a6d6968a5eecae7b5e78ecc823c7880fa',1,'XeRange']]],
-  ['dist',['dist',['../classXeTest.html#abb313dee0a0d284e4ec136b20fe1225f',1,'XeTest']]],
   ['dlefftvalueforexclusion',['DLEffTValueForExclusion',['../classS1S2PL.html#a5a289111af6ae494302537eb79b9616d',1,'S1S2PL']]],
   ['doapplycls',['doApplyCLs',['../classExclusion.html#ab0a4070643210c20a19ae4e7d11764e9',1,'Exclusion']]],
   ['domcsignalband',['DoMCSignalBand',['../classXeRun.html#aa9dde63d274a5cc0478da386ccb7295f',1,'XeRun']]],

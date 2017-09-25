@@ -39,7 +39,6 @@ class shapeSys : public LKParameter {
 	//! returns the nearest HISTOGRAM value in the grid, upper edge
 	double getNearestHigh();
 	
-    ClassDef(shapeSys,1)
 };
 
 
@@ -64,7 +63,6 @@ class scaleSys : public LKParameter {
 		bool isNull;
 	
 
-    ClassDef(scaleSys,1)
 };
 
 
@@ -162,7 +160,6 @@ class pdfComponent :errorHandler{
 
 	void extendHisto(TH2F &h);
 
-    ClassDef(pdfComponent,1)
 };
 
 
@@ -225,7 +222,6 @@ class histoCompare :errorHandler{
 	    void project(); /** push histo into the TH1D*/
 
 
-    ClassDef(histoCompare,1)
 	   
 
 

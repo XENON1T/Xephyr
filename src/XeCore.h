@@ -304,7 +304,6 @@ class XeCore {
      static stopper *mainStopper;
 
 
-     ClassDef(XeCore,1)
 
 } ;
 
@@ -523,7 +522,6 @@ class stopper : public XeTool, public TStopwatch {
  */
      void lapse();
 
-     ClassDef(stopper,1)
 
    protected :
 
@@ -986,7 +984,6 @@ class XeObject : virtual public XeCore, virtual public TObject {
     virtual  void traceTheFlags();
 
 
-    ClassDef(XeObject,1)
 
 };
 
@@ -1011,7 +1008,6 @@ class XeTopObject : public XeObject {
 
   protected: 
 
-    ClassDef(XeTopObject,1)
 };
 
 /**
@@ -1054,7 +1050,6 @@ class XeTable : public map<int,double> , public XeObject {
     int      first;
     int      last;
 
-    ClassDef(XeTable,1)
 };
 
 typedef map<int,double>::iterator XeTableIterator;
@@ -1098,7 +1093,6 @@ class Flattener : virtual public XeObject {
  */
     void     unflatten(TGraph* origin,TGraph* added);
 
-    ClassDef(Flattener,1)
   
 };
 
@@ -1216,7 +1210,6 @@ class XeStyle : virtual public XeGraphics, virtual public XeObject  {
     int    fillColor;
     int    fillStyle;
     
-    ClassDef(XeStyle,1)
 };
 
 /**
@@ -1437,7 +1430,6 @@ class XeStylized  :  virtual public XeGraphics , virtual public XeObject {
     int      defaultXScale;
     int      defaultYScale;
 
-  ClassDef(XeStylized,1)
 }; 
 
 
@@ -1600,7 +1592,6 @@ class XeGraph : public XeStylized {
 
     TGraph   graph;
  
-             ClassDef(XeGraph,1)
 } ;
 
 /**
@@ -1644,7 +1635,6 @@ class XeGraphPositive : public XeGraph {
      *                Internal methods (not for user)
      * ------------------------------------------------------------*/
                     
-      ClassDef(XeGraphPositive,1)
 
    protected:
 
@@ -1908,7 +1898,6 @@ class XeMultiGraph : public XeStylized , public vector<XeGraph*> {
      vector<double>  Vx;     /*!< Vector of reference X value*/
      vector<double>  Vz;     /*!< Vector of "z" values*/
     
-     ClassDef(XeMultiGraph,1)
 } ;
 
 /**

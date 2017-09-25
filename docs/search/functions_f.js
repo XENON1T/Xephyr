@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['rate',['rate',['../classTarget.html#a2062cef4b8815abb92a0adb77e95c13a',1,'Target']]],
   ['read',['read',['../classXeObject.html#ace0f96f60a3c31cd52a5a64c2f431e8b',1,'XeObject::read()'],['../classXeSigmas.html#ae2b8b79a29cc99e3c0b1ade66c1df643',1,'XeSigmas::read()'],['../classXeLimits.html#a1cd7b427a1f7be8aba643e775e87ff27',1,'XeLimits::read()'],['../classSensitivityBands.html#a958f2e2c0e2c85d53406e2df16c08aee',1,'SensitivityBands::read()']]],
   ['readfromsimplefile',['readFromSimpleFile',['../classXeObject.html#a1456cdf464222c72f08c7e387afff132',1,'XeObject']]],
   ['rebinx',['rebinX',['../classModelImporter.html#a39621f9f688f30070abce4173edc675a',1,'ModelImporter']]],
@@ -14,7 +15,6 @@ var searchData=
   ['restoreobjects',['restoreObjects',['../classXeCore.html#a39fcdaed883948fb4fe51eadc8ee0898',1,'XeCore']]],
   ['reweightthebands',['reweightTheBands',['../classS1Slice.html#a7ad305cc1ac5022993b448a47f3357bc',1,'S1Slice::reweightTheBands()'],['../classS1S2Bands.html#a0f34d78ec36ce6d0976998d1f0858832',1,'S1S2Bands::reweightTheBands()']]],
   ['rndm',['rndm',['../classXeDist.html#ad8403ac6f0c9ada2789948cd168210e0',1,'XeDist']]],
-  ['runanalysis',['runAnalysis',['../classXeTest.html#a2d220d4006090ca46034cfb01b6f18d7',1,'XeTest']]],
   ['runcomponent',['RunComponent',['../classRunComponent.html#a8825bd997cd3379d87172eb5e50886f7',1,'RunComponent::RunComponent()'],['../classRunComponent.html#a8b0cc71815d857b9217e74e951d64067',1,'RunComponent::RunComponent(string name)']]],
   ['runflattener',['RunFlattener',['../classRunFlattener.html#a1e92d309728d43beeb12f48f3d0cf1b3',1,'RunFlattener::RunFlattener()'],['../classRunFlattener.html#a34978c3e572088629d1b40d9845bc29e',1,'RunFlattener::RunFlattener(XeRun *run)']]]
 ];

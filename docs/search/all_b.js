@@ -46,6 +46,7 @@ var searchData=
   ['newgraphofloglikelihood',['newGraphOfLogLikelihood',['../classProfileLikelihood.html#af5493b0f12424ad48bcc0433c9465e30',1,'ProfileLikelihood']]],
   ['newgraphofpvalue',['newGraphOfPValue',['../classExclusion.html#a09260b33b578a88f76e3aceb8afd6669',1,'Exclusion']]],
   ['newgraphofqexclusion',['newGraphOfQExclusion',['../classExclusion.html#a844858e83a698a3058c5c1494f941a2d',1,'Exclusion']]],
+  ['newgraphofrate',['newGraphOfRate',['../classTarget.html#a7ab71db6d58f89d8c1e63435831bed1d',1,'Target']]],
   ['newgraphofselectioncutsacceptance',['newGraphOfSelectionCutsAcceptance',['../classXeRun.html#a9815b206c5601408f31ce845010173fc',1,'XeRun']]],
   ['newgraphofsignalandbackgrounds1distribution',['newGraphOfSignalAndBackgroundS1Distribution',['../classXeRun.html#a8178647a5934c18efd215e217f39ffa6',1,'XeRun']]],
   ['newgraphofsignalandbackgrounds1spectrum',['newGraphOfSignalAndBackgroundS1Spectrum',['../classXeRun.html#ab4c993d0e309484a3f2fae3d95580cf8',1,'XeRun']]],
@@ -108,5 +109,6 @@ var searchData=
   ['npvalues',['nPValues',['../classExclusion.html#a794d6eaa702bf41fd314c18e2b9a897a',1,'Exclusion']]],
   ['nsignalpercm2',['nSignalPerCm2',['../classHistLikelihood.html#afb995ae3714eb0256044cf4abb25ebbb',1,'HistLikelihood::nSignalPerCm2()'],['../classXeRun.html#a7b056089658c3840972954c716131249',1,'XeRun::nSignalPerCm2()'],['../classS1S2PValue.html#a1de42f736ab804f89dc4aed4aab9eba6',1,'S1S2PValue::nSignalPerCm2()'],['../classS1S2PL.html#aed97bb8c68b641c8009deeefb646c2c1',1,'S1S2PL::nSignalPerCm2(double lt)'],['../classS1S2PL.html#aa8509b5aefef044db1b67ff2fa7aef56',1,'S1S2PL::nSignalPerCm2()'],['../classpdfLikelihood.html#ae007e653c2f930cf0f9c3fad22033488',1,'pdfLikelihood::nSignalPerCm2()'],['../classPValue.html#a07a571759e341e27294f746d7b656300',1,'PValue::nSignalPerCm2()'],['../classPVcountingSB.html#a97efe7db80450bc49df83ab9d0ac4e04',1,'PVcountingSB::nSignalPerCm2()'],['../classYellinPValue.html#a86ba26bd25d9742b715126e2959a1331',1,'YellinPValue::nSignalPerCm2()'],['../classCombinedProfileLikelihood.html#a6a5dd0c8ab0056be61fddb48a0a0bdce',1,'CombinedProfileLikelihood::nSignalPerCm2()'],['../classPLcountingSB.html#ad23ca97098ee1583c6cd694315d78714',1,'PLcountingSB::nSignalPerCm2()']]],
   ['nslices',['nSlices',['../classS2Band.html#a80276fe422bdb52280c9f089bf1a9718',1,'S2Band::nSlices()'],['../classS1S2Bands.html#a267f7259c733d93f713564c6ff0cade5',1,'S1S2Bands::nSlices()'],['../classXeRun.html#a2d9e6314bfc30f58bdae427788e3d00a',1,'XeRun::nSlices()']]],
+  ['nucleus',['Nucleus',['../classNucleus.html',1,'Nucleus'],['../classNucleus.html#a9ec670c7e5dee2cab93deb35c2cab483',1,'Nucleus::Nucleus()']]],
   ['numberofsigmas',['numberOfSigmas',['../classSensitivityBands.html#a097cf437bd6bd2c620e5ca4ff342464d',1,'SensitivityBands']]]
 ];

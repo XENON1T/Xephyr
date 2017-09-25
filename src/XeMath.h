@@ -122,7 +122,6 @@ public:
  */
     static string tValueName(double t);
 
-  ClassDef(XeMath,1)
 };
 
 /**
@@ -399,7 +398,6 @@ class XeBins : public XeObject {
 
     void             establishTheMap();
 
-    ClassDef(XeBins,1)
 
 };
 
@@ -433,7 +431,6 @@ class EquidistantBins : public XeBins {
     double          step;
     static string   getEquidistantName(string w,int n, double a, double b);
 
-    ClassDef(EquidistantBins,1)
 
 };
 
@@ -468,7 +465,6 @@ class EquiContentBins :public XeBins {
     static string   getEquiContentName(string w,int n);
     bool            fillFromMap(map<double,int>* data, int nBins, int n=0);
 
-    ClassDef(EquiContentBins,1)
 
 };
 
@@ -736,7 +732,6 @@ class XeRange : public XeMath, public XeObject {
    static SigmaRange   *defaultSigmaRange;  /*!<default Sigma XeRange */
    static EventRange   *defaultEventRange;  /*!< default nEventsXeRange*/
 
-   ClassDef(XeRange,1)
 
  };
 
@@ -791,7 +786,6 @@ class GeneralRange: public XeRange {
 
    map<double,int>  bins;   
 
-   ClassDef(GeneralRange,1)
 
 };
 
@@ -830,7 +824,6 @@ class LogRange : public XeRange {
    double computeValue(int i);
    double computeValue(double i);
 
-   ClassDef(LogRange,1)
 
 };
 
@@ -890,7 +883,6 @@ class LinearRange : public XeRange {
 */
     pair<int,double>    getTolerantIndexAndFraction(double x);
 
-   ClassDef(LinearRange,1)
 
 };
 
@@ -919,7 +911,6 @@ class PRLMassRange : public  GeneralRange {
 
      static double prlMasses[PRLMassRange::N_PRL_MASSES];
 
-   ClassDef(PRLMassRange,1)
 };
 
 
@@ -945,7 +936,6 @@ class MassRange : public  LogRange {
  */
     ~MassRange();
 
-   ClassDef(MassRange,1)
 
 };
 
@@ -970,7 +960,6 @@ class S1Range : public LinearRange {
  */
     ~S1Range();
 
-   ClassDef(S1Range,1)
 
 };
 
@@ -994,7 +983,6 @@ class VEscRange : public LinearRange {
  */
      ~VEscRange();
 
-   ClassDef(VEscRange,1)
 
 } ;
 
@@ -1018,7 +1006,6 @@ class tValueRange : public LinearRange {
  */
      ~tValueRange();
 
-   ClassDef(tValueRange,1)
 
 } ;
 
@@ -1044,7 +1031,6 @@ class ErRange : public LinearRange {
  */
     ~ErRange();
 
-   ClassDef(ErRange,1)
 
 };
 
@@ -1070,7 +1056,6 @@ class SigmaRange : public LogRange {
  */
     ~SigmaRange();
 
-   ClassDef(SigmaRange,1)
 
 };
 
@@ -1096,7 +1081,6 @@ class EventRange : public LinearRange {
  */
     ~EventRange();
 
-   ClassDef(EventRange,1)
 
 };
 
@@ -1123,7 +1107,6 @@ class YRange : public LinearRange {
  */
     ~YRange();
 
-   ClassDef(YRange,1)
 
 };
 

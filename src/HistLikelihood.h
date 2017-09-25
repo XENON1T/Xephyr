@@ -112,7 +112,6 @@ class HistLikelihood :virtual public ProfileLikelihood, virtual public RunCompon
 
 	void checkHistos();
 
-	ClassDef(HistLikelihood,1)
 
 };
 

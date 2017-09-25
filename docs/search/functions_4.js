@@ -7,7 +7,7 @@ var searchData=
   ['equalizevector',['equalizeVector',['../classXeMath.html#a26590c5591d208aaeedc4377ef3bbeb9',1,'XeMath::equalizeVector(double *v, int n)'],['../classXeMath.html#a1c5db10c41dfca4690208c879affc3f3',1,'XeMath::equalizeVector(vector&lt; double &gt; &amp;v)']]],
   ['equicontentbins',['EquiContentBins',['../classEquiContentBins.html#a01d04ca56a8e150913e28377fc629e1d',1,'EquiContentBins']]],
   ['equidistantbins',['EquidistantBins',['../classEquidistantBins.html#ae9458f028d49b4e0d597dd57cc84ee8f',1,'EquidistantBins']]],
-  ['ermax',['ErMax',['../classXeRun.html#a593739bdd0e099d664ad5e8d2a8f76d2',1,'XeRun']]],
+  ['ermax',['ErMax',['../classXeRun.html#a593739bdd0e099d664ad5e8d2a8f76d2',1,'XeRun::ErMax()'],['../classTarget.html#a9b2078669d62d24b849872a5e9de0522',1,'Target::ErMax()']]],
   ['ertonphotons',['ErToNPhotons',['../classXeRun.html#af95a2b26c8e43afe88665b5dd0c247db',1,'XeRun']]],
   ['establishpointerstocounts',['establishPointersToCounts',['../classS1S2Bands.html#a7435bd2b37ea0c4a03fb7532eef388a8',1,'S1S2Bands']]],
   ['estimatecrosssection',['estimateCrossSection',['../classPValue.html#a3a0aa15dacfafe17342f664bc3fd45f8',1,'PValue::estimateCrossSection()'],['../classProfileLikelihood.html#aab64cf366d2611c80166bf3b45e3153e',1,'ProfileLikelihood::estimateCrossSection()']]],

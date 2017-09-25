@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['galaxymodel',['GalaxyModel',['../classGalaxyModel.html',1,'']]],
   ['gaussiandist',['GaussianDist',['../classGaussianDist.html',1,'GaussianDist'],['../classGaussianDist.html#a315e94ec2a080420cdb1f769e76628c3',1,'GaussianDist::GaussianDist()'],['../classGaussianDist.html#adb4b8cf8fc5b4e99532f92630590a341',1,'GaussianDist::GaussianDist(double mu, double sigma)']]],
   ['gaussianexpected',['gaussianExpected',['../classElectronBackgroundModel.html#a8faa0be0765fef6dff8fe9e3698846f0',1,'ElectronBackgroundModel']]],
   ['generalrange',['GeneralRange',['../classGeneralRange.html',1,'GeneralRange'],['../classGeneralRange.html#ad14adf25217820b5b88985eb3878b2eb',1,'GeneralRange::GeneralRange(string what, int n, double *values)'],['../classGeneralRange.html#ad7ca892a8a1ba4eded57d05c61d93982',1,'GeneralRange::GeneralRange()']]],
@@ -244,6 +245,7 @@ var searchData=
   ['getsmearmode',['getSmearMode',['../classSelectionCut.html#a990057433bb4584e315689c75f5a2460',1,'SelectionCut']]],
   ['getsmearmodename',['getSmearModeName',['../classSelectionCut.html#aa2a131bb572e44ab260dd2ce8da29eca',1,'SelectionCut']]],
   ['getspectrum',['getSpectrum',['../classXeSpectrum.html#a7aca51708671a3f28cb7da37ce3af295',1,'XeSpectrum']]],
+  ['getspin',['getSpin',['../classSpinContent.html#a96cf960e8a2e5822eddae9f5ba71dade',1,'SpinContent']]],
   ['getsr',['getSr',['../classXeRun.html#a4d9c1ed6424aeab34291eb45e2952348',1,'XeRun']]],
   ['getstatbkgtvalueforexclusion',['getStatBkgTValueForExclusion',['../classS1S2PL.html#a2d0119292660bd3725b1381e59485db1',1,'S1S2PL']]],
   ['getstatbkgtvalueparameters',['getStatBkgTValueParameters',['../classS1S2PL.html#a4db075541a598a91d5526d8dbe19f0cc',1,'S1S2PL']]],
@@ -281,7 +283,7 @@ var searchData=
   ['getupperlimit',['getUpperLimit',['../classXeLimit.html#ae4a7d388e4c2b16f9631ead211863346',1,'XeLimit']]],
   ['getuppersigma',['getUpperSigma',['../classXeLimit.html#a0b8e43b67de54690e3f85cfa3205e1e7',1,'XeLimit::getUpperSigma()'],['../classExclusion.html#a428df988108dbae07da3f79633793a96',1,'Exclusion::getUpperSigma()']]],
   ['getuppersigmalabel',['getUpperSigmaLabel',['../classXeStat.html#a8d90d130f912fc883811f5c6a1c32650',1,'XeStat']]],
-  ['getvalue',['getValue',['../classXeRun.html#a920cc67cea5d3cf127175483667cc79b',1,'XeRun::getValue()'],['../classXeRange.html#aca012450e36b699679f452d70edd2919',1,'XeRange::getValue()'],['../classintegrable.html#a5a1a2e3cef321c754aca4c59f3e6c9fc',1,'integrable::getValue()'],['../classsolvable.html#a9b8a267eb730be36271984c7d4736dab',1,'solvable::getValue()'],['../classXeSigma.html#a29a8da857e84e4950fdefa788d18a1f1',1,'XeSigma::getValue()'],['../classXeLimit.html#ab5ff72192d2cf61d3a6494a7a11a7629',1,'XeLimit::getValue()'],['../classDataSet.html#a770f4e4beec260e14bf6ea4abdb96676',1,'DataSet::getValue()'],['../classPoissonCI.html#a2d9c6548def79fb0c57431c655a0c22f',1,'PoissonCI::getValue()'],['../classExclusion.html#a680561714ef3c9fd757a76a9d207eea0',1,'Exclusion::getValue()']]],
+  ['getvalue',['getValue',['../classXeRun.html#a920cc67cea5d3cf127175483667cc79b',1,'XeRun::getValue()'],['../classXeRange.html#aca012450e36b699679f452d70edd2919',1,'XeRange::getValue()'],['../classintegrable.html#a5a1a2e3cef321c754aca4c59f3e6c9fc',1,'integrable::getValue()'],['../classsolvable.html#a9b8a267eb730be36271984c7d4736dab',1,'solvable::getValue()'],['../classTarget.html#a212d6f6a2d7267b8633296e7e1a7f156',1,'Target::getValue()'],['../classXeSigma.html#a29a8da857e84e4950fdefa788d18a1f1',1,'XeSigma::getValue()'],['../classXeLimit.html#ab5ff72192d2cf61d3a6494a7a11a7629',1,'XeLimit::getValue()'],['../classDataSet.html#a770f4e4beec260e14bf6ea4abdb96676',1,'DataSet::getValue()'],['../classPoissonCI.html#a2d9c6548def79fb0c57431c655a0c22f',1,'PoissonCI::getValue()'],['../classExclusion.html#a680561714ef3c9fd757a76a9d207eea0',1,'Exclusion::getValue()']]],
   ['getvalues',['getValues',['../classXeRange.html#af6e574c608167cdd1623bc958de60a87',1,'XeRange']]],
   ['getvector',['getVector',['../classDataSet.html#a87c1e6d0971d6cf3d31d519649d4ddd4',1,'DataSet']]],
   ['getvx',['getVx',['../classXeMultiGraph.html#aba7eddaa768504ca74b7f02b47534398',1,'XeMultiGraph']]],
@@ -292,6 +294,5 @@ var searchData=
   ['getx',['getX',['../classS1S2Data.html#a58c45d56b3e6552d4f62798409378c19',1,'S1S2Data::getX()'],['../classXeMultiGraph.html#aa890057a4e9fe7c20efeaea828992224',1,'XeMultiGraph::getX(int g)'],['../classXeMultiGraph.html#a3f592622bc5b3c3e3dc6b5beccc7d329',1,'XeMultiGraph::getX()']]],
   ['getxsecmultiplier',['getXsecMultiplier',['../classSignalModel.html#a7a69085e94337bfd8d2feab585f38b8f',1,'SignalModel']]],
   ['gety',['getY',['../classS1S2Data.html#a82ebdf6e2f9222c7597c618bc58e345d',1,'S1S2Data']]],
-  ['getz',['getZ',['../classXeMultiGraph.html#a012ec2ebc6c3108782e97ad68a543ee4',1,'XeMultiGraph::getZ(int g)'],['../classXeMultiGraph.html#ade864d78c77f0ed6c00aaec50dce816b',1,'XeMultiGraph::getZ()']]],
-  ['gr',['gr',['../classXeTest.html#a70d40b9688343c2b35b534ee0927c6be',1,'XeTest']]]
+  ['getz',['getZ',['../classXeMultiGraph.html#a012ec2ebc6c3108782e97ad68a543ee4',1,'XeMultiGraph::getZ(int g)'],['../classXeMultiGraph.html#ade864d78c77f0ed6c00aaec50dce816b',1,'XeMultiGraph::getZ()']]]
 ];

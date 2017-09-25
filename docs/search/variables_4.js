@@ -10,6 +10,5 @@ var searchData=
   ['eventmax',['eventMax',['../classExclusion.html#a45f87fe1ded477187cad8a4bcbd68646',1,'Exclusion']]],
   ['eventmin',['eventMin',['../classExclusion.html#aa6f2db0dc04e38fa1e0cf315eb74da46',1,'Exclusion']]],
   ['events',['events',['../classXeSigma.html#a88fd604ba364cfc151455414a9f59b86',1,'XeSigma']]],
-  ['exclusion',['exclusion',['../classXeTest.html#a189b954d6b7f077080ed32c663227191',1,'XeTest']]],
   ['exposure',['Exposure',['../classXeRun.html#a4e764711436ea92484acf594f3199666',1,'XeRun']]]
 ];

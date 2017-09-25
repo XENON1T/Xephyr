@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['lederertable',['LedererTable',['../classLedererTable.html',1,'']]],
   ['leff',['LEff',['../classLEff.html',1,'']]],
   ['leff2011',['LEff2011',['../classLEff2011.html',1,'']]],
   ['leffruns8and10',['LEffRuns8And10',['../classLEffRuns8And10.html',1,'']]],

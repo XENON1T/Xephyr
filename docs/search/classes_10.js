@@ -1,6 +1,7 @@
 var searchData=
 [
   ['tabulateddist',['TabulatedDist',['../classTabulatedDist.html',1,'']]],
+  ['target',['Target',['../classTarget.html',1,'']]],
   ['tefficiencyparameter',['TEfficiencyParameter',['../classTEfficiencyParameter.html',1,'']]],
   ['tgaussparameter',['TGaussParameter',['../classTGaussParameter.html',1,'']]],
   ['this',['This',['../classhistoCompare_1_1This.html',1,'histoCompare']]],

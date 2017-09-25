@@ -114,7 +114,6 @@ class dataHandler : public errorHandler{
 
 	   void addToDataSet(TH2F *h2pdf, int N);
 
-	ClassDef(dataHandler,1)
 
 };
 

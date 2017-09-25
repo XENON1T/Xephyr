@@ -4,6 +4,7 @@ var searchData=
   ['largestgap',['largestGap',['../classXeValues.html#a640b341066723d8657cc3571377f9063',1,'XeValues']]],
   ['lastanalysiss1bin',['lastAnalysisS1Bin',['../classXeRun.html#a656c1dcd9dbc1ed7104fc66fd28bd6d6',1,'XeRun']]],
   ['le',['le',['../classHistLikelihood.html#abbc214a915b1fc0d145e68e73eaeacf5',1,'HistLikelihood::le()'],['../classS1S2PL.html#a75a6378fe7a978a41b671eb65ffa3150',1,'S1S2PL::le()']]],
+  ['lederertable',['LedererTable',['../classLedererTable.html',1,'']]],
   ['leff',['LEff',['../classLEff.html',1,'LEff'],['../classLEff.html#aef7a3667a4750bd4d9232936eb53b390',1,'LEff::LEff()'],['../classXeRun.html#ae0e150a8968bdf4a26f0536db016cb56',1,'XeRun::leff()']]],
   ['leff2011',['LEff2011',['../classLEff2011.html',1,'']]],
   ['leffermin',['LEffErMin',['../classXeRun.html#a38e36276af72860b658acc86653c6591',1,'XeRun']]],

@@ -33,8 +33,10 @@ var searchData=
   ['forcedsignalerecoilspectrum',['forcedSignalERecoilSpectrum',['../classXeRun.html#ac10dbf401feb0dbe5a60a54d28b7d9b3',1,'XeRun']]],
   ['forcesignalerecoilspectrum',['forceSignalERecoilSpectrum',['../classXeRun.html#ac2a6a2bb07180cf60cde4ee46b9cb09c',1,'XeRun']]],
   ['formatcontent',['formatContent',['../classS1S2Data.html#a1b3c1be51845a3ef83b96c5f2fe0fc83',1,'S1S2Data']]],
+  ['formfactor',['FormFactor',['../classFormFactor.html',1,'']]],
   ['fortvalue',['forTValue',['../classXeStyle.html#adf52511b518513374005aa79c9d9106c',1,'XeStyle']]],
   ['frac_5fco_5fmodel',['frac_Co_model',['../classS1S2PL.html#a3a668932cae1dbd3365251b84f6f8ffe',1,'S1S2PL']]],
   ['freeze',['freeze',['../classLKParameter.html#a5b1cbafd5ec98caf27bc97118c46ee4b',1,'LKParameter']]],
+  ['fricksiformfactor',['FrickSIFormFactor',['../classFrickSIFormFactor.html',1,'']]],
   ['from2dto1dgraph',['from2dto1dGraph',['../classXeRun.html#ad999aff3754eb9303c20b00f014a31aa',1,'XeRun']]]
 ];

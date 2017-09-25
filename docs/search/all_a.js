@@ -18,7 +18,6 @@ var searchData=
   ['mcsignalmodel',['MCSignalModel',['../classMCSignalModel.html',1,'MCSignalModel'],['../classMCSignalModel.html#a877030f9f65cd33f98d590d071b61ecc',1,'MCSignalModel::MCSignalModel()']]],
   ['meanco60',['meanCo60',['../classElectronBackgroundModel.html#af3be1901f80a52616b399ad93d487ba3',1,'ElectronBackgroundModel']]],
   ['methodcounter',['MethodCounter',['../classMethodCounter.html',1,'']]],
-  ['mg',['mg',['../classXeTest.html#a162e10cf56131d951fed2fdd94774c11',1,'XeTest']]],
   ['mins1',['minS1',['../classXeRun.html#ae996a2ec1f6edb4c4356b621f7e5159e',1,'XeRun::minS1()'],['../classXeRun.html#a4a61ce00e6d02c546048ca0bf6233804',1,'XeRun::minS1(int type)']]],
   ['mins2',['minS2',['../classS1S2Data.html#ae705a082ee0f626b25de8be4cfded415',1,'S1S2Data::minS2()'],['../classXeRun.html#a929c376dbd1655efe809e5a966949c63',1,'XeRun::minS2()'],['../classXeRun.html#a9aada0c2ff7df8c55b59e76a29dcaa7c',1,'XeRun::minS2(int type)']]],
   ['mins2overs1',['minS2OverS1',['../classS1S2Data.html#ad8ecd7416b6f513d9e6fd1c95930d6df',1,'S1S2Data']]],

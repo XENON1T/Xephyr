@@ -7,6 +7,5 @@ var searchData=
   ['referencegraph',['referenceGraph',['../classXeMultiGraph.html#ad9c6fc421f39951853d955af3e045500',1,'XeMultiGraph']]],
   ['referenceindex',['referenceIndex',['../classXeRange.html#a3fc812bbc25b340ec21ca0488289cc85',1,'XeRange']]],
   ['requestedanalysismode',['requestedAnalysisMode',['../classPValue.html#ad732b5295da9d656c33f503f72dffbec',1,'PValue']]],
-  ['run',['run',['../classXeTest.html#a87bb9d1c8857f608894de1e7230830c6',1,'XeTest']]],
   ['runnumber',['runNumber',['../classXeRun.html#aedc7ecdf9f17bfb295655165aad51da8',1,'XeRun']]]
 ];

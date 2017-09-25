@@ -9,7 +9,7 @@ var searchData=
   ['checkall',['checkAll',['../classXeObject.html#a5f5c2f6e42fd9bf1541734ea4c84f45e',1,'XeObject']]],
   ['checkanalysismode',['checkAnalysisMode',['../classXeStat.html#aa4e8599aad1848e2b51cd6f111c88dfb',1,'XeStat']]],
   ['checkband',['checkBand',['../classXeRun.html#a87fe3a5782d7efb357796342f6395305',1,'XeRun']]],
-  ['checkit',['checkIt',['../classXeBackgroundModel.html#ae62d958913c6e768810dd36ba7c1b1a5',1,'XeBackgroundModel::checkIt()'],['../classXeRun.html#af8e789f6b47d6fa8931732bf926e8777',1,'XeRun::checkIt()'],['../classXeObject.html#aca33ad39c16e3a05e9f2734e22531e6e',1,'XeObject::checkIt()']]],
+  ['checkit',['checkIt',['../classXeBackgroundModel.html#ae62d958913c6e768810dd36ba7c1b1a5',1,'XeBackgroundModel::checkIt()'],['../classXeRun.html#af8e789f6b47d6fa8931732bf926e8777',1,'XeRun::checkIt()'],['../classXeObject.html#aca33ad39c16e3a05e9f2734e22531e6e',1,'XeObject::checkIt()'],['../classTarget.html#a5bb130b3f6b732064b5fd238a2d6a899',1,'Target::checkIt()'],['../classSDFormFactor.html#afe77fc0c7a6c35a221e65f161504b0dd',1,'SDFormFactor::checkIt()']]],
   ['checkpvalue',['checkPValue',['../classS1S2CLs.html#ae2d1db57dbdaa5902d6a9445a1200f79',1,'S1S2CLs::checkPValue()'],['../classPValue.html#a47173c5b2fc3e15029763b9872df3afb',1,'PValue::checkPValue()'],['../classPVcountingSB.html#aadd823707327d8a0e94b8126645c75a5',1,'PVcountingSB::checkPValue()'],['../classYellinPValue.html#a915bf9d74480a354465b9ae0daffbf49',1,'YellinPValue::checkPValue()'],['../classProfileLikelihood.html#aa80f9f7656bb451003633fa5b389eb1f',1,'ProfileLikelihood::checkPValue()'],['../classCombinedProfileLikelihood.html#af1230e4afd422cee8a2c54d56812b6f6',1,'CombinedProfileLikelihood::checkPValue()']]],
   ['checkruncompatibility',['checkRunCompatibility',['../classRunComponent.html#a7c320755595ac4b355679c5d0f4d4168',1,'RunComponent']]],
   ['checks1limitsconsistency',['checkS1LimitsConsistency',['../classXeRun.html#ad3f74a5d382d55a1479985ba5ef57b10',1,'XeRun']]],
@@ -19,7 +19,6 @@ var searchData=
   ['classdef',['ClassDef',['../classNeutronBackgroundModel.html#a64d1224efa377bfee7000332ebdd7090',1,'NeutronBackgroundModel']]],
   ['clear',['clear',['../classDataSet.html#a26aba451d80b3f13ad2815ff65d1f8f7',1,'DataSet']]],
   ['combinedprofilelikelihood',['CombinedProfileLikelihood',['../classCombinedProfileLikelihood.html',1,'']]],
-  ['combineruns',['combineRuns',['../classXeTest.html#a5e3692f91883673da54fbdf8758ff3bd',1,'XeTest']]],
   ['compare',['compare',['../classhistoCompare.html#a288e3fffb7714ba6cad7370a25b4c08b',1,'histoCompare']]],
   ['comparewithratio',['compareWithRatio',['../classhistoCompare.html#acf81c4912c052c1fb92fd1d4efa1ced9',1,'histoCompare']]],
   ['completerange',['completeRange',['../classXeRange.html#a501a1502275ae0ff60b02be7b93eecdc',1,'XeRange']]],
@@ -38,7 +37,6 @@ var searchData=
   ['computeqteststat',['computeQTestStat',['../classAsymptoticExclusion.html#a2706a937c22595891a15c5f59aaff8bb',1,'AsymptoticExclusion']]],
   ['computereferencebands',['computeReferenceBands',['../classSignalModel.html#ad75937a098f2b1a1fce5e2777e492793',1,'SignalModel::computeReferenceBands()'],['../classMCSignalModel.html#a3ffbc9ce92d20f367695064401c441c0',1,'MCSignalModel::computeReferenceBands()']]],
   ['computesensitivity',['computeSensitivity',['../classAsymptoticExclusion.html#a605c82a5cd5b71891724d01c44cb1f6a',1,'AsymptoticExclusion']]],
-  ['computesensitivitybands',['computeSensitivityBands',['../classXeTest.html#a36e74c9808ceb4e90a8602148ec03b87',1,'XeTest']]],
   ['computesensitivityhagar',['computeSensitivityHagar',['../classAsymptoticExclusion.html#ac9ce3471d79397e9470893232624145d',1,'AsymptoticExclusion']]],
   ['computesigmaasimov',['computeSigmaAsimov',['../classAsymptoticExclusion.html#a13b14640dd1ca7945cfe39b1b81bcfc4',1,'AsymptoticExclusion']]],
   ['computesignal',['computeSignal',['../classXeRun.html#a8386d34d3118d64ddb1fc509e6270c55',1,'XeRun']]],
@@ -52,6 +50,5 @@ var searchData=
   ['count',['count',['../classS1Slice.html#a85ca4f5d4b5834d735ee72ca1a21663a',1,'S1Slice::count()'],['../classS2Band.html#a09cc9bd29f7f4aa2b10c706081d52f0a',1,'S2Band::count()'],['../classMethodCounter.html#aefe4e927b266bd446cc0bc46ead953cd',1,'MethodCounter::count()']]],
   ['counts',['counts',['../classS1Slice.html#a0b3c43f9ae88e4b289eb458c2a1f6104',1,'S1Slice::counts()'],['../classS2Band.html#ab0f00b0b1a4267bcc3130f2261e023a3',1,'S2Band::counts()'],['../classS1S2Bands.html#a5fb7716b181a3aa1f8fb6f7ae2be16ff',1,'S1S2Bands::counts()']]],
   ['cumulate',['cumulate',['../classS1S2Bands.html#a409d86026af753d22029e5a7f948a209',1,'S1S2Bands']]],
-  ['currentrun',['currentRun',['../classSignalModel.html#ab7024969a90b06e406adef368b742911',1,'SignalModel']]],
-  ['cuts',['cuts',['../classXeTest.html#abc007c73648964b4a83b592d47d99b22',1,'XeTest']]]
+  ['currentrun',['currentRun',['../classSignalModel.html#ab7024969a90b06e406adef368b742911',1,'SignalModel']]]
 ];

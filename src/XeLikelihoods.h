@@ -140,7 +140,6 @@ class pdfLikelihood :virtual public ProfileLikelihood {
      //------------------------------//
 
 
-	ClassDef(pdfLikelihood,1)
 
 };
 

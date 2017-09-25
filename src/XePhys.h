@@ -173,7 +173,6 @@ class XePhysics : virtual public XeMath, public XeObject {
    XePhysics();
    XePhysics(string name);
    virtual ~XePhysics();
-   ClassDef(XePhysics,1)
 };
 
 /**
@@ -228,7 +227,6 @@ class GalaxyModel : public XePhysics {
      double RoverR0;
      void   updateKinematics();
 
-     ClassDef(GalaxyModel,1)
 
 } ;
 
@@ -261,7 +259,6 @@ class Wimp : public XePhysics {
   
     double mass;
 
-     ClassDef(Wimp,1)
 };
 
 
@@ -327,7 +324,6 @@ class Nucleus : public XePhysics {
     double mass             ; // in GeV
     double oscillatorSizeSQ ; // in fm
 
-     ClassDef(Nucleus,1)
 };
 
 
@@ -358,7 +354,6 @@ class LedererTable : public XePhysics {
     static LedererTable* instance;
     map<int,Nucleus*> nuclei;
 
-    ClassDef(LedererTable,1)
 };
 
 
@@ -475,7 +470,6 @@ class Target :public XePhysics, public integrable {
      Wimp            *wimp;
      void             init();
  
-    ClassDef(Target,1)
 }  ;
 
 
@@ -525,7 +519,6 @@ class SpinContent :public XePhysics  {
                          SpinContent(int model);  
     static  SpinContent* instances[N_SPIN_CONTENT];  
 
-    ClassDef(SpinContent,1)
  
 };
 
@@ -570,7 +563,6 @@ class StructureFunction :  public XePhysics {
     int              edge;
     int              what;
 
-    ClassDef(StructureFunction,1)
  
 } ;
 
@@ -591,7 +583,6 @@ class SIStructureFunction : public StructureFunction {
      virtual       ~SIStructureFunction();
 
 
-    ClassDef(SIStructureFunction,1)
  
 };
 
@@ -629,7 +620,6 @@ class SDStructureFunction : public StructureFunction {
 
      double         yMax;
 
-    ClassDef(SDStructureFunction,1)
 };
 
 /**
@@ -669,7 +659,6 @@ class SchwenkSDStructureFunction: public SDStructureFunction{
   
    double           coefs[N_S_NUCLEI][N_NUCLEONS][N_POLSD_COEFS];
 
-    ClassDef(SchwenkSDStructureFunction,1)
 };
 
 
@@ -709,7 +698,6 @@ class FormFactor :  public XePhysics {
      int              edge;
      int              which;
 
-    ClassDef(FormFactor,1)
  
 };
 
@@ -734,7 +722,6 @@ class SuhonenTable : virtual public XeMath {
                       SuhonenTable();
      int              getIndex(double u);
      double           interpolate(double u, int n, int index, int coef) ;
-     ClassDef(SuhonenTable,1)
      
 };
 
@@ -759,7 +746,6 @@ class SIFormFactor :public FormFactor {
                           SIFormFactor(int w);
      virtual double       computeFF(double q,Nucleus *nuc)=0;
 
-    ClassDef(SIFormFactor,1)
  
 };
 
@@ -794,7 +780,6 @@ class ExponentialFormFactor : public SIFormFactor{
      void   setCoherence(double c);
      double computeFF(double q, Nucleus* nuc); 
 
-    ClassDef(ExponentialFormFactor,1)
  
 };
 
@@ -823,7 +808,6 @@ class WoodsSaxonFormFactor : public SIFormFactor {
       virtual void        setTheName()=0;
       double              thickness;
 
-    ClassDef(WoodsSaxonFormFactor,1)
  
 };
 
@@ -867,7 +851,6 @@ class EngelSIFormFactor : public WoodsSaxonFormFactor {
    protected :
      double R0;
 
-    ClassDef(EngelSIFormFactor,1)
 
 };
 
@@ -920,7 +903,6 @@ class FrickSIFormFactor : public WoodsSaxonFormFactor {
      double R1;  
      double thicknessA;  
 
-    ClassDef(FrickSIFormFactor,1)
 
 };
 
@@ -952,7 +934,6 @@ class SuhonenSIFormFactor : virtual public SIFormFactor
      double computeFF(double y,Nucleus *nuc);
      XeStyle*  getStyle();
 
-    ClassDef(SuhonenSIFormFactor,1)
 
 };
 
@@ -1022,7 +1003,6 @@ class SDFormFactor : public FormFactor {
 
      double               yMax;
 
-    ClassDef(SDFormFactor,1)
 
 };
  
@@ -1057,7 +1037,6 @@ class PolynomialSDFormFactor : public SDFormFactor {
      void   setParameters(string nam, int ncoefs, double yMax);
      double coefs[N_S_NUCLEI][N_SFACT][N_POLSD_COEFS];
 
-    ClassDef(PolynomialSDFormFactor,1)
 
 };
                     
@@ -1087,7 +1066,6 @@ class RessellBonnSDFormFactor: public PolynomialSDFormFactor{
                     
     XeStyle* getStyle();
 
-    ClassDef(PolynomialSDFormFactor,1)
 
 };
 
@@ -1114,7 +1092,6 @@ class RessellNijmegenSDFormFactor: public PolynomialSDFormFactor{
                     
     XeStyle* getStyle();
 
-    ClassDef(RessellNijmegenSDFormFactor,1)
 };
 
 /**
@@ -1142,7 +1119,6 @@ class Schwenk1bcFormFactor: public PolynomialSDFormFactor{
                     
    XeStyle* getStyle();
 
-    ClassDef(Schwenk1bcFormFactor,1)
 
 };
 
@@ -1178,7 +1154,6 @@ class Schwenk2bcFormFactor: public PolynomialSDFormFactor{
    XeStyle* getStyle();
    static double Bands[N_S_NUCLEI][N_SF_BANDS_COEFS][N_POLSD_COEFS];
 
-    ClassDef(Schwenk2bcFormFactor,1)
 
 };
 
@@ -1214,7 +1189,6 @@ class SchwenkDeltaA1  : public  XePhysics {
    static XeStyle* getStyle();
 
    
-     ClassDef(SchwenkDeltaA1,1)
 
 };
 
@@ -1228,7 +1202,6 @@ class SchwenkYRange : public GeneralRange {
      SchwenkYRange(int nb=N_SCHWENK_Y);
     ~SchwenkYRange();
 
-    ClassDef(SchwenkYRange,1)
 
 };
 
@@ -1260,7 +1233,6 @@ class SuhonenSDFormFactor : virtual public SDFormFactor
      XeStyle* getStyle();
      void computeStructureFactor(Nucleus *nuc,double y,double *s);
 
-    ClassDef(SuhonenSDFormFactor,1)
 };
 
 
@@ -1326,7 +1298,6 @@ class Interaction :  public XePhysics  {
     FormFactor        *form;
     StructureFunction *structure;
  
-    ClassDef(Interaction,1)
 
 } ;
 
@@ -1382,7 +1353,6 @@ class SIInteraction : public Interaction {
 
     void setParameters(SIFormFactor *f);
 
-    ClassDef(SIInteraction,1)
 
 };
 
@@ -1455,7 +1425,6 @@ class SDInteraction : public Interaction {
     void                 setParameters(double an, double ap,SDFormFactor* f
                                       ,SDStructureFunction* sf);
 
-    ClassDef(SDInteraction,1)
 
 };
    
@@ -1489,7 +1458,6 @@ class SDPureInteraction: public SDInteraction {
 
     void     setNucleon(int m);
 
-    ClassDef(SDPureInteraction,1)
 
 }; 
 
@@ -1514,7 +1482,6 @@ class SDPureProtonInteraction: public SDPureInteraction {
                     
    ~SDPureProtonInteraction();
 
-    ClassDef(SDPureProtonInteraction,1)
 
 };
 
@@ -1539,7 +1506,6 @@ class SDPureNeutronInteraction: public SDPureInteraction {
                     
    ~SDPureNeutronInteraction();
 
-    ClassDef(SDPureNeutronInteraction,1)
 
 };
  

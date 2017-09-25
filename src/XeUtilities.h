@@ -17,7 +17,6 @@ class XeUtilities : public XeCore {
 
   void copyGraphs(string input, string output, vector<string> graphs);
 
-  ClassDef(XeUtilities,1)
 };
 #endif
 

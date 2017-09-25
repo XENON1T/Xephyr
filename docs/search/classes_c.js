@@ -5,6 +5,7 @@ var searchData=
   ['plcountingsb',['PLcountingSB',['../classPLcountingSB.html',1,'']]],
   ['poissonci',['PoissonCI',['../classPoissonCI.html',1,'']]],
   ['poissondist',['PoissonDist',['../classPoissonDist.html',1,'']]],
+  ['polynomialsdformfactor',['PolynomialSDFormFactor',['../classPolynomialSDFormFactor.html',1,'']]],
   ['prlmassrange',['PRLMassRange',['../classPRLMassRange.html',1,'']]],
   ['profilelikelihood',['ProfileLikelihood',['../classProfileLikelihood.html',1,'']]],
   ['publishedelectronbackgroundrun10',['PublishedElectronBackgroundRun10',['../classPublishedElectronBackgroundRun10.html',1,'']]],
