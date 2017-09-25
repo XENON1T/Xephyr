@@ -442,7 +442,7 @@ class LEff2011 : public LEff {
      * ------------------------------------------------------------*/
                     
     double getLEffFromTable(double Er,int mode=CENTRAL);
-    static double  _leff[N_ER_POINTS][N_SIGMA_MODES];
+    double  _leff[N_ER_POINTS][N_SIGMA_MODES];
 
 
 };
@@ -468,8 +468,8 @@ class LEffRuns8And10 : public LEff {
      * ------------------------------------------------------------*/
                     
     double getLEffFromTable(double Er,int mode=CENTRAL);
-    static double  _leff[N_SIGMA_MODES][N_LEFF_RUNS_8_AND_10];
-    static double  _er[N_LEFF_RUNS_8_AND_10];
+    double  _leff[N_SIGMA_MODES][N_LEFF_RUNS_8_AND_10];
+    double  _er[N_LEFF_RUNS_8_AND_10];
 
 
 };
@@ -1152,7 +1152,7 @@ class s2peaks0Cut : public SelectionCutUnsmearedS1 {
   protected :
 
     double             minS2;
-    static   double   _acc_run_08[N_PE_POINTS];
+    double   acc_run_08[N_PE_POINTS];
 
 /**
  * Get default s2Min
@@ -1283,7 +1283,7 @@ class AllSelectionCutsS1 : public SelectionCutS1 {
      *                Internal methods (not for user)
      * ------------------------------------------------------------*/
                     
-    static double   _acc_run_08[N_PE_POINTS];
+    double   acc_run_08[N_PE_POINTS];
 
 /** 
  * Implementation of the virtual method to define run compatibility
@@ -3503,7 +3503,7 @@ class NeutronBackgroundModelRun10 : public NeutronBackgroundModel {
 
   protected :
 
-    static double  _integrated[N_PE_NR_BACKGROUND];
+    double  _integrated[N_PE_NR_BACKGROUND];
 
 
 };
@@ -4057,7 +4057,7 @@ class SignalModel : public XeObject{
 	  /**
 	    * Clones reference bands and fill it with computed signal
 	    * @param "reference" bands (NOTE: parameter is passed by value)
-	    * @param "T_Leff"  Leff T value
+	    * @param "TLeff"  Leff T value
 	    * @param "T_Qy"    Qy (charge yield) T value	    
 	  */
 	  virtual S1S2Bands computeSignalBands(double T_Leff, double T_Qy);

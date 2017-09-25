@@ -704,7 +704,7 @@ double s2peaks0Cut::computeAcceptance(double uS1, int mode) {
     case  RUN_08 :
        { int i=(int)(.001+uS1/PE_STEP);
          if(i<0 || i>=N_PE_POINTS) return 0.;
-         return _acc_run_08[i]; 
+         return acc_run_08[i]; 
        }
     case RUN_10 :
        { double a= 1.00 - 0.08*exp(-0.33*(uS1-1.25));
@@ -787,7 +787,7 @@ double AllSelectionCutsS1::computeAcceptance(double uS1,int mode) {
   }
   int i=(int)(.001+uS1/PE_STEP);
   if(i<0 || i>=N_PE_POINTS) return 0.;
-  return _acc_run_08[i];
+  return acc_run_08[i];
 }
 
 
