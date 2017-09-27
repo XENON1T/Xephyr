@@ -1,5 +1,0 @@
-{
-	"pkg_name"    :"xephyr",
-	"pkg_version" : "0.0",
-	"dependencies": ["ROOT==6.1.0"]
-}
