@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# xedocs documentation build configuration file, created by
-# sphinx-quickstart on Wed Sep 20 15:55:28 2017.
+# xephyr documentation build configuration file, created by
+# sphinx-quickstart on Wed Sep 27 19:47:54 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -32,7 +32,7 @@ import shlex
 extensions = []
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ['templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -43,10 +43,10 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'xedocs'
+master_doc = 'index'
 
 # General information about the project.
-project = u'xedocs'
+project = u'xephyr'
 copyright = u'2017, Ale'
 author = u'Ale'
 
@@ -74,7 +74,7 @@ language = 'c++'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = []
+exclude_patterns = ['build']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -108,7 +108,8 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+import sphinx_rtd_theme
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -137,7 +138,7 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -200,7 +201,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'xedocsdoc'
+htmlhelp_basename = 'xephyrdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -222,7 +223,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'xedocs.tex', u'xedocs Documentation',
+  (master_doc, 'xephyr.tex', u'xephyr Documentation',
    u'Ale', 'manual'),
 ]
 
@@ -252,7 +253,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'xedocs', u'xedocs Documentation',
+    (master_doc, 'xephyr', u'xephyr Documentation',
      [author], 1)
 ]
 
@@ -266,8 +267,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'xedocs', u'xedocs Documentation',
-   author, 'xedocs', 'One line description of project.',
+  (master_doc, 'xephyr', u'xephyr Documentation',
+   author, 'xephyr', 'One line description of project.',
    'Miscellaneous'),
 ]
 

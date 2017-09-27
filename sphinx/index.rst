@@ -1,9 +1,9 @@
-.. xedocs documentation master file, created by
-   sphinx-quickstart on Wed Sep 20 15:55:28 2017.
+.. xephyr documentation master file, created by
+   sphinx-quickstart on Wed Sep 27 19:47:54 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to xedocs's documentation!
+Welcome to xephyr's documentation!
 ==================================
 
 Contents:
