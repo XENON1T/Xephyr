@@ -1,6 +1,6 @@
 # Xephyr
-# Userfriendly documentation, tutorials etc. at: https://xenon1t.github.io/Xephyr/Documentation/xedocs.html
-# Doxigen style code reference, classes and description at: https://xenon1t.github.io/Xephyr/
+# Userfriendly documentation, tutorials etc. at: https://xenon1t.github.io/Xephyr/docs/
+# Doxigen style code reference, classes and description at: https://xenon1t.github.io/Xephyr/class_reference/
 
 # Requirements:
 - g++ >= 4.8.1

@@ -3,3 +3,5 @@
 **/*.pcm
 **/*.ipynb
 **/*.swp
+SOURCE
+SOURCE/*
