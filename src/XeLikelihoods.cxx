@@ -236,14 +236,6 @@ void pdfLikelihood::generateToyDataset(double seed, double mu_prime) { cout << "
 
 
 
-double pdfLikelihood::nSignalPerCm2() { 
- 
-   return  ( 1.  / siganlDefaultNorm );
-
-
-}
-
-
 double pdfLikelihood::getCurrentNs(){
 	return  (POI->getCurrentValue() * getSignalMultiplier() *  signal_component->getNormalizedEvents());
 }
@@ -408,32 +400,6 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
 
 
-bool pdfLikelihood::update() { 
-/*
-  cout << "pdfLikelihood:: Update() was called " << endl; 
-
-  if(!ls->inCombinedMode())  ls->setMinuitUnit(1.);
-
-  activateParameter(lkSystBkg,isSystBkgTValueFit);
-
-  activateParameter(le,isLEffTValueFit);
-
-  activateParameter(lqy,isQyTValueFit);
-
-  activateParameter(lkacc,isSigAccFit);
-
-  for(int b=0; b < bkg->GetNbinsX() + 2; b++) {
-    //epsilons nuissance parameter (stat. uncertainties)
-    lkStatBkgs[b]->setInitialValue( 0. );
-    ((TStatBkgParameter*)lkStatBkgs[b])->setStatError( 1. );
-    lkStatBkgs[b]->setStep( 0.1 );
-    activateParameter(lkStatBkgs[b],isStatBkgTValueFit);
-
-  }
-*/
-  return true;
-
-}
 
 
 

@@ -127,12 +127,6 @@ class pdfLikelihood :virtual public ProfileLikelihood {
 
 	LKParameter            *safeGuardParam;
 
-      //--- not usefull methods -----//
-	//this is just for compatibility... FIXME
-	bool update();
-	
-	//this is just for compatibility... FIXME
-	double nSignalPerCm2();
 
 	//This is needed for compatibility, ancestral xephyr roots.
 	//FIXME: move getWimpMass to Asymptotics
