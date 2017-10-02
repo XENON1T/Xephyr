@@ -1,0 +1,519 @@
+
+Xephyr library is loaded and you can use all classes and methods
+================================================================
+
+Now we are going to set up the SR0 likelihood.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: c++
+
+    .x loadXephyr.C
+
+
+.. parsed-literal::
+
+    (int) 0
+
+
+We start from defining the input PDFs and their related uncertaintied:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+this is done via a class called pdfComponent, its constructor take the
+following arguments:
+
+.. code:: cpp
+
+    pdfComponent::pdfComponent(TString name, TString filename) 
+
+where "name" must be the prefix of the histogram from which you are
+loading this component, and "filename" is the file with its complete
+path.
+
+**REMINDER:** - The only supported histo name structure is the
+following: - Must prefix\_XXname\_YY\_name2\_
+
+.. code:: c++
+
+    TString ER_file = "data_examples/DMTemplatesReweighted_lax0.11.1_V12.root";
+    pdfComponent *ER = new pdfComponent("hband", ER_file);
+
+.. code:: c++
+
+     //Now some settings:
+            ER->setScaleFactor(63.);                    // Set the normalization factor for ER in events.
+            shapeSys *PY = new shapeSys("_PY");         // 
+            PY->setStep(0.25);     
+            PY->setMinimum(-2.);   
+            PY->setMaximum(2.);    
+    //      PY->setType(FIXED_PARAMETER);
+            shapeSys *RF = new shapeSys("_RF");
+            RF->setStep(0.25);     
+            RF->setMinimum(-2.);   
+            RF->setMaximum(2.);    
+    //      RF->setType(FIXED_PARAMETER);
+    //      shapeSys *Thr = new shapeSys("_Threshold");
+    //      Thr->setStep(0.5);     
+    //      shapeSys *Ne = new shapeSys("_NexNi");
+    //      Ne->setStep(0.5);      
+            scaleSys *s1 = new scaleSys("ERscale",0.12); 
+            s1->setType(FREE_PARAMETER);
+            ER->addScaleSys(s1);   
+            ER->addShapeSys(PY);   
+            ER->addShapeSys(RF);
+            //ER->addShapeSys(Thr);
+            //ER->addShapeSys(Ne); 
+
+.. code:: c++
+
+    TCanvas *c = new TCanvas();
+    TH2F h = ER->getInterpolatedHisto();
+    h.Draw("colz");
+    c->Draw();
+
+
+
+.. image:: output_5_0.png
+
+
+Now you couold for example change the value of one of the nuissance
+parameter and get the relative histogram interpolated... Let's do that!
+
+.. code:: c++
+
+    TCanvas *c2 = new TCanvas();
+    RF->setCurrentValue(-1.7);               // Setting the value of RF to -1.7 sigma from its standard value (rememer the value will be interpolated)
+    PY->setCurrentValue(0.35);
+    TH2F h2 = ER->getInterpolatedHisto();
+    h2.Draw("colz");
+    c2->Draw();
+
+
+
+.. image:: output_7_0.png
+
+
+Now let's add a Signal PdfComponent
+'''''''''''''''''''''''''''''''''''
+
+.. code:: c++
+
+    TString Signal_file ="data_examples/wimp_0050gev_variations_lax_0.11.1.root" ;
+    pdfComponent *Signal = new pdfComponent( "wimp_0050gev", Signal_file);
+    
+            Signal->setScaleFactor(34.2 * 1.0418);
+            Signal->suffix= "sigma";
+    
+    //        scaleSys *s2 = new scaleSys("scaleS",0.1);
+    //      Signal->addScaleSys(s2);
+    
+            shapeSys *Gamma = new shapeSys("_gamma_");
+    //      Gamma->setStep(0.5);
+            shapeSys *Alpha = new shapeSys("_alpha_");  // OK
+    //      Alpha->setStep(0.5);
+            shapeSys *Lambda = new shapeSys("_eta_");
+    //      Lambda->setStep(0.5);
+    //      shapeSys *Lambda = new shapeSys("_lambda_");
+            shapeSys *ExEff = new shapeSys("_acceptance_par_");  //OK 
+    //      ExEff->setStep(0.5);
+    //      shapeSys *ExEff = new shapeSys("_extraction_efficiency_");
+    
+            Gamma->setType(FIXED_PARAMETER);
+            //Alpha->setType(FIXED_PARAMETER);
+            Lambda->setType(FIXED_PARAMETER);
+            //ExEff->setType(FIXED_PARAMETER);
+    
+            Signal->addShapeSys(Gamma);
+            Signal->addShapeSys(Alpha);
+            Signal->addShapeSys(Lambda);
+            Signal->addShapeSys(ExEff);
+
+
+And let's draw it, just for fun...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: c++
+
+    TCanvas *c3 = new TCanvas();
+    TH2F h3 = Signal->getInterpolatedHisto();
+    h3.Draw("colz");
+    c3->Draw();
+
+
+
+.. image:: output_11_0.png
+
+
+Now let's add some data
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: c++
+
+    TString data_filename = "data_examples/xephyr_data_none_lowenergy_roi.root";
+    TString data_treeName = "DMtree";
+    dataHandler *data = new dataHandler("dmData",data_filename, data_treeName);
+
+.. code:: c++
+
+    data->drawS1S2("same*");
+    c3->Draw();
+
+
+
+.. image:: output_14_0.png
+
+
+Now it's time for some likelihood game
+======================================
+
+.. code:: c++
+
+    pdfLikelihood pl("xe1T", 50);
+    pl.setExperiment(1);
+    //pl.addBkgPdfComponent(flat, true);
+    //pl.addBkgPdfComponent(radio, false);
+    //pl.addBkgPdfComponent(cnns, false);
+    //pl.addBkgPdfComponent(AC, false);
+    //pl.addBkgPdfComponent(wall, false);
+    pl.addBkgPdfComponent(ER, true);
+    pl.setSignalPdf(Signal);       
+    pl.setSignalDefaultNorm(1.E-45);
+    pl.setPrintLevel(0);
+    pl.setDataHandler(data);       
+      
+    //pl.setCalibrationData(radon220);
+    pl.setWithSafeGuard(false);    
+    //pl.setAdditionalSafeGuardComponent(ACforSafeguard);
+      
+    pl.initialize();
+
+
+
+.. parsed-literal::
+
+    pdfLikelihood - INFO: bkg component named hband added to    SAFEGUARDED
+    pdfLikelihood::initialize - INFO :  initialize..... 
+    	Likelihood::addParameter - Info : Adding parameter Sigma  with ID -1  to PL xe1T
+    INFO :  adding sys for BKG component hband
+    	Likelihood::addParameter - Info : Adding parameter ERscale  with ID 1  to PL xe1T
+    	Likelihood::addParameter - Info : Adding parameter _PY  with ID 2  to PL xe1T
+    	Likelihood::addParameter - Info : Adding parameter _RF  with ID 3  to PL xe1T
+    INFO :  adding sys for SIGNAL component wimp_0050gev
+    	Likelihood::addParameter - Info : Adding parameter _gamma_  with ID 4  to PL xe1T
+    	Likelihood::addParameter - Info : Adding parameter _alpha_  with ID 5  to PL xe1T
+    	Likelihood::addParameter - Info : Adding parameter _eta_  with ID 6  to PL xe1T
+    	Likelihood::addParameter - Info : Adding parameter _acceptance_par_  with ID 7  to PL xe1T
+    
+    ------ WARNING -------  Safeguard is turned OFF altough you have set components to be safeguarded this is ignored -----
+    
+    pdfLikelihood::initialize - INFO :  initialization SUCCESSFUL. 
+
+
+.. code:: c++
+
+    pl.maximize(false);             
+    pl.printCurrentParameters(); 
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Of interest    1     0.26                     0.26
+      1 ERscale              Free           1   -0.034                   -0.034
+      2 _PY                  Nuisance       1     0.12                     0.12
+      3 _RF                  Nuisance       1     0.27                     0.27
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1   0.0023                   0.0023
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1  -0.0007                  -0.0007
+
+
+.. code:: c++
+
+    // class example to compare histograms
+    histoCompare p = pl.getModelCompare();
+    //p.setNameofComponent(1,"flat");
+    //p.setNameofComponent(1,"AC");
+    p.setNameofComponent(1,"ER");
+    p.setNameofComponent(2,"WIMP 50 GeV");
+    p.rebinY = 1;
+    p.rebinX = 3;
+    p.doStack = true;
+    p.titleY="Entries/[PE]";
+    p.titleX="cS2 [PE]";
+    p.projectionMin = 3;
+    p.projectionMax = 3.6;
+    p.projectionX = true;
+    //p.compareWithRatio();
+    TCanvas *c4 = new TCanvas();
+    p.compare();
+    
+    c4->Draw();
+
+
+
+.. image:: output_18_0.png
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Of interest    1     0.26                     0.26
+      1 ERscale              Free           1   -0.034                   -0.034
+      2 _PY                  Nuisance       1     0.12                     0.12
+      3 _RF                  Nuisance       1     0.27                     0.27
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1   0.0023                   0.0023
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1  -0.0007                  -0.0007
+    Data   63
+    Bkg    62.7409
+    Signal 16.6006 POI 0.256271  SignalMultiplier  0.0602386
+    ...... That signal scaled is 0.25627
+
+
+.. parsed-literal::
+
+    Info in <TObject::Model Comparison>: .....
+    Info in <TH1D::Add>: Attempt to add histograms with different bin limits - trying to use TH1::Merge
+
+
+.. code:: c++
+
+    AsymptoticExclusion as( &pl, 0.1);  // 0.1  --> means 90% CLs
+      
+      
+    //just compute the sensitivity 
+    //  as.computeSensitivity();
+      
+    as.setNscanPoints(100);   // set the number of scan points for limit computation, the pvalues are computed in steps of the parameter of interest untill the CL is reached.
+    //as.setScanMax(100.);    // Set the range of the scan (default 3 sigma from expected sensitivity)
+    //as.setScanMin(0.);      // Set the range of the scan (default 0.) 
+      
+      
+    as.setQTilde(true);            
+      
+      
+    as.computeLimits();       // compute the sensitivity first then the CLs limit
+      
+    //as.LikelihoodScan();
+      
+    as.writeToFile("example_limit_"); 
+
+
+.. parsed-literal::
+
+     ------- START-------- 
+     AsymptoticExclusion::unconditionalFit() 
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Of interest    1     0.26                     0.26
+      1 ERscale              Free           1   -0.034                   -0.034
+      2 _PY                  Nuisance       1     0.12                     0.12
+      3 _RF                  Nuisance       1     0.27                     0.27
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1   0.0023                   0.0023
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1  -0.0007                  -0.0007
+    recomputing.... mu_hat
+    sigma min = 0.256271
+    sigma min = 0.256271
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      1.3                      1.3
+      1 ERscale              Free           1    -0.14                    -0.14
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.13                    -0.13
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1   0.0003                   0.0003
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -1.8e-05                 -1.8e-05
+     	  at: 1.256271 (min 0.256271)  q_lim=1.642374  ll0=-231.589562  qval=0.047583 diff=-1.594792 next-step=1.000000 
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      2.3                      2.3
+      1 ERscale              Free           1    -0.19                    -0.19
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.27                    -0.27
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  0.00067                  0.00067
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -0.00054                 -0.00054
+     	  at: 2.256271 (min 0.256271)  q_lim=1.642374  ll0=-231.875099  qval=0.618655 diff=-1.023719 next-step=1.000000 
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      3.3                      3.3
+      1 ERscale              Free           1    -0.22                    -0.22
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.32                    -0.32
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  0.00021                  0.00021
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -0.00047                 -0.00047
+     	  at: 3.256271 (min 0.256271)  q_lim=1.642374  ll0=-232.304940  qval=1.478337 diff=-0.164037 next-step=1.000000 
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      4.3                      4.3
+      1 ERscale              Free           1    -0.25                    -0.25
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.36                    -0.36
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  0.00026                  0.00026
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -0.00018                 -0.00018
+     	  at: 4.256271 (min 0.256271)  q_lim=1.642374  ll0=-232.823592  qval=2.515643 diff=0.873268 next-step=-0.500000 
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      3.8                      3.8
+      1 ERscale              Free           1    -0.24                    -0.24
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.34                    -0.34
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  7.5e-05                  7.5e-05
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -0.00025                 -0.00025
+     	  at: 3.756271 (min 0.256271)  q_lim=1.642374  ll0=-232.555398  qval=1.979253 diff=0.336879 next-step=-0.500000 
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      3.3                      3.3
+      1 ERscale              Free           1    -0.22                    -0.22
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.32                    -0.32
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  0.00021                  0.00021
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -0.00047                 -0.00047
+     	  at: 3.256271 (min 0.256271)  q_lim=1.642374  ll0=-232.304940  qval=1.478337 diff=-0.164037 next-step=0.250000 
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      3.5                      3.5
+      1 ERscale              Free           1    -0.23                    -0.23
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.33                    -0.33
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  4.4e-05                  4.4e-05
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -0.00024                 -0.00024
+     	  at: 3.506271 (min 0.256271)  q_lim=1.642374  ll0=-232.427723  qval=1.723904 diff=0.081530 next-step=-0.125000 
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      3.4                      3.4
+      1 ERscale              Free           1    -0.23                    -0.23
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.33                    -0.33
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  0.00048                  0.00048
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1  -0.0021                  -0.0021
+     	  at: 3.381271 (min 0.256271)  q_lim=1.642374  ll0=-232.365830  qval=1.600118 diff=-0.042257 next-step=0.062500 
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      3.4                      3.4
+      1 ERscale              Free           1    -0.23                    -0.23
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.33                    -0.33
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  0.00059                  0.00059
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -6.3e-05                 -6.3e-05
+     	  at: 3.443771 (min 0.256271)  q_lim=1.642374  ll0=-232.396638  qval=1.661734 diff=0.019359 next-step=-0.031250 
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      3.4                      3.4
+      1 ERscale              Free           1    -0.23                    -0.23
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.33                    -0.33
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  1.4e-05                  1.4e-05
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -0.00073                 -0.00073
+     	  at: 3.412521 (min 0.256271)  q_lim=1.642374  ll0=-232.381099  qval=1.630655 diff=-0.011719 next-step=0.015625 
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+
+.. parsed-literal::
+
+     Id Name                 Type         Exp  Value               For Minuit
+     -1 Sigma                Frozen         1      3.4                      3.4
+      1 ERscale              Free           1    -0.23                    -0.23
+      2 _PY                  Nuisance       1    -0.25                    -0.25
+      3 _RF                  Nuisance       1    -0.33                    -0.33
+      4 _gamma_              Fixed          1        0                        0
+      5 _alpha_              Nuisance       1  0.00013                  0.00013
+      6 _eta_                Fixed          1        0                        0
+      7 _acceptance_par_     Nuisance       1 -0.00015                 -0.00015
+     	  at: 3.428146 (min 0.256271)  q_lim=1.642374  ll0=-232.388798  qval=1.646053 diff=0.003679 next-step=-0.007812 
+    diff= got 12 points 
+    OBSERVED limit not scaled mu 3.42441  cross section no cLS 2.06282e-46  test stat value no cls -999  cross section  2.06282e-46  test stat value -999
+
+
+.. parsed-literal::
+
+    Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+    Warning in <TFile::Append>: Replacing existing TH1: pullsHisto (Potential memory leak).
+
+
+If you go at the bottom of the previous print out you'll see the result:
+========================================================================
+
+::
+
+    OBSERVED limit not scaled mu 3.42441  cross section no cLS 2.06282e-46  test stat value no cls -999  cross section  2.06282e-46  test stat value -999
+
+The important number is cross section no CLs 2.06e-46 cm^2
+

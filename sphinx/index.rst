@@ -18,5 +18,11 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
+* :ref:`likelihood_setup_example`
 * :ref:`search`
+
+
+This is a paragraph that contains `a link`_.
+
+.. _a link: likelihood_setup_example.html
 
