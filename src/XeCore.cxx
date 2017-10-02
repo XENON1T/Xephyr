@@ -15,7 +15,7 @@ void MethodCounter::list()              {
  cout<<endl<<"Breakdown of method invocation"<<endl;
  map<string,int>::iterator it;
  for(it=counts.begin();it!=counts.end();it++){
-   cout<<setw(6)<<it->second<<"  "<<it->first<<endl;
+//   cout<<setw(6)<<it->second<<"  "<<it->first<<endl;
  }
 }
 
