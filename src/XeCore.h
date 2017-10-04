@@ -2128,12 +2128,34 @@ class S1S2Object : virtual public XeGraphics, virtual public XeObject  {
    
 };
 
+/**
+  * Helper Class to send consistently formatted messages. It allows different levels 
+  of severity for the messages: Info, Warning and Error. Error actually throws an 
+  error with the std::runtime_error() which will abort (no so) gracefully and quit
+  Xephyr, whatever it is doing.
+*/
+
 class errorHandler {
-   public:	
+   public:
+
+    //	Constructor: @param name: Tag name, typically here you wanna put the
+    //  name of the class for which you wanna handle errors.
 	errorHandler(TString name);
 
-	void Error(TString functionName, TString message);
-	void Warning(TString functionName, TString message);
+    // Send a message with ERROR severity, Xephyr will quit.
+    // @param functionName: Tag identifier, function or in general reference place 
+    // in the code where this message has been produced. 
+    // @param message: message to the user.
+    void Error(TString functionName, TString message);
+    // Send a message with ERROR severity, Xephyr will quit.
+    // @param functionName: Tag identifier, function or in general reference place 
+    // in the code where this message has been produced. 
+    // @param message: message to the user.
+    void Warning(TString functionName, TString message);
+    // Send a message with ERROR severity, Xephyr will quit.
+    // @param functionName: Tag identifier, function or in general reference place 
+    // in the code where this message has been produced. 
+    // @param message: message to the user.
 	void Info(TString functionName, TString message);
 
 	TString className;	
