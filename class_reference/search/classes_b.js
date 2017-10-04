@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['pdfcomponent',['pdfComponent',['../classpdfComponent.html',1,'']]],
-  ['pdflikelihood',['pdfLikelihood',['../classpdfLikelihood.html',1,'']]],
-  ['plcountingsb',['PLcountingSB',['../classPLcountingSB.html',1,'']]],
-  ['poissonci',['PoissonCI',['../classPoissonCI.html',1,'']]],
-  ['poissondist',['PoissonDist',['../classPoissonDist.html',1,'']]],
-  ['prlmassrange',['PRLMassRange',['../classPRLMassRange.html',1,'']]],
-  ['profilelikelihood',['ProfileLikelihood',['../classProfileLikelihood.html',1,'']]],
-  ['pvalue',['PValue',['../classPValue.html',1,'']]],
-  ['pvcountingsb',['PVcountingSB',['../classPVcountingSB.html',1,'']]]
+  ['s1range',['S1Range',['../classS1Range.html',1,'']]],
+  ['s1s2display',['S1S2Display',['../classS1S2Display.html',1,'']]],
+  ['s1s2object',['S1S2Object',['../classS1S2Object.html',1,'']]],
+  ['scalesys',['scaleSys',['../classscaleSys.html',1,'']]],
+  ['shapesys',['shapeSys',['../classshapeSys.html',1,'']]],
+  ['sigmaparameter',['SigmaParameter',['../classSigmaParameter.html',1,'']]],
+  ['sigmarange',['SigmaRange',['../classSigmaRange.html',1,'']]],
+  ['solvable',['solvable',['../classsolvable.html',1,'']]],
+  ['stopper',['stopper',['../classstopper.html',1,'']]]
 ];

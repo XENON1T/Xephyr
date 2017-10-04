@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['upperlimit',['upperLimit',['../classPValue.html#ad0382a1dce5e7fee4bd0294da9e74391',1,'PValue']]]
+  ['wcanvas',['wCanvas',['../classXeGraphics.html#a83941d598a3a9e8c45d9f4b1fcb7360e',1,'XeGraphics']]]
 ];

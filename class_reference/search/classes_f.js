@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uniformdist',['UniformDist',['../classUniformDist.html',1,'']]]
+  ['yrange',['YRange',['../classYRange.html',1,'']]]
 ];

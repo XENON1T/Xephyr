@@ -6,7 +6,6 @@ var searchData=
   ['markfromcheck',['markFromCheck',['../classXeObject.html#ad7d09bb539312591efafca1133469310',1,'XeObject']]],
   ['markok',['markOK',['../classXeObject.html#a00f1d26ce6b3d57f4bbc1f2807c5cf23',1,'XeObject']]],
   ['markunchecked',['markUnchecked',['../classXeObject.html#a3bcfb6cd2ec5fff0b57c3159e640e612',1,'XeObject']]],
-  ['mass',['mass',['../classXeSigma.html#aaaab90ac4e7ead5528d75b625d2d1964',1,'XeSigma::mass()'],['../classXeSensitivity.html#ad224e9d3c786f89fe1b156c946bd9117',1,'XeSensitivity::mass()']]],
   ['massrange',['MassRange',['../classMassRange.html',1,'']]],
   ['maxx',['maxX',['../classS1S2Object.html#a6b22efc633af5f9b11f9e03d70ae1a46',1,'S1S2Object']]],
   ['maxy',['maxY',['../classS1S2Object.html#a0bd78da96f89c6806ba4b132665176ae',1,'S1S2Object']]],

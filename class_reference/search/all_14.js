@@ -1,8 +1,25 @@
 var searchData=
 [
-  ['wcanvas',['wCanvas',['../classXeGraphics.html#a83941d598a3a9e8c45d9f4b1fcb7360e',1,'XeGraphics']]],
-  ['wimpmass',['wimpMass',['../classExclusion.html#a835057cb08d838dc2e75c3638c069852',1,'Exclusion']]],
-  ['write',['write',['../classXeObject.html#aefb872d5f1a4f61546c9d4d7b37fa79f',1,'XeObject']]],
-  ['writetofile',['writeToFile',['../classAsymptoticExclusion.html#a2c7919d279593e64a1280e0ddfb883d7',1,'AsymptoticExclusion']]],
-  ['writetosimplefile',['writeToSimpleFile',['../classXeObject.html#aec3b94eb1af3048ae5e20ccbd2049c70',1,'XeObject']]]
+  ['xcanvas',['xCanvas',['../classXeGraphics.html#a3a336b32e81be820eebb7f11fac8ba00',1,'XeGraphics']]],
+  ['xebins',['XeBins',['../classXeBins.html',1,'XeBins'],['../classXeBins.html#a0a70c401b7d426c6fd3453e8796365ec',1,'XeBins::XeBins()'],['../classXeBins.html#a0db9bdc3ab7fa5ef3e486a6a2c9813b9',1,'XeBins::XeBins(string name)'],['../classXeBins.html#a77fb72265860d78907c67af05224ded9',1,'XeBins::XeBins(string name, vector&lt; double &gt; &amp;edges)']]],
+  ['xecore',['XeCore',['../classXeCore.html',1,'']]],
+  ['xegraph',['XeGraph',['../classXeGraph.html',1,'XeGraph'],['../classXeGraph.html#abcd6301da1802d54551442a2d04a92cb',1,'XeGraph::XeGraph(string name, string xLab=&quot;&quot;, string yLab=&quot;&quot;)'],['../classXeGraph.html#a56feb3856e2f71d7f11e1127f627c62d',1,'XeGraph::XeGraph(string fn, string name, int dummy, string Xlab=&quot;&quot;, string Ylab=&quot;&quot;, XeStyle *st=NULL, string legend=&quot;&quot;)'],['../classXeGraph.html#adf6b9abcb57a311339a8bb6ae2010695',1,'XeGraph::XeGraph(string name, int n, double *x, double *y, string Xlab=&quot;&quot;, string Ylab=&quot;&quot;, XeStyle *st=NULL, string legend=&quot;&quot;, double norm=1.)'],['../classXeGraph.html#a054c9ec5cc2b77ee9c40df4d0ac1b095',1,'XeGraph::XeGraph(string name, int n, string Xlab=&quot;&quot;, string Ylab=&quot;&quot;, XeStyle *st=NULL, string legend=&quot;&quot;)'],['../classXeGraph.html#a067f96f4121047f8cd2997892b2fad6e',1,'XeGraph::XeGraph(string name, TGraph &amp;gr, string Xlab=&quot;&quot;, string Ylab=&quot;&quot;, XeStyle *st=NULL, string legend=&quot;&quot;)']]],
+  ['xegraphics',['XeGraphics',['../classXeGraphics.html',1,'']]],
+  ['xegraphpositive',['XeGraphPositive',['../classXeGraphPositive.html',1,'XeGraphPositive'],['../classXeGraphPositive.html#a0701d7d93594fea59b1de71b4e706772',1,'XeGraphPositive::XeGraphPositive(string name, int n, double *x, double *y, string xLab=&quot;&quot;, string yLab=&quot;&quot;, XeStyle *style=NULL, string legend=&quot;&quot;)'],['../classXeGraphPositive.html#a4b490dbc7751b2fab73d6bd70c48cd77',1,'XeGraphPositive::XeGraphPositive(string name, TGraph *gr, string xLab=&quot;&quot;, string yLab=&quot;&quot;, XeStyle *style=NULL, string legend=&quot;&quot;)']]],
+  ['xeinterpolation',['XeInterpolation',['../classXeInterpolation.html',1,'XeInterpolation'],['../classXeInterpolation.html#a5c4daf57c970c74772b8e3910f043394',1,'XeInterpolation::XeInterpolation()']]],
+  ['xemath',['XeMath',['../classXeMath.html',1,'XeMath'],['../classXeMath.html#af736c9dcd6f7c6dc075ee515da34549a',1,'XeMath::XeMath()']]],
+  ['xemultigraph',['XeMultiGraph',['../classXeMultiGraph.html',1,'XeMultiGraph'],['../classXeMultiGraph.html#a3fceb8ca0c9c6f6ade78aaae88ec3e0a',1,'XeMultiGraph::XeMultiGraph(string name, string xA=&quot;&quot;, string yA=&quot;&quot;, string zA=&quot;&quot;)'],['../classXeMultiGraph.html#a026bef08b0a7399b0052c7a5d4999337',1,'XeMultiGraph::XeMultiGraph(string name, int ng, XeGraph **g, double *z=NULL, string xA=&quot;&quot;, string yA=&quot;&quot;, string zA=&quot;&quot;)'],['../classXeMultiGraph.html#a21c5cfa990c8f2baa97370dd356777f4',1,'XeMultiGraph::XeMultiGraph(string name, vector&lt; XeGraph * &gt; &amp;v, vector&lt; double &gt; *vz=NULL, string xA=&quot;&quot;, string yA=&quot;&quot;, string zA=&quot;&quot;)']]],
+  ['xeobject',['XeObject',['../classXeObject.html',1,'XeObject'],['../classXeObject.html#a3f17dd8cc6eb86d10b1575d904652761',1,'XeObject::XeObject()'],['../classXeObject.html#a0519c394fd4e95f33e4a8f232f77c306',1,'XeObject::XeObject(string name)']]],
+  ['xerange',['XeRange',['../classXeRange.html',1,'XeRange'],['../classXeRange.html#a88e9024f8d37bd83424f616ceaf39d6f',1,'XeRange::XeRange(string what, int n, double a, double b, int mode)'],['../classXeRange.html#a42a5eb7af2025b5d2a3123fbdc2e4d8f',1,'XeRange::XeRange()']]],
+  ['xestat',['XeStat',['../classXeStat.html',1,'']]],
+  ['xestyle',['XeStyle',['../classXeStyle.html',1,'XeStyle'],['../classXeStyle.html#a7a9ecff787dc6b54b7955c44d51b5c20',1,'XeStyle::XeStyle()']]],
+  ['xestylized',['XeStylized',['../classXeStylized.html',1,'XeStylized'],['../classXeStylized.html#a1017dbf220dc695bfc0970c4dc156861',1,'XeStylized::XeStylized()']]],
+  ['xetable',['XeTable',['../classXeTable.html',1,'']]],
+  ['xetolerance',['XeTolerance',['../classXeTolerance.html',1,'XeTolerance'],['../classXeTolerance.html#a08c845356b5f7fe4d38b67531cb06b8e',1,'XeTolerance::XeTolerance()']]],
+  ['xetool',['XeTool',['../classXeTool.html',1,'']]],
+  ['xetopobject',['XeTopObject',['../classXeTopObject.html',1,'']]],
+  ['xeversion',['XeVersion',['../classXeVersion.html',1,'']]],
+  ['xmax',['xmax',['../classsolvable.html#ac7cfa4087ce9c39b8037a5e6d44339fa',1,'solvable']]],
+  ['xmin',['xmin',['../classsolvable.html#ae89e5d4cb7386b92988590f9e71a5d7f',1,'solvable']]],
+  ['xs',['xs',['../classXeRange.html#af128426dbf0451eee912b15096301e91',1,'XeRange']]]
 ];

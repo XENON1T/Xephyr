@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['vectorsum',['vectorSum',['../classXeMath.html#aa2db7dcd494acc035caf12b2cab93140',1,'XeMath::vectorSum(double *v, int n)'],['../classXeMath.html#ab439b1dfdc9a550f36e313c5863e1a2f',1,'XeMath::vectorSum(vector&lt; double &gt; &amp;v)']]],
-  ['vescrange',['VEscRange',['../classVEscRange.html',1,'']]],
-  ['vx',['Vx',['../classXeMultiGraph.html#ad3d81e1803244e55dd8735c266ed48a8',1,'XeMultiGraph']]],
-  ['vz',['Vz',['../classXeMultiGraph.html#a09fa2ff2fe6871e964e94500da56b042',1,'XeMultiGraph']]]
+  ['wcanvas',['wCanvas',['../classXeGraphics.html#a83941d598a3a9e8c45d9f4b1fcb7360e',1,'XeGraphics']]],
+  ['write',['write',['../classXeObject.html#aefb872d5f1a4f61546c9d4d7b37fa79f',1,'XeObject']]],
+  ['writetofile',['writeToFile',['../classAsymptoticExclusion.html#a2c7919d279593e64a1280e0ddfb883d7',1,'AsymptoticExclusion']]],
+  ['writetosimplefile',['writeToSimpleFile',['../classXeObject.html#aec3b94eb1af3048ae5e20ccbd2049c70',1,'XeObject']]]
 ];

@@ -8,6 +8,5 @@ var searchData=
   ['defaulttvaluerange',['defaultTValueRange',['../classXeRange.html#a0673627185a2aacbd4c4d594d23fd57c',1,'XeRange']]],
   ['defaultvescrange',['defaultVEscRange',['../classXeRange.html#ab18d6f65d16af51182429dfdf4954823',1,'XeRange']]],
   ['defaultyrange',['defaultYRange',['../classXeRange.html#a6d6968a5eecae7b5e78ecc823c7880fa',1,'XeRange']]],
-  ['doapplycls',['doApplyCLs',['../classExclusion.html#ab0a4070643210c20a19ae4e7d11764e9',1,'Exclusion']]],
   ['downs',['downs',['../classXeObject.html#a7da7e06105ac8da47defc63578558e59',1,'XeObject']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['thefunction',['theFunction',['../classsolvable.html#a138e81de14bc520a7abe858baf6894ac',1,'solvable']]],
-  ['thelegends',['theLegends',['../classXeMultiGraph.html#a58808bc010abc8e15d79fc7dd91f943d',1,'XeMultiGraph']]],
-  ['titlex',['titleX',['../classhistoCompare.html#a567502d3ebb06ab07768435e5a31e70f',1,'histoCompare']]]
+  ['vx',['Vx',['../classXeMultiGraph.html#ad3d81e1803244e55dd8735c266ed48a8',1,'XeMultiGraph']]],
+  ['vz',['Vz',['../classXeMultiGraph.html#a09fa2ff2fe6871e964e94500da56b042',1,'XeMultiGraph']]]
 ];

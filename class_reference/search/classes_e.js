@@ -1,12 +1,21 @@
 var searchData=
 [
-  ['tabulateddist',['TabulatedDist',['../classTabulatedDist.html',1,'']]],
-  ['tefficiencyparameter',['TEfficiencyParameter',['../classTEfficiencyParameter.html',1,'']]],
-  ['tgaussparameter',['TGaussParameter',['../classTGaussParameter.html',1,'']]],
-  ['this',['This',['../classhistoCompare_1_1This.html',1,'histoCompare']]],
-  ['tleffparameter',['TLEffParameter',['../classTLEffParameter.html',1,'']]],
-  ['tqyparameter',['TQyParameter',['../classTQyParameter.html',1,'']]],
-  ['tstatbkgparameter',['TStatBkgParameter',['../classTStatBkgParameter.html',1,'']]],
-  ['tsystbkgparameter',['TSystBkgParameter',['../classTSystBkgParameter.html',1,'']]],
-  ['tvaluerange',['tValueRange',['../classtValueRange.html',1,'']]]
+  ['xebins',['XeBins',['../classXeBins.html',1,'']]],
+  ['xecore',['XeCore',['../classXeCore.html',1,'']]],
+  ['xegraph',['XeGraph',['../classXeGraph.html',1,'']]],
+  ['xegraphics',['XeGraphics',['../classXeGraphics.html',1,'']]],
+  ['xegraphpositive',['XeGraphPositive',['../classXeGraphPositive.html',1,'']]],
+  ['xeinterpolation',['XeInterpolation',['../classXeInterpolation.html',1,'']]],
+  ['xemath',['XeMath',['../classXeMath.html',1,'']]],
+  ['xemultigraph',['XeMultiGraph',['../classXeMultiGraph.html',1,'']]],
+  ['xeobject',['XeObject',['../classXeObject.html',1,'']]],
+  ['xerange',['XeRange',['../classXeRange.html',1,'']]],
+  ['xestat',['XeStat',['../classXeStat.html',1,'']]],
+  ['xestyle',['XeStyle',['../classXeStyle.html',1,'']]],
+  ['xestylized',['XeStylized',['../classXeStylized.html',1,'']]],
+  ['xetable',['XeTable',['../classXeTable.html',1,'']]],
+  ['xetolerance',['XeTolerance',['../classXeTolerance.html',1,'']]],
+  ['xetool',['XeTool',['../classXeTool.html',1,'']]],
+  ['xetopobject',['XeTopObject',['../classXeTopObject.html',1,'']]],
+  ['xeversion',['XeVersion',['../classXeVersion.html',1,'']]]
 ];
