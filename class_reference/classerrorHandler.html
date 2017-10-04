@@ -90,6 +90,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">errorHandler Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Helper Class to send consistently formatted messages. It allows different levels of severity for the messages: Info, Warning and Error.  
+ <a href="classerrorHandler.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="XeCore_8h_source.html">XeCore.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for errorHandler:</div>
 <div class="dyncontent">
@@ -104,17 +109,16 @@ Inheritance diagram for errorHandler:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6623a8447ef7ea5fed7aed2f31d19636"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6623a8447ef7ea5fed7aed2f31d19636"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>errorHandler</b> (TString name)</td></tr>
+<tr class="memitem:a6623a8447ef7ea5fed7aed2f31d19636"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a6623a8447ef7ea5fed7aed2f31d19636">errorHandler</a> (TString name)</td></tr>
 <tr class="separator:a6623a8447ef7ea5fed7aed2f31d19636"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d5f801832b893cf411e84fbb5177e24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d5f801832b893cf411e84fbb5177e24"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Error</b> (TString functionName, TString message)</td></tr>
+<tr class="memitem:a0d5f801832b893cf411e84fbb5177e24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a0d5f801832b893cf411e84fbb5177e24">Error</a> (TString functionName, TString message)</td></tr>
+<tr class="memdesc:a0d5f801832b893cf411e84fbb5177e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an Error message to the user.  <a href="#a0d5f801832b893cf411e84fbb5177e24">More...</a><br/></td></tr>
 <tr class="separator:a0d5f801832b893cf411e84fbb5177e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75f056715257f6e9ebd9bd03a39ed1de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75f056715257f6e9ebd9bd03a39ed1de"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Warning</b> (TString functionName, TString message)</td></tr>
+<tr class="memitem:a75f056715257f6e9ebd9bd03a39ed1de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a75f056715257f6e9ebd9bd03a39ed1de">Warning</a> (TString functionName, TString message)</td></tr>
+<tr class="memdesc:a75f056715257f6e9ebd9bd03a39ed1de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a Warning message to the user.  <a href="#a75f056715257f6e9ebd9bd03a39ed1de">More...</a><br/></td></tr>
 <tr class="separator:a75f056715257f6e9ebd9bd03a39ed1de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73a8d5ef2b239229be91213a15597a17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73a8d5ef2b239229be91213a15597a17"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Info</b> (TString functionName, TString message)</td></tr>
+<tr class="memitem:a73a8d5ef2b239229be91213a15597a17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a73a8d5ef2b239229be91213a15597a17">Info</a> (TString functionName, TString message)</td></tr>
+<tr class="memdesc:a73a8d5ef2b239229be91213a15597a17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an Info message to the user.  <a href="#a73a8d5ef2b239229be91213a15597a17">More...</a><br/></td></tr>
 <tr class="separator:a73a8d5ef2b239229be91213a15597a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -123,6 +127,142 @@ Public Attributes</h2></td></tr>
 TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td></tr>
 <tr class="separator:a07f838eebf13b018a0892214d5998015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Helper Class to send consistently formatted messages. It allows different levels of severity for the messages: Info, Warning and Error. </p>
+<p>Error actually throws an error with the std::runtime_error() which will abort (no so) gracefully and quit Xephyr, whatever it is doing. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a6623a8447ef7ea5fed7aed2f31d19636"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">errorHandler::errorHandler </td>
+          <td>(</td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor: </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Tag name, typically here you wanna put the name of the class for which you wanna handle errors. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0d5f801832b893cf411e84fbb5177e24"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void errorHandler::Error </td>
+          <td>(</td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>functionName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send an Error message to the user. </p>
+<p>Send a message with ERROR severity, Xephyr will quit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">functionName</td><td>Tag identifier, function or in general reference place in the code where this message has been produced. </td></tr>
+    <tr><td class="paramname">message</td><td>message to the user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a73a8d5ef2b239229be91213a15597a17"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void errorHandler::Info </td>
+          <td>(</td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>functionName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send an Info message to the user. </p>
+<p>Send a message with INFO severity, Xephyr will continue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">functionName</td><td>Tag identifier, function or in general reference place in the code where this message has been produced. </td></tr>
+    <tr><td class="paramname">message</td><td>message to the user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a75f056715257f6e9ebd9bd03a39ed1de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void errorHandler::Warning </td>
+          <td>(</td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>functionName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send a Warning message to the user. </p>
+<p>Send a message with WARNING severity, Xephyr will continue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">functionName</td><td>Tag identifier, function or in general reference place in the code where this message has been produced. </td></tr>
+    <tr><td class="paramname">message</td><td>message to the user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>SOURCE/src/<a class="el" href="XeCore_8h_source.html">XeCore.h</a></li>
 <li>SOURCE/src/XeCore.cxx</li>
