@@ -12,7 +12,6 @@
 #include <vector>
 #include <utility>      // std::pair, std::make_pair
 #include "dataHandler.h"
-#include "XeCore.h"
 
 #include "XePdfObjects.h"
 

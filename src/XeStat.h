@@ -6,10 +6,40 @@
 #include "Math/DistFunc.h"
 #include "Math/Minimizer.h"
 #include "Math/Factory.h"
-#include "XeMath.h"
 #include "Math/DistFunc.h"
 #include <TRandom3.h>
 #include "XeUtils.h"
+
+#include "Math/Functor.h"
+
+#include <iomanip>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <set>
+#include <map>
+#include <math.h>
+
+#include "TCanvas.h"
+#include "TF1.h"
+#include "TFile.h"
+#include "TGraphErrors.h"
+#include "TGraph.h"
+#include "TH1F.h"
+#include "TH2F.h"
+#include "TLatex.h"
+#include "TLegend.h"
+#include "TMath.h"
+#include "TMultiGraph.h"
+#include "TROOT.h"
+#include "TStyle.h"
+#include "TSystem.h"
+#include "TTree.h"
+
+
+
+#define deleteWithPointer(ptr)  {if(ptr!=NULL){ delete ptr;ptr=NULL;}}
+
 
 enum content         { SPECTRUM
                      , VALUES
@@ -85,8 +115,63 @@ static const  double DEFAULT_SIMULATED_XMAX_B      =            1.0 ;
 static const  double LOGSQR2PI                     = 0.918938533205 ;
 static const  double DEFAULT_EVENT_UPPER_LIMIT     =           20.0 ;
 
+static const  double VERY_LARGE =                  1.E19
+                  , TINY            =             1.E-99
+                  , VERY_SMALL      =        -VERY_LARGE
+                  , VERY_SMALL_LOG  =            -10000.
+                  , UNDEFINED       =        -9999
+                  , AUTOMATIC       =       UNDEFINED*10.
+                  , CRAZY           =  98765432123456789.
+                  ;
 
 
+enum flagType     { VERY_LARGE_INT =  9999999
+                  , VERY_SMALL_INT = -VERY_LARGE_INT
+                  , UNDEFINED_INT  
+                  , SAME     
+                  , NEXT
+                  , AUTO        
+                  , ALL
+                  , NONE 
+                  , GENERAL
+                  , LINEAR
+                  , LOG
+                  , EXPONENTIAL
+                  , LOGX_LINY
+                  , PARABOLIC
+                  } ;
+
+const string UNDEFINED_STRING="???";
+
+const string LABEL_BAND            = "Band number"
+                  , LABEL_ER              = "E_{r} (KeV)"
+                  , LABEL_EVT_AFTER_SEL   = "Events after selection"
+                  , LABEL_EVT_DAY         = "Events (day^{-1})"
+                  , LABEL_EVT             = "Events"
+                  , LABEL_EVT_MAX         = "Events_{max}"
+                  , LABEL_EVT_KEV         = "Events (KeV^{-1})"
+                  , LABEL_EVT_KG_DAY      = "Events (Kg^{-1} day^{-1})"
+                  , LABEL_EVT_KG_DAY_KEV  = "Events (Kg^{-1} day^{-1} KeV^{-1})"
+                  , LABEL_EVT_PE          = "Events (p.e^{-1})"
+                  , LABEL_FF              = "F^{2}"
+                  , LABEL_FLATTENED       = "Flattened log_{10}(S2/S1)"
+                  , LABEL_LEFF            = "L_{eff}"
+                  , LABEL_LEFF_TVALUE     = "t-Value for L_{eff}"
+                  , LABEL_MASS            = "Mass (GeV/c^{2})"
+                  , LABEL_NORMTO1         = "Distribution norm. to 1"
+                  , LABEL_LOG_LIKELIHOOD  = "-log(Likelihood)"
+                  , LABEL_PVALUE          = "P-value"
+                  , LABEL_Q_EXCLUSION     = "q_{excl.}"
+                  , LABEL_S1              = "S1 (p.e.)"
+                  , LABEL_S2              = "S2"
+                  , LABEL_S2_OVER_S1      = "S2/S1"
+                  , LABEL_SA              = "SA(y)"
+                  , LABEL_SIGMA           = "\\sigma (cm^{2})"
+                  , LABEL_SIGMA_MAX       = "\\sigma_{max} (cm^{2})"
+                  , LABEL_SLICE           = "Slice Number"
+                  , LABEL_VESC            = "V_{esc}"
+                  , LABEL_Y_UOVER2        = "y=u/2"
+                  ;
 /**
    * Collection of static methods defining analysis methods.
    * Relevant flags: PL vs Cls, print Level
@@ -148,13 +233,6 @@ class XeStat : public errorHandler, public printTools {
  * @param unit SIGMA_UNIT or EVENT_UNIT
  */
     static int    getSigmaLinLog(int unit);
-
-/**
- * Create default range if needed. Does not work in SIGMA_UNIT unit mode.
- * @param Original range, if null will create a new range;
- * @param unit SIGMA_UNIT or EVENT_UNIT
- */
-    static XeRange*  newSigmaRange(XeRange*range=NULL, int unit=EVENT_UNIT);
 
 /**
  * Return name of current analysis mode
@@ -682,12 +760,6 @@ class ProfileLikelihood : public Likelihood {
      void    estimateCrossSection();
      bool  initialize() {return true;}; //FIXME ALE - place holder.
  
-
- /**
- * @return  an XeGraph of Likelihood for a sigma range
- * @param er Event range
- */
-    XeGraph* newGraphOfLogLikelihood(EventRange* er=NULL);
 
 /**
   * @return a TGraph of the likelihood for n_points sigma equal steps between min and max

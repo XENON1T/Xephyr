@@ -186,7 +186,7 @@ void pdfComponent::loadHistos() {
 
 		TString histName = getNearestHistoName(grid_point);
 //		Info("loadHistos","Loading histo: "+ histName + " interp. factor for  " + getParamValueString() + " : " +
-//				+ TString(XeCore::formatF(grid_point_vol / total_vol)) ) ;
+//				+ TString(printTools::formatF(grid_point_vol / total_vol)) ) ;
 		
 		//check if name exist
 		if( file->FindKey(histName) == NULL) 
@@ -435,13 +435,13 @@ TString pdfComponent::getParamValueString(){
 	for(unsigned int k =0; k< myShapeUnc.size(); k++){
 		if(k!=0) gridPointName.Append("_");
 		gridPointName.Append(myShapeUnc[k]->getName());
-		gridPointName.Append(XeCore::formatF(myShapeUnc[k]->getCurrentValue(),1,2));
+		gridPointName.Append(printTools::formatF(myShapeUnc[k]->getCurrentValue(),1,2));
 	}
 
 	for(unsigned int k =0; k< myScaleUnc.size(); k++){
 		if(gridPointName!="") gridPointName.Append("_");
 		gridPointName.Append(myScaleUnc[k]->getName());
-		gridPointName.Append(XeCore::formatF(myScaleUnc[k]->getCurrentValue(),1,2));
+		gridPointName.Append(printTools::formatF(myScaleUnc[k]->getCurrentValue(),1,2));
 	}
 
 	return gridPointName;
@@ -456,13 +456,13 @@ TString pdfComponent::getParamValueWritable(){
 	for(unsigned int k =0; k< myShapeUnc.size(); k++){
 		if(k!=0) gridPointName.Append("_");
 		gridPointName.Append(myShapeUnc[k]->getName());
-		gridPointName.Append(XeCore::formatR(myShapeUnc[k]->getCurrentValue(),2));
+		gridPointName.Append(printTools::formatR(myShapeUnc[k]->getCurrentValue(),2));
 	}
 
 	for(unsigned int k =0; k< myScaleUnc.size(); k++){
 		if(gridPointName!="") gridPointName.Append("_");
 		gridPointName.Append(myScaleUnc[k]->getName());
-		gridPointName.Append(XeCore::formatR(myScaleUnc[k]->getCurrentValue(),2));
+		gridPointName.Append(printTools::formatR(myScaleUnc[k]->getCurrentValue(),2));
 	}
 
 	return gridPointName;

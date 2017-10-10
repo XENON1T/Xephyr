@@ -14,7 +14,7 @@ using namespace Math;
   * Output: root files with histograms for a single mass point, several files can be hadd togheter. This is to promote parallelization.
   * The mass point has to be defined previously using the appropriated XeRun method
 */
-class AsymptoticExclusion : public XeObject{
+class AsymptoticExclusion : public XeStat{
     public:
 
 	~AsymptoticExclusion();
@@ -25,7 +25,6 @@ class AsymptoticExclusion : public XeObject{
 	TGraphAsymmErrors  getExpected2Sigma()    {return expected2Sigma;};
         TGraph             getObservedLimit()	  {return observedLimit;};
         double 		   getMass()		  {return plike->getWimpMass();};
-	TString		   getName() 		  {return name;};
 
     /**
       * This will trigger the XeRun associated to produce an Asimov dataset with the 
@@ -170,8 +169,6 @@ class AsymptoticExclusion : public XeObject{
 						//specified with setAlternativeXAxisVal()
 
 	int		     nScanPoints;	// Number of points for which mu is computed in limit calculation, default 100.
-
-	TString 	     name;
 
 	vector<double>       asimovSigmaSet;
 	vector<double>       muStepsSet;

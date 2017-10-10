@@ -19,8 +19,8 @@ class XeVersion {
  ~XeVersion(){}
   XeVersion(){
     string tab="      ";
-    string XephyrVersion = "5.25";
-    string XephyrDate    = "04-Jul-2015";
+    string XephyrVersion = "6.0";
+    string XephyrDate    = "10-Oct-2017";
     cout<<endl<<endl
         <<tab<<"=================== Welcome to Xephyr ====================="
         <<endl

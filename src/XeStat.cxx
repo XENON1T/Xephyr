@@ -32,12 +32,7 @@ bool XeStat::isAnalysisDefined(bool verbose){
   return !undef;
 }
 
-XeRange* XeStat::newSigmaRange(XeRange *range, int unit){
-  if(range!=NULL) return range;
-  if(unit==EVENT_UNIT) return new LinearRange("Number of events",50,0.,10.);
-  cout<<"No default Sigma range in SIGMA_UNIT"<<endl;
-  return NULL;
-}
+
 
 TString  XeStat::getSigmaUnitName(int unit) {
   switch(unit) {
@@ -706,7 +701,6 @@ void Likelihood::setCurrentValuesInMinuitUnits( const double *v,const double *e)
 static Likelihood*  currentLikelihood;
 
 double LikelihoodEvaluate (const double * values) {
-  MethodCounter::count("Compute LogLikelihood");
   currentLikelihood->setCurrentValuesInMinuitUnits(values); // write the current values to LKParameters
 
 
@@ -783,7 +777,6 @@ double Likelihood::maximize(bool freezeParametersOfInterest){
     min->SetLimitedVariable(i,pn.c_str(),v,s,vmi,vma);
   } 
   // do the minimization
-  MethodCounter::count("Calls to Minuit");
   min->Minimize(); 
   
   // write the post fit value to LKparameter 

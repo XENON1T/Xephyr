@@ -1,6 +1,7 @@
 #include "AsymptoticExclusion.h"
 
-AsymptoticExclusion::AsymptoticExclusion(ProfileLikelihood *pl, double confidenceLevel): XeObject(), 
+AsymptoticExclusion::AsymptoticExclusion(ProfileLikelihood *pl, double confidenceLevel) : 
+  XeStat("AsymptoticExclusion_" + pl->getName()),
 	expectedMedian(1), expected2Sigma(1), observedLimit(1),observedLimitNoCLS(1),sigmaScan(1),qTestScan(1), 
 	qTestScanData(1), pulls_uncond("pulls_uncond","",1,0.,20.), pulls_cond("pulls_cond","",1,0.,20.),
 	Histo2D_mass_vs_x("Histo2D_mass_vs_x","",1001,-5.,10005.,61,-2.5,302.5)
@@ -11,7 +12,6 @@ AsymptoticExclusion::AsymptoticExclusion(ProfileLikelihood *pl, double confidenc
 
 	if(pl == NULL)  cout <<" ProfileLikelihood is empty ---- this will crash!" << endl;
 
-	name = "AsymptoticExclusion_" + pl->getName();
 
 	plike=pl;
         cl = confidenceLevel;
