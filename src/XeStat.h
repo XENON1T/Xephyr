@@ -1,5 +1,6 @@
 #ifndef XeStat_h
 #define XeStat_h
+
 #include <fstream>
 #include "Math/ProbFunc.h"
 #include "Math/DistFunc.h"
@@ -8,7 +9,7 @@
 #include "XeMath.h"
 #include "Math/DistFunc.h"
 #include <TRandom3.h>
-#include "XeCore.h"
+#include "XeUtils.h"
 
 enum content         { SPECTRUM
                      , VALUES
@@ -91,7 +92,7 @@ static const  double DEFAULT_EVENT_UPPER_LIMIT     =           20.0 ;
    * Relevant flags: PL vs Cls, print Level
 */
 
-class XeStat : virtual public XeMath , virtual public XeObject {
+class XeStat : public errorHandler, public printTools {
 
   public :
 
@@ -99,6 +100,7 @@ class XeStat : virtual public XeMath , virtual public XeObject {
      *                     Basic methods 
      * ------------------------------------------------------------*/
                     
+    XeStat(TString name);
     
  /**
   * Set the analysis mode
@@ -112,18 +114,12 @@ class XeStat : virtual public XeMath , virtual public XeObject {
  */
     static int    getAnalysisMode();
 
-/**
- * Set print trace level
- * @param level print level
- */  
-    static void   setPrintLevel(int level);
-
  /**
      * Check the anaylsis mode and set it if neccesary
      * @param name object name to be printed in case of error 
      * @param requested either NO_ANALYSIS, CUTS_ANALYSIS or PL_ANALYSIS
  */
-    static bool   checkAnalysisMode(string name, int requested);
+    static bool   checkAnalysisMode(TString name, int requested);
  
 
     /* -------------------------------------------------------------
@@ -146,10 +142,6 @@ class XeStat : virtual public XeMath , virtual public XeObject {
  */  
     static bool   isPL();
 
-/**
- * Get current print level
- */
-    static int    getPrintLevel();
 
 /**
  * Return defaut Lin/Log mode for sigma unit
@@ -167,53 +159,64 @@ class XeStat : virtual public XeMath , virtual public XeObject {
 /**
  * Return name of current analysis mode
  */
-    static string getAnalysisModeName();
+    static TString getAnalysisModeName();
 
 /**
  * Return name of  a given analysis mode
  * @param mode NO_ANALYSIS , PL_ANALYSIS or CUTS_ANALYSIS
  */
-    static string getAnalysisModeName(int mode);
+    static TString getAnalysisModeName(int mode);
 
 /** 
  * Return systematic error name
  * @param syst ONE_SIGMA_BELOW, CENTRAL, or ONE_SIGMA_ABOVE
  */
-    static string getSystematicModeName(int syst);
+    static TString getSystematicModeName(int syst);
 
 /**
  * Return unit name for a given sigma unit
  * @param unit SIGMA_UNIT or EVENT_UNIT
  */
-    static string getSigmaUnitName(int unit);
+    static TString getSigmaUnitName(int unit);
 
 /**
  * Return sigma label for a given sigma unit
  * @param unit SIGMA_UNIT or EVENT_UNIT
  */
-    static string getSigmaLabel(int unit);
+    static TString getSigmaLabel(int unit);
 
 /**
  * Return name a given mode (estimated or upper limit)
  * @param mode  ESTIMATED or UPPER_LIMIT 
  */
-    static string getSigmaModeName(int mode);
+    static TString getSigmaModeName(int mode);
 
 
 /**
  * Return sigma limit label for a given sigma unit
  * @param unit SIGMA_UNIT or EVENT_UNIT
  */
-    static string getUpperSigmaLabel(int unit);
+    static TString getUpperSigmaLabel(int unit);
 
-    virtual ~XeStat();
-    XeStat(string name);
-    XeStat();
 
+
+    //! \brief helper method to set the name of this instance.
+    void setName(TString nam="No_Name") { name = nam; };
+
+    //! \brief helper method to return the name of this instance.
+    TString getName() { return name; };
+
+    //! \brief set the experiment number, usefull for combination
+    void setExperiment(int exp) { experiment = exp;};
+
+    //! \brief set the experiment number, usefull for combination
+    int getExperiment() { return experiment; };
+    
   protected:
 
-    static int    printLevel; 
     static int    analysisMode;
+    TString       name;
+    int           experiment;
 
 } ;
 
@@ -237,14 +240,14 @@ class LKParameter :  public XeStat {
   public  :
 
 
-    static string   getTypeName(int type);
+    static TString   getTypeName(int type);
 
     virtual        ~LKParameter();
    
 /**
  * Empry constructor for ROOT
  */    
-   LKParameter();
+   LKParameter(TString name);
 
  /**
      * Regular Constructor 
@@ -258,7 +261,7 @@ class LKParameter :  public XeStat {
      * @param  min  minimum value
      * @param  max  maximum value
  */
-    LKParameter(int id, int type,string nam,double initial,double step
+    LKParameter(int id, int type,TString nam,double initial,double step
                ,double min, double max);
 
     void    printInitial();
@@ -296,7 +299,7 @@ class LKParameter :  public XeStat {
     double  getStep();
     double  getStepInMinuitUnits();
     double  getSigma();
-    string  getTypeName();
+    TString  getTypeName();
 
     double  getInitialSigma() { return initialSigma;};
 
@@ -371,7 +374,7 @@ class TSystBkgParameter : public LKParameter {
     TSystBkgParameter(int run);
    ~TSystBkgParameter();
 
-  static string getTheName(int run);
+  static TString getTheName(int run);
 
 } ;
 
@@ -383,7 +386,7 @@ class TGaussParameter : public LKParameter {
     void   setUncertainty(double unc) { uncertainty = unc;};
     double getUncertainty()           { return uncertainty; };
 
-    static string getTheName(int b, int run);
+    static TString getTheName(int b, int run);
 
     double uncertainty;
 
@@ -404,7 +407,7 @@ class TStatBkgParameter : public LKParameter {
     void printCurrent(bool withError);
   protected :
 
-    static string getTheName(int b, int run);
+    static TString getTheName(int b, int run);
     int band;
     double stat_error;
 } ;
@@ -449,7 +452,7 @@ class TEfficiencyParameter : public LKParameter {
      * A likelihood object, consisting of parameters.
      * This is a virtual class
  */
-class Likelihood :  virtual public XeStat {
+class Likelihood :  public XeStat {
 
 
    public:
@@ -470,12 +473,7 @@ class Likelihood :  virtual public XeStat {
  * Constructor
  * @param name name of the object
  */
-     Likelihood(string name);
-
-/**
- * Empty constructor for root
- */
-     Likelihood();
+     Likelihood(TString name);
 
  
 /**
@@ -504,7 +502,7 @@ class Likelihood :  virtual public XeStat {
  * @param mi          minimum value
  * @param ma          maximum value
  */
-     void     addParameter(int id, int type,string nam,double initialVal
+     void     addParameter(int id, int type,TString nam,double initialVal
                          ,double step,double mi, double ma);
 
 /**
@@ -643,7 +641,7 @@ typedef map<int,LKParameter*>::iterator ParameterIterator;
    *  Profile likelihood calculator
 */
 
-class ProfileLikelihood : virtual public Likelihood {
+class ProfileLikelihood : public Likelihood {
     
   /* virtual class */ 
 
@@ -653,16 +651,12 @@ class ProfileLikelihood : virtual public Likelihood {
      *                     Basic methods 
      * ------------------------------------------------------------*/
                     
-/**
- * Empty constructor for root
- */
-      ProfileLikelihood();
 
 /**
  * Constructor
  * @param name name of the object
  */
-      ProfileLikelihood(string name);
+      ProfileLikelihood(TString name);
 
     /* -------------------------------------------------------------
      *                     Advanced methods 
@@ -754,7 +748,7 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
      *                     Basic methods 
      * ------------------------------------------------------------*/
                     
-           CombinedProfileLikelihood(string name);
+           CombinedProfileLikelihood(TString name);
           ~CombinedProfileLikelihood();
     void   combine(ProfileLikelihood* pl);
     double computeTheLogLikelihood();

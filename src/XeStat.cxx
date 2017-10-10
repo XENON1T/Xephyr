@@ -3,20 +3,19 @@
 
 
 int    XeStat::analysisMode = NO_ANALYSIS;
-int    XeStat::printLevel=0;
 
-       XeStat::~XeStat()                          {}
-       XeStat::XeStat()           : XeObject()    {}
-       XeStat::XeStat(string nam) : XeObject()    {setName(nam);}
+       XeStat::XeStat(TString nam) : errorHandler("Stat")    {
+           setName(nam);
+           setExperiment(1);
+        }
+
 void   XeStat::setAnalysisMode(int m){analysisMode=m;}
-void   XeStat::setPrintLevel(int l)  {printLevel=l;}
 bool   XeStat::isCutsBased()         {return analysisMode==CUTS_ANALYSIS;}
 bool   XeStat::isPL()                {return analysisMode==PL_ANALYSIS;}
 int    XeStat::getAnalysisMode()     {return analysisMode;}
-int    XeStat::getPrintLevel()       {return printLevel;}
-string XeStat::getAnalysisModeName() {return getAnalysisModeName(analysisMode);}
+TString XeStat::getAnalysisModeName() {return getAnalysisModeName(analysisMode);}
 
-string XeStat::getSystematicModeName(int i){
+TString XeStat::getSystematicModeName(int i){
   switch(i){
     case ONE_SIGMA_BELOW   : return "1 sigma below";
     case CENTRAL           : return "Central Value";
@@ -40,7 +39,7 @@ XeRange* XeStat::newSigmaRange(XeRange *range, int unit){
   return NULL;
 }
 
-string  XeStat::getSigmaUnitName(int unit) {
+TString  XeStat::getSigmaUnitName(int unit) {
   switch(unit) {
     case SIGMA_UNIT  : return "cross section";
     case EVENT_UNIT  : return "number of events";
@@ -48,7 +47,7 @@ string  XeStat::getSigmaUnitName(int unit) {
   return UNDEFINED_STRING;
 }
 
-string  XeStat::getSigmaModeName(int mode) {
+TString  XeStat::getSigmaModeName(int mode) {
   switch(mode) {
     case ESTIMATED   : return "Estimated";
     case UPPER_LIMIT : return "Upper Limit";
@@ -56,7 +55,7 @@ string  XeStat::getSigmaModeName(int mode) {
   return UNDEFINED_STRING;
 }
 
-string XeStat::getSigmaLabel(int unit){
+TString XeStat::getSigmaLabel(int unit){
   switch(unit) {
     case SIGMA_UNIT  : return LABEL_SIGMA;
     case EVENT_UNIT  : return LABEL_EVT;
@@ -64,7 +63,7 @@ string XeStat::getSigmaLabel(int unit){
   return UNDEFINED_STRING;
 }
 
-string XeStat::getUpperSigmaLabel(int unit){
+TString XeStat::getUpperSigmaLabel(int unit){
   switch(unit) {
     case SIGMA_UNIT  : return LABEL_SIGMA_MAX;
     case EVENT_UNIT  : return LABEL_EVT_MAX;
@@ -74,7 +73,7 @@ string XeStat::getUpperSigmaLabel(int unit){
 
 int XeStat::getSigmaLinLog(int unit) {return(unit==SIGMA_UNIT? LOG:LINEAR);}
 
-string  XeStat::getAnalysisModeName(int m) {
+TString  XeStat::getAnalysisModeName(int m) {
   switch(m) {
     case NO_ANALYSIS   : return "Undefined";
     case PL_ANALYSIS   : return "Profile likelihood";
@@ -83,7 +82,7 @@ string  XeStat::getAnalysisModeName(int m) {
   return UNDEFINED_STRING;
 }
 
-bool XeStat::checkAnalysisMode(string name, int requestedAnalysisMode){
+bool XeStat::checkAnalysisMode(TString name, int requestedAnalysisMode){
   if(   requestedAnalysisMode==analysisMode 
      || requestedAnalysisMode==NO_ANALYSIS) return true;
 
@@ -105,18 +104,18 @@ bool XeStat::checkAnalysisMode(string name, int requestedAnalysisMode){
 //--------------- Parameters of a likelihood computations ------------
 
 LKParameter::~LKParameter(){}
-LKParameter::LKParameter() : XeStat() { t0=0.;}
-LKParameter::LKParameter(int i, int typ,string nam,double initV,double st
-                    ,double mi,double ma) : XeStat() {
+
+LKParameter::LKParameter(TString nam) : XeStat(nam) { t0=0.;}
+LKParameter::LKParameter(int i, int typ,TString nam,double initV,double st
+                    ,double mi,double ma) : XeStat(nam) {
   if(typ<0 || typ>=N_PARAMETER_TYPES){
     cout<<"Unknown LK parameter type "<<typ<<endl;
     return ;
   }
 
-  if(printLevel>1) cout <<"LKParameter::LKParameter()  " << nam << " Enter"<< endl;
+  Debug("LKParameter::LKParameter()  " + nam , " Enter");
 
   t0 = 0.;
-  setName(nam);
   id=i;
   setType(typ);
   setInitialValue(initV);
@@ -130,7 +129,7 @@ LKParameter::LKParameter(int i, int typ,string nam,double initV,double st
 
   initialSigma = 1.; // tipicly is 1. for a standard NP, but of course not for a Stat NP.
 
-  if(printLevel>1) cout <<"LKParameter::LKParameter()  " << nam << " Exit" << endl;
+  Debug("LKParameter::LKParameter()  " + nam , " Exit" );
 }
 
 void   LKParameter::setId(int i)              {id=i;}
@@ -164,7 +163,7 @@ void   LKParameter::setSigmaInMinuitUnits(double si) {
 }
 
 void   LKParameter::setMinuitUnit(double s){
-  if(printLevel>1) cout<<"Minuit Scaling of "<<Name<<": "<<s<<endl;
+  Debug("Minuit Scaling of " + getName(), TString::Itoa(s,10));
   MinuitUnit=s;
 }
 double LKParameter::getCurrentValueInMinuitUnits() {
@@ -202,39 +201,34 @@ double LKParameter::getLLGausConstraint(){
 
 
 bool LKParameter::compares(LKParameter* par,bool prnt){
-  if(Name!=getName()) {
-    if(prnt) cout<<"Mismatch in name "<<Name<<" vs "
-                  <<par->getName()<<endl;
-    return false;
-  }
   if(id!=par->getId()) {
     if(prnt) cout<<"Mismatch in id "<<id<<" vs "<<par->getId()
-                  <<" for "<<Name<<endl;
+                  <<" for "<<getName()<<endl;
     return false;
   }
   if(type!=par->getType()) {
     if(prnt) cout<<"Mismatch in type "<<type<<" vs "<<par->getType()
-                  <<" for "<<Name<<endl;
+                  <<" for "<<getName()<<endl;
     return false;
   }
   if(initialValue!=par->getInitialValue()) {
     if(prnt) cout<<"Mismatch in initial value "<<initialValue<<" vs "
-                  <<par->getInitialValue()<<" for "<<Name<<endl;
+                  <<par->getInitialValue()<<" for "<<getName()<<endl;
     return false;
   }
   if(step!=par->getStep()) {
     if(prnt) cout<<"Mismatch in step "<<step<<" vs "<<par->getStep()
-                  <<" for "<<Name<<endl;
+                  <<" for "<<getName()<<endl;
     return false;
   }
   if(minimum!=par->getMinimum()) {
     if(prnt) cout<<"Mismatch in minimum "<<minimum<<" vs "
-                  <<par->getMinimum()<<" for "<<Name<<endl;
+                  <<par->getMinimum()<<" for "<<getName()<<endl;
     return false;
   }
   if(maximum!=par->getMaximum()) {
     if(prnt) cout<<"Mismatch in maximum "<<maximum<<" vs "
-                  <<par->getMaximum()<<" for "<<Name<<endl;
+                  <<par->getMaximum()<<" for "<<getName()<<endl;
     return false;
   }
   return true;
@@ -252,8 +246,8 @@ bool LKParameter::isOfInterest()    {
          || type==FROZEN_PARAMETER;
 }
 
-string LKParameter::getTypeName()        {return getTypeName(type);}
-string LKParameter::getTypeName(int type){
+TString LKParameter::getTypeName()        {return getTypeName(type);}
+TString LKParameter::getTypeName(int type){
   switch(type) {
     case FROZEN_PARAMETER      : return "Frozen     ";
     case PARAMETER_OF_INTEREST : return "Of interest";
@@ -276,8 +270,7 @@ void LKParameter::freeze(bool doFreeze){
 void LKParameter::printHeader(){
   cout<<formatI(id,3)
       <<" "<<leftJustify(getName(),20)
-      <<" "<<getTypeName()
-      <<" "<<positiveFlag(experiment);
+      <<" "<<getTypeName() << endl;
 }
 
 void LKParameter::printInitial(){
@@ -308,7 +301,7 @@ TSystBkgParameter::~TSystBkgParameter(){}
 TSystBkgParameter::TSystBkgParameter(int run) : LKParameter(PAR_SYST_BKG_TVALUE
         ,NUISANCE_PARAMETER ,getTheName(run),0.,0.01,-5.,5) {}
 
-string TSystBkgParameter::getTheName(int run){
+TString TSystBkgParameter::getTheName(int run){
 
   return "Syst. bkgd t-Value run"+formatI(run,2) ;
 }
@@ -321,7 +314,7 @@ TGaussParameter::~TGaussParameter(){}
 TGaussParameter::TGaussParameter(int b,int run) : LKParameter(PAR_GAUSS_TVALUE+b
         ,NUISANCE_PARAMETER ,getTheName(b, run),0.,0.01,-5.,5.) { uncertainty = 1. ;}
 
-string TGaussParameter::getTheName(int b, int run){
+TString TGaussParameter::getTheName(int b, int run){
   return "Gauss NP "+formatI(b,3) + " run"+formatI(run,2) ;
 }
 
@@ -330,13 +323,13 @@ string TGaussParameter::getTheName(int b, int run){
 
 TStatBkgParameter::~TStatBkgParameter(){}
 
-TStatBkgParameter::TStatBkgParameter() : LKParameter(){ stat_error = 0.;}
+TStatBkgParameter::TStatBkgParameter() : LKParameter("FuckYouGiveMeAName"){ stat_error = 0.;}
 
 // this is not a t_value
 TStatBkgParameter::TStatBkgParameter(int b,int run) : LKParameter(PAR_STAT_BKG_TVALUE+b
         ,NUISANCE_PARAMETER ,getTheName(b, run),0.1,0.01,0.,1.) {band=b; stat_error =0.;}
 
-string TStatBkgParameter::getTheName(int b, int run){
+TString TStatBkgParameter::getTheName(int b, int run){
   return "Stat .bkgd for band"+formatI(b,3) + " run"+formatI(run,2) ;
 }
  
@@ -378,9 +371,7 @@ TEfficiencyParameter::TEfficiencyParameter() : LKParameter(PAR_EFFICIENCY_TVALUE
 //--------------- virtual class for Likelihood computation --------
 
 Likelihood::~Likelihood()                     {clear();}
-Likelihood::Likelihood() : XeStat()           {setup();}
-Likelihood::Likelihood(string nam) : XeStat() {
-  setName(nam);
+Likelihood::Likelihood(TString nam) : XeStat(nam) {
   setup();
 }
 
@@ -412,7 +403,7 @@ void Likelihood::clearTheParameters(){
 }
 
 void Likelihood::printInitialHeader(){
-  cout<<" Id Name                 Type         Exp    Initial  Step    Min     Max"
+  cout<<" Id Name                  Type         Exp    Initial  Step    Min     Max"
       <<endl;
 }
 
@@ -435,9 +426,7 @@ void Likelihood::removeParameter(int id, bool tolerant){
 }
 
 void Likelihood::addParameterTolerant(LKParameter* param){
-  if(printLevel>1){
-    cout<<"Adding parameter "<<param->getName()<<endl;
-  }
+  Info("Likelihood::Adding parameter ", param->getName());
   param->setExperiment(experiment);
   int id=param->getId();
   parameters[id]=param;
@@ -481,16 +470,14 @@ void Likelihood::replaceParameter(LKParameter* param){
   if(parameters[id]!=param) {
     delete parameters[id];
     parameters[id]=param;
-    if(printLevel>0) {
-      cout<<"Replacing parameter "<<id<<" with existing common one"<<endl;
-    }
+     Info("Replacing parameter ", TString::Itoa(id,10) + " with existing common one");
   }
   else {
-    if(printLevel>0) cout<<"Keeping same parameter "<<id<<endl;
+    Debug("replaceParameter" , "Keeping same parameter " + TString::Itoa(id,10));
   }
 }
 
-void Likelihood::addParameter(int id, int type,string nam,double initialVal
+void Likelihood::addParameter(int id, int type,TString nam,double initialVal
                              ,double step,double mi, double ma) {
   if(id==AUTO) id=++currentId; 
   addParameter(new LKParameter(id,type,nam,initialVal,step,mi,ma));
@@ -567,7 +554,7 @@ void Likelihood::setInitialValue(int id,double v){
 }
 
 void Likelihood::printInitialParameters(){
-  cout<<endl<<Name<<" has "<<parameters.size()<<" parameters:"<<endl;
+  cout<<endl<<getName()<<" has "<<parameters.size()<<" parameters:"<<endl;
   printInitialHeader(); 
   TRAVERSE_PARAMETERS(it) { 
     LKParameter *p=it->second; 
@@ -717,17 +704,19 @@ void Likelihood::setCurrentValuesInMinuitUnits( const double *v,const double *e)
 //look here: https://root.cern.ch/how-implement-mathematical-function-inside-framework
 //Functor can call also methods of a class, clean this mess... FIXME.
 static Likelihood*  currentLikelihood;
+
 double LikelihoodEvaluate (const double * values) {
   MethodCounter::count("Compute LogLikelihood");
   currentLikelihood->setCurrentValuesInMinuitUnits(values); // write the current values to LKParameters
-  int printLevel=XeStat::getPrintLevel();
-  if(printLevel>3) {
+
+
+  if( errorHandler::globalPrintLevel < 1) { //Debug print
     cout<<"Evaluating likelihood "<<endl;
     currentLikelihood->printCurrentParameters();
   }
   double e= -1. * currentLikelihood->computeTheLogLikelihood();
-  if(printLevel>3) {
-    cout<<"             .... result:"<<XeCore::formatF(e,19,8)<<endl; 
+  if(errorHandler::globalPrintLevel < 1) {
+    cout<<"             .... result:"<<printTools::formatF(e,19,8)<<endl; 
   }
   return e;
 }
@@ -738,7 +727,7 @@ double Likelihood::maximize(bool freezeParametersOfInterest){
 
   nActiveParameters = getNActiveParameters();
 
-  if(printLevel>1) {
+  if(getPrintLevel() < 2) {
     cout<<"Finding maximum of "+getName()
         <<endl
         <<"Total of "<<nActiveParameters<<" active parameters, "
@@ -749,13 +738,13 @@ double Likelihood::maximize(bool freezeParametersOfInterest){
   }
   if(np==0){
     double e=computeTheLogLikelihood();
-    if(printLevel>1) {
+    if(getPrintLevel() < 2) {
       cout<<"Nothing to minimize, result:"<<formatF(e,19,8)<<endl; 
     }
     return e; 
   } 
 
-  string m="Minuit2";
+ string m="Minuit2";
   ROOT::Math::Minimizer* min = ROOT::Math::Factory::CreateMinimizer(m,"Migrad"); // ALE_TEST  -- before was Migrad
   //ROOT::Math::Minimizer* min = ROOT::Math::Factory::CreateMinimizer(m,"Simplex"); // ALE_TEST  -- before was Migrad
   if(min==NULL) {
@@ -771,16 +760,16 @@ double Likelihood::maximize(bool freezeParametersOfInterest){
   min->SetMaxIterations(100000);  // for GSL                     //was           10000
   min->SetTolerance(0.001); 					// was 0.01		
 //  min->SetPrintLevel(0);
-  min->SetPrintLevel(max(0,printLevel-3));
   for(int i=0;i<np;i++){
     LKParameter* par=MinuitParameters[i];
-    string pn=par->getName();
+   TString pnS= par->getName();
+    string pn = pnS.Data(); 
     double v=par->getInitialValueInMinuitUnits();
     double s = par->getStepInMinuitUnits();
     //double s= par->getStepInMinuitUnits(); // don't ask why but the factor 100 is needed for better convergence
     double vmi=par->getMinimumInMinuitUnits();
     double vma=par->getMaximumInMinuitUnits();
-    if(printLevel>2) {
+    if(getPrintLevel() < 1) {
       double v0=par->getInitialValue();
       double s0=par->getStep();
       double vmi0=par->getMinimum();
@@ -800,7 +789,7 @@ double Likelihood::maximize(bool freezeParametersOfInterest){
   // write the post fit value to LKparameter 
   setCurrentValuesInMinuitUnits(min->X(),min->Errors());
   double ml= -1. * min->MinValue();
-  if(printLevel>1) {
+  if(getPrintLevel() < 2) {
     cout<<"ML "<<ml<<" achieved for "<<endl;
     printResultParameters();
   }
@@ -830,7 +819,7 @@ double Likelihood::maximizeNumerically(int numberOfToys, bool freezeParametersOf
   nActiveParameters = getNActiveParameters();
 
   // Some printing
-  if(printLevel>1) {
+  if(getPrintLevel() < 1) {
     cout<<"Finding maximum NUMERICALLY of "+getName()
         <<endl
         <<"Total of "<<nActiveParameters<<" active parameters, "
@@ -842,7 +831,7 @@ double Likelihood::maximizeNumerically(int numberOfToys, bool freezeParametersOf
 
   if(np==0){
     double e=computeTheLogLikelihood();
-    if(printLevel>1) {
+    if(getPrintLevel() <2) {
       cout<<"Nothing to maximize, result:"<<formatF(e,19,8)<<endl; 
     }
     return e; 
@@ -1003,14 +992,10 @@ double Likelihood::maximizeNumerically(int numberOfToys, bool freezeParametersOf
 
 ProfileLikelihood::~ProfileLikelihood(){}
 
-ProfileLikelihood::ProfileLikelihood(string nam): Likelihood(nam){
-  setName(nam);
+ProfileLikelihood::ProfileLikelihood(TString nam): Likelihood(nam){
   setup();
 }
 
-ProfileLikelihood::ProfileLikelihood(): Likelihood(){
-  setup();
-}
 
 void ProfileLikelihood::printFlagsAndParameters(){
   cout<<endl<<getName()<<endl;
@@ -1030,8 +1015,8 @@ double ProfileLikelihood::getWimpMass(){
 
 
 void ProfileLikelihood::estimateCrossSection() {
-  if(printLevel>1){
-     cout<<"Fitting "<<Name<<" once, for null hypothesis"<<endl;
+  if( getPrintLevel() < 2){
+     cout<<"Fitting "<<getName()<<" once, for null hypothesis"<<endl;
   }
   resetParameters();
   LogD=maximize(false);
@@ -1040,7 +1025,7 @@ void ProfileLikelihood::estimateCrossSection() {
     cout<<"Technical bug!"<<getName()<<" does not have a 'sigma' param"<<endl; 
     return;
   }
-  if(printLevel>1){
+  if( getPrintLevel() < 2){
      cout<<"Estimated sigma="<<sigmaHat<<" log(d)="<<LogD<<endl;
   }
 }
@@ -1267,7 +1252,7 @@ TGraph* ProfileLikelihood::getGraphOfParameter( int n_points, int param_index){
 
 //--------- Combining several profile likelihoods --------------------
 
-CombinedProfileLikelihood::CombinedProfileLikelihood(string n)
+CombinedProfileLikelihood::CombinedProfileLikelihood(TString n)
                    : ProfileLikelihood(n) {
   combinedMode=false;
   nCommon=0;
@@ -1311,7 +1296,7 @@ void   CombinedProfileLikelihood::combine(ProfileLikelihood* pl) {
 }
 
 bool CombinedProfileLikelihood::checkPValue(){
-  if(printLevel>0) cout<<"Building up combined PL "<<Name<<endl;
+ Info("CombinedProfileLikelihood", "Building up combined PL " + getName() );
 
   // first common parameters
   TRAVERSE_EXPERIMENTS(it) {
@@ -1323,7 +1308,7 @@ bool CombinedProfileLikelihood::checkPValue(){
       if(param->isCommon()){
         int id=param->getId();
         if(parameters.find(id)==parameters.end()){
-          if(printLevel>0) {
+          if(getPrintLevel() < 2) {
              cout<<" adding common parameter "<<id<<" ("<<param->getName()
                  <<")"<<endl;
           }
@@ -1331,7 +1316,7 @@ bool CombinedProfileLikelihood::checkPValue(){
           param->setExperiment(ALL);
         }     
         else if(param->compares(parameters[id],true)) {
-          if(printLevel>0) {
+          if(getPrintLevel() < 2) {
              cout<<" skipping existing common parameter "<<id<<" ("
                  <<param->getName()<<")"<<endl;
           }
@@ -1358,7 +1343,7 @@ bool CombinedProfileLikelihood::checkPValue(){
   }
   sigPar=getParameter(PAR_SIGMA);
   if(sigPar==NULL) {
-    cout<<"There should be a 'SIGMA' parameter in "<<Name<<endl;
+    cout<<"There should be a 'SIGMA' parameter in "<<getName()<<endl;
     return false;
   }
 
@@ -1374,14 +1359,14 @@ bool CombinedProfileLikelihood::checkPValue(){
         int id=ip->first;
         addParameter(param,AUTO);
         param->setExperiment(exp);
-        if(printLevel>0) {
+        if(getPrintLevel() < 2) {
            cout<<" adding specific parameter "<<id<<" ("<<param->getName()
                <<") for experiment "<<exp<<", new id="<<param->getId()<<endl;
         }
       } 
     }
   }
-  if(printLevel>-1) printInitialParameters();
+  if(getPrintLevel() < 2) printInitialParameters();
   return true;
 }
 
@@ -1404,7 +1389,7 @@ double CombinedProfileLikelihood::computeTheLogLikelihood(){
 /*
 void CombinedProfileLikelihood::setWimpMass(double mass){
   if(printLevel>0) {
-    cout<<"Setting mass for "<<Name<<": "<<mass<<endl;
+    cout<<"Setting mass for "<<getName()<<": "<<mass<<endl;
   }
   TRAVERSE_EXPERIMENTS(it) {
     ProfileLikelihood* pl=it->second;
@@ -1544,7 +1529,7 @@ bool CombinedProfileLikelihood::update(){
     sigToEvents += pl->nSignalPerCm2();
   }
   if(printLevel>0) {
-    cout<<"Overall sigma to events for "<<Name<<": "<<sigToEvents<<endl;
+    cout<<"Overall sigma to events for "<<getName()<<": "<<sigToEvents<<endl;
   }
   return initializedOK;
 }

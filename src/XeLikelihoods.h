@@ -8,6 +8,7 @@
 #include <cmath>
 #include <csignal>
 #include <iostream>
+#include <cstdio>
 #include <vector>
 #include <utility>      // std::pair, std::make_pair
 #include "dataHandler.h"
@@ -17,14 +18,14 @@
 
 using namespace std;
 
-class pdfLikelihood :virtual public ProfileLikelihood {
+class pdfLikelihood : public ProfileLikelihood {
 
   public :
 
 	//FIXME   put some comments
 
 	  ~pdfLikelihood();
-	pdfLikelihood(string name, double wimpMass);
+	pdfLikelihood(TString name, double wimpMass);
 
 
         void initialize();

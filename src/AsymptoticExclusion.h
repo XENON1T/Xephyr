@@ -1,9 +1,10 @@
 #ifndef AsymptoticExclusion_h
 #define AsymptoticExclusion_h
+
 #include "XeStat.h"
 #include "XePdfObjects.h"
 #include "TGraphAsymmErrors.h"
-#include "XeCore.h"
+#include "XeUtils.h"
 
 using namespace ROOT;
 using namespace Math;

@@ -1889,18 +1889,3 @@ bool XeMultiGraph::printIt(int level){
 }
 
 
-errorHandler::errorHandler(TString name) : className(name) { }
-
-void errorHandler::Error(TString functionName, TString message){
-
-	cout << className + "::" + functionName + " - ERROR : " + message << endl;
-	//this is a fatal error need to quit or will produce unwanted results
-	exit(100); 
-}
-void errorHandler::Warning(TString functionName, TString message){
-	cout << className + "::" + functionName + " - WARNING : " + message << endl;
-}
-void errorHandler::Info(TString functionName, TString message){
-	cout << className + "::" + functionName + " - INFO : " + message << endl;
-}
-

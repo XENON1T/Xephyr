@@ -5,6 +5,7 @@
 
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 #include <vector>
 #include <set>
 #include <map>
@@ -2126,48 +2127,6 @@ class S1S2Object : virtual public XeGraphics, virtual public XeObject  {
 
      bool  automaticLimits;              /*!< Drawings are in automatic limits*/
    
-};
-
-/**
-  * \class errorHandler
-  * \brief Helper Class to send consistently formatted messages. It allows different levels  of severity for the messages: Info, Warning and Error.
-
-  * Error actually throws an  error with the std::runtime_error() which will 
-  * abort (no so) gracefully and quit  Xephyr, whatever it is doing.
-*/
-
-class errorHandler {
-   public:
-    //! Constructor: @param name: Tag name, typically here you wanna put the
-    //! name of the class for which you wanna handle errors.
-	errorHandler(TString name);
-
-    //! \brief Send an Error message to the user
-    //
-    //! Send a message with ERROR severity, Xephyr will quit.
-    //! @param functionName: Tag identifier, function or in general reference place 
-    //! in the code where this message has been produced. 
-    //! @param message: message to the user.
-    void Error(TString functionName, TString message);
-
-    //! \brief Send a Warning message to the user
-    //
-    //! Send a message with WARNING severity, Xephyr will continue.
-    //! @param functionName: Tag identifier, function or in general reference place 
-    //! in the code where this message has been produced. 
-    //! @param message: message to the user.
-    void Warning(TString functionName, TString message);
-
-
-    //! \brief Send an Info message to the user
-    //
-    //! Send a message with INFO severity, Xephyr will continue.
-    //! @param functionName: Tag identifier, function or in general reference place 
-    //! in the code where this message has been produced. 
-    //! @param message: message to the user.
-	void Info(TString functionName, TString message);
-
-	TString className;	
 };
 
 #endif

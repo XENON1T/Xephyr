@@ -10,7 +10,7 @@ pdfLikelihood::~pdfLikelihood(){
 
 }
 
-pdfLikelihood::pdfLikelihood(string name, double wimpMass) : ProfileLikelihood(name) {  
+pdfLikelihood::pdfLikelihood(TString nam, double wimpMass) : ProfileLikelihood(nam) {  
 	//setting to a dummy experiment value, this parameter is usefull if you want to combine
 	//likelihoods, in that case you need to override it and make sure the two likelihood 
 	//have different "experiment" number.
@@ -242,7 +242,7 @@ double pdfLikelihood::getCurrentNs(){
 
 double pdfLikelihood::computeTheLogLikelihood() {
 
-   if(printLevel > 3)   cout<<"pdfLikelihood::computeTheLogLikelihood - INFO : ENTER"<<endl;
+   Debug("pdfLikelihood::computeTheLogLikelihood"," ENTER");
   //Retriving Parameter of Interest value
     double sigma = POI->getCurrentValue();
 
@@ -258,7 +258,6 @@ double pdfLikelihood::computeTheLogLikelihood() {
 	}
      }
    //---------------------------------------------------------------//
-   if(printLevel > 3)   cout<<"pdfLikelihood::computeTheLogLikelihood - INFO : STAGE 1  sigma val " << sigma <<endl;
 
      // LL = log(likelihood) 
      double LL = 0;
@@ -285,8 +284,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
      	    }
 	
             if (fabs(bkgPdf.Integral()-bkgPdftemp.Integral())>1e-2) {
-		    printf (" OOOHHHHHHHHHHHH background integral : %f %f \n",bkgPdf.Integral(), bkgPdftemp.Integral());
-		    exit(100);
+		    Error("ComputeTheLikelihood", Form("OOOHHHHHHHHHHHH background integral : %f %f \n",bkgPdf.Integral(), bkgPdftemp.Integral()));
 		}
      }
      else{
@@ -321,10 +319,9 @@ double pdfLikelihood::computeTheLogLikelihood() {
      LL += Nobs * log(Ns + Nb ) -Ns - Nb ;  
    //---------------------------------------------------------------//
 
-     if(printLevel > 0)    cout<<"pdfLikelihood::computeTheLogLikelihood - INFO : STAGE 3  Ns "<< Ns << " Nobs " << Nobs  << "   Nb " << Nb <<endl;
-     if(printLevel > 0)    cout<<"pdfLikelihood::computeTheLogLikelihood - INFO : STAGE 3  sigma "<< sigma << " getSignalMultiplier() " <<getSignalMultiplier()  << "   signalPdf.Integral() " << signalPdf.Integral() <<endl;
-     if(printLevel > 1)    cout<<"pdfLikelihood::computeTheLogLikelihood - INFO : STAGE 3  Ns + Nb "<< Ns + Nb <<endl;
-     if(printLevel > 1)    cout<<"pdfLikelihood::computeTheLogLikelihood - INFO : STAGE PoissonTerm "<< Nobs * log(Ns + Nb ) -Ns - Nb <<endl;
+    Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Ns %f    Nobs %f   Nb %f ", Ns , Nobs,  Nb));
+    Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Sigma %f    sigmaMultiplier %f ", getSignalMultiplier() , signalPdf.Integral() ));
+    Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" PoissonTerm %f ",Nobs * log(Ns + Nb ) -Ns - Nb ));
 
 
   
@@ -333,7 +330,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
      Long64_t Nentry  = data->getEntries();  
    
-      if(printLevel > 3)    cout<<"pdfLikelihood::computeTheLogLikelihood - INFO : Nentry "<< Nentry <<endl;
+      Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Nentry %lld ", Nentry ));
      //loop over all data
       for(Long64_t event = 0; event < Nentry; event++){
 	double ts1=data->getS1(event);
@@ -353,18 +350,19 @@ double pdfLikelihood::computeTheLogLikelihood() {
 	     
 	     // check physical result 
 	     if(extended_signal + extended_bkg <=0) {	     
-	     	if(printLevel > 0) cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : NsFs + NbFb <= 0. " << extended_signal  << " <-- NsFs  NbFb--> " << extended_bkg << endl;
+	      	Warning("pdfLikelihood::computeTheLogLikelihood" , "NsFs + NbFb <= 0 ");
+	     	//if(printLevel > 0) cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : NsFs + NbFb <= 0. " << extended_signal  << " <-- NsFs  NbFb--> " << extended_bkg << endl;
 	     	return VERY_SMALL;
 	     }
 
 	     extended_term += tweight * log( (extended_signal + extended_bkg) / (Ns + Nb) ) ; //data weight is 1 for DM data and whatever for asimov
 
-	     if(printLevel > 0)    cout<<"....................... - INFO : STAGE 3.1  ex_S "<< extended_signal << "   ex_B "<< extended_bkg << "  W " << tweight << " ex-T " << extended_term   <<endl;
+	   //  if(printLevel > 0)    cout<<"....................... - INFO : STAGE 3.1  ex_S "<< extended_signal << "   ex_B "<< extended_bkg << "  W " << tweight << " ex-T " << extended_term   <<endl;
      }
      
      LL += extended_term ;
    //---------------------------------------------------------------//
-     if(printLevel > 1)  cout<<"pdfLikelihood::computeTheLogLikelihood - INFO : STAGE 4  extendedTerm "<< extended_term   <<endl;
+      Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Extended term %f ", extended_term ));
 
 
 
@@ -374,8 +372,8 @@ double pdfLikelihood::computeTheLogLikelihood() {
 	     // in this case safeguard can bring problem.
 	     double epsilon = safeGuardParam->getCurrentValue() ;
 	     if(  epsilon <= 0. ) {
-	     	    if(printLevel > 1) cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : safeguard not safe " <<  endl;
-		    return VERY_SMALL; 
+				 Warning("computeTheLogLikelihood", "safeguard not safe");
+			     return VERY_SMALL; 
 	     }
     	     LL += LLsafeGuard();
      }     
@@ -391,7 +389,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
 
   
-     if(printLevel > 3)      cout << "computeTheLogLikelihood = " << LL << endl;
+	 Debug("computeTheLogLikelihood", Form("LogLike %f", LL));
 
   return LL;
 
@@ -468,7 +466,7 @@ histoCompare pdfLikelihood::getModelCompare(){
      c.addHistoToList(signalPdf,"WIMP");
 
 
-     Info("Model Comparison", ".....");
+    // Info("Model Comparison", ".....");
      cout <<"Data   " << dataHisto->Integral() << endl;;     
      cout <<"Bkg    "  << bkgIntegral << endl;;     
      if(scaleFactorSignal != 0.) 
@@ -563,7 +561,7 @@ bool pdfLikelihood::isNegativeAnywhere(TH2F histo){
 
 	for(int k=1; k <= histo.GetNcells(); k++){
 		if(histo.GetBinContent(k) < 0. ) {
-	     		if(printLevel > -1) cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : safeGuard component <= 0 "<< histo.GetBinContent(k) << endl;
+	     	Warning("computeTheLogLikelihood", Form(" safeGuard component <= 0 --> %f ", histo.GetBinContent(k) ));
 			return true;
 		}
 	}
@@ -594,7 +592,7 @@ double pdfLikelihood::LLsafeGuard(){
 	     safeguard_only.Add(safeguardAdditionalComponent);
 
      double safeguard_only_integral=safeguard_only.Integral();
-   if(printLevel > 4)  cout << "safeguard_only_integral=safeguard_only.Integral  = " << safeguard_only_integral << endl;
+     //if(printLevel > 4)  cout << "safeguard_only_integral=safeguard_only.Integral  = " << safeguard_only_integral << endl;
      //loop over all data
      for(Long64_t event = 0; event < Nentry; event++){
        double ts1=calibrationData->getS1(event);
@@ -611,14 +609,14 @@ double pdfLikelihood::LLsafeGuard(){
 
 	     // check physical result 
 	     if(NbFb <=0) {	     
-	     	if(printLevel > 1) cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : safeGuard component <= 0. " << NbFb << endl;
+	     	//if(printLevel > 1) cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : safeGuard component <= 0. " << NbFb << endl;
 	     	return VERY_SMALL;
 	     }
 
 	     //	     LL +=  log( NbFb / safeguard_only.Integral() ) ;
 	     LL +=  log( NbFb / safeguard_only_integral ) ; 
 
-	     if(printLevel > 4)    cout<<"....................... - INFO : Safeguard NB*Fb(x)" << NbFb << "  LL for data i " << LL << endl;
+	     //if(printLevel > 4)    cout<<"....................... - INFO : Safeguard NB*Fb(x)" << NbFb << "  LL for data i " << LL << endl;
      }
      
      return LL ;
