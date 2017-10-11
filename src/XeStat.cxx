@@ -263,29 +263,29 @@ void LKParameter::freeze(bool doFreeze){
 }
 
 void LKParameter::printHeader(){
-  cout<<formatI(id,3)
-      <<" "<<leftJustify(getName(),20)
-      <<" "<<getTypeName() << endl;
+  cout<<formatI(id,3).Data()
+      <<" "<<leftJustify(getName(),20).Data()
+      <<" "<<getTypeName().Data() ; //<< endl;
 }
 
 void LKParameter::printInitial(){
   printHeader();
-  cout<<formatG(initialValue,8,2)
-      <<formatG(step,8,2)
-      <<formatG(minimum,8,2)
-      <<formatG(maximum,8,2)
+  cout<<formatG(initialValue,8,2).Data()
+      <<formatG(step,8,2).Data()
+      <<formatG(minimum,8,2).Data()
+      <<formatG(maximum,8,2).Data()
       <<endl;
 }
 
 void LKParameter::printCurrent(bool withError){
   printHeader();
-  cout<<" "<<formatRG(currentValue,8,2);
+  cout<<" "<<formatRG(currentValue,8,2).Data();
   if(withError && (type==PARAMETER_OF_INTEREST || type==NUISANCE_PARAMETER || type==FREE_PARAMETER)) {
-    if(sigma>0.) cout<<" +- "<<formatLG(sigma,8,2);
+    if(sigma>0.) cout<<" +- "<<formatLG(sigma,8,2).Data();
     else         cout<<" +-     (undef)";
   }
   else           cout<<"                ";
-  cout<<" "<<formatRG(getCurrentValueInMinuitUnits(),8,2)<<endl;
+  cout<<" "<<formatRG(getCurrentValueInMinuitUnits(),8,2).Data()<<endl;
 }
 
 SigmaParameter::~SigmaParameter(){}
@@ -569,7 +569,7 @@ void Likelihood::printResultParameters(){
 void Likelihood::printCurrentParameters(){
   printCurrentHeader(); 
   TRAVERSE_PARAMETERS(it) { 
-    LKParameter *p=it->second; 
+    LKParameter *p=it->second;
     p->printCurrent(false); 
   }
 }
@@ -753,7 +753,7 @@ double Likelihood::maximize(bool freezeParametersOfInterest){
   min->SetMaxFunctionCalls(1000000); // for Minuit/Minuit2       //TEST_ALE was 100000
   min->SetMaxIterations(100000);  // for GSL                     //was           10000
   min->SetTolerance(0.001); 					// was 0.01		
-  min->SetPrintLevel(0);
+  min->SetPrintLevel(-1);   // quiet
   for(int i=0;i<np;i++){
     LKParameter* par=MinuitParameters[i];
    TString pnS= par->getName();
