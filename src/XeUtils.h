@@ -90,8 +90,8 @@ public:
      static TString  lowerCase(TString s);
      static TString  trim(TString s);
      static TString  justify(TString s, int w, bool left,bool trim);
-     static TString  Justify(TString s,int w, bool trim=false);
      static TString  rightJustify(TString s, int w, bool trim=false);
+     static TString  leftJustify(TString s,int w, bool trim=false);
      static TString  format0I(int v, int w=1);
      static TString  formatLI(int v, int w=1, int p=1);
      static TString  formatRI(int v, int w=1, int p=1);
@@ -103,7 +103,6 @@ public:
      static TString  formatLG(double v, int w=1, int p=1);
      static TString  formatRG(double v, int w=1, int p=1);
      static TString  formatI(int v, int w=1, int trailer=0);
-     static TString  leftJustify(TString s,int w, bool trim=false);
      static TString  doOrDont(bool b) ;
 
 

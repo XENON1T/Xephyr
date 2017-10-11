@@ -133,9 +133,24 @@ TString printTools::trim(TString str){
 }
 
 
+TString printTools::justify(TString s, int w, bool left, bool trm){
+  if(trm) s=trim(s);
+  int l=s.Length();
+  if(l>=w) return s;
+  if(left) return s+string(w-l,' ');
+  else return string(w-l,' ')+s;
+}
+
+
 
 TString printTools::leftJustify(TString s,int w,bool trm) {
   return justify(s,w,true,trm);
 }
+
+TString printTools::rightJustify(TString s, int w, bool trm){
+  return justify(s,w,false,trm);
+}
+
+
 
 TString printTools::doOrDont(bool b) {return b? "":"don't";}

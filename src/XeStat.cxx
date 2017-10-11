@@ -753,7 +753,7 @@ double Likelihood::maximize(bool freezeParametersOfInterest){
   min->SetMaxFunctionCalls(1000000); // for Minuit/Minuit2       //TEST_ALE was 100000
   min->SetMaxIterations(100000);  // for GSL                     //was           10000
   min->SetTolerance(0.001); 					// was 0.01		
-//  min->SetPrintLevel(0);
+  min->SetPrintLevel(0);
   for(int i=0;i<np;i++){
     LKParameter* par=MinuitParameters[i];
    TString pnS= par->getName();
