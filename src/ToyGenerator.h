@@ -24,12 +24,14 @@ class ToyGenerator: public errorHandler {
         void setLikelihood(pdfLikelihood *like) {likeHood = like;};
 
         //! \brief the total number of events to which the calibtration pdfs will be rescaled.
+        //
         //! The fraction of events given to each pdf component is defined in the likelihood. 
         //! This is just an overall scale.
         void setAverageCalibrationEvents(double evnt) {averageCalEvnt = evnt;} ;
 
 
         //! \brief the total number of events to which the science data pdfs will be rescaled.
+        //
         //! This overrides the number of events set in the likelihood.
         //! The fraction of events given to each pdf component is defined in the likelihood. 
         //! This is just an overall scale. Typically you don't want to set this, but you must 
@@ -46,6 +48,7 @@ class ToyGenerator: public errorHandler {
         void setSeed(int seed);
 
         //! \brief this will randomize the nominal value of the nuissance parameters, according to their distro.
+        //
         //! The generated toys will not be generated now from nominal distro. YOU MUST change seed
         //! for each repetition of this.
         void randomizeNuissanceParameter();
