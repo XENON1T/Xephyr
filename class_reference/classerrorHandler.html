@@ -85,6 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classerrorHandler-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">errorHandler Class Reference</div>  </div>
@@ -94,16 +95,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Helper Class to send consistently formatted messages. It allows different levels of severity for the messages: Info, Warning and Error.  
  <a href="classerrorHandler.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="XeCore_8h_source.html">XeCore.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="XeUtils_8h_source.html">XeUtils.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for errorHandler:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classerrorHandler.png" usemap="#errorHandler_map" alt=""/>
   <map id="errorHandler_map" name="errorHandler_map">
-<area href="classdataHandler.html" alt="dataHandler" shape="rect" coords="0,56,93,80"/>
-<area href="classhistoCompare.html" alt="histoCompare" shape="rect" coords="103,56,196,80"/>
-<area href="classpdfComponent.html" alt="pdfComponent" shape="rect" coords="206,56,299,80"/>
+<area href="classdataHandler.html" alt="dataHandler" shape="rect" coords="0,56,134,80"/>
+<area href="classhistoCompare.html" alt="histoCompare" shape="rect" coords="144,56,278,80"/>
+<area href="classpdfComponent.html" alt="pdfComponent" shape="rect" coords="288,56,422,80"/>
+<area href="classToyGenerator.html" alt="ToyGenerator" shape="rect" coords="432,56,566,80"/>
+<area href="classXeStat.html" alt="XeStat" shape="rect" coords="576,56,710,80"/>
+<area href="classAsymptoticExclusion.html" alt="AsymptoticExclusion" shape="rect" coords="432,112,566,136"/>
+<area href="classLikelihood.html" alt="Likelihood" shape="rect" coords="576,112,710,136"/>
+<area href="classLKParameter.html" alt="LKParameter" shape="rect" coords="720,112,854,136"/>
+<area href="classProfileLikelihood.html" alt="ProfileLikelihood" shape="rect" coords="576,168,710,192"/>
+<area href="classscaleSys.html" alt="scaleSys" shape="rect" coords="864,168,998,192"/>
+<area href="classshapeSys.html" title="it represents a Shape Systematic. It inherits from LKParameter. Here you can use the LKParameter func..." alt="shapeSys" shape="rect" coords="864,224,998,248"/>
+<area href="classSigmaParameter.html" alt="SigmaParameter" shape="rect" coords="864,280,998,304"/>
+<area href="classTEfficiencyParameter.html" alt="TEfficiencyParameter" shape="rect" coords="864,336,998,360"/>
+<area href="classTGaussParameter.html" alt="TGaussParameter" shape="rect" coords="864,392,998,416"/>
+<area href="classTLEffParameter.html" alt="TLEffParameter" shape="rect" coords="864,448,998,472"/>
+<area href="classTQyParameter.html" alt="TQyParameter" shape="rect" coords="864,504,998,528"/>
+<area href="classTStatBkgParameter.html" alt="TStatBkgParameter" shape="rect" coords="864,560,998,584"/>
+<area href="classTSystBkgParameter.html" alt="TSystBkgParameter" shape="rect" coords="864,616,998,640"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -120,12 +136,32 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a73a8d5ef2b239229be91213a15597a17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a73a8d5ef2b239229be91213a15597a17">Info</a> (TString functionName, TString message)</td></tr>
 <tr class="memdesc:a73a8d5ef2b239229be91213a15597a17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an Info message to the user.  <a href="#a73a8d5ef2b239229be91213a15597a17">More...</a><br/></td></tr>
 <tr class="separator:a73a8d5ef2b239229be91213a15597a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d4b552a426289906710c6855506ae14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a1d4b552a426289906710c6855506ae14">Debug</a> (TString functionName, TString message)</td></tr>
+<tr class="memdesc:a1d4b552a426289906710c6855506ae14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a Debug message to the user.  <a href="#a1d4b552a426289906710c6855506ae14">More...</a><br/></td></tr>
+<tr class="separator:a1d4b552a426289906710c6855506ae14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8abfce01e4c3bd9bf7810741b9dbeea1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a8abfce01e4c3bd9bf7810741b9dbeea1">setPrintLevel</a> (int level)</td></tr>
+<tr class="memdesc:a8abfce01e4c3bd9bf7810741b9dbeea1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the local printing level (for this instance only)  <a href="#a8abfce01e4c3bd9bf7810741b9dbeea1">More...</a><br/></td></tr>
+<tr class="separator:a8abfce01e4c3bd9bf7810741b9dbeea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44e34b712a579e00cfc8e23bceae98b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44e34b712a579e00cfc8e23bceae98b3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a44e34b712a579e00cfc8e23bceae98b3">getPrintLevel</a> ()</td></tr>
+<tr class="memdesc:a44e34b712a579e00cfc8e23bceae98b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current print level for this instance. remind that if you set with setPrintLevel this will override the global print level. <br/></td></tr>
+<tr class="separator:a44e34b712a579e00cfc8e23bceae98b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a10dd01d847afd87386afeedc93e98460"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10dd01d847afd87386afeedc93e98460"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>localPrintLevel</b></td></tr>
+<tr class="separator:a10dd01d847afd87386afeedc93e98460"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07f838eebf13b018a0892214d5998015"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07f838eebf13b018a0892214d5998015"></a>
-TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td></tr>
+TString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a07f838eebf13b018a0892214d5998015">className</a></td></tr>
+<tr class="memdesc:a07f838eebf13b018a0892214d5998015"><td class="mdescLeft">&#160;</td><td class="mdescRight">global print level of all objects, modify this with <a class="el" href="classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123" title="local print level for this instance modify it with setPrintLevel. ">errorHandler::globalPrintLevel</a>. <br/></td></tr>
 <tr class="separator:a07f838eebf13b018a0892214d5998015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:aa5abc1d5f2db3898f40c393721d7b123"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123">globalPrintLevel</a> = 1</td></tr>
+<tr class="memdesc:aa5abc1d5f2db3898f40c393721d7b123"><td class="mdescLeft">&#160;</td><td class="mdescRight">local print level for this instance modify it with setPrintLevel.  <a href="#aa5abc1d5f2db3898f40c393721d7b123">More...</a><br/></td></tr>
+<tr class="separator:aa5abc1d5f2db3898f40c393721d7b123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helper Class to send consistently formatted messages. It allows different levels of severity for the messages: Info, Warning and Error. </p>
@@ -155,6 +191,42 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a1d4b552a426289906710c6855506ae14"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void errorHandler::Debug </td>
+          <td>(</td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>functionName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send a Debug message to the user. </p>
+<p>Send a message with DEBUG severity, Xephyr will continue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">functionName</td><td>Tag identifier, function or in general reference place in the code where this message has been produced. </td></tr>
+    <tr><td class="paramname">message</td><td>message to the user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a0d5f801832b893cf411e84fbb5177e24"></a>
 <div class="memitem">
 <div class="memproto">
@@ -227,6 +299,39 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
 
 </div>
 </div>
+<a class="anchor" id="a8abfce01e4c3bd9bf7810741b9dbeea1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void errorHandler::setPrintLevel </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>level</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the local printing level (for this instance only) </p>
+<p>The print level is defined globally, if you want to modify, increase reduce the verbosity of this particular instance you can set its print level. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">level</td><td>the print level you wanna set. Default is &lt; 0 which means all, 0 = Debug + Info + Warning + Error, 1 = Info + Warning + Error, 2 = Warning + Error, 3 = Error only. you can modify the global print level with <a class="el" href="classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123" title="local print level for this instance modify it with setPrintLevel. ">errorHandler::globalPrintLevel</a> = XX </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a75f056715257f6e9ebd9bd03a39ed1de"></a>
 <div class="memitem">
 <div class="memproto">
@@ -263,9 +368,33 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="aa5abc1d5f2db3898f40c393721d7b123"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int errorHandler::globalPrintLevel = 1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>local print level for this instance modify it with setPrintLevel. </p>
+<p>global print level by default set to all. 0 = Debug-print all, 1 = Info + Warning + Error, 2 = Warning + Error, 3 = Only error </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>SOURCE/src/<a class="el" href="XeCore_8h_source.html">XeCore.h</a></li>
-<li>SOURCE/src/XeCore.cxx</li>
+<li>SOURCE/src/<a class="el" href="XeUtils_8h_source.html">XeUtils.h</a></li>
+<li>SOURCE/src/XeUtils.cxx</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

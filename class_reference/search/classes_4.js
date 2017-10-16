@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['flattener',['Flattener',['../classFlattener.html',1,'']]]
+  ['histocompare',['histoCompare',['../classhistoCompare.html',1,'']]]
 ];

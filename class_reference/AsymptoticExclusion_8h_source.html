@@ -89,26 +89,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef AsymptoticExclusion_h</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define AsymptoticExclusion_h</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;XeStat.h&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;XePdfObjects.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;TGraphAsymmErrors.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;XeCore.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">using namespace </span>ROOT;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">using namespace </span>Math;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classAsymptoticExclusion.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classAsymptoticExclusion.html">AsymptoticExclusion</a> : <span class="keyword">public</span> <a class="code" href="classXeObject.html">XeObject</a>{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    ~<a class="code" href="classAsymptoticExclusion.html">AsymptoticExclusion</a>();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classAsymptoticExclusion.html">AsymptoticExclusion</a>(<a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a> *pl, <span class="keywordtype">double</span> confidenceLevel);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a>* getProfileLikelihood() {<span class="keywordflow">return</span> plike;};</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    TGraphAsymmErrors  getExpectedMedian()    {<span class="keywordflow">return</span> expectedMedian;};</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    TGraphAsymmErrors  getExpected2Sigma()    {<span class="keywordflow">return</span> expected2Sigma;};</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        TGraph             getObservedLimit()     {<span class="keywordflow">return</span> observedLimit;};</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">double</span>         getMass()          {<span class="keywordflow">return</span> plike-&gt;getWimpMass();};</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    TString        getName()          {<span class="keywordflow">return</span> name;};</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;XeStat.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;XePdfObjects.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;TGraphAsymmErrors.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;XeUtils.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">using namespace </span>ROOT;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">using namespace </span>Math;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classAsymptoticExclusion.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classAsymptoticExclusion.html">AsymptoticExclusion</a> : <span class="keyword">public</span> <a class="code" href="classXeStat.html">XeStat</a>{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    ~<a class="code" href="classAsymptoticExclusion.html">AsymptoticExclusion</a>();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="classAsymptoticExclusion.html">AsymptoticExclusion</a>(<a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a> *pl, <span class="keywordtype">double</span> confidenceLevel);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a>* getProfileLikelihood() {<span class="keywordflow">return</span> plike;};</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    TGraphAsymmErrors  getExpectedMedian()    {<span class="keywordflow">return</span> expectedMedian;};</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    TGraphAsymmErrors  getExpected2Sigma()    {<span class="keywordflow">return</span> expected2Sigma;};</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        TGraph             getObservedLimit()     {<span class="keywordflow">return</span> observedLimit;};</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">double</span>         getMass()          {<span class="keywordflow">return</span> plike-&gt;getWimpMass();};</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">void</span> generateAndSetAsimov(<span class="keywordtype">double</span> mu_prime);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
@@ -189,31 +189,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">int</span>          nScanPoints;   <span class="comment">// Number of points for which mu is computed in limit calculation, default 100.</span></div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    TString          name;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    vector&lt;double&gt;       asimovSigmaSet;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    vector&lt;double&gt;       muStepsSet;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordtype">double</span>           cl;            <span class="comment">// confidence level DEFAULT = 0.1</span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordtype">double</span>           stored3Sigma_mu;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordtype">double</span>           storedMedian_mu;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordtype">double</span>           scanMin;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordtype">double</span>           scanMax;   </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    vector&lt;double&gt;       asimovSigmaSet;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    vector&lt;double&gt;       muStepsSet;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordtype">double</span>           cl;            <span class="comment">// confidence level DEFAULT = 0.1</span></div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordtype">double</span>           stored3Sigma_mu;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordtype">double</span>           storedMedian_mu;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordtype">double</span>           scanMin;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordtype">double</span>           scanMax;   </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordtype">bool</span>             useQtilde;</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordtype">bool</span>             useQtilde;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordtype">double</span>               AlternativeX;</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordtype">double</span>               AlternativeX;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;};</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;};</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="classXeStat_html"><div class="ttname"><a href="classXeStat.html">XeStat</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:180</div></div>
 <div class="ttc" id="classAsymptoticExclusion_html_a725c0181a68acd5ffd09bddb49408a7e"><div class="ttname"><a href="classAsymptoticExclusion.html#a725c0181a68acd5ffd09bddb49408a7e">AsymptoticExclusion::setAlternativeXAxisVal</a></div><div class="ttdeci">void setAlternativeXAxisVal(double x)</div><div class="ttdef"><b>Definition:</b> AsymptoticExclusion.h:138</div></div>
-<div class="ttc" id="classAsymptoticExclusion_html"><div class="ttname"><a href="classAsymptoticExclusion.html">AsymptoticExclusion</a></div><div class="ttdef"><b>Definition:</b> AsymptoticExclusion.h:16</div></div>
+<div class="ttc" id="classAsymptoticExclusion_html"><div class="ttname"><a href="classAsymptoticExclusion.html">AsymptoticExclusion</a></div><div class="ttdef"><b>Definition:</b> AsymptoticExclusion.h:17</div></div>
 <div class="ttc" id="classAsymptoticExclusion_html_afe7f77aa9f4b0af3aebdce15c92142b6"><div class="ttname"><a href="classAsymptoticExclusion.html#afe7f77aa9f4b0af3aebdce15c92142b6">AsymptoticExclusion::setNscanPoints</a></div><div class="ttdeci">void setNscanPoints(int nPoints)</div><div class="ttdef"><b>Definition:</b> AsymptoticExclusion.h:101</div></div>
-<div class="ttc" id="classXeObject_html"><div class="ttname"><a href="classXeObject.html">XeObject</a></div><div class="ttdef"><b>Definition:</b> XeCore.h:580</div></div>
-<div class="ttc" id="classProfileLikelihood_html"><div class="ttname"><a href="classProfileLikelihood.html">ProfileLikelihood</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:646</div></div>
+<div class="ttc" id="classProfileLikelihood_html"><div class="ttname"><a href="classProfileLikelihood.html">ProfileLikelihood</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:722</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

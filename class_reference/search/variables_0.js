@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['automaticlimits',['automaticLimits',['../classS1S2Object.html#aa0751971381c14a908dddcd3a228ecf8',1,'S1S2Object']]]
+  ['binmax',['binMax',['../classhistoCompare.html#abd126153f49a9ea23f1474f0df148337',1,'histoCompare']]],
+  ['binmin',['binMin',['../classhistoCompare.html#a413eef0a9172aa330a074a7c4714f53e',1,'histoCompare']]]
 ];

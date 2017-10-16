@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['massrange',['MassRange',['../classMassRange.html',1,'']]],
-  ['methodcounter',['MethodCounter',['../classMethodCounter.html',1,'']]]
+  ['xestat',['XeStat',['../classXeStat.html',1,'']]],
+  ['xeversion',['XeVersion',['../classXeVersion.html',1,'']]]
 ];

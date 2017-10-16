@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['canvas',['canvas',['../classXeGraphics.html#ad6e39e98457c2aee1831fd54ea7eb043',1,'XeGraphics']]]
+  ['globalprintlevel',['globalPrintLevel',['../classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123',1,'errorHandler']]]
 ];
