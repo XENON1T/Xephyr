@@ -1,5 +1,5 @@
 cp Xephyr/pacman/CMakeLists.txt .
-python Xephyr/pacman/check.py
+python3.4 Xephyr/pacman/check.py
 cd build
 cmake ..
 make
