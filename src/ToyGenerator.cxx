@@ -17,12 +17,49 @@ void ToyGenerator::setSeed(int seed){
 }
 
 
+void ToyGenerator::saveParameters(TTree *tree){
+    
+    TList *config = tree->GetUserInfo();
+
+    map <int, LKParameter*> *params = likeHood->getParameters();
+    for(ParameterIterator ip=params->begin(); ip!=params->end(); ip++){
+            
+        LKParameter *param = ip->second;
+        TParameter<double> *temp_p = new TParameter<double>(param->getName(), param->getCurrentValue());
+
+        config->Add(temp_p);
+    }
+    
+}
+
 void ToyGenerator::generateCalibration(int N){
 
 }
 
 
 void ToyGenerator::generateData(double mu, int N){
+
+    // the idea is to generate N toys with the current seed
+    // Each dataset will contain as average averageDataEvnt events
+    // which will be Poisson random distributed.
+
+    // set the parameter of interest to the specified value
+    likeHood->getParameter(PAR_SIGMA)->setCurrentValue(mu);
+
+    TFile f(dir+treeName+".root","RECREATE");
+
+    
+    
+    TTree toyTree (treeName, "generated toy data");
+
+    saveParameters(&toyTree);
+       
+    for(int evnt =0; evnt < N ; evnt++){
+
+    }
+
+    toyTree.Write();
+    f.Close();
 
 }
 

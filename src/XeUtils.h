@@ -68,16 +68,18 @@ class errorHandler {
     int  getPrintLevel()  {return (localPrintLevel > 0 ? localPrintLevel : globalPrintLevel) ;};
 
    
-    int localPrintLevel;              //! local print level for this instance modify it with setPrintLevel.
+    int localPrintLevel;              /*!< local print level for this instance modify it with setPrintLevel. */
     
-    static int globalPrintLevel;      //! global print level of all objects, modify this with errorHandler::globalPrintLevel.
-                                      // and you'll modify all.
+    static int globalPrintLevel;      /*<! global print level of all objects, modify this with errorHandler::globalPrintLevel.
+                                       and you'll modify all. */
     
     TString className;	
 };
 
-
-
+/**
+ * \class printTools
+ * \brief printing helpers, probably you wont use this class
+ */
 class printTools {
 
 

@@ -4,9 +4,14 @@
 
 #include "TRandom.h"
 #include "TString.h"
+#include "TFile.h"
+#include "TTree.h"
+#include "TList.h"
 #include "XeUtils.h"
 #include "XeLikelihoods.h"
+#include "TParameter.h"
 #include "XeStat.h"
+#include "TTree.h"
 #include <map>
 
 /**
@@ -56,6 +61,8 @@ class ToyGenerator: public errorHandler {
 
 
     private:
+        
+        void saveParameters(TTree *f);
 
         double    averageCalEvnt;
         double    averageDataEvnt;
