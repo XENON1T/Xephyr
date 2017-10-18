@@ -17,17 +17,23 @@
 
 using namespace std;
 
+/**
+ * \class pdfLikelihood
+ * \brief implements 2D pdf profiled likelihood fitting.
+ * 
+ * It expects as inputs pdfObjects. It also implements safeguard.
+ */
 class pdfLikelihood : public ProfileLikelihood {
 
   public :
 
-	//FIXME   put some comments
+	//FIXME  TODO put some comments
 
-	  ~pdfLikelihood();
+	~pdfLikelihood();
 	pdfLikelihood(TString name, double wimpMass);
 
 
-        void initialize();
+    void initialize();
 
 	void setData(int dataType);
 
@@ -77,21 +83,24 @@ class pdfLikelihood : public ProfileLikelihood {
         // used by drawAllOnProjection()
 	histoCompare getModelCompare();
 
-	//returns (1-epsilon)Fb(x,y) + epsilon*Fs(x,y) with all 
-	// uncertainties interpolated and added.
-	// this term is a full bkg pdf including also the non safeguarded bkgs
-	// TO BE USED IN THE "physics" likelihood
+	/**
+	 * returns (1-epsilon)Fb(x,y) + epsilon*Fs(x,y) with all 
+	 * uncertainties interpolated and added.
+	 * this term is a full bkg pdf including also the non safeguarded bkgs
+	 * TO BE USED IN THE "physics" likelihood
+	*/
 	TH2F getSafeguardedBkgPdf();
 
-	// returns (1-epsilon)Fb(x,y) + epsilon*Fs(x,y) for all bkg components that
-	// are considered for dafeguard, with all uncertainties 
-	// interpolated and added.
-	// TO BE USED in the fit to calibration
+	/**
+	 *  returns (1-epsilon)Fb(x,y) + epsilon*Fs(x,y) for all bkg components that
+	 * are considered for dafeguard, with all uncertainties 
+	 * interpolated and added. TO BE USED in the fit to calibration
+	 */
 	TH2F getSafeguardedBkgPdfOnly();
 
 	vector <pdfComponent*> bkg_components;
         
-	// says if a bkg component needs to be safeguarded.
+	//! \brief says if a bkg component needs to be safeguarded.
 	vector <bool>    safeguarded_bkg_components; 
 
 	// is an additional component to be added in the fit to calibration for
@@ -103,12 +112,12 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	double LLsafeGuard();	
 
-	// returns the number of bkg components that ask for safeguard
+	//! \brief returns the number of bkg components that ask for safeguard
 	int   numberOfSafeguarded();	
 	
 	pdfComponent           *signal_component;
 
-	dataHandler	       *data;
+	dataHandler	       		*data;
 	
 	dataHandler            *calibrationData;	
 

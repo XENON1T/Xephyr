@@ -6,7 +6,8 @@
 #include "TString.h"
 #include "XeUtils.h"
 #include "XeLikelihoods.h"
-
+#include "XeStat.h"
+#include <map>
 
 /**
  * \class ToyGenerator 

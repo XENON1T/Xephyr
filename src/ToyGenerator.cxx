@@ -27,5 +27,38 @@ void ToyGenerator::generateData(double mu, int N){
 }
 
 void ToyGenerator::randomizeNuissanceParameter(){
+    map <int, LKParameter*> *params = likeHood->getParameters();
+
+    for(ParameterIterator ip=params->begin(); ip!=params->end(); ip++){
+        Info("randomizeNuissanceParameter", "Randomizing parameters:");
+
+        LKParameter *param = ip->second;
+        if(param->getType() == FIXED_PARAMETER || param->isOfInterest() ) 
+            { Info("===> Skipping paramater: ", param->getName()); continue; }
+        
+        // getting range
+        double min = param->getMinimum();
+        double max = param->getMaximum();
+        
+        // if param is Free then sample uniform otherwise gauss
+        double random_tvalue = 0.;
+        if(param->getType() == FREE_PARAMETER ){
+            Warning("===> Following parameter is FREE and will be extracted from uniform distro, maybe you don\'t want this.", param->getName());
+            random_tvalue = randomizeMyass.Uniform(min,max);
+        }
+        else{ 
+            random_tvalue = randomizeMyass.Gaus(0.,1.);
+            // extract again if out of range
+            while(random_tvalue > max || random_tvalue < min)
+                random_tvalue = randomizeMyass.Gaus(0.,1.);
+        }
+
+        param->setCurrentValue(random_tvalue);
+
+    }
+
+
+    likeHood->printCurrentParameters();
+
 
 }

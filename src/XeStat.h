@@ -59,7 +59,7 @@ enum parameterType   { PARAMETER_OF_INTEREST
                      , NUISANCE_PARAMETER
                      , FIXED_PARAMETER
                      , FROZEN_PARAMETER
-		     , FREE_PARAMETER
+                     , FREE_PARAMETER
                      , N_PARAMETER_TYPES
                      } ;
 
