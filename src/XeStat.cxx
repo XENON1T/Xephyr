@@ -285,7 +285,8 @@ void LKParameter::printCurrent(bool withError){
     else         cout<<" +-     (undef)";
   }
   else           cout<<"                ";
-  cout<<" "<<formatRG(getCurrentValueInMinuitUnits(),8,2).Data()<<endl;
+  //cout<<" "<<formatRG(getCurrentValueInMinuitUnits(),8,2).Data()<<endl;
+  cout<<" "<<endl;
 }
 
 SigmaParameter::~SigmaParameter(){}
@@ -403,7 +404,7 @@ void Likelihood::printInitialHeader(){
 }
 
 void Likelihood::printCurrentHeader(){
-  cout<<" Id Name                 Type         Exp  Value               For Minuit"
+  cout<<" Id Name                 Type         Current Value               Uncertainty"
       <<endl;
 }
 
