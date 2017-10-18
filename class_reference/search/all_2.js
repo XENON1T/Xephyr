@@ -1,7 +1,6 @@
 var searchData=
 [
   ['checkanalysismode',['checkAnalysisMode',['../classXeStat.html#abc3c28e43d503d41465c564e3fc002f8',1,'XeStat']]],
-  ['classname',['className',['../classerrorHandler.html#a07f838eebf13b018a0892214d5998015',1,'errorHandler']]],
   ['combinedprofilelikelihood',['CombinedProfileLikelihood',['../classCombinedProfileLikelihood.html',1,'']]],
   ['compare',['compare',['../classhistoCompare.html#a288e3fffb7714ba6cad7370a25b4c08b',1,'histoCompare']]],
   ['comparewithratio',['compareWithRatio',['../classhistoCompare.html#acf81c4912c052c1fb92fd1d4efa1ced9',1,'histoCompare']]],

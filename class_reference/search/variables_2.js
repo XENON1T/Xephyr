@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['globalprintlevel',['globalPrintLevel',['../classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123',1,'errorHandler']]]
+  ['localprintlevel',['localPrintLevel',['../classerrorHandler.html#a10dd01d847afd87386afeedc93e98460',1,'errorHandler']]],
+  ['logd',['LogD',['../classLikelihood.html#ab0928598bc9fd12a78e136a236fc343d',1,'Likelihood']]]
 ];

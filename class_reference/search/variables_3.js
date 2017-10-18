@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logd',['LogD',['../classLikelihood.html#ab0928598bc9fd12a78e136a236fc343d',1,'Likelihood']]]
+  ['myshapeunc',['myShapeUnc',['../classpdfComponent.html#aad97c48b86745672f396a9cced85efe3',1,'pdfComponent']]]
 ];

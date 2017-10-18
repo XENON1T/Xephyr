@@ -1,23 +1,6 @@
 var searchData=
 [
-  ['setalternativexaxisval',['setAlternativeXAxisVal',['../classAsymptoticExclusion.html#a725c0181a68acd5ffd09bddb49408a7e',1,'AsymptoticExclusion']]],
-  ['setanalysismode',['setAnalysisMode',['../classXeStat.html#a5026f877d22f525e671fb49f0445971f',1,'XeStat']]],
-  ['setaveragecalibrationevents',['setAverageCalibrationEvents',['../classToyGenerator.html#aab2479ab9945243c106cc025d9efdcef',1,'ToyGenerator']]],
-  ['setaveragedataevents',['setAverageDataEvents',['../classToyGenerator.html#af5156e903fd4c78e25460a74546702dd',1,'ToyGenerator']]],
-  ['setbasehisto',['setBaseHisto',['../classhistoCompare.html#ab570f4c95234792595f4ff7506527ac6',1,'histoCompare']]],
-  ['setcommon',['setCommon',['../classLKParameter.html#ae07b33fdf400cc3ca18236d3e7814bdb',1,'LKParameter']]],
-  ['setexperiment',['setExperiment',['../classXeStat.html#a11a8eefbaed533896170701924697bd9',1,'XeStat']]],
-  ['setlikelihood',['setLikelihood',['../classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3',1,'ToyGenerator']]],
-  ['setname',['setName',['../classXeStat.html#a5c46e5184568b56cd0d2df3655cd5f9f',1,'XeStat']]],
-  ['setnameofcomponent',['setNameofComponent',['../classhistoCompare.html#a22e7e03284040627de30d74c6af03423',1,'histoCompare']]],
-  ['setnscanpoints',['setNscanPoints',['../classAsymptoticExclusion.html#afe7f77aa9f4b0af3aebdce15c92142b6',1,'AsymptoticExclusion']]],
-  ['setprintlevel',['setPrintLevel',['../classerrorHandler.html#a8abfce01e4c3bd9bf7810741b9dbeea1',1,'errorHandler']]],
-  ['setrealdata',['setRealData',['../classAsymptoticExclusion.html#a30a1134893b36d1c799ced46bb96842a',1,'AsymptoticExclusion']]],
-  ['setscalefactor',['setScaleFactor',['../classpdfComponent.html#a941209edf4adefa2df0480ed93c59829',1,'pdfComponent']]],
-  ['setseed',['setSeed',['../classToyGenerator.html#a1f0234da8252b22afb4ecbb3411060b8',1,'ToyGenerator']]],
-  ['sett0value',['setT0value',['../classLKParameter.html#a5acb39762d8349144c4c1bc317c27cd8',1,'LKParameter']]],
-  ['settoydataset',['setToyDataset',['../classAsymptoticExclusion.html#a5c095652f490582f72ceeb6c95059dea',1,'AsymptoticExclusion']]],
-  ['setup',['setup',['../classLikelihood.html#a3c6cdd2b2274ca7adbcdf6032352568d',1,'Likelihood::setup()'],['../classProfileLikelihood.html#a397985f1c4bd92e40a9567d5fae17fa7',1,'ProfileLikelihood::setup()']]],
-  ['shapelikelihood',['shapeLikelihood',['../classLikelihood.html#a66dc6f3f8e348c2cec6ce3773d71ef6c',1,'Likelihood']]],
-  ['shapesys',['shapeSys',['../classshapeSys.html#a1816a4031694074a2734f73a57eb93c1',1,'shapeSys']]]
+  ['randomizenuissanceparameter',['randomizeNuissanceParameter',['../classToyGenerator.html#a917ee789dfea24b3efaac407f8cfa62e',1,'ToyGenerator']]],
+  ['removeparameter',['removeParameter',['../classLikelihood.html#a41823d2d5c2ab8076d78bad975b8ef9b',1,'Likelihood::removeParameter(LKParameter *param, bool tolerant=false)'],['../classLikelihood.html#a837a644b6f60952cc82969a861c9ac41',1,'Likelihood::removeParameter(int id, bool tolerant=false)']]],
+  ['replaceparameter',['replaceParameter',['../classLikelihood.html#a9449630750c47ba37be24b3fad11ea7a',1,'Likelihood']]]
 ];

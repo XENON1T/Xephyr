@@ -149,18 +149,15 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a10dd01d847afd87386afeedc93e98460"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10dd01d847afd87386afeedc93e98460"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>localPrintLevel</b></td></tr>
+<tr class="memitem:a10dd01d847afd87386afeedc93e98460"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a10dd01d847afd87386afeedc93e98460">localPrintLevel</a></td></tr>
 <tr class="separator:a10dd01d847afd87386afeedc93e98460"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07f838eebf13b018a0892214d5998015"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07f838eebf13b018a0892214d5998015"></a>
-TString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a07f838eebf13b018a0892214d5998015">className</a></td></tr>
-<tr class="memdesc:a07f838eebf13b018a0892214d5998015"><td class="mdescLeft">&#160;</td><td class="mdescRight">global print level of all objects, modify this with <a class="el" href="classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123" title="local print level for this instance modify it with setPrintLevel. ">errorHandler::globalPrintLevel</a>. <br/></td></tr>
+TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td></tr>
 <tr class="separator:a07f838eebf13b018a0892214d5998015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:aa5abc1d5f2db3898f40c393721d7b123"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123">globalPrintLevel</a> = 1</td></tr>
-<tr class="memdesc:aa5abc1d5f2db3898f40c393721d7b123"><td class="mdescLeft">&#160;</td><td class="mdescRight">local print level for this instance modify it with setPrintLevel.  <a href="#aa5abc1d5f2db3898f40c393721d7b123">More...</a><br/></td></tr>
 <tr class="separator:aa5abc1d5f2db3898f40c393721d7b123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -325,7 +322,7 @@ Static Public Attributes</h2></td></tr>
 <p>The print level is defined globally, if you want to modify, increase reduce the verbosity of this particular instance you can set its print level. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">level</td><td>the print level you wanna set. Default is &lt; 0 which means all, 0 = Debug + Info + Warning + Error, 1 = Info + Warning + Error, 2 = Warning + Error, 3 = Error only. you can modify the global print level with <a class="el" href="classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123" title="local print level for this instance modify it with setPrintLevel. ">errorHandler::globalPrintLevel</a> = XX </td></tr>
+    <tr><td class="paramname">level</td><td>the print level you wanna set. Default is &lt; 0 which means all, 0 = Debug + Info + Warning + Error, 1 = Info + Warning + Error, 2 = Warning + Error, 3 = Error only. you can modify the global print level with <a class="el" href="classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123">errorHandler::globalPrintLevel</a> = XX </td></tr>
   </table>
   </dd>
 </dl>
@@ -386,9 +383,20 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>local print level for this instance modify it with setPrintLevel. </p>
 <p>global print level by default set to all. 0 = Debug-print all, 1 = Info + Warning + Error, 2 = Warning + Error, 3 = Only error </p>
+
+</div>
+</div>
+<a class="anchor" id="a10dd01d847afd87386afeedc93e98460"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int errorHandler::localPrintLevel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>local print level for this instance modify it with setPrintLevel. </p>
 
 </div>
 </div>

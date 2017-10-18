@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unconditionalfit',['unconditionalFit',['../classAsymptoticExclusion.html#a2ed5ac6bfa19d189aa0ecd4d4bf33f66',1,'AsymptoticExclusion']]]
+  ['toygenerator',['ToyGenerator',['../classToyGenerator.html#a6cd161e6796603667d035fce840ba2c8',1,'ToyGenerator']]]
 ];

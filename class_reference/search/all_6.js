@@ -25,6 +25,8 @@ var searchData=
   ['getnormmodifier',['getNormModifier',['../classscaleSys.html#ab03e516ce0573ca4b73fb570467f156d',1,'scaleSys']]],
   ['getparamvaluestring',['getParamValueString',['../classpdfComponent.html#aa31c18e19fd8507ca2b8ae97d8e59e29',1,'pdfComponent']]],
   ['getprintlevel',['getPrintLevel',['../classerrorHandler.html#a44e34b712a579e00cfc8e23bceae98b3',1,'errorHandler']]],
+  ['getsafeguardedbkgpdf',['getSafeguardedBkgPdf',['../classpdfLikelihood.html#a0c10dda80e5310b48ee510e4697cf9ba',1,'pdfLikelihood']]],
+  ['getsafeguardedbkgpdfonly',['getSafeguardedBkgPdfOnly',['../classpdfLikelihood.html#aec5d958b2b1c58d395768731420b8637',1,'pdfLikelihood']]],
   ['getsigmahat',['getSigmaHat',['../classLikelihood.html#a537362f778d8edcb5ead065e03932e08',1,'Likelihood']]],
   ['getsigmalabel',['getSigmaLabel',['../classXeStat.html#a8d186c87ecb61bb280cb5e76e686db05',1,'XeStat']]],
   ['getsigmalinlog',['getSigmaLinLog',['../classXeStat.html#a7d77a1517406320f9ef203c1c177a319',1,'XeStat']]],

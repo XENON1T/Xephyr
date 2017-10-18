@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['classname',['className',['../classerrorHandler.html#a07f838eebf13b018a0892214d5998015',1,'errorHandler']]]
+  ['globalprintlevel',['globalPrintLevel',['../classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123',1,'errorHandler']]]
 ];

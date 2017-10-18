@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['myshapeunc',['myShapeUnc',['../classpdfComponent.html#aad97c48b86745672f396a9cced85efe3',1,'pdfComponent']]]
+  ['projectionmax',['projectionMax',['../classhistoCompare.html#ae2531276397c2bfb6e57767b30186957',1,'histoCompare']]]
 ];
