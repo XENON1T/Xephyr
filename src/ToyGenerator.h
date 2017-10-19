@@ -3,6 +3,7 @@
 
 
 #include "TRandom.h"
+#include "TRint.h"
 #include "TString.h"
 #include "TFile.h"
 #include "TTree.h"
@@ -12,11 +13,13 @@
 #include "TParameter.h"
 #include "XeStat.h"
 #include "TTree.h"
+#include "TH2F.h"
 #include <map>
+#include <vector>
 
 /**
  * \class ToyGenerator 
- * \biref Helper class to generate toys given an input likelihood. 
+ * \brief Helper class to generate toys given an input likelihood. 
  * It can generate toys for the calibration dataset and for the "science data" dataset.
 */
 class ToyGenerator: public errorHandler {
@@ -48,7 +51,7 @@ class ToyGenerator: public errorHandler {
         void generateCalibration(int N);
 
         //! \brief generate N toys of the 'science data' dataset with injected signal fraction 'mu'.
-        void generateData(double mu, int N);
+        void generateData(double mu, int N, bool randomizeNP = true);
 
         //! set the seed for the toy generation. YOU MUST CHANGE THIS for any run.
         void setSeed(int seed);
@@ -62,7 +65,18 @@ class ToyGenerator: public errorHandler {
 
     private:
         
+        //! \biref saves the current values of NP to the UserInfo TList of the Tree
         void saveParameters(TTree *f);
+        
+        //! \brief return the sum of default integral of all bkg components.
+        //! 
+        //! NOTE: is always the 'default' integral for nominal t-value of NP, not the current. 
+        //! scale factors are applied but not scale SYS.
+        double getModelIntegral();
+
+        //! \brief returns a vector of sys interpolated TH2F of each bkg
+        vector<TH2F> getTH2OfBkg();
+
 
         double    averageCalEvnt;
         double    averageDataEvnt;

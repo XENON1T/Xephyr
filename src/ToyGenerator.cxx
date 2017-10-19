@@ -37,28 +37,74 @@ void ToyGenerator::generateCalibration(int N){
 }
 
 
-void ToyGenerator::generateData(double mu, int N){
+void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
 
     // the idea is to generate N toys with the current seed
     // Each dataset will contain as average averageDataEvnt events
     // which will be Poisson random distributed.
 
+    // randomize initial 'true' values of NP
+    if(randomizeNP) randomizeNuissanceParameter();
     // set the parameter of interest to the specified value
     likeHood->getParameter(PAR_SIGMA)->setCurrentValue(mu);
 
+    // rescaling to defined data events
+    double default_evnt = getModelIntegral();
+    double scaleFactor  = (averageDataEvnt>0.) ? averageDataEvnt / default_evnt : 1.;
+
+    // retrive a vector of TH2F of interpolated bkg components
+    vector <TH2F> backgrounds = getTH2OfBkg();
+
     TFile f(dir+treeName+".root","RECREATE");
-
     
-    
-    TTree toyTree (treeName, "generated toy data");
+    // necessary because TH2F::GetRandom uses ROOT::gRandom
+    gRandom = &randomizeMyass;
 
-    saveParameters(&toyTree);
-       
-    for(int evnt =0; evnt < N ; evnt++){
+    // actual generation of N toys with poisson fluctuating events.
+    for(int toyItr =0; toyItr < N ; toyItr++){
+
+        TString name = treeName + TString::Itoa(toyItr,10); 
+        TTree toyTree (name, "generated toy data");
+        double cs1 = 0.; 
+        double cs2 = 0.;
+        string type = "DummyLabel";
+
+        toyTree.Branch("cs1",&cs1,"cs1/D");
+        toyTree.Branch("cs2",&cs2,"cs2/D");
+        toyTree.Branch("type",&type);
+
+        saveParameters(&toyTree);
+    
+        
+        // loop over each bkg extract N events and dice s1-s2
+        for(unsigned int bkgItr=0; bkgItr < backgrounds.size(); bkgItr++){
+            int N_events   = randomizeMyass.Poisson(scaleFactor * backgrounds[bkgItr].Integral());
+            
+            type = (likeHood->bkg_components[bkgItr])->getName();
+            for(int evt =0; evt < N_events; evt++){
+                backgrounds[bkgItr].GetRandom2(cs1,cs2);
+                toyTree.Fill();
+            }
+        }
+
+        if(mu > 0) {
+          // filling signal if any
+          type = likeHood->signal_component->getName();
+          int N_signal  = randomizeMyass.Poisson(likeHood->getCurrentNs());
+          TH2F signal   = likeHood->signal_component->getInterpolatedHisto();
+          
+          for(int evt =0; evt < N_signal; evt++){
+            signal.GetRandom2(cs1,cs2);
+            toyTree.Fill();
+          }
+        
+        }
+
+        toyTree.Write();
 
     }
 
-    toyTree.Write();
+    
     f.Close();
 
 }
@@ -97,5 +143,34 @@ void ToyGenerator::randomizeNuissanceParameter(){
 
     likeHood->printCurrentParameters();
 
+
+}
+
+
+double ToyGenerator::getModelIntegral(){
+    
+    double total_integral = 0.;
+    unsigned int n = likeHood->bkg_components.size();
+
+    for (unsigned int i=0; i < n; i++ ){
+
+        total_integral += (likeHood->bkg_components[i])->getDefaultEvents();
+    }
+
+    return total_integral;
+}
+
+
+vector<TH2F> ToyGenerator::getTH2OfBkg(){
+
+    vector<TH2F> temp_v;
+    unsigned int n = likeHood->bkg_components.size();
+    
+        for (unsigned int i=0; i < n; i++ ){
+    
+            temp_v.push_back((likeHood->bkg_components[i])->getInterpolatedHisto());
+        }
+
+    return temp_v;
 
 }
