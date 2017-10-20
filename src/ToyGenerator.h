@@ -48,7 +48,13 @@ class ToyGenerator: public errorHandler {
         void setAverageDataEvents(double evnt) {averageDataEvnt = evnt;} ;
 
         //! \brief generate N toys of the calibration dataset.
-        void generateCalibration(int N);
+        //
+        // generate calibration like toys, where averageCalEvnt is the poisson median
+        // of the number of generated event per toy. N is the number of toy datasets.
+        // The pdfs are taken only from pdfcomponent that are "safeguarded" in the 
+        // likelihood, their relative rates are respected. Also the additional 
+        // contribution from "AdditionalSafeGuardComponent" is included.
+        void generateCalibration(int N, bool randomizeNP = true);
 
         //! \brief generate N toys of the 'science data' dataset with injected signal fraction 'mu'.
         void generateData(double mu, int N, bool randomizeNP = true);
@@ -74,13 +80,19 @@ class ToyGenerator: public errorHandler {
         //! scale factors are applied but not scale SYS.
         double getModelIntegral();
 
+        //! \brief return the sum of default integral of all bkg safeguarded components.
+        //!
+        //! NOTE: is always the 'default' integral for nominal t-value of NP, not the current. 
+        //! scale factors are applied but not scale SYS.
+        double getModelIntegralSafeguarded();
+
         //! \brief returns a vector of sys interpolated TH2F of each bkg
         vector<TH2F> getTH2OfBkg();
 
 
         double    averageCalEvnt;
         double    averageDataEvnt;
-        TRandom3  randomizeMyass;
+        TRandom3  rambo;
         TString   treeName;
         TString   dir;
         pdfLikelihood *likeHood;

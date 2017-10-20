@@ -13,7 +13,7 @@ void errorHandler::Error(TString functionName, TString message){
 
 	cout << className + "::" + functionName + " - ERROR : " + message << endl;
 	//this is a fatal error need to quit or will produce unwanted results
-	std::runtime_error(message.Data()); 
+	throw std::runtime_error(message.Data()); 
 }
 void errorHandler::Warning(TString functionName, TString message){
     if(getPrintLevel() < 3 ) 
