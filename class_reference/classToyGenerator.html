@@ -90,6 +90,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Helper class to generate toys given an input likelihood. It can generate toys for the calibration dataset and for the "science data" dataset.  
+ <a href="classToyGenerator.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="ToyGenerator_8h_source.html">ToyGenerator.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ToyGenerator:</div>
@@ -115,14 +118,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:af5156e903fd4c78e25460a74546702dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyGenerator.html#af5156e903fd4c78e25460a74546702dd">setAverageDataEvents</a> (double evnt)</td></tr>
 <tr class="memdesc:af5156e903fd4c78e25460a74546702dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">the total number of events to which the science data pdfs will be rescaled.  <a href="#af5156e903fd4c78e25460a74546702dd">More...</a><br/></td></tr>
 <tr class="separator:af5156e903fd4c78e25460a74546702dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72c8e56203bb67a8fb1758c277ae6dbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72c8e56203bb67a8fb1758c277ae6dbe"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyGenerator.html#a72c8e56203bb67a8fb1758c277ae6dbe">generateCalibration</a> (int N)</td></tr>
-<tr class="memdesc:a72c8e56203bb67a8fb1758c277ae6dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate N toys of the calibration dataset. <br/></td></tr>
-<tr class="separator:a72c8e56203bb67a8fb1758c277ae6dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a799373c5d092d90245863e3d3f1dcc50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a799373c5d092d90245863e3d3f1dcc50"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyGenerator.html#a799373c5d092d90245863e3d3f1dcc50">generateData</a> (double mu, int N)</td></tr>
-<tr class="memdesc:a799373c5d092d90245863e3d3f1dcc50"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate N toys of the 'science data' dataset with injected signal fraction 'mu'. <br/></td></tr>
-<tr class="separator:a799373c5d092d90245863e3d3f1dcc50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af611a5ce745cadbd2ca25d5a440de4bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af611a5ce745cadbd2ca25d5a440de4bf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyGenerator.html#af611a5ce745cadbd2ca25d5a440de4bf">generateCalibration</a> (int N, bool randomizeNP=true)</td></tr>
+<tr class="memdesc:af611a5ce745cadbd2ca25d5a440de4bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate N toys of the calibration dataset. <br/></td></tr>
+<tr class="separator:af611a5ce745cadbd2ca25d5a440de4bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97718d3f884123a9e5f19a8cd9d0fcb3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97718d3f884123a9e5f19a8cd9d0fcb3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyGenerator.html#a97718d3f884123a9e5f19a8cd9d0fcb3">generateData</a> (double mu, int N, bool randomizeNP=true)</td></tr>
+<tr class="memdesc:a97718d3f884123a9e5f19a8cd9d0fcb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate N toys of the 'science data' dataset with injected signal fraction 'mu'. <br/></td></tr>
+<tr class="separator:a97718d3f884123a9e5f19a8cd9d0fcb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f0234da8252b22afb4ecbb3411060b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f0234da8252b22afb4ecbb3411060b8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyGenerator.html#a1f0234da8252b22afb4ecbb3411060b8">setSeed</a> (int seed)</td></tr>
 <tr class="memdesc:a1f0234da8252b22afb4ecbb3411060b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the seed for the toy generation. YOU MUST CHANGE THIS for any run. <br/></td></tr>
