@@ -4,7 +4,6 @@ var searchData=
   ['tgaussparameter',['TGaussParameter',['../classTGaussParameter.html',1,'']]],
   ['this',['This',['../classhistoCompare_1_1This.html',1,'histoCompare']]],
   ['tleffparameter',['TLEffParameter',['../classTLEffParameter.html',1,'']]],
-  ['toyfitexclusion',['ToyFitExclusion',['../classToyFitExclusion.html',1,'']]],
   ['toyfitterexclusion',['ToyFitterExclusion',['../classToyFitterExclusion.html',1,'']]],
   ['toygenerator',['ToyGenerator',['../classToyGenerator.html',1,'']]],
   ['tqyparameter',['TQyParameter',['../classTQyParameter.html',1,'']]],

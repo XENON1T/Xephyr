@@ -5,7 +5,6 @@ var searchData=
   ['this',['This',['../classhistoCompare_1_1This.html',1,'histoCompare']]],
   ['titlex',['titleX',['../classhistoCompare.html#a567502d3ebb06ab07768435e5a31e70f',1,'histoCompare']]],
   ['tleffparameter',['TLEffParameter',['../classTLEffParameter.html',1,'']]],
-  ['toyfitexclusion',['ToyFitExclusion',['../classToyFitExclusion.html',1,'']]],
   ['toyfitterexclusion',['ToyFitterExclusion',['../classToyFitterExclusion.html',1,'ToyFitterExclusion'],['../classToyFitterExclusion.html#a5d97092251e4cb83c27299446e3bee91',1,'ToyFitterExclusion::ToyFitterExclusion()']]],
   ['toygenerator',['ToyGenerator',['../classToyGenerator.html',1,'ToyGenerator'],['../classToyGenerator.html#a6cd161e6796603667d035fce840ba2c8',1,'ToyGenerator::ToyGenerator()']]],
   ['tqyparameter',['TQyParameter',['../classTQyParameter.html',1,'']]],
