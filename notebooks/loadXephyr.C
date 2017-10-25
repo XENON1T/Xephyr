@@ -6,5 +6,6 @@ int loadXephyr(){
   gROOT->ProcessLine(".L ../src/XeLikelihoods.cxx+g");
   gROOT->ProcessLine(".L ../src/AsymptoticExclusion.cxx+g");
   gROOT->ProcessLine(".L ../src/ToyGenerator.cxx+g");
+  gROOT->ProcessLine(".L ../src/ToyFitterExclusion.cxx+g");
   return 0;
 }

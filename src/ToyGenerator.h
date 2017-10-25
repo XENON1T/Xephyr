@@ -16,6 +16,10 @@
 #include "TH2F.h"
 #include <map>
 #include <vector>
+#include <stdio.h>
+
+using namespace std;
+
 
 /**
  * \class ToyGenerator 

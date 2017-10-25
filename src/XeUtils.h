@@ -65,7 +65,7 @@ class errorHandler {
     
     //! \brief Return the current print level for this instance. 
     //! remind that if you set with setPrintLevel this will override the global print level.
-    int  getPrintLevel()  {return (localPrintLevel > 0 ? localPrintLevel : globalPrintLevel) ;};
+    int  getPrintLevel()  {return (localPrintLevel >= 0 ? localPrintLevel : globalPrintLevel) ;};
 
    
     int localPrintLevel;              /*!< local print level for this instance modify it with setPrintLevel. */
