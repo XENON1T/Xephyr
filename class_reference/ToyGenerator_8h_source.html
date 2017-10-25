@@ -105,71 +105,70 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;TH2F.h&quot;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classToyGenerator.html">   25</a></span>&#160;<span class="keyword">class </span><a class="code" href="classToyGenerator.html">ToyGenerator</a>: <span class="keyword">public</span> <a class="code" href="classerrorHandler.html">errorHandler</a> {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classToyGenerator.html#a6cd161e6796603667d035fce840ba2c8">ToyGenerator</a>(TString sampleName, TString outDir);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3">   33</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3">setLikelihood</a>(<a class="code" href="classpdfLikelihood.html">pdfLikelihood</a> *like) {likeHood = like;};</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="comment">//</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classToyGenerator.html#aab2479ab9945243c106cc025d9efdcef">   39</a></span>&#160;<span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#aab2479ab9945243c106cc025d9efdcef">setAverageCalibrationEvents</a>(<span class="keywordtype">double</span> evnt) {averageCalEvnt = evnt;} ;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="comment">//</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classToyGenerator.html#af5156e903fd4c78e25460a74546702dd">   48</a></span>&#160;<span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#af5156e903fd4c78e25460a74546702dd">setAverageDataEvents</a>(<span class="keywordtype">double</span> evnt) {averageDataEvnt = evnt;} ;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="comment">//</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">// generate calibration like toys, where averageCalEvnt is the poisson median</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="comment">// of the number of generated event per toy. N is the number of toy datasets.</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="comment">// The pdfs are taken only from pdfcomponent that are &quot;safeguarded&quot; in the </span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">// likelihood, their relative rates are respected. Also the additional </span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">// contribution from &quot;AdditionalSafeGuardComponent&quot; is included.</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#af611a5ce745cadbd2ca25d5a440de4bf">generateCalibration</a>(<span class="keywordtype">int</span> N, <span class="keywordtype">bool</span> randomizeNP = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#a97718d3f884123a9e5f19a8cd9d0fcb3">generateData</a>(<span class="keywordtype">double</span> mu, <span class="keywordtype">int</span> N, <span class="keywordtype">bool</span> randomizeNP = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#a1f0234da8252b22afb4ecbb3411060b8">setSeed</a>(<span class="keywordtype">int</span> seed);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="comment">//</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#a917ee789dfea24b3efaac407f8cfa62e">randomizeNuissanceParameter</a>();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordtype">void</span> saveParameters(TTree *f);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordtype">double</span> getModelIntegral();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordtype">double</span> getModelIntegralSafeguarded();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        vector&lt;TH2F&gt; getTH2OfBkg();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classToyGenerator.html">   29</a></span>&#160;<span class="keyword">class </span><a class="code" href="classToyGenerator.html">ToyGenerator</a>: <span class="keyword">public</span> <a class="code" href="classerrorHandler.html">errorHandler</a> {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classToyGenerator.html">ToyGenerator</a>(TString sampleName, TString outDir);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3">   37</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3">setLikelihood</a>(<a class="code" href="classpdfLikelihood.html">pdfLikelihood</a> *like) {likeHood = like;};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="comment">//</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classToyGenerator.html#aab2479ab9945243c106cc025d9efdcef">   43</a></span>&#160;<span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#aab2479ab9945243c106cc025d9efdcef">setAverageCalibrationEvents</a>(<span class="keywordtype">double</span> evnt) {averageCalEvnt = evnt;} ;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="comment">//</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classToyGenerator.html#af5156e903fd4c78e25460a74546702dd">   52</a></span>&#160;<span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="classToyGenerator.html#af5156e903fd4c78e25460a74546702dd">setAverageDataEvents</a>(<span class="keywordtype">double</span> evnt) {averageDataEvnt = evnt;} ;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">//</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">// generate calibration like toys, where averageCalEvnt is the poisson median</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="comment">// of the number of generated event per toy. N is the number of toy datasets.</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="comment">// The pdfs are taken only from pdfcomponent that are &quot;safeguarded&quot; in the </span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">// likelihood, their relative rates are respected. Also the additional </span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">// contribution from &quot;AdditionalSafeGuardComponent&quot; is included.</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> generateCalibration(<span class="keywordtype">int</span> N, <span class="keywordtype">bool</span> randomizeNP = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">void</span> generateData(<span class="keywordtype">double</span> mu, <span class="keywordtype">int</span> N, <span class="keywordtype">bool</span> randomizeNP = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> setSeed(<span class="keywordtype">int</span> seed);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">//</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"></span>        <span class="keywordtype">void</span> randomizeNuissanceParameter();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">void</span> saveParameters(TTree *f);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordtype">double</span> getModelIntegral();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">double</span> getModelIntegralSafeguarded();</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordtype">double</span>    averageCalEvnt;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordtype">double</span>    averageDataEvnt;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        TRandom3  rambo;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        TString   treeName;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        TString   dir;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="classpdfLikelihood.html">pdfLikelihood</a> *likeHood;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;};</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="classToyGenerator_html_af611a5ce745cadbd2ca25d5a440de4bf"><div class="ttname"><a href="classToyGenerator.html#af611a5ce745cadbd2ca25d5a440de4bf">ToyGenerator::generateCalibration</a></div><div class="ttdeci">void generateCalibration(int N, bool randomizeNP=true)</div><div class="ttdoc">generate N toys of the calibration dataset. </div><div class="ttdef"><b>Definition:</b> ToyGenerator.cxx:35</div></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        vector&lt;TH2F&gt; getTH2OfBkg();</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordtype">double</span>    averageCalEvnt;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordtype">double</span>    averageDataEvnt;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        TRandom3  rambo;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        TString   treeName;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        TString   dir;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="classpdfLikelihood.html">pdfLikelihood</a> *likeHood;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="classpdfLikelihood_html"><div class="ttname"><a href="classpdfLikelihood.html">pdfLikelihood</a></div><div class="ttdoc">implements 2D pdf profiled likelihood fitting. </div><div class="ttdef"><b>Definition:</b> XeLikelihoods.h:26</div></div>
 <div class="ttc" id="classerrorHandler_html"><div class="ttname"><a href="classerrorHandler.html">errorHandler</a></div><div class="ttdoc">Helper Class to send consistently formatted messages. It allows different levels of severity for the ...</div><div class="ttdef"><b>Definition:</b> XeUtils.h:17</div></div>
-<div class="ttc" id="classToyGenerator_html_a917ee789dfea24b3efaac407f8cfa62e"><div class="ttname"><a href="classToyGenerator.html#a917ee789dfea24b3efaac407f8cfa62e">ToyGenerator::randomizeNuissanceParameter</a></div><div class="ttdeci">void randomizeNuissanceParameter()</div><div class="ttdoc">this will randomize the nominal value of the nuissance parameters, according to their distro...</div><div class="ttdef"><b>Definition:</b> ToyGenerator.cxx:194</div></div>
-<div class="ttc" id="classToyGenerator_html"><div class="ttname"><a href="classToyGenerator.html">ToyGenerator</a></div><div class="ttdoc">Helper class to generate toys given an input likelihood. It can generate toys for the calibration dat...</div><div class="ttdef"><b>Definition:</b> ToyGenerator.h:25</div></div>
-<div class="ttc" id="classToyGenerator_html_aab2479ab9945243c106cc025d9efdcef"><div class="ttname"><a href="classToyGenerator.html#aab2479ab9945243c106cc025d9efdcef">ToyGenerator::setAverageCalibrationEvents</a></div><div class="ttdeci">void setAverageCalibrationEvents(double evnt)</div><div class="ttdoc">the total number of events to which the calibtration pdfs will be rescaled. </div><div class="ttdef"><b>Definition:</b> ToyGenerator.h:39</div></div>
-<div class="ttc" id="classToyGenerator_html_a97718d3f884123a9e5f19a8cd9d0fcb3"><div class="ttname"><a href="classToyGenerator.html#a97718d3f884123a9e5f19a8cd9d0fcb3">ToyGenerator::generateData</a></div><div class="ttdeci">void generateData(double mu, int N, bool randomizeNP=true)</div><div class="ttdoc">generate N toys of the &#39;science data&#39; dataset with injected signal fraction &#39;mu&#39;. ...</div><div class="ttdef"><b>Definition:</b> ToyGenerator.cxx:122</div></div>
-<div class="ttc" id="classToyGenerator_html_afb85e9b5e9bf8f033dde007d30b7e9e3"><div class="ttname"><a href="classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3">ToyGenerator::setLikelihood</a></div><div class="ttdeci">void setLikelihood(pdfLikelihood *like)</div><div class="ttdoc">pointer to the defined likelihood </div><div class="ttdef"><b>Definition:</b> ToyGenerator.h:33</div></div>
-<div class="ttc" id="classToyGenerator_html_a1f0234da8252b22afb4ecbb3411060b8"><div class="ttname"><a href="classToyGenerator.html#a1f0234da8252b22afb4ecbb3411060b8">ToyGenerator::setSeed</a></div><div class="ttdeci">void setSeed(int seed)</div><div class="ttdoc">set the seed for the toy generation. YOU MUST CHANGE THIS for any run. </div><div class="ttdef"><b>Definition:</b> ToyGenerator.cxx:14</div></div>
-<div class="ttc" id="classToyGenerator_html_af5156e903fd4c78e25460a74546702dd"><div class="ttname"><a href="classToyGenerator.html#af5156e903fd4c78e25460a74546702dd">ToyGenerator::setAverageDataEvents</a></div><div class="ttdeci">void setAverageDataEvents(double evnt)</div><div class="ttdoc">the total number of events to which the science data pdfs will be rescaled. </div><div class="ttdef"><b>Definition:</b> ToyGenerator.h:48</div></div>
-<div class="ttc" id="classToyGenerator_html_a6cd161e6796603667d035fce840ba2c8"><div class="ttname"><a href="classToyGenerator.html#a6cd161e6796603667d035fce840ba2c8">ToyGenerator::ToyGenerator</a></div><div class="ttdeci">ToyGenerator(TString sampleName, TString outDir)</div><div class="ttdef"><b>Definition:</b> ToyGenerator.cxx:3</div></div>
+<div class="ttc" id="classToyGenerator_html"><div class="ttname"><a href="classToyGenerator.html">ToyGenerator</a></div><div class="ttdoc">Helper class to generate toys given an input likelihood. It can generate toys for the calibration dat...</div><div class="ttdef"><b>Definition:</b> ToyGenerator.h:29</div></div>
+<div class="ttc" id="classToyGenerator_html_aab2479ab9945243c106cc025d9efdcef"><div class="ttname"><a href="classToyGenerator.html#aab2479ab9945243c106cc025d9efdcef">ToyGenerator::setAverageCalibrationEvents</a></div><div class="ttdeci">void setAverageCalibrationEvents(double evnt)</div><div class="ttdoc">the total number of events to which the calibtration pdfs will be rescaled. </div><div class="ttdef"><b>Definition:</b> ToyGenerator.h:43</div></div>
+<div class="ttc" id="classToyGenerator_html_afb85e9b5e9bf8f033dde007d30b7e9e3"><div class="ttname"><a href="classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3">ToyGenerator::setLikelihood</a></div><div class="ttdeci">void setLikelihood(pdfLikelihood *like)</div><div class="ttdoc">pointer to the defined likelihood </div><div class="ttdef"><b>Definition:</b> ToyGenerator.h:37</div></div>
+<div class="ttc" id="classToyGenerator_html_af5156e903fd4c78e25460a74546702dd"><div class="ttname"><a href="classToyGenerator.html#af5156e903fd4c78e25460a74546702dd">ToyGenerator::setAverageDataEvents</a></div><div class="ttdeci">void setAverageDataEvents(double evnt)</div><div class="ttdoc">the total number of events to which the science data pdfs will be rescaled. </div><div class="ttdef"><b>Definition:</b> ToyGenerator.h:52</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

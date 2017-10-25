@@ -116,7 +116,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">//</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classerrorHandler.html#a8abfce01e4c3bd9bf7810741b9dbeea1">   64</a></span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> <a class="code" href="classerrorHandler.html#a8abfce01e4c3bd9bf7810741b9dbeea1">setPrintLevel</a>(<span class="keywordtype">int</span> level) {localPrintLevel = level;};</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classerrorHandler.html#a10dd01d847afd87386afeedc93e98460">   68</a></span>&#160;    <span class="keywordtype">int</span>  getPrintLevel()  {<span class="keywordflow">return</span> (localPrintLevel &gt; 0 ? localPrintLevel : globalPrintLevel) ;};</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classerrorHandler.html#a10dd01d847afd87386afeedc93e98460">   68</a></span>&#160;    <span class="keywordtype">int</span>  getPrintLevel()  {<span class="keywordflow">return</span> (localPrintLevel &gt;= 0 ? localPrintLevel : globalPrintLevel) ;};</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   </div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">int</span> localPrintLevel;              </div>

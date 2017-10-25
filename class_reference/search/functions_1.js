@@ -11,5 +11,6 @@ var searchData=
   ['computesensitivityhagar',['computeSensitivityHagar',['../classAsymptoticExclusion.html#ac9ce3471d79397e9470893232624145d',1,'AsymptoticExclusion']]],
   ['computesigmaasimov',['computeSigmaAsimov',['../classAsymptoticExclusion.html#a13b14640dd1ca7945cfe39b1b81bcfc4',1,'AsymptoticExclusion']]],
   ['computetheloglikelihood',['computeTheLogLikelihood',['../classpdfLikelihood.html#a61762848cd9dfe3136637afd4d473101',1,'pdfLikelihood::computeTheLogLikelihood()'],['../classLikelihood.html#a8d86ffd2a694c697459499ee52ae7b6e',1,'Likelihood::computeTheLogLikelihood()'],['../classCombinedProfileLikelihood.html#a024b1ad4e23d42eadafe3747a1c2fad1',1,'CombinedProfileLikelihood::computeTheLogLikelihood()']]],
+  ['computets',['computeTS',['../classToyFitterExclusion.html#a33f6a1e288728b822eb53a95401ec8df',1,'ToyFitterExclusion']]],
   ['conditionalfit',['conditionalFit',['../classAsymptoticExclusion.html#a77e3bfabcf3692bd26ebd2687a018133',1,'AsymptoticExclusion']]]
 ];
