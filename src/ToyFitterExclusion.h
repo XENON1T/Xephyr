@@ -22,7 +22,7 @@
 using namespace std;
 
 /**
- * \class ToyFitExclusion
+ * \class ToyFitterExclusion
  * \brief Class to handle the fitting of toy dataset for limit production.
  * 
  *  
