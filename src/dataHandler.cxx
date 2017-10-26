@@ -244,7 +244,7 @@ void dataHandler::setDataTree(TString nameTree){
 
 void dataHandler::setDataTree(TTree *tree){
 
-	delete DMdata;
+	//delete DMdata;  // no much reason to delete this, since adding from file or existing tree
 	delete gs1s2w;
 	
 	gs1s2w=new TGraph2D();

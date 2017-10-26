@@ -67,9 +67,10 @@ void ToyFitterExclusion::fit(double mu, TString nameTree){
         fillTrueParams(readTree);
 
         // set toy data for fit
-        
-        // Dice the measured parameters (note that if a parameter is free the t-value exytacted here has no effect)
+        data.setDataTree(readTree);
 
+        // Dice the measured parameters (note that if a parameter is free the t-value exytacted here has no effect)
+        
 
         testStat = computeTS(mu);
         
