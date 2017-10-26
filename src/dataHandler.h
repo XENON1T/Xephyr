@@ -48,7 +48,7 @@ class dataHandler : public errorHandler{
 
 	    ~dataHandler();
 	    
-	    TNtuple *DMdata;
+	    TTree *DMdata;
 
 	    
 	    //	    TH2F    *asimovData;
@@ -106,6 +106,9 @@ class dataHandler : public errorHandler{
 	   
 	   //change the tree pointer to data, assumed to be in same file.
 	   void   setDataTree(TString nameTree); 
+
+		//! \brief change the tree pointer to data.
+		void   setDataTree(TTree *tree); 
 
 	   //change the  file.
 	   void   setFile(TString PathtoFile); 

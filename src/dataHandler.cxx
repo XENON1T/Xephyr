@@ -2,8 +2,6 @@
 
 dataHandler::dataHandler(TString name) : errorHandler("dataHandler"), Name(name){
 
-	cout <<"dataHandler:: WARNING - null constructor, you should use this only to run sensitivity " << endl;
-
 	DMdata = NULL;
 	file = NULL;
 	sumOfWeights=0;
@@ -65,7 +63,7 @@ dataHandler::dataHandler(TString name, TString fileName, TString dmTree) : error
 		Error("dataHandler","file " + fileName + " does not exist. Quit.");
 
 	if( file->FindKey(dmTree) == NULL) 
-		Error("dataHandler","TNtuple " + dmTree+ " does not exist in file " 
+		Error("dataHandler","TTree " + dmTree+ " does not exist in file " 
 			                       + fileName + ". Quit.");
 
 
@@ -73,7 +71,7 @@ dataHandler::dataHandler(TString name, TString fileName, TString dmTree) : error
 	SecondVarName  = "cs2";  //default var name
 
 
-	DMdata = (TNtuple*) file->Get(dmTree);
+	DMdata = (TTree*) file->Get(dmTree);
 	
 	s1 = 0.;
 	s2 = 0.;
@@ -121,18 +119,22 @@ void dataHandler::getEntry(Long64_t entry) {
 }
 
 void dataHandler::generateAsimov( TH2F *background ){
-        delete DMdata;
+    delete DMdata;
 	delete gs1s2w;
-	DMdata = new TNtuple(Name,"FakeData "+Name, FirstVarName+":"+SecondVarName+":"+"weight"); 
+	double ts1 = 0., ts2 =0., tw = 0.;
+	DMdata = new TTree(Name,"FakeData "+Name);
+	DMdata->Branch(FirstVarName,&ts1);
+	DMdata->Branch(SecondVarName,&ts2);
+	DMdata->Branch("weight", &tw); 
 	gs1s2w=new TGraph2D();
-        sumOfWeights=0;
+    sumOfWeights=0;
 
 	for (int ix=1; ix<=background->GetNbinsX(); ix++) {
 	  for (int iy=1; iy<=background->GetNbinsY(); iy++) {
-	   double ts1 = background->GetXaxis()->GetBinCenter(ix);
-	   double ts2 = background->GetYaxis()->GetBinCenter(iy);
-	   double tw=background->GetBinContent(ix,iy);
-	   DMdata->Fill(ts1,ts2,tw);
+	   ts1 = background->GetXaxis()->GetBinCenter(ix);
+	   ts2 = background->GetYaxis()->GetBinCenter(iy);
+	   tw=background->GetBinContent(ix,iy);
+	   DMdata->Fill();
 	   gs1s2w->SetPoint(gs1s2w->GetN(),ts1,ts2,tw);
 	   sumOfWeights+=tw;
 	  }
@@ -232,21 +234,28 @@ void dataHandler::setFile(TString PathtoFile){
 void dataHandler::setDataTree(TString nameTree){
 
 	if( file->FindKey(nameTree) == NULL) 
-		Error("dataHandler","TNtuple " + nameTree+ " does not exist in file " 
+		Error("dataHandler","TTree " + nameTree+ " does not exist in file " 
 			                       + file->GetName() + ". Quit.");
+
+	
+	setDataTree( (TTree*) file->Get(nameTree) );
+	
+}
+
+void dataHandler::setDataTree(TTree *tree){
 
 	delete DMdata;
 	delete gs1s2w;
 	
 	gs1s2w=new TGraph2D();
-	DMdata = (TNtuple*) file->Get(nameTree);
+	DMdata = tree;
 	
 	DMdata->SetBranchAddress(FirstVarName,&s1);
 	DMdata->SetBranchAddress(SecondVarName,&s2);
 	
 	dataType = DM_DATA;
 	sumOfWeights=0;
-	for (int i=0; i< DMdata->GetEntries(); i++) {
+	for (Long64_t i=0; i< DMdata->GetEntries(); i++) {
 	   weight = 1.;
 	   DMdata->GetEntry(i);
 	   gs1s2w->SetPoint(gs1s2w->GetN(),s1,s2,weight);
@@ -271,13 +280,15 @@ void dataHandler::addToDataSet(TH2F *h2pdf, int N){
   dataType = DM_SIMULATED_DATA;
   if(dataType != DM_SIMULATED_DATA)
     Error("addTodataSet","Cannot add fake data to this data set. Use generateDataSet first");
-  double ts1,ts2,tw;
+  double ts1,ts2,tw = 0.;
+  DMdata->SetBranchAddress(FirstVarName,&ts1);
+  DMdata->SetBranchAddress(SecondVarName,&ts2);
   Name+=Form("%s(%d),",h2pdf->GetName(),N);
   gRandom->SetSeed(0);
   for (int i=0; i<N; i++) {
     h2pdf->GetRandom2(ts1,ts2);
     tw=1;
-    DMdata->Fill(ts1,ts2,tw);
+    DMdata->Fill();
     gs1s2w->SetPoint(gs1s2w->GetN(),ts1,ts2,tw);
     sumOfWeights+=tw;
   }

@@ -37,12 +37,17 @@ void ToyFitterExclusion::fit(double mu, TString nameTree){
     outTree->Branch("LL_cond", &likelihood_cond, "LL_cond/D");
     outTree->Branch("LL_uncond", &likelihood_uncond, "LL_uncond/D");
     outTree->Branch("true_params", true_params,"true_params[n_params]/D");
+    outTree->Branch("measured_params", measured_params,"measured_params[n_params]/D");
     outTree->Branch("uncond_params", uncond_params,"uncond_params[n_params]/D");
     outTree->Branch("cond_params", cond_params,"cond_params[n_params]/D");
     outTree->Branch("name_params", &name_params);
 
     // input tree
     TTree *readTree = NULL;
+
+    // Data handler
+    dataHandler data("toyDMData");
+    data.setData(DM_DATA);
 
     // looping over all tree that are prefixed with nameTree
     TIter next(f->GetListOfKeys());
@@ -63,6 +68,9 @@ void ToyFitterExclusion::fit(double mu, TString nameTree){
 
         // set toy data for fit
         
+        // Dice the measured parameters (note that if a parameter is free the t-value exytacted here has no effect)
+
+
         testStat = computeTS(mu);
         
         outTree->Fill();

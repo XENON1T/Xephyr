@@ -3,6 +3,7 @@
 
 #include "XeLikelihoods.h"
 #include "XeUtils.h"
+#include "dataHandler.h"
 #include "TFile.h"
 #include "TGraph.h"
 #include "TRandom.h"
@@ -83,14 +84,15 @@ class ToyFitterExclusion: public errorHandler {
     pdfLikelihood *likeHood;
     TString       dirPath;
     TString       treeName;
+    TString       OutDir;               //! output dir if not set is current dir
     
-    double        likelihood_uncond;  //! value of unconditional fit
-    double        likelihood_cond;  //! value of conditional fit
-    double true_params[50]  ;    //! t_value of measured param
-    double uncond_params[50] ;  //! unconditional fit
-    double cond_params[50] ;    //! conditional fit
-    vector< string > name_params;   //! names of parameters
-    TString         OutDir;     //! output dir if not set is current dir
+    double        likelihood_uncond;    //! value of unconditional fit
+    double        likelihood_cond;      //! value of conditional fit
+    double        true_params[50]  ;    //! t_value of truth generated param
+    double        measured_params[50];  //! t_value of measured param
+    double        uncond_params[50] ;   //! unconditional fit
+    double        cond_params[50] ;     //! conditional fit
+    vector<string> name_params;         //! names of parameters
 
 };
 
