@@ -75,6 +75,7 @@ void ToyFitterExclusion::fit(double mu, TString nameTree){
         likeHood->setDataHandler(&data);
 
         // Dice the measured parameters (note that if a parameter is free the t-value exytacted here has no effect)
+        // this MUST be called after "fillTrueParams"
         measureParameters();
 
         testStat = computeTS(mu);
@@ -193,6 +194,8 @@ void ToyFitterExclusion::fillTrueParams(TTree *inputTree){
 
 void ToyFitterExclusion::measureParameters(){
 
+    // randomize measure of parameters around the true value.
+    
     map <int, LKParameter*> *params = likeHood->getParameters();
     
     Info("measureParameters", "Randomizing parameters:");
@@ -215,10 +218,10 @@ void ToyFitterExclusion::measureParameters(){
             
         // sample gauss tvalue for parameter
         double random_tvalue = 0.;
-        random_tvalue = rambo.Gaus(0.,1.);
+        random_tvalue = rambo.Gaus(true_params[parItr],1.);
         // extract again if out of range
         while(random_tvalue > max || random_tvalue < min)
-                    random_tvalue = rambo.Gaus(0.,1.);
+                    random_tvalue = rambo.Gaus(true_params[parItr],1.);
     
     
         param->setT0value(random_tvalue);

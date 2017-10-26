@@ -69,12 +69,12 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
         
         TString name = treeName + "_Cal" + TString::Itoa(toyItr,10); 
         TTree toyTree (name, "generated toy Calibration");
-        double cs1 = 0.; 
-        double cs2 = 0.;
+        float cs1 = 0.; 
+        float cs2 = 0.;
         string type = "DummyLabel";
         
-        toyTree.Branch("cs1",&cs1,"cs1/D");
-        toyTree.Branch("cs2",&cs2,"cs2/D");
+        toyTree.Branch("cs1",&cs1,"cs1/F");
+        toyTree.Branch("cs2",&cs2,"cs2/F");
         toyTree.Branch("type",&type);
         
         saveParameters(&toyTree);
@@ -95,8 +95,10 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
             for(int evt =0; evt < N_events; evt++){
         
                 Debug("generateCalibration: inner loop Active","");
-
-                backgrounds[bkgItr].GetRandom2(cs1,cs2);
+                double temp_cs1 = 0., temp_cs2 = 0.;
+                backgrounds[bkgItr].GetRandom2(temp_cs1,temp_cs2);
+                cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
+                cs2 = (float) temp_cs2;
                 toyTree.Fill();
             }
         }
@@ -107,7 +109,10 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
 
         type = "additional";
         for(int evt =0; evt < N_additional; evt++){
-            likeHood->safeguardAdditionalComponent->GetRandom2(cs1,cs2);
+            double temp_cs1 = 0., temp_cs2 = 0.; // TODO FIXME this is just for back compatibility cs1 and cs2 must be double
+            likeHood->safeguardAdditionalComponent->GetRandom2(temp_cs1,temp_cs2);
+            cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
+            cs2 = (float) temp_cs2;
             toyTree.Fill();
         }
 
@@ -147,12 +152,12 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
 
         TString name = treeName + TString::Itoa(toyItr,10); 
         TTree toyTree (name, "generated toy data");
-        double cs1 = 0.; 
-        double cs2 = 0.;
+        float cs1 = 0.; 
+        float cs2 = 0.;
         string type = "DummyLabel";
 
-        toyTree.Branch("cs1",&cs1,"cs1/D");
-        toyTree.Branch("cs2",&cs2,"cs2/D");
+        toyTree.Branch("cs1",&cs1,"cs1/F");
+        toyTree.Branch("cs2",&cs2,"cs2/F");
         toyTree.Branch("type",&type);
 
         saveParameters(&toyTree);
@@ -164,7 +169,10 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
             
             type = (likeHood->bkg_components[bkgItr])->getName();
             for(int evt =0; evt < N_events; evt++){
-                backgrounds[bkgItr].GetRandom2(cs1,cs2);
+                double temp_cs1 = 0., temp_cs2 = 0.;
+                backgrounds[bkgItr].GetRandom2(temp_cs1,temp_cs2);
+                cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
+                cs2 = (float) temp_cs2;
                 toyTree.Fill();
             }
         }
@@ -176,7 +184,10 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
           TH2F signal   = likeHood->signal_component->getInterpolatedHisto();
           
           for(int evt =0; evt < N_signal; evt++){
-            signal.GetRandom2(cs1,cs2);
+            double temp_cs1 = 0., temp_cs2 = 0.;
+            signal.GetRandom2(temp_cs1,temp_cs2);
+            cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
+            cs2 = (float) temp_cs2;
             toyTree.Fill();
           }
         
