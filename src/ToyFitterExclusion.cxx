@@ -49,6 +49,10 @@ void ToyFitterExclusion::fit(double mu, TString nameTree){
     dataHandler data("toyDMData");
     data.setData(DM_DATA);
 
+    // setting random seed for measured param generation
+    // TRandom likes a integer seed, the multiplication just makes sure that even if mu is small you get a new seed 
+    rambo.SetSeed(((ULong_t) mu * 1000.)); 
+
     // looping over all tree that are prefixed with nameTree
     TIter next(f->GetListOfKeys());
     TObject *treeKey = NULL;
@@ -68,9 +72,10 @@ void ToyFitterExclusion::fit(double mu, TString nameTree){
 
         // set toy data for fit
         data.setDataTree(readTree);
+        likeHood->setDataHandler(&data);
 
         // Dice the measured parameters (note that if a parameter is free the t-value exytacted here has no effect)
-        
+        measureParameters();
 
         testStat = computeTS(mu);
         
@@ -184,3 +189,41 @@ void ToyFitterExclusion::fillTrueParams(TTree *inputTree){
     }
 }
 
+
+
+void ToyFitterExclusion::measureParameters(){
+
+    map <int, LKParameter*> *params = likeHood->getParameters();
+    
+    Info("measureParameters", "Randomizing parameters:");
+
+    int parItr = -1;
+    for(ParameterIterator ip=params->begin(); ip!=params->end(); ip++){
+            
+        LKParameter *param = ip->second;
+        parItr++;   // start from zero 
+        
+        if(param->getType() == FIXED_PARAMETER || param->isOfInterest() 
+            || param->getType() == FREE_PARAMETER ) {
+
+             Info("---->","Skipping paramater: " + param->getName()); continue; 
+        }
+            
+        // getting range
+        double min = param->getMinimum();
+        double max = param->getMaximum();
+            
+        // sample gauss tvalue for parameter
+        double random_tvalue = 0.;
+        random_tvalue = rambo.Gaus(0.,1.);
+        // extract again if out of range
+        while(random_tvalue > max || random_tvalue < min)
+                    random_tvalue = rambo.Gaus(0.,1.);
+    
+    
+        param->setT0value(random_tvalue);
+        measured_params[parItr] = random_tvalue;
+        Info("---->",TString::Format("new T0-Value: %s = %1.2f",param->getName().Data(),random_tvalue)); 
+    }
+
+}

@@ -79,6 +79,9 @@ class ToyFitterExclusion: public errorHandler {
     //! \brief fills the initial paramteres value of true parameter an their name
     void fillTrueParams( TTree *inputTree);
 
+    //! \brief assign to each parameter a random measured t-value
+    void measureParameters();
+
     void saveNames(string *names);
 
     pdfLikelihood *likeHood;
@@ -93,7 +96,7 @@ class ToyFitterExclusion: public errorHandler {
     double        uncond_params[50] ;   //! unconditional fit
     double        cond_params[50] ;     //! conditional fit
     vector<string> name_params;         //! names of parameters
-
+    TRandom3      rambo;                //! random handler
 };
 
 #endif

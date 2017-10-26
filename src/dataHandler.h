@@ -63,9 +63,9 @@ class dataHandler : public errorHandler{
 	    TString SecondVarName;
 
 
-	    float s1;
-	    float s2;
-	    float weight;
+		double s1;
+	    double s2;
+	    double weight;
 
 	    int dataType;
 
