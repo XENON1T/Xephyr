@@ -16,13 +16,13 @@ ToyFitterExclusion::ToyFitterExclusion(TString fileName):errorHandler("ToyExclus
 }
 
 
-void ToyFitterExclusion::fit(double mu, TString nameTree){
+void ToyFitterExclusion::fit(double mu, TString nameTree,bool randomizeMeasure, int stopAt){
     
     // open the file and loop over all trees with given name
     TFile *f = TFile::Open(dirPath);
     if(f == NULL) Error("fit", TString::Format("file %s does not exist",dirPath.Data()));
     
-    TFile f_out(OutDir + "post_fit_" + nameTree + "_mu"+ TString::Format("%2.2f",mu)+ ".root","RECREATE");
+    TFile f_out(OutDir + "post_fit_" + nameTree + "_mufit"+ TString::Format("%1.2f",mu)+ ".root","RECREATE");
 
     // output tree, here intentionally all out tree will have the same name so we can hadd
     TTree *outTree = new TTree("out_" + nameTree, "output tree for a given mu, hadd me");
@@ -56,16 +56,20 @@ void ToyFitterExclusion::fit(double mu, TString nameTree){
     // looping over all tree that are prefixed with nameTree
     TIter next(f->GetListOfKeys());
     TObject *treeKey = NULL;
-    while ((treeKey = next())) {
-     
-        if(TString(treeKey->GetName()).Contains(nameTree))
+    int treeNumber =0;
+    if(stopAt < 0 ) stopAt = f->GetListOfKeys()->GetSize();
+    while ((treeKey = next()) && (treeNumber <= stopAt)) {
+        
+        if(TString(treeKey->GetName()).Contains(nameTree)){
             readTree = (TTree*)f->Get(treeKey->GetName());
+            treeNumber++;
+        }
         else { 
-            Debug("fit", TString::Format("skipping, %s",treeKey->GetName()));
+            Info("fit", TString::Format("skipping, %s",treeKey->GetName()));
             continue; 
         }
 
-        Debug("fit", TString::Format("Matched tree name, %s", treeKey->GetName()));
+        Info("fit", TString::Format("Matched tree name, %s", treeKey->GetName()));
 
         // fill true values from generated tree
         fillTrueParams(readTree);
@@ -74,9 +78,12 @@ void ToyFitterExclusion::fit(double mu, TString nameTree){
         data.setDataTree(readTree);
         likeHood->setDataHandler(&data);
 
+        // reset the parameter to their nominal initial value (othrwise takes longer to fit)
+        likeHood->resetParameters();
+
         // Dice the measured parameters (note that if a parameter is free the t-value exytacted here has no effect)
-        // this MUST be called after "fillTrueParams"
-        measureParameters();
+        // Note: this MUST be called after "fillTrueParams"
+        if(randomizeMeasure) measureParameters();
 
         testStat = computeTS(mu);
         
@@ -100,19 +107,20 @@ double ToyFitterExclusion::computeTS(double mu){
     
     // performing unconditional fit
     double LL_denominator = likeHood->maximize(false) ;
+    double mu_hat         = likeHood->getSigmaHat();
 
     // saving the unconditional likelihood  for outTree
     likelihood_uncond = LL_denominator;
 
     // printing 
-    if(getPrintLevel() < 2) 
+    if(getPrintLevel() < WARNING) 
         likeHood->printCurrentParameters();
     
     // save parameters of unconditional fit 
     saveParameters(uncond_params);
     
     // override denominator in case mu_hat < 0.
-    if(likeHood->POI->getCurrentValue() < 0.){
+    if( mu_hat < 0.){
         likeHood->POI->setCurrentValue(0.);    
         LL_denominator = likeHood->maximize(true) ;
     }
@@ -125,8 +133,8 @@ double ToyFitterExclusion::computeTS(double mu){
     likelihood_cond = LL_numerator;
     
     // printing 
-    if(getPrintLevel() < 2) 
-    likeHood->printCurrentParameters();
+    if(getPrintLevel() < WARNING) 
+        likeHood->printCurrentParameters();
 
     // save parameters of conditional fit 
     saveParameters(cond_params);
@@ -135,7 +143,7 @@ double ToyFitterExclusion::computeTS(double mu){
 
     // following the q_tilde construction, this could have been put above with just return 0.
     // I just wanted to do the conditional fit anyway to return conditional parameter for study
-    if( likeHood->POI->getCurrentValue() > mu )  qstat = 0. ;
+    if( mu_hat > mu )  qstat = 0. ;
 
     
 
@@ -209,7 +217,9 @@ void ToyFitterExclusion::measureParameters(){
         if(param->getType() == FIXED_PARAMETER || param->isOfInterest() 
             || param->getType() == FREE_PARAMETER ) {
 
-             Info("---->","Skipping paramater: " + param->getName()); continue; 
+             measured_params[parItr] = param->getCurrentValue();
+             Info("---->","Skipping paramater: " + param->getName()); 
+             continue; 
         }
             
         // getting range
@@ -225,8 +235,69 @@ void ToyFitterExclusion::measureParameters(){
     
     
         param->setT0value(random_tvalue);
+        param->setCurrentValue(random_tvalue);  // you wanna start the fit from here
         measured_params[parItr] = random_tvalue;
         Info("---->",TString::Format("new T0-Value: %s = %1.2f",param->getName().Data(),random_tvalue)); 
     }
+
+}
+
+
+TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TString fileName, double *mu_list, int mu_size){
+
+
+    TFile *f = new TFile(fileName);
+    
+    TTree *tree = (TTree*) f->Get(treeName);
+ 
+    return computeTSDistros(tree, mu_list, mu_size );
+    
+        
+}
+
+
+TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TTree *tree, double *mu_list, int mu_size){
+
+    TH1F *temp_h;
+    TGraphAsymmErrors *q_mu_90 = new TGraphAsymmErrors(mu_size);
+
+    TFile *out = new TFile("limit_distros.root", "RECREATE");
+
+    const int    nq = 4;
+    double xq[nq]= {0.5, 0.88, 0.90, 0.92};  // 2% unc
+    double yq[nq] = {0};
+
+    for(int i =0; i < mu_size ; i++){
+
+        TString histo_name = "q_mu_"+TString::Format("%1.2f",mu_list[i]);
+        temp_h = new TH1F(histo_name, "", 1000, 0,10);
+
+        tree->Draw("q_mu >>"+histo_name, "q_mu>= -0.01 && mu_fit =="+TString::Format("%1.2f",mu_list[i]));
+        temp_h->GetQuantiles(nq, yq, xq);
+        cout << yq[0] << "  " << yq[1] << "  " << yq[2] << "  " << yq[3] << endl;
+        q_mu_90->SetPoint(i, mu_list[i], yq[2]);
+        q_mu_90->SetPointError(i, 0.,0., yq[2] - yq[1], yq[3] - yq[2]);
+        out->cd();
+    
+        //new TCanvas();
+        //temp_h->Draw();
+        temp_h->Write();
+    
+
+    }
+
+    //new TCanvas();
+    //q_mu_90->Draw("AE*");
+
+    out->cd();
+    q_mu_90->Write("quantiles");
+
+    out->Close();
+
+    return *q_mu_90;
+}
+
+void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, TFile *inputTreeFile){
+
 
 }

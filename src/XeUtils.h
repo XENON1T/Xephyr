@@ -4,6 +4,11 @@
 #include "TString.h"
 #include <iostream>
 
+static const int ERROR   = 3;
+static const int WARNING = 2;
+static const int INFO    = 1;
+static const int DEBUG   = 0;
+
 using namespace std;
 
 /**

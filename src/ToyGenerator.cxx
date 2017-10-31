@@ -142,7 +142,7 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
     // retrive a vector of TH2F of interpolated bkg components
     vector <TH2F> backgrounds = getTH2OfBkg();
 
-    TFile f(dir+treeName+".root","RECREATE");
+    TFile f(dir+treeName+TString::Format("mutrue%1.2f.root",mu),"RECREATE");
     
     // necessary because TH2F::GetRandom uses ROOT::gRandom
     gRandom = &rambo;
@@ -197,6 +197,7 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
 
     }
 
+    likeHood->printCurrentParameters();
     
     f.Close();
 
