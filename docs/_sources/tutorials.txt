@@ -4,8 +4,12 @@ Tutorials Notebook
 
 You can find the HTML version of the following ROOT jupyter notebooks here:
 
-`tutorial likelihood`_
+- `tutorial likelihood`_
+- `tutorial toy generation`_
+- `tutorial toy fitting and limits`_
 
 
 .. _`tutorial likelihood`: https://xenon1t.github.io/Xephyr/docs/likelihood_setup_example.html 
+.. _`tutorial toy generation`: https://xenon1t.github.io/Xephyr/docs/ToyGenerator_example.html
+.. _`tutorial toy fitting and limits`: https://xenon1t.github.io/Xephyr/docs/ToyFitter.html
 

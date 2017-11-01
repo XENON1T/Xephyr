@@ -11,13 +11,16 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   quick_start
+   basics
+   tutorials
 
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`likelihood_setup_example`
-* :ref:`search`
+
+
+
+
+
+
 

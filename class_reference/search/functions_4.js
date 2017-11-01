@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['fit',['fit',['../classToyFitterExclusion.html#aa5067305321c4657fce888faf2204008',1,'ToyFitterExclusion']]],
+  ['fit',['fit',['../classToyFitterExclusion.html#ad492b8177c3f17fac528d108c84e8f27',1,'ToyFitterExclusion']]],
   ['freeze',['freeze',['../classLKParameter.html#a5b1cbafd5ec98caf27bc97118c46ee4b',1,'LKParameter']]]
 ];

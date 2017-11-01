@@ -8,6 +8,7 @@ var searchData=
   ['setaveragedataevents',['setAverageDataEvents',['../classToyGenerator.html#af5156e903fd4c78e25460a74546702dd',1,'ToyGenerator']]],
   ['setbasehisto',['setBaseHisto',['../classhistoCompare.html#ab570f4c95234792595f4ff7506527ac6',1,'histoCompare']]],
   ['setcommon',['setCommon',['../classLKParameter.html#ae07b33fdf400cc3ca18236d3e7814bdb',1,'LKParameter']]],
+  ['setdatatree',['setDataTree',['../classdataHandler.html#ad76d0ecf5e834a684051b542361f7890',1,'dataHandler']]],
   ['setexperiment',['setExperiment',['../classXeStat.html#a11a8eefbaed533896170701924697bd9',1,'XeStat']]],
   ['setlikelihood',['setLikelihood',['../classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3',1,'ToyGenerator']]],
   ['setname',['setName',['../classXeStat.html#a5c46e5184568b56cd0d2df3655cd5f9f',1,'XeStat']]],
@@ -27,5 +28,6 @@ var searchData=
   ['sigmahat',['sigmaHat',['../classLikelihood.html#a2089d932f9677a69cabdfb556d2a596a',1,'Likelihood']]],
   ['sigmaparameter',['SigmaParameter',['../classSigmaParameter.html',1,'']]],
   ['sigpar',['sigPar',['../classProfileLikelihood.html#a0fad223677ef302261cbded74be72ddb',1,'ProfileLikelihood']]],
+  ['spitthelimit',['spitTheLimit',['../classToyFitterExclusion.html#a452fd9ff9291208972328680f757537e',1,'ToyFitterExclusion']]],
   ['suffix',['suffix',['../classpdfComponent.html#ab7700cf9bb9fa3561407171b57778639',1,'pdfComponent']]]
 ];

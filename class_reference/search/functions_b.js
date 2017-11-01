@@ -6,6 +6,7 @@ var searchData=
   ['setaveragedataevents',['setAverageDataEvents',['../classToyGenerator.html#af5156e903fd4c78e25460a74546702dd',1,'ToyGenerator']]],
   ['setbasehisto',['setBaseHisto',['../classhistoCompare.html#ab570f4c95234792595f4ff7506527ac6',1,'histoCompare']]],
   ['setcommon',['setCommon',['../classLKParameter.html#ae07b33fdf400cc3ca18236d3e7814bdb',1,'LKParameter']]],
+  ['setdatatree',['setDataTree',['../classdataHandler.html#ad76d0ecf5e834a684051b542361f7890',1,'dataHandler']]],
   ['setexperiment',['setExperiment',['../classXeStat.html#a11a8eefbaed533896170701924697bd9',1,'XeStat']]],
   ['setlikelihood',['setLikelihood',['../classToyGenerator.html#afb85e9b5e9bf8f033dde007d30b7e9e3',1,'ToyGenerator']]],
   ['setname',['setName',['../classXeStat.html#a5c46e5184568b56cd0d2df3655cd5f9f',1,'XeStat']]],
@@ -21,5 +22,6 @@ var searchData=
   ['settoydataset',['setToyDataset',['../classAsymptoticExclusion.html#a5c095652f490582f72ceeb6c95059dea',1,'AsymptoticExclusion']]],
   ['setup',['setup',['../classLikelihood.html#a3c6cdd2b2274ca7adbcdf6032352568d',1,'Likelihood::setup()'],['../classProfileLikelihood.html#a397985f1c4bd92e40a9567d5fae17fa7',1,'ProfileLikelihood::setup()']]],
   ['shapelikelihood',['shapeLikelihood',['../classLikelihood.html#a66dc6f3f8e348c2cec6ce3773d71ef6c',1,'Likelihood']]],
-  ['shapesys',['shapeSys',['../classshapeSys.html#a1816a4031694074a2734f73a57eb93c1',1,'shapeSys']]]
+  ['shapesys',['shapeSys',['../classshapeSys.html#a1816a4031694074a2734f73a57eb93c1',1,'shapeSys']]],
+  ['spitthelimit',['spitTheLimit',['../classToyFitterExclusion.html#a452fd9ff9291208972328680f757537e',1,'ToyFitterExclusion']]]
 ];
