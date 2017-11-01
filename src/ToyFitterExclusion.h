@@ -60,11 +60,10 @@ class ToyFitterExclusion: public errorHandler {
      * post fit values, and the test statistic. This is supposed to be used for the alternative 
      * hypotesis fits, to be able to generate aftewards the graph of 90th percentiles.
      * @parmam mu: the signal strenght of the conditional fit.
-     * @param nameTree: the name prefix of the tree inside the file.
-     * @param randomizeMeasure: if it is going to randomize the measure of the parameter for each toy.
      * @parma soptAt:  optional, the number of toy in file you want to fit.
+     * NOTE: by deafulte this will randomize the NP measures during fit for each toy, setRandomizeMeasure(false) if you don't want.
      */
-    void fit(double mu, TString nameTree,  bool randomizeMeasure =true, int stopAt=-999);
+    void fit(double mu, int stopAt=-999);
 
     //! \brief set the likelihood to fit
     void setTheLikelihood(pdfLikelihood *like) { likeHood = like; };
@@ -72,34 +71,61 @@ class ToyFitterExclusion: public errorHandler {
     //! \brief set the path to dir in which the fits are stored otherwise is current
     void setOutputDir(TString path){ OutDir = path; };
 
-    //! \brief produces a TGraph with the 90% quantiles of the alternate Hypothesis.
-    //
-    //! it is used to compute limits. The TH1F of the test statistic f(q_mu | H_mu) are
-    //! stored in a root file toghether with the TGraph of 90% quantiles.
-    //! @param fileName: takes as input the hadded post fit output from fit() of this class.
-    //! @param mu_list: is the list of true mu hypothesis present in the file tree.
-    //! @param mu_size: is the size of the previous list.
+    /**
+     * \brief produces a TGraph with the 90% quantiles of the alternate Hypothesis.
+     * 
+     * it is used to compute limits. The TH1F of the test statistic f(q_mu | H_mu) are
+     * stored in a root file toghether with the TGraph of 90% quantiles.
+     * @param fileName: takes as input the hadded post fit output from fit() of this class.
+     * @param mu_list: is the list of true mu hypothesis present in the file tree.
+     * @param mu_size: is the size of the previous list.
+     */
     TGraphAsymmErrors computeTSDistros(TString fileName, double *mu_list, int mu_size);
 
 
-    //! \brief produces a TGraph with the 90% quantiles of the alternate Hypothesis.
-    //
-    //! it is used to compute limits. The TH1F of the test statistic f(q_mu | H_mu) are
-    //! stored in a root file toghether with the TGraph of 90% quantiles.
-    //! @param fileName: takes as input the hadded post fit output from fit() of this class.
-    //! @param mu_list: is the list of true mu hypothesis present in the file tree.
-    //! @param mu_size: is the size of the previous list.
+    /**
+     * \brief produces a TGraph with the 90% quantiles of the alternate Hypothesis.
+     * 
+     * it is used to compute limits. The TH1F of the test statistic f(q_mu | H_mu) are
+     * stored in a root file toghether with the TGraph of 90% quantiles.
+     * @param tree: takes as input the tree of post fit output from fit() of this class.
+     * @param mu_list: is the list of true mu hypothesis present in the file tree.
+     * @param mu_size: is the size of the previous list.
+     */
     TGraphAsymmErrors computeTSDistros(TTree *tree, double *mu_list, int mu_size);
     
-    //! \biref given a input file with N null Hypo toy trees it produce an out tree containing post fits and limit.
-    //!
-    //! note that this can be used also with just a signle tree, for real data limit production.
-    //! @param ninety_quantiles: graph of 90% quantiles as produced from computeTSDistros().
-    //! @param inputTreeFile: file containing the input toy tree list or data.
-    void spitTheLimit(TGraphAsymmErrors *ninety_quantiles, TFile *inputTreeFile);
+    /**
+     * \biref given a input file with N null Hypo toy trees it produce an out tree containing post fits and limit.
+     * 
+     * note that this can be used also with just a signle tree, for real data limit production.
+     * @param ninety_quantiles: graph of 90% quantiles as produced from computeTSDistros().
+     * @param TreeName: prefix name of the tree list you fit. To se the input file file use setPathToFile() method.
+     * @param mu: is the mu_test value one wants to start with seaching for the limit. I suggest to put here the mu value of asymptotic limit.
+     * @parma soptAt:  optional, the number of toy in file you want to fit.
+     * NOTE: by deafulte this will randomize the NP measures during fit for each toy, setRandomizeMeasure(false) if you don't want. 
+     */
+    void spitTheLimit(TGraphAsymmErrors *ninety_quantiles, double mu, int sopAt);
 
+    //! \brief set complete path to input file (including dir and file name)
+    void setPathToFile(TString path) { dirPath = path; };
+
+    // \brief set or unset the parameter randomization. Default true.
+    void setRandomizeMeasure(bool doOrNot) { randomizeMeasure = doOrNot ;};
+
+    // \brief in case you want to change the tree name on the fly
+    void setTreeName(TString newName) { treeName = newName; };
+
+    
   private:
 
+    //! \brief fancy method that loops over a list of tree in a file and run the p2method() function on each.
+    //!
+    //! @params stopAt: number of tree one wants to loop on
+    void for_each_tree(TFile *f, double (ToyFitterExclusion::*p2method)(double), TTree *outTree, double mu, int stopAt = -999);
+
+    //! \brief compute the limit starting from initial_mu via a loop on computeTS
+    //! and using graph_of_quantiles
+    double limitLoop(double initial_mu);
 
     //! \brief save the postfit parameters into params.
     void saveParameters(double *params);
@@ -116,6 +142,8 @@ class ToyFitterExclusion: public errorHandler {
     TString       dirPath;
     TString       treeName;
     TString       OutDir;               //! output dir if not set is current dir
+    TString       DataNameHolder;
+    TGraphAsymmErrors *graph_of_quantiles;
     
     double        likelihood_uncond;    //! value of unconditional fit
     double        likelihood_cond;      //! value of conditional fit
@@ -125,6 +153,12 @@ class ToyFitterExclusion: public errorHandler {
     double        cond_params[50] ;     //! conditional fit
     vector<string> name_params;         //! names of parameters
     TRandom3      rambo;                //! random handler
+    double        mu_fit;               //! mu to be tested, conditional fit
+    double        mu_limit;             //! value of the limit in terms of mu
+    double        limit;                //! limit scaled in cross section
+    double        testStat;             //! value of test statistic
+    int           numberOfParams;       //! number of likelihood parameter (including POI)
+    bool          randomizeMeasure;     //! to random or not the np central value
 };
 
 #endif

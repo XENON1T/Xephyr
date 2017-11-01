@@ -11,26 +11,22 @@ ToyFitterExclusion::ToyFitterExclusion(TString fileName):errorHandler("ToyExclus
     likelihood_uncond = 0.;
     likelihood_cond = 0.;
     name_params.clear();
-
-
+    DataNameHolder = "";
+    mu_fit = 0.;
+    testStat =0.;
+    numberOfParams = 0.;
+    randomizeMeasure = true;
+    graph_of_quantiles = NULL;
+    mu_limit = 0.;
+    limit    = 0.;
 }
 
-
-void ToyFitterExclusion::fit(double mu, TString nameTree,bool randomizeMeasure, int stopAt){
+void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2method)(double), TTree *outTree,  double mu, int stopAt){
     
-    // open the file and loop over all trees with given name
-    TFile *f = TFile::Open(dirPath);
-    if(f == NULL) Error("fit", TString::Format("file %s does not exist",dirPath.Data()));
-    
-    TFile f_out(OutDir + "post_fit_" + nameTree + "_mufit"+ TString::Format("%1.2f",mu)+ ".root","RECREATE");
-
-    // output tree, here intentionally all out tree will have the same name so we can hadd
-    TTree *outTree = new TTree("out_" + nameTree, "output tree for a given mu, hadd me");
-
     // setting up branches on outTree
-    double mu_fit    = mu;
-    double testStat = 0.;
-    int numberOfParams =  likeHood->getParameters()->size();
+    mu_fit    = mu;
+    testStat = 0.;
+    numberOfParams =  likeHood->getParameters()->size();
     outTree->Branch("mu_fit", &mu_fit, "mu_fit/D");
     outTree->Branch("q_mu", &testStat, "testStat/D");
     outTree->Branch("n_params", &numberOfParams, "n_params/I");
@@ -60,7 +56,7 @@ void ToyFitterExclusion::fit(double mu, TString nameTree,bool randomizeMeasure, 
     if(stopAt < 0 ) stopAt = f->GetListOfKeys()->GetSize();
     while ((treeKey = next()) && (treeNumber <= stopAt)) {
         
-        if(TString(treeKey->GetName()).Contains(nameTree)){
+        if(TString(treeKey->GetName()).Contains(treeName)){
             readTree = (TTree*)f->Get(treeKey->GetName());
             treeNumber++;
         }
@@ -85,16 +81,113 @@ void ToyFitterExclusion::fit(double mu, TString nameTree,bool randomizeMeasure, 
         // Note: this MUST be called after "fillTrueParams"
         if(randomizeMeasure) measureParameters();
 
-        testStat = computeTS(mu);
+        // Fancy coding isn't it? ;)  
+        // This is functional using a pointer to a function of ToyFitterExclusion
+        // so that we can run this same loop for different purposes
+        testStat = (this->*p2method)(mu);
         
         outTree->Fill();
 
     }
+
+    if(treeNumber == 0) Error("for_each_tree",TString::Format("tree name %s was not found in file",treeName.Data()));
+
+}
+
+void ToyFitterExclusion::fit(double mu, int stopAt){
     
+    // check if the tree is defined
+    if(treeName == "") Error("fit", "You must set a tree name");
+
+    // open the file and loop over all trees with given name
+    TFile *f = TFile::Open(dirPath);
+    if(f == NULL) Error("fit", TString::Format("file %s does not exist",dirPath.Data()));
+    
+    TFile f_out(OutDir + "post_fit_" + treeName + "_mufit"+ TString::Format("%1.2f",mu)+ ".root","RECREATE");
+
+    // output tree, here intentionally all out tree will have the same name so we can hadd
+    TTree *outTree = new TTree("out_" + treeName, "output tree for a given mu, hadd me");
+
+    // read each tree in input file "f" nad applies the computeTS function to it 
+    for_each_tree(f, &ToyFitterExclusion::computeTS, outTree, mu, stopAt );
+        
     f_out.cd();
     outTree->Write();
     f_out.Close();
+    f->Close();
 
+}
+
+
+
+void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, double mu, int stopAt){
+    
+    // check if the tree is defined
+    if(treeName == "") Error("fit", "You must set a tree name");
+
+     // open the file and loop over all trees with given name
+     TFile *f = TFile::Open(dirPath);
+     if(f == NULL) Error("fit", TString::Format("file %s does not exist",dirPath.Data()));
+     
+     TFile f_out(OutDir + "limit_" + treeName + ".root","RECREATE");
+    
+     graph_of_quantiles = ninety_quantiles;
+
+     // output tree, here intentionally all out tree will have the same name so we can hadd
+     TTree *outTree = new TTree("limit_" + treeName, "tree containing limits");
+    
+     // attach a few additional branch to out tree
+     mu_limit = 0.;
+     limit    = 0.;
+     outTree->Branch("mu_limit", &mu_limit, "mu_limit/D");
+     outTree->Branch("limit", &limit, "limit/D");
+
+     // read each tree in input file "f" nad applies the computeTS function to it 
+     for_each_tree(f, &ToyFitterExclusion::limitLoop, outTree, mu, stopAt );
+              
+     f_out.cd();
+     outTree->Write();
+     f_out.Close();
+     f->Close();
+    
+}
+
+double ToyFitterExclusion::limitLoop(double initial_mu){
+
+    // some checks
+    if(graph_of_quantiles == NULL) Error("limitLoop", "graph of quantiles is not defined.");
+
+    double current_qstat = 0.;
+    bool loop = true;
+
+    double current_mu = initial_mu;
+
+    while (loop){
+
+        // computing the difference between H0 qstat for a given mu and H_mu qstat.
+        current_qstat = computeTS(current_mu);
+        double delta  = graph_of_quantiles->Eval(current_mu) - current_qstat;
+        
+        Debug("limitLoop", TString::Format("current_mu = %f   ;  current_qstat = %f  ;  delta = %f" ,current_mu, current_qstat, delta));        
+
+        // harcoded threshold for limit convergence 0.1, maybe put smaller.
+        if(fabs(delta) < 0.1) { loop = false; break; }
+
+        // no clue if this is fast enough, probably using a minimizer will be better
+        // anyway, this is coming from the fact that q_mu ~ (mu - mu')^2
+        double factor  =  sqrt( fabs(delta) / current_qstat );
+        if( delta > 0 ) current_mu = current_mu + current_mu * factor;
+        else            current_mu = current_mu - current_mu * factor;
+        
+        Debug("limitLoop", TString::Format("Applying factor = %f", factor));
+    }
+
+    mu_limit = current_mu;
+    limit    = current_mu * likeHood->getSignalMultiplier() * likeHood->getSignalDefaultNorm();
+    
+    Info("limitLoop",TString::Format("computed for %s ---> mu_limit= %f (~events) xsec = %E cm^2", likeHood->data->Name.Data(), mu_limit, limit));
+    
+    return current_qstat;
 }
 
 
@@ -105,12 +198,19 @@ double ToyFitterExclusion::computeTS(double mu){
     
     double qstat = 0.;
     
-    // performing unconditional fit
-    double LL_denominator = likeHood->maximize(false) ;
-    double mu_hat         = likeHood->getSigmaHat();
+    // this is for limit case, where we are running many fit with different mu_test
+    // on the same data tree. In those cases mu_hat is always the same, you don't want
+    // to do unconditional fit again.
+    bool DoMaximize  = ( DataNameHolder != likeHood->data->Name );
+    Debug("computeTS", TString::Format("maximize %s --> %s", likeHood->data->Name.Data(), DataNameHolder.Data()));
+    
+    if(DoMaximize) DataNameHolder = likeHood->data->Name;
 
-    // saving the unconditional likelihood  for outTree
-    likelihood_uncond = LL_denominator;
+    // performing unconditional fit and saving it in unconditional likelihood  for outTree
+    if(DoMaximize)    likelihood_uncond = likeHood->maximize(false) ;
+    double mu_hat  = likeHood->getSigmaHat();
+
+    double LL_denominator = likelihood_uncond;
 
     // printing 
     if(getPrintLevel() < WARNING) 
@@ -267,6 +367,8 @@ TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TTree *tree, double *mu_l
     double xq[nq]= {0.5, 0.88, 0.90, 0.92};  // 2% unc
     double yq[nq] = {0};
 
+    cout << "Quantiles: "<< endl;
+    cout << "  mu"<< "\t  " << "50%" << "\t  " << "88%" << "\t  " << "90%" << "\t  " << "92%" << endl;
     for(int i =0; i < mu_size ; i++){
 
         TString histo_name = "q_mu_"+TString::Format("%1.2f",mu_list[i]);
@@ -274,20 +376,16 @@ TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TTree *tree, double *mu_l
 
         tree->Draw("q_mu >>"+histo_name, "q_mu>= -0.01 && mu_fit =="+TString::Format("%1.2f",mu_list[i]));
         temp_h->GetQuantiles(nq, yq, xq);
-        cout << yq[0] << "  " << yq[1] << "  " << yq[2] << "  " << yq[3] << endl;
+        cout << TString::Format("%1.3f \t %1.3f \t %1.3f \t %1.3f \t %1.3f", mu_list[i], yq[0], yq[1], yq[2], yq[3] ) << endl;
         q_mu_90->SetPoint(i, mu_list[i], yq[2]);
         q_mu_90->SetPointError(i, 0.,0., yq[2] - yq[1], yq[3] - yq[2]);
         out->cd();
     
-        //new TCanvas();
-        //temp_h->Draw();
         temp_h->Write();
     
 
     }
 
-    //new TCanvas();
-    //q_mu_90->Draw("AE*");
 
     out->cd();
     q_mu_90->Write("quantiles");
@@ -297,7 +395,4 @@ TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TTree *tree, double *mu_l
     return *q_mu_90;
 }
 
-void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, TFile *inputTreeFile){
 
-
-}
