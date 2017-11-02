@@ -10,6 +10,8 @@ ToyFitterExclusion::ToyFitterExclusion(TString fileName):errorHandler("ToyExclus
     treeName = "";
     likelihood_uncond = 0.;
     likelihood_cond = 0.;
+    limit_converged = false;
+    testStat_limit  = 0.;
     name_params.clear();
     DataNameHolder = "";
     mu_fit = 0.;
@@ -23,6 +25,12 @@ ToyFitterExclusion::ToyFitterExclusion(TString fileName):errorHandler("ToyExclus
 
 void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2method)(double), TTree *outTree,  double mu, int stopAt){
     
+    // TODO FIXME: this won't work for combination.
+    // PROPOSAL: make the loop go through and match the number first, then 
+    // match the name, so that you know the name and how many tree to load from combinedLikelihood,
+    // and they are matchd by number. This way we can just change this function and the rest should 
+    // run out of the box.
+
     // setting up branches on outTree
     mu_fit    = mu;
     testStat = 0.;
@@ -120,7 +128,7 @@ void ToyFitterExclusion::fit(double mu, int stopAt){
 
 
 
-void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, double mu, int stopAt){
+void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int stopAt){
     
     // check if the tree is defined
     if(treeName == "") Error("fit", "You must set a tree name");
@@ -141,9 +149,11 @@ void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, doubl
      limit    = 0.;
      outTree->Branch("mu_limit", &mu_limit, "mu_limit/D");
      outTree->Branch("limit", &limit, "limit/D");
+     outTree->Branch("testStat_limit", &testStat_limit, "testStat_limit/D");
+     outTree->Branch("limit_converged", &limit_converged, "limit_converged/O");
 
      // read each tree in input file "f" nad applies the computeTS function to it 
-     for_each_tree(f, &ToyFitterExclusion::limitLoop, outTree, mu, stopAt );
+     for_each_tree(f, &ToyFitterExclusion::limitLoop, outTree, -9., stopAt );
               
      f_out.cd();
      outTree->Write();
@@ -157,41 +167,46 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     // some checks
     if(graph_of_quantiles == NULL) Error("limitLoop", "graph of quantiles is not defined.");
 
-    double current_qstat = 0.;
-    bool loop = true;
+    limit_converged = false;
+    testStat_limit  = 0.;
 
-    double current_mu = initial_mu;
-
-    while (loop){
-
-        // computing the difference between H0 qstat for a given mu and H_mu qstat.
-        current_qstat = computeTS(current_mu);
-        double delta  = graph_of_quantiles->Eval(current_mu) - current_qstat;
-        
-        Debug("limitLoop", TString::Format("current_mu = %f   ;  current_qstat = %f  ;  delta = %f" ,current_mu, current_qstat, delta));        
-
-        // harcoded threshold for limit convergence 0.1, maybe put smaller.
-        if(fabs(delta) < 0.1) { loop = false; break; }
-
-        // no clue if this is fast enough, probably using a minimizer will be better
-        // anyway, this is coming from the fact that q_mu ~ (mu - mu')^2
-        double factor  =  sqrt( fabs(delta) / current_qstat );
-        if( delta > 0 ) current_mu = current_mu + current_mu * factor;
-        else            current_mu = current_mu - current_mu * factor;
-        
-        Debug("limitLoop", TString::Format("Applying factor = %f", factor));
-    }
-
-    mu_limit = current_mu;
-    limit    = current_mu * likeHood->getSignalMultiplier() * likeHood->getSignalDefaultNorm();
+    // from ROOT docs:  https://root.cern.ch/root/html/ROOT__Math__BrentMinimizer1D.html
+    //                  https://root.cern.ch/numerical-minimization
+    //                  https://root.cern.ch/how-implement-mathematical-function-inside-framework
+    ROOT::Math::Functor1D func(this,&ToyFitterExclusion::eval_testStatMinuit); 
     
+    ROOT::Math::BrentMinimizer1D bm; // this guy does numerical minimization scanning a range, not the fastest but quite robust.
+    bm.SetFunction(func, 1. , 4.);   // interval from [0,4] in mu (by construction limit should be around 2.3)
+    bm.SetNpx(3);                    // divide in 3 intervals
+    limit_converged = bm.Minimize(10, 0.05, 0.01);     // max 10 iteration absolute error on mu = 0.05 relative error 1% 
+
+    double q_stat  =  bm.FValMinimum();  // test stat value at limit
+
+    mu_limit = bm.XMinimum();
+    limit    = mu_limit * likeHood->getSignalMultiplier() * likeHood->getSignalDefaultNorm();
+
+    Info("limitLoop", TString::Format("%s with TS val= %1.3f", (limit_converged ? "CONVERGED" : "NOT - CONVERGED" ), q_stat ) );
     Info("limitLoop",TString::Format("computed for %s ---> mu_limit= %f (~events) xsec = %E cm^2", likeHood->data->Name.Data(), mu_limit, limit));
     
-    return current_qstat;
+    return bm.FValMinimum();
 }
 
 
-double ToyFitterExclusion::computeTS(double mu){
+double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
+
+    // computing the difference between H0 qstat for a given mu and H_mu qstat.
+    double qstat = computeTS(mu);
+    double delta  = graph_of_quantiles->Eval(mu) - qstat;
+    
+    Debug("limitLoop", TString::Format("current_mu = %f   ;  current_qstat = %f  ;  delta = %f" ,mu, qstat, delta));        
+    
+    testStat_limit  =  qstat; // assuming the last call will set the qstat_limit properly
+    
+    return fabs(delta);
+}
+
+
+double ToyFitterExclusion::computeTS(double mu) {
     
     // we use q_tilde from equation 16 of: https://arxiv.org/abs/1007.1727
     // this is suitable for upper limit in which the parameter of interest must be >0.

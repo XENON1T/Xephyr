@@ -22,6 +22,11 @@
 #include <vector>
 #include <stdio.h>
 
+#include "Math/Minimizer.h"
+#include "Math/Factory.h"
+#include "Math/Functor.h"
+#include "Math/BrentMinimizer1D.h"
+
 using namespace std;
 
 /**
@@ -50,7 +55,7 @@ class ToyFitterExclusion: public errorHandler {
      * For it to work correctly is important to set up the likelihood beforehand.
      * @param mu: the signal strenght for conditional fit. 
      */
-    double computeTS(double mu);
+    double computeTS(double mu) ;
 
     /**
      * \brief given as input a file with many data toys, it writes a tree with fit outputs
@@ -100,11 +105,10 @@ class ToyFitterExclusion: public errorHandler {
      * note that this can be used also with just a signle tree, for real data limit production.
      * @param ninety_quantiles: graph of 90% quantiles as produced from computeTSDistros().
      * @param TreeName: prefix name of the tree list you fit. To se the input file file use setPathToFile() method.
-     * @param mu: is the mu_test value one wants to start with seaching for the limit. I suggest to put here the mu value of asymptotic limit.
      * @parma soptAt:  optional, the number of toy in file you want to fit.
      * NOTE: by deafulte this will randomize the NP measures during fit for each toy, setRandomizeMeasure(false) if you don't want. 
      */
-    void spitTheLimit(TGraphAsymmErrors *ninety_quantiles, double mu, int sopAt);
+    void spitTheLimit(TGraphAsymmErrors *ninety_quantiles,  int sopAt = -999);
 
     //! \brief set complete path to input file (including dir and file name)
     void setPathToFile(TString path) { dirPath = path; };
@@ -136,6 +140,9 @@ class ToyFitterExclusion: public errorHandler {
     //! \brief assign to each parameter a random measured t-value
     void measureParameters();
 
+    //! \brief function implementation to be used in limit minuit minimization
+    double eval_testStatMinuit( double mu );
+
     void saveNames(string *names);
 
     pdfLikelihood *likeHood;
@@ -151,6 +158,8 @@ class ToyFitterExclusion: public errorHandler {
     double        measured_params[50];  //! t_value of measured param
     double        uncond_params[50] ;   //! unconditional fit
     double        cond_params[50] ;     //! conditional fit
+    bool          limit_converged;      //! if limit finder converged or not
+    double        testStat_limit;       //! value of test statistic at limit
     vector<string> name_params;         //! names of parameters
     TRandom3      rambo;                //! random handler
     double        mu_fit;               //! mu to be tested, conditional fit
