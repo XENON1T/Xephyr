@@ -35,7 +35,9 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
     mu_fit    = mu;
     testStat = 0.;
     numberOfParams =  likeHood->getParameters()->size();
+    double mass    =  likeHood->getWimpMass();
     outTree->Branch("mu_fit", &mu_fit, "mu_fit/D");
+    outTree->Branch("mass", &mass, "mass/D");
     outTree->Branch("q_mu", &testStat, "testStat/D");
     outTree->Branch("n_params", &numberOfParams, "n_params/I");
     outTree->Branch("LL_cond", &likelihood_cond, "LL_cond/D");
@@ -376,7 +378,9 @@ TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TTree *tree, double *mu_l
     TH1F *temp_h;
     TGraphAsymmErrors *q_mu_90 = new TGraphAsymmErrors(mu_size);
 
-    TFile *out = new TFile("limit_distros.root", "RECREATE");
+    TString mass = TString::Itoa((int)likeHood->getWimpMass(), 10);
+
+    TFile *out = new TFile(OutDir + "ts_distros_quantiles_m"+mass+".root", "RECREATE");
 
     const int    nq = 4;
     double xq[nq]= {0.5, 0.88, 0.90, 0.92};  // 2% unc
@@ -386,7 +390,7 @@ TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TTree *tree, double *mu_l
     cout << "  mu"<< "\t  " << "50%" << "\t  " << "88%" << "\t  " << "90%" << "\t  " << "92%" << endl;
     for(int i =0; i < mu_size ; i++){
 
-        TString histo_name = "q_mu_"+TString::Format("%1.2f",mu_list[i]);
+        TString histo_name = "q_mu_"+TString::Format("%1.2f",mu_list[i] ) + "_m" + mass;
         temp_h = new TH1F(histo_name, "", 1000, 0,10);
 
         tree->Draw("q_mu >>"+histo_name, "q_mu>= -0.01 && mu_fit =="+TString::Format("%1.2f",mu_list[i]));
@@ -403,7 +407,7 @@ TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TTree *tree, double *mu_l
 
 
     out->cd();
-    q_mu_90->Write("quantiles");
+    q_mu_90->Write("quantiles_m" + mass);
 
     out->Close();
 
