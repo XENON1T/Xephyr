@@ -41,7 +41,8 @@
 - Compiling Xephyr
 <code>
 	cd ..
-	source Xephyr/pacman/build.sh		
+	cmake -D CMAKE_C_COMPILER="/software/gcc-4.8-el6-x86_64/bin/gcc" -D CMAKE_CXX_COMPILER="/software/gcc-4.8-el6-x86_64/bin/g++" ..
+#	source Xephyr/pacman/build.sh		
 </code>
 
 - 

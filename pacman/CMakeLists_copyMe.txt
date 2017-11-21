@@ -1,0 +1,47 @@
+cmake_minimum_required(VERSION 3.4.0)
+
+#set (CMAKE_CXX_STANDARD 11)            # needed for root 6
+set( CMAKE_EXPORT_COMPILE_COMMANDS ON ) # generate database for vim
+
+project(xephyr)
+#########  IMPORTANT  ######################
+# make sure the compiler supports c++11 libraries
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.8.1")
+                message(FATAL_ERROR "GNU-gcc version less than 4.8.1, this does not support c++11 library needed for ROOT 6")
+        endif()
+endif()
+##########################################
+
+################ ROOT setup #####################
+list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
+find_package(ROOT REQUIRED )
+include(${ROOT_USE_FILE})
+################################################
+
+# dir of headers (which is the same as source)
+include_directories(Xephyr/src)
+
+# Get all source file and saves it in a list called SOURCES
+file(GLOB SOURCES "Xephyr/src/*.cxx")
+
+# Producing a shared library with all xephyr stuff
+add_library(xelib SHARED ${SOURCES})
+target_link_libraries(xelib ${ROOT_LIBRARIES}) # link the xephyr lib to the
+
+
+############  USER LIBRARIES AND EXE  #####################
+include_directories(SR1/StatisticalAnalyses/xephyr_sr1_likelihood/src)
+file(GLOB SR1SOURCE "SR1/StatisticalAnalyses/xephyr_sr1_likelihood/src/*.cxx")
+add_library(sr1lib SHARED ${SR1SOURCE})
+
+add_executable(SR1_toygen SR1/StatisticalAnalyses/xephyr_sr1_likelihood/toy_gen_main.cxx)
+target_link_libraries(SR1_toygen xelib sr1lib)
+add_executable(SR1_toyfit SR1/StatisticalAnalyses/xephyr_sr1_likelihood/toy_fit_main.cxx)
+target_link_libraries(SR1_toyfit xelib sr1lib)
+add_executable(SR1_makeQuantiles SR1/StatisticalAnalyses/xephyr_sr1_likelihood/make_quantiles.cxx)
+target_link_libraries(SR1_makeQuantiles xelib sr1lib)
+add_executable(SR1_spitLimit SR1/StatisticalAnalyses/xephyr_sr1_likelihood/spitTheLimit.cxx)
+target_link_libraries(SR1_spitLimit xelib sr1lib)
+
+
