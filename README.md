@@ -11,3 +11,37 @@
 # Quick Start:
 ### To load the library simply do: 
 <code> root -l loadXephyr.C </code>
+
+# Setting Up on Midway
+
+- Setting up:
+<code>
+	mkdir XEPHYR
+	cd XEPHYR
+	git clone https://github.com/XENON1T/Xephyr.git Xephyr
+	module load cmake 
+	module unload ROOT
+	module load ROOT/6.06
+	module unload python
+	module load  python/3.5.2+gcc-4.8
+<code>
+
+- Cloning your code to compile against the library, in this case is SR1 (here we are only pulling the necessary directories):
+<code>
+	mkdir SR1
+	cd SR1
+	git init
+	git remote add -f origin https://github.com/XENON1T/SR1Results.git
+	git config core.sparseCheckout true
+	echo "StatisticalAnalyses/xephyr_sr1_likelihood/" >> .git/info/sparse-checkout
+	echo "StatisticalAnalyses/inputs_for_likelihood/" >> .git/info/sparse-checkout
+	git pull origin master 
+</code>
+
+- Compiling Xephyr
+<code>
+	cd ..
+	source Xephyr/pacman/build.sh		
+</code>
+
+- 
