@@ -15,7 +15,7 @@
 # Setting Up on Midway
 
 - Setting up:
-<code>
+```bash
 	mkdir XEPHYR
 	cd XEPHYR
 	git clone https://github.com/XENON1T/Xephyr.git Xephyr
@@ -24,10 +24,10 @@
 	module load ROOT/6.06
 	module unload python
 	module load  python/3.5.2+gcc-4.8
-<code>
+```
 
 - Cloning your code to compile against the library, in this case is SR1 (here we are only pulling the necessary directories):
-<code>
+```bash
 	mkdir SR1
 	cd SR1
 	git init
@@ -36,13 +36,12 @@
 	echo "StatisticalAnalyses/xephyr_sr1_likelihood/" >> .git/info/sparse-checkout
 	echo "StatisticalAnalyses/inputs_for_likelihood/" >> .git/info/sparse-checkout
 	git pull origin master 
-</code>
+```
 
 - Compiling Xephyr
-<code>
+```bash
 	cd ..
-	cmake -D CMAKE_C_COMPILER="/software/gcc-4.8-el6-x86_64/bin/gcc" -D CMAKE_CXX_COMPILER="/software/gcc-4.8-el6-x86_64/bin/g++" ..
+	cmake -DCMAKE_C_COMPILER="/usr/bin/gcc" -DCMAKE_CXX_COMPILER="/usr/bin/g++" ..
 #	source Xephyr/pacman/build.sh		
-</code>
-
+```
 - 
