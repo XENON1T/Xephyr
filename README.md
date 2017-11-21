@@ -46,6 +46,7 @@
 	mkdir build
 	cd build
 	cmake -DCMAKE_C_COMPILER="/usr/bin/gcc" -DCMAKE_CXX_COMPILER="/usr/bin/g++" ..
+	make
 #	source Xephyr/pacman/build.sh        #all the above will in the future be done with this command but give problems now.
 ```
 - 
