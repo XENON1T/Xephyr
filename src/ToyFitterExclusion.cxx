@@ -40,7 +40,7 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
     double mass    =  likeHood->getWimpMass();
     outTree->Branch("mu_fit", &mu_fit, "mu_fit/D");
     outTree->Branch("mass", &mass, "mass/D");
-    outTree->Branch("q_mu", &testStat, "testStat/D");
+    outTree->Branch("q_mu", &testStat, "q_mu/D");
     outTree->Branch("n_params", &numberOfParams, "n_params/I");
     outTree->Branch("LL_cond", &likelihood_cond, "LL_cond/D");
     outTree->Branch("LL_uncond", &likelihood_uncond, "LL_uncond/D");
@@ -379,43 +379,9 @@ TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TString fileName, double 
 
 TGraphAsymmErrors ToyFitterExclusion::computeTSDistros(TTree *tree, double *mu_list, int mu_size){
 
-    TH1F *temp_h;
-    TGraphAsymmErrors *q_mu_90 = new TGraphAsymmErrors(mu_size);
+    double wimpMass = likeHood->getWimpMass();
+    return plotHelpers::giveTSquantiles(tree,mu_list, mu_size, OutDir, wimpMass);
 
-    TString mass = TString::Itoa((int)likeHood->getWimpMass(), 10);
-
-    TFile *out = new TFile(OutDir + "ts_distros_quantiles_m"+mass+".root", "RECREATE");
-
-    const int    nq = 4;
-    double xq[nq]= {0.5, 0.88, 0.90, 0.92};  // 2% unc
-    double yq[nq] = {0};
-
-    cout << "Quantiles: "<< endl;
-    cout << "  mu"<< "\t  " << "50%" << "\t  " << "88%" << "\t  " << "90%" << "\t  " << "92%" << endl;
-    for(int i =0; i < mu_size ; i++){
-
-        TString histo_name = "q_mu_"+TString::Format("%1.2f",mu_list[i] ) + "_m" + mass;
-        temp_h = new TH1F(histo_name, "", 1000, 0,10);
-
-        tree->Draw("q_mu >>"+histo_name, "q_mu>= -0.01 && mu_fit =="+TString::Format("%1.2f",mu_list[i]));
-        temp_h->GetQuantiles(nq, yq, xq);
-        cout << TString::Format("%1.3f \t %1.3f \t %1.3f \t %1.3f \t %1.3f", mu_list[i], yq[0], yq[1], yq[2], yq[3] ) << endl;
-        q_mu_90->SetPoint(i, mu_list[i], yq[2]);
-        q_mu_90->SetPointError(i, 0.,0., yq[2] - yq[1], yq[3] - yq[2]);
-        out->cd();
-    
-        temp_h->Write();
-    
-
-    }
-
-
-    out->cd();
-    q_mu_90->Write("quantiles_m" + mass);
-
-    out->Close();
-
-    return *q_mu_90;
 }
 
 

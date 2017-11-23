@@ -21,6 +21,7 @@
 #include <map>
 #include <vector>
 #include <stdio.h>
+#include "plotHelpers.cxx"
 
 #include "Math/Minimizer.h"
 #include "Math/Factory.h"
