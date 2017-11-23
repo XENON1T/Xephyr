@@ -43,9 +43,9 @@ class ToyFitterExclusion: public errorHandler {
 
   public:
     
-    //! \brief constructor, pathToFile is the name of the file including path to fit, 
-    //! by convenction this ia also the name of the file.
-    ToyFitterExclusion(TString pathToFile);
+    //! \brief constructor, CollectionName is the name of the tree collection to fit, 
+    //! by convention set by ToyGenerator this is also the name of the file.
+    ToyFitterExclusion(TString CollectionName);
     
     /**
      * \brief returns the Test Statistic q_tilde(mu) for a value of mu_test.
@@ -73,8 +73,6 @@ class ToyFitterExclusion: public errorHandler {
     //! \brief set the likelihood to fit
     void setTheLikelihood(pdfLikelihood *like) { likeHood = like; };
 
-    //! \brief set the path to dir in which the fits are stored otherwise is current
-    void setOutputDir(TString path){ OutDir = path; };
 
     /**
      * \brief produces a TGraph with the 90% quantiles of the alternate Hypothesis.
@@ -110,14 +108,21 @@ class ToyFitterExclusion: public errorHandler {
      */
     void spitTheLimit(TGraphAsymmErrors *ninety_quantiles,  int sopAt = -999);
 
-    //! \brief set complete path to input file (including dir and file name)
-    void setPathToFile(TString path) { dirPath = path; };
+    //! \brief set path to input file (only dir no file name)
+    void setInputDir(TString path) { dirPath = path; };
+    
+    //! \brief set the path to dir in which the fits are stored otherwise is current
+    void setOutputDir(TString path){ OutDir = path; };
 
     // \brief set or unset the parameter randomization. Default true.
     void setRandomizeMeasure(bool doOrNot) { randomizeMeasure = doOrNot ;};
 
     // \brief in case you want to change the tree name on the fly
     void setTreeName(TString newName) { treeName = newName; };
+
+    // \brief setting random seed for measured param generation
+    // TRandom likes a integer seed.
+    void setSeed(ULong_t seed) { rambo.SetSeed(seed); }; 
 
     
   private:

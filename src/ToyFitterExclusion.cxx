@@ -1,13 +1,14 @@
 #include "ToyFitterExclusion.h"
 
 
-ToyFitterExclusion::ToyFitterExclusion(TString fileName):errorHandler("ToyExclusion"){
+ToyFitterExclusion::ToyFitterExclusion(TString CollectionName):errorHandler("ToyExclusion"){
 
 
     likeHood = NULL;
-    dirPath  = fileName;
+    dirPath  = "./";
     OutDir = "./";
-    treeName = "";
+
+    treeName = CollectionName;
     likelihood_uncond = 0.;
     likelihood_cond = 0.;
     limit_converged = false;
@@ -34,6 +35,7 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
     // setting up branches on outTree
     mu_fit    = mu;
     testStat = 0.;
+    string inputTreeName = "";
     numberOfParams =  likeHood->getParameters()->size();
     double mass    =  likeHood->getWimpMass();
     outTree->Branch("mu_fit", &mu_fit, "mu_fit/D");
@@ -47,17 +49,13 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
     outTree->Branch("uncond_params", uncond_params,"uncond_params[n_params]/D");
     outTree->Branch("cond_params", cond_params,"cond_params[n_params]/D");
     outTree->Branch("name_params", &name_params);
-
+    outTree->Branch("inputTreeName", &inputTreeName);
     // input tree
     TTree *readTree = NULL;
 
     // Data handler
     dataHandler data("toyDMData");
     data.setData(DM_DATA);
-
-    // setting random seed for measured param generation
-    // TRandom likes a integer seed, the multiplication just makes sure that even if mu is small you get a new seed 
-    rambo.SetSeed(((ULong_t) mu * 1000.)); 
 
     // looping over all tree that are prefixed with nameTree
     TIter next(f->GetListOfKeys());
@@ -77,6 +75,8 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
 
         Info("fit", TString::Format("Matched tree name, %s", treeKey->GetName()));
 
+        inputTreeName = treeKey->GetName();
+
         // fill true values from generated tree
         fillTrueParams(readTree);
 
@@ -92,7 +92,7 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
         if(randomizeMeasure) measureParameters();
 
         // Fancy coding isn't it? ;)  
-        // This is functional using a pointer to a function of ToyFitterExclusion
+        // This is a functional: using a pointer to a function of ToyFitterExclusion
         // so that we can run this same loop for different purposes
         testStat = (this->*p2method)(mu);
         
@@ -109,14 +109,16 @@ void ToyFitterExclusion::fit(double mu, int stopAt){
     // check if the tree is defined
     if(treeName == "") Error("fit", "You must set a tree name");
 
+    // build filename base on convention of toygenerator
+    TString pathToFile = dirPath + treeName + ".root";
     // open the file and loop over all trees with given name
-    TFile *f = TFile::Open(dirPath);
-    if(f == NULL) Error("fit", TString::Format("file %s does not exist",dirPath.Data()));
+    TFile *f = TFile::Open(pathToFile);
+    if(f == NULL) Error("fit", TString::Format("file %s does not exist", pathToFile.Data()));
     
-    TFile f_out(OutDir + "post_fit_" + treeName + "_mufit"+ TString::Format("%1.2f",mu)+ ".root","RECREATE");
+    TFile f_out(OutDir + "post_fit_" + treeName + ".root","RECREATE");
 
     // output tree, here intentionally all out tree will have the same name so we can hadd
-    TTree *outTree = new TTree("out_" + treeName, "output tree for a given mu, hadd me");
+    TTree *outTree = new TTree("post_fit_tree", "output tree for a given mu, hadd me");
 
     // read each tree in input file "f" nad applies the computeTS function to it 
     for_each_tree(f, &ToyFitterExclusion::computeTS, outTree, mu, stopAt );
@@ -135,16 +137,18 @@ void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int s
     // check if the tree is defined
     if(treeName == "") Error("fit", "You must set a tree name");
 
-     // open the file and loop over all trees with given name
-     TFile *f = TFile::Open(dirPath);
-     if(f == NULL) Error("fit", TString::Format("file %s does not exist",dirPath.Data()));
-     
-     TFile f_out(OutDir + "limit_" + treeName + ".root","RECREATE");
+    // build filename base on convention of toygenerator
+    TString pathToFile = dirPath + treeName + ".root";
+    // open the file and loop over all trees with given name
+    TFile *f = TFile::Open(pathToFile);
+    if(f == NULL) Error("spitTheLimit", TString::Format("file %s does not exist", pathToFile.Data()));
     
+    TFile f_out(OutDir + "post_fit_" + treeName + ".root","RECREATE");
+
      graph_of_quantiles = ninety_quantiles;
 
      // output tree, here intentionally all out tree will have the same name so we can hadd
-     TTree *outTree = new TTree("limit_" + treeName, "tree containing limits");
+     TTree *outTree = new TTree("limit_tree", "tree containing limits, hadd me");
     
      // attach a few additional branch to out tree
      mu_limit = 0.;
@@ -154,7 +158,7 @@ void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int s
      outTree->Branch("testStat_limit", &testStat_limit, "testStat_limit/D");
      outTree->Branch("limit_converged", &limit_converged, "limit_converged/O");
 
-     // read each tree in input file "f" nad applies the computeTS function to it 
+     // read each tree in input file "f" and applies the computeTS function to it 
      for_each_tree(f, &ToyFitterExclusion::limitLoop, outTree, -9., stopAt );
               
      f_out.cd();

@@ -142,7 +142,7 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
     // retrive a vector of TH2F of interpolated bkg components
     vector <TH2F> backgrounds = getTH2OfBkg();
 
-    TFile f(dir+treeName+TString::Format("mutrue%1.2f.root",mu),"RECREATE");
+    TFile f(dir+treeName+".root","RECREATE");
     
     // necessary because TH2F::GetRandom uses ROOT::gRandom
     gRandom = &rambo;
@@ -150,7 +150,7 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
     // actual generation of N toys with poisson fluctuating events.
     for(int toyItr =0; toyItr < N ; toyItr++){
 
-        TString name = treeName + TString::Itoa(toyItr,10); 
+        TString name = treeName + "_" + TString::Itoa(toyItr,10); 
         TTree toyTree (name, "generated toy data");
         float cs1 = 0.; 
         float cs2 = 0.;
