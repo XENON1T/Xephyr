@@ -64,7 +64,7 @@ TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TSt
     double yq[nq] = {0.};                    // quantiles to be filled
 
     TCanvas *c1 = new TCanvas();
-    c1->Print("quantiles_m"+ mass+".pdf[");
+    c1->Print(OutDir + "quantiles_m"+ mass+".pdf[");
 
     for (int i = 0; i < mu_size; i++)
     {
@@ -73,14 +73,15 @@ TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TSt
         TH1F temp = giveQuantiles(tree, xq, yq, nq, "q_mu", cut);
 
         // storing the distro in file pdf
+        temp.Rebin(100);
         temp.Draw();
-        c1->Print("quantiles_m"+ mass+".pdf");
+        c1->Print(OutDir + "quantiles_m"+ mass+".pdf");
 
         q_mu_90->SetPoint(i, mu_list[i], yq[2]);
         q_mu_90->SetPointError(i, 0., 0., yq[2] - yq[1], yq[3] - yq[2]);
     }
 
-    c1->Print("quantiles_m"+ mass+".pdf]");
+    c1->Print(OutDir + "quantiles_m"+ mass+".pdf]");
     delete c1;
 
     out->cd();

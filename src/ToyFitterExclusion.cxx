@@ -14,7 +14,7 @@ ToyFitterExclusion::ToyFitterExclusion(TString CollectionName):errorHandler("Toy
     limit_converged = false;
     testStat_limit  = 0.;
     name_params.clear();
-    DataNameHolder = "";
+    DataNameHolder = "ImpossibleNameToMatchAtFirstOneMustBeStupid";
     mu_fit = 0.;
     testStat =0.;
     numberOfParams = 0.;
@@ -62,7 +62,7 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
     TObject *treeKey = NULL;
     int treeNumber =0;
     if(stopAt < 0 ) stopAt = f->GetListOfKeys()->GetSize();
-    while ((treeKey = next()) && (treeNumber <= stopAt)) {
+    while ((treeKey = next()) && (treeNumber < stopAt)) {
         
         if(TString(treeKey->GetName()).Contains(treeName)){
             readTree = (TTree*)f->Get(treeKey->GetName());
@@ -143,7 +143,7 @@ void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int s
     TFile *f = TFile::Open(pathToFile);
     if(f == NULL) Error("spitTheLimit", TString::Format("file %s does not exist", pathToFile.Data()));
     
-    TFile f_out(OutDir + "post_fit_" + treeName + ".root","RECREATE");
+    TFile f_out(OutDir + "limits_" + treeName + ".root","RECREATE");
 
      graph_of_quantiles = ninety_quantiles;
 
@@ -229,7 +229,7 @@ double ToyFitterExclusion::computeTS(double mu) {
 
     // performing unconditional fit and saving it in unconditional likelihood  for outTree
     if(DoMaximize)    likelihood_uncond = likeHood->maximize(false) ;
-    double mu_hat  = likeHood->getSigmaHat();
+    double mu_hat  = likeHood->getSigmaHat();   // the likelihood store safely mu_hat and overrides it only when you call maximize(false)
 
     double LL_denominator = likelihood_uncond;
 
@@ -238,7 +238,7 @@ double ToyFitterExclusion::computeTS(double mu) {
         likeHood->printCurrentParameters();
     
     // save parameters of unconditional fit 
-    saveParameters(uncond_params);
+    if(DoMaximize)  saveParameters(uncond_params);
     
     // override denominator in case mu_hat < 0.
     if( mu_hat < 0.){
