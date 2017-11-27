@@ -92,5 +92,81 @@ TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TSt
 }
 
 
+TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], int N_mass){
+                         // -2       -1        0    +1        +2        sigmas
+    double percents[5] = {0.022750, 0.158655, 0.5, 0.841345, 0.977250 };
+    double quantiles[5] = { 0. };
+
+    TFile *fOut = new TFile(OutDir + "sensitivity.root", "RECREATE");
+    
+    TGraphAsymmErrors median_and_one_sigma(N_mass);
+    TGraphAsymmErrors median_and_two_sigma(N_mass);
+    
+    TGraphAsymmErrors XS_median_and_one_sigma(N_mass);
+    TGraphAsymmErrors XS_median_and_two_sigma(N_mass);
+
+    if(!OutDir.Contains("/"))
+        OutDir += "/";
+
+ 
+    TCanvas *c1 = new TCanvas();
+    c1->Print(OutDir + "limitDistros.pdf[");
+
+    for (int massItr=0; massItr < N_mass; massItr++){
+        TString mass = TString::Format("%1.0f", wimpMass[massItr]);
+    
+        // limit distro in NS
+        TH1F temp = giveQuantiles(tree,percents, quantiles, 5, "mu_limit", "mass ==" + mass);
+
+        // some silly drawing of distros...
+        temp.Rebin(100);
+        temp.Draw();
+        c1->Print(OutDir + "limitDistros.pdf");
+        
+
+        // Filling Limit TGraph
+        median_and_one_sigma.SetPoint(massItr, wimpMass[massItr], quantiles[2]);
+        median_and_one_sigma.SetPointEYhigh(massItr, quantiles[3]); // + 1 sigma
+        median_and_one_sigma.SetPointEYlow(massItr, quantiles[1]);  // - 1 sigma
+
+        median_and_two_sigma.SetPoint(massItr, wimpMass[massItr], quantiles[2]);
+        median_and_two_sigma.SetPointEYhigh(massItr, quantiles[4]); // + 2 sigma
+        median_and_two_sigma.SetPointEYlow(massItr, quantiles[0]);  // - 2 sigma
+
+        // Limit distro in X section
+        temp = giveQuantiles(tree,percents, quantiles, 5, "limit", "mass ==" + mass);
+        
+        // some silly drawing of distros...
+        temp.Rebin(100);
+        temp.Draw();
+        c1->Print(OutDir + "limitDistros.pdf");
+        
+        // Filling Limit TGraph
+        XS_median_and_one_sigma.SetPoint(massItr, wimpMass[massItr], quantiles[2]);
+        XS_median_and_one_sigma.SetPointEYhigh(massItr, quantiles[3]); // + 1 sigma
+        XS_median_and_one_sigma.SetPointEYlow(massItr, quantiles[1]);  // - 1 sigma
+
+        XS_median_and_two_sigma.SetPoint(massItr, wimpMass[massItr], quantiles[2]);
+        XS_median_and_two_sigma.SetPointEYhigh(massItr, quantiles[4]); // + 2 sigma
+        XS_median_and_two_sigma.SetPointEYlow(massItr, quantiles[0]);  // - 2 sigma
+    }
+
+    fOut->cd();
+    median_and_one_sigma.Write("sensitivity_ns_1s");
+    median_and_two_sigma.Write("sensitivity_ns_2s");
+
+    XS_median_and_one_sigma.Write("sensitivity_xsec_1s");
+    XS_median_and_two_sigma.Write("sensitivity_xsec_2s");
+    fOut->Close();
+    
+    c1->Print(OutDir + "limitDistros.pdf]");
+    delete c1;
+
+    return XS_median_and_one_sigma;
+}
+
+
+
+
 }
 #endif
