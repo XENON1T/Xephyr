@@ -52,6 +52,7 @@ TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TSt
 
     for (int i = 0; i < mu_size; i++)
     {
+	std::cout << "------->  mu " << mu_list[i] << std::endl;
 
         TString cut = "q_mu>= -0.01 && mass ==" + mass + " && mu_fit ==" + TString::Format("%1.2f", mu_list[i]);
         TH1F temp = giveQuantiles(tree, xq, yq, nq, "q_mu", cut);
