@@ -100,6 +100,8 @@ TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], in
     for (int massItr=0; massItr < N_mass; massItr++){
         TString mass = TString::Format("%1.0f", wimpMass[massItr]);
     
+        std::cout << "------->  mass " << wimpMass[massItr] << std::endl;
+
         // limit distro in NS
         TH1F temp = giveQuantiles(tree,percents, quantiles, 5, "mu_limit", "mass ==" + mass);
 
