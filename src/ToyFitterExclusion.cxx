@@ -9,6 +9,8 @@ ToyFitterExclusion::ToyFitterExclusion(TString CollectionName):errorHandler("Toy
     OutDir = "./";
 
     treeName = CollectionName;
+    calTreeName = "";
+    Suffix      = "";
     likelihood_uncond = 0.;
     likelihood_cond = 0.;
     limit_converged = false;
@@ -24,7 +26,7 @@ ToyFitterExclusion::ToyFitterExclusion(TString CollectionName):errorHandler("Toy
     limit    = 0.;
 }
 
-void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2method)(double), TTree *outTree,  double mu, int stopAt){
+void ToyFitterExclusion::for_each_tree(TFile *f, TFile *f_cal, double (ToyFitterExclusion::*p2method)(double), TTree *outTree,  double mu, int stopAt){
     
     // TODO FIXME: this won't work for combination.
     // PROPOSAL: make the loop go through and match the number first, then 
@@ -52,6 +54,10 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
     outTree->Branch("inputTreeName", &inputTreeName);
     // input tree
     TTree *readTree = NULL;
+
+    // calibration data
+    dataHandler calData("calibrationData");
+    TTree *calTree = NULL;
 
     // Data handler
     dataHandler data("toyDMData");
@@ -84,6 +90,16 @@ void ToyFitterExclusion::for_each_tree(TFile *f, double (ToyFitterExclusion::*p2
         data.setDataTree(readTree);
         likeHood->setDataHandler(&data);
 
+        // set the new calibration tree
+        if(f_cal){
+            // treeNumber -1 because I did +1 previously above... this maybe done better FIXME 
+            calTree = (TTree*)f_cal->Get(calTreeName + TString::Itoa(treeNumber -1,10));
+            if(calTree == NULL) Error("forEachTree", TString::Format("calibration tree does not exist in file %s",calTree->GetName()) );
+            calData.setDataTree(calTree);
+            likeHood->setCalibrationData(&calData);
+            Info("fit", TString::Format("Calibration tree switched to %s", calTree->GetName()));
+        }
+
         // reset the parameter to their nominal initial value (othrwise takes longer to fit)
         likeHood->resetParameters();
 
@@ -115,13 +131,20 @@ void ToyFitterExclusion::fit(double mu, int stopAt){
     TFile *f = TFile::Open(pathToFile);
     if(f == NULL) Error("fit", TString::Format("file %s does not exist", pathToFile.Data()));
     
-    TFile f_out(OutDir + "post_fit_" + treeName + ".root","RECREATE");
+    // calibration file
+    TFile *f_cal = NULL;
+    if(calTreeName !="") {
+        f_cal = TFile::Open(dirPath + calTreeName + ".root");
+        if(f_cal == NULL) Error("Fit", TString::Format("file %s does not exist", (dirPath + calTreeName + ".root").Data()));
+    }
+
+    TFile f_out(OutDir + "post_fit_" + treeName + Suffix + ".root","RECREATE");
 
     // output tree, here intentionally all out tree will have the same name so we can hadd
     TTree *outTree = new TTree("post_fit_tree", "output tree for a given mu, hadd me");
 
     // read each tree in input file "f" nad applies the computeTS function to it 
-    for_each_tree(f, &ToyFitterExclusion::computeTS, outTree, mu, stopAt );
+    for_each_tree(f, f_cal, &ToyFitterExclusion::computeTS, outTree, mu, stopAt );
         
     f_out.cd();
     outTree->Write();
@@ -142,7 +165,14 @@ void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int s
     // open the file and loop over all trees with given name
     TFile *f = TFile::Open(pathToFile);
     if(f == NULL) Error("spitTheLimit", TString::Format("file %s does not exist", pathToFile.Data()));
-    
+
+    // calibration file
+    TFile *f_cal = NULL;
+    if(calTreeName !="") {
+        f_cal = TFile::Open(dirPath + calTreeName + ".root");
+        if(f_cal == NULL) Error("spitTheLimit", TString::Format("file %s does not exist", (dirPath + calTreeName + ".root").Data()));
+    }
+
     TFile f_out(OutDir + "limits_" + treeName + ".root","RECREATE");
 
      graph_of_quantiles = ninety_quantiles;
@@ -159,7 +189,7 @@ void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int s
      outTree->Branch("limit_converged", &limit_converged, "limit_converged/O");
 
      // read each tree in input file "f" and applies the computeTS function to it 
-     for_each_tree(f, &ToyFitterExclusion::limitLoop, outTree, -9., stopAt );
+     for_each_tree(f, f_cal, &ToyFitterExclusion::limitLoop, outTree, -9., stopAt );
               
      f_out.cd();
      outTree->Write();

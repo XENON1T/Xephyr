@@ -125,13 +125,18 @@ class ToyFitterExclusion: public errorHandler {
     // TRandom likes a integer seed.
     void setSeed(ULong_t seed) { rambo.SetSeed(seed); }; 
 
+    // \brief you must set this if you want to use calibration in fit
+    void setCalibrationTreeName(TString newName) { calTreeName = newName; };
+
+    // \brief set output file suffix, useful for conditional fit of null 
+    void setOutputSuffix(TString name) { Suffix = name; } ;
     
   private:
 
     //! \brief fancy method that loops over a list of tree in a file and run the p2method() function on each.
     //!
     //! @params stopAt: number of tree one wants to loop on
-    void for_each_tree(TFile *f, double (ToyFitterExclusion::*p2method)(double), TTree *outTree, double mu, int stopAt = -999);
+    void for_each_tree(TFile *f, TFile *f_cal, double (ToyFitterExclusion::*p2method)(double), TTree *outTree, double mu, int stopAt = -999);
 
     //! \brief compute the limit starting from initial_mu via a loop on computeTS
     //! and using graph_of_quantiles
@@ -157,6 +162,8 @@ class ToyFitterExclusion: public errorHandler {
     TString       OutDir;               //! output dir if not set is current dir
     TString       DataNameHolder;
     TGraphAsymmErrors *graph_of_quantiles;
+    TString       calTreeName;
+    TString       Suffix;
     
     double        likelihood_uncond;    //! value of unconditional fit
     double        likelihood_cond;      //! value of conditional fit
