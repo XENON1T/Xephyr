@@ -153,4 +153,16 @@ TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], in
 }
 
 
+void addHisto(TH2F *histo, TH2F *h_toBeAdded, double scalefactor ){
+      int Nx = histo->GetNbinsX();
+      int Ny = histo->GetNbinsY();
+      for (int x=1; x <= Nx ; x++){
+        for (int y=1; y <= Ny; y++){
+          double new_content = histo->GetBinContent(x,y)  + h_toBeAdded->GetBinContent(x,y) * scalefactor;
+         histo->SetBinContent(x,y, new_content ) ;
+        }
+      }
+}
+
+
 }

@@ -497,6 +497,7 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
      TH2F bkg_plusSafeguard = bkg_components[0]->getInterpolatedHisto();
      bkg_plusSafeguard.Reset(); // just to take the skeleton
 
+
      float standard_integral = 0. ;
      double Nb_safeguard      = 0. ;
      double epsilon           = safeGuardParam->getCurrentValue();
@@ -519,11 +520,12 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
       }
 
      // Adding Nb*epsilon*Fs     
-     TH2F Fs (signal_component->getInterpolatedHisto());	
-     bkg_plusSafeguard.Add(&Fs, epsilon * Nb_safeguard / Fs.Integral() ) ;
+	 TH2F Fs (signal_component->getInterpolatedHisto());	
 
-  
-     //cross check:
+	 //bkg_plusSafeguard.Add(&Fs, epsilon * Nb_safeguard / Fs.Integral() ) ;
+	 plotHelpers::addHisto(&bkg_plusSafeguard, &Fs, epsilon * Nb_safeguard / Fs.Integral() );
+
+	 //cross check:
      if( fabs(bkg_plusSafeguard.Integral() - standard_integral) > 0.001|| 
 		     bkg_plusSafeguard.Integral() <= 0.) { 
 	  cout <<"pdfLikelihood::getSafeguardedBkgPdf - ERROR: probability is not conserved in safeguard." << endl;

@@ -14,6 +14,7 @@
 #include "dataHandler.h"
 
 #include "XePdfObjects.h"
+#include "plotHelpers.h"
 
 using namespace std;
 
