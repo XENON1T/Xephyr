@@ -43,7 +43,7 @@ TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TSt
 
     TFile *out = new TFile(OutDir + "ts_distros_quantiles_m" + mass + ".root", "RECREATE");
 
-    const int nq = 4;
+    const int nq = 4;   
     double xq[nq] = {0.5, 0.88, 0.90, 0.92}; // 2% unc
     double yq[nq] = {0.};                    // quantiles to be filled
 
@@ -70,6 +70,8 @@ TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TSt
     delete c1;
 
     out->cd();
+    q_mu_90->GetXaxis()->SetTitle("#mu_{test} [similar to #events]");
+    q_mu_90->GetYaxis()->SetTitle("Alternative Hypo LLR 90\% quantile");
     q_mu_90->Write("quantiles_m" + mass);
     out->Close();
 
@@ -152,6 +154,60 @@ TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], in
     return XS_median_and_one_sigma;
 }
 
+TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name,  bool isCond){
+        
+
+        double percents[3] = { 0.158655, 0.5, 0.841345 };
+        double quantiles[3] = { 0. };
+        int numberOfParams = 0;
+        vector <string> *name_params = 0;
+        tree->SetBranchAddress("name_params",&name_params);
+        
+        tree->GetEntry(1);
+        cout << "numberOfParams " << numberOfParams << "  " << name_params->at(0) << endl;
+        unsigned int Nparam = name_params->size();
+
+        TGraphAsymmErrors pulls(Nparam);
+        TGraphAsymmErrors sigma1(Nparam);
+
+        TCanvas *c1 = new TCanvas();
+        c1->Print(OutDir + name +"_pulls.pdf[");
+    
+        for(unsigned int i =0; i < Nparam; i++) {
+            TString var = "cond_params[" + TString::Itoa(i, 10) + "]";
+            if(isCond)  var = "un" + var;
+
+            TH1F temp = giveQuantiles(tree,percents, quantiles, 3, var, "");
+            temp.Rebin(100);
+            temp.Draw();
+            c1->Print(OutDir + name +"_pulls.pdf");
+            pulls.SetPoint(i, i + 2, quantiles[1]);
+            pulls.SetPointEYhigh(i, quantiles[2] - quantiles[1]);
+            pulls.SetPointEYlow(i,  quantiles[1] - quantiles[0] );
+            sigma1.SetPoint(i, i+2, 0.);
+            sigma1.SetPointEYhigh(i, 1);
+            sigma1.SetPointEYlow(i, 1);
+
+        }
+
+            TAxis *x = pulls.GetXaxis();
+            TAxis *x2 = sigma1.GetXaxis();
+            for(unsigned int i=0; i  < Nparam; i++) {
+                x->SetBinLabel(x->FindBin(i +2), name_params->at(i).c_str() );
+                x2->SetBinLabel(x->FindBin(i +2), name_params->at(i).c_str() );
+            }
+
+            pulls.GetYaxis()->SetRangeUser(-2,2);
+            pulls.SetTitle("");
+
+        TFile output(OutDir + name +"_pulls.root", "RECREATE");
+        pulls.Write(name+"_pulls");
+        sigma1.Write("one_sigma");
+        output.Close();
+        return pulls;
+        // put file ----> 
+        // TH1F giveQuantiles(TTree *tree, double percent[], double quantiles[], int nquanta, TString var, TString cut)
+}
 
 void addHisto(TH2F *histo, TH2F *h_toBeAdded, double scalefactor ){
       int Nx = histo->GetNbinsX();
