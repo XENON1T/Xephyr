@@ -154,7 +154,7 @@ TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], in
     return XS_median_and_one_sigma;
 }
 
-TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name,  bool isCond){
+TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name, TString cut="",  bool isCond =true ){
         
 
         double percents[3] = { 0.158655, 0.5, 0.841345 };
@@ -177,7 +177,7 @@ TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name,  bool isCond)
             TString var = "cond_params[" + TString::Itoa(i, 10) + "]";
             if(isCond)  var = "un" + var;
 
-            TH1F temp = giveQuantiles(tree,percents, quantiles, 3, var, "");
+            TH1F temp = giveQuantiles(tree,percents, quantiles, 3, var, cut);
             temp.Rebin(100);
             temp.Draw();
             c1->Print(OutDir + name +"_pulls.pdf");
