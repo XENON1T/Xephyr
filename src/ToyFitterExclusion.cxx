@@ -211,8 +211,14 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     //                  https://root.cern.ch/how-implement-mathematical-function-inside-framework
     ROOT::Math::Functor1D func(this,&ToyFitterExclusion::eval_testStatMinuit); 
     
+    // Test statistic is =0 in case mu_test < mu_hat (so there is no point to compute that, plus helps convergence)
+    likelihood_uncond = likeHood->maximize(false) ;
+    double mu_hat  = likeHood->getSigmaHat();   
+    saveParameters(uncond_params);          // need to do here at this point 
+    DataNameHolder = likeHood->data->Name;  // trick to avoid recomputing the unconditional fit, this sucks a bit FIXME
+
     ROOT::Math::BrentMinimizer1D bm; // this guy does numerical minimization scanning a range, not the fastest but quite robust.
-    bm.SetFunction(func, 0.5 , 5.);   // interval from [0,4] in mu (by construction limit should be around 2.3)
+    bm.SetFunction(func, mu_hat , 15.);   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
     bm.SetNpx(3);                    // divide in 3 intervals
     limit_converged = bm.Minimize(10, 0.05, 0.01);     // max 10 iteration absolute error on mu = 0.05 relative error 1% 
 
@@ -243,6 +249,9 @@ double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
 
 
 double ToyFitterExclusion::computeTS(double mu) {
+
+    // MAYBE make sense to brake this in two functions conditional and unconditional fit
+    // instead of this messy thing here, see fore example above limit_loop (that sucks) FIXME.
     
     // we use q_tilde from equation 16 of: https://arxiv.org/abs/1007.1727
     // this is suitable for upper limit in which the parameter of interest must be >0.
