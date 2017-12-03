@@ -211,14 +211,9 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     //                  https://root.cern.ch/how-implement-mathematical-function-inside-framework
     ROOT::Math::Functor1D func(this,&ToyFitterExclusion::eval_testStatMinuit); 
     
-    // Test statistic is =0 in case mu_test < mu_hat (so there is no point to compute that, plus helps convergence)
-    likelihood_uncond = likeHood->maximize(false) ;
-    double mu_hat  = likeHood->getSigmaHat();   
-    saveParameters(uncond_params);          // need to do here at this point 
-    DataNameHolder = likeHood->data->Name;  // trick to avoid recomputing the unconditional fit, this sucks a bit FIXME
-
+    
     ROOT::Math::BrentMinimizer1D bm; // this guy does numerical minimization scanning a range, not the fastest but quite robust.
-    bm.SetFunction(func, mu_hat , 15.);   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
+    bm.SetFunction(func, 0.1 , 15.);   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
     bm.SetNpx(3);                    // divide in 3 intervals
     limit_converged = bm.Minimize(10, 0.05, 0.01);     // max 10 iteration absolute error on mu = 0.05 relative error 1% 
 
@@ -239,6 +234,11 @@ double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
     // computing the difference between H0 qstat for a given mu and H_mu qstat.
     double qstat = computeTS(mu);
     double delta  = graph_of_quantiles->Eval(mu) - qstat;
+    
+    // the plus 10 is to make it asymmetric with respect to zero, 
+    // it had a lot of difficulties in finding the right minima otherwise
+    // this is a work around, a better solution might be neded FIXME.
+    if( delta > 0. ) delta = delta + 10.;   
     
     Debug("limitLoop", TString::Format("current_mu = %f   ;  current_qstat = %f  ;  delta = %f" ,mu, qstat, delta));        
     
