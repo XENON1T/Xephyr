@@ -167,10 +167,10 @@ class ToyFitterExclusion: public errorHandler {
     
     double        likelihood_uncond;    //! value of unconditional fit
     double        likelihood_cond;      //! value of conditional fit
-    double        true_params[50]  ;    //! t_value of truth generated param
-    double        measured_params[50];  //! t_value of measured param
-    double        uncond_params[50] ;   //! unconditional fit
-    double        cond_params[50] ;     //! conditional fit
+    double        true_params[50] = {0.} ;    //! t_value of truth generated param
+    double        measured_params[50] = {0.};  //! t_value of measured param
+    double        uncond_params[50] = {0.};   //! unconditional fit
+    double        cond_params[50] = {0.};     //! conditional fit
     bool          limit_converged;      //! if limit finder converged or not
     double        testStat_limit;       //! value of test statistic at limit
     vector<string> name_params;         //! names of parameters

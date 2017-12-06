@@ -781,7 +781,7 @@ class ProfileLikelihood : public Likelihood {
 
     TGraph* getGraphOfParameter(int n_points,  int param_index);
 
-    TGraph* getLikelihoodScanOfParameter( int n_points, LKParameter * par);
+    TGraph* getLikelihoodScanOfParameter( int n_points, LKParameter * par, double mu = 0);
 
   virtual double getWimpMass();
 

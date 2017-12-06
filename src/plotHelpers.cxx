@@ -155,7 +155,7 @@ TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], in
     return XS_median_and_one_sigma;
 }
 
-TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name, TString cut="",  bool isCond =true ){
+TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name, TString cut="",  bool isUnCond =true ){
         
 
         double percents[3] = { 0.158655, 0.5, 0.841345 };
@@ -176,9 +176,12 @@ TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name, TString cut="
     
         for(unsigned int i =0; i < Nparam; i++) {
             TString var = "cond_params[" + TString::Itoa(i, 10) + "]";
-            if(isCond)  var = "un" + var;
+            if(isUnCond)  var = "un" + var;
 
             TH1F temp = giveQuantiles(tree,percents, quantiles, 3, var, cut);
+            if(!isUnCond) temp.SetTitle(TString(name_params->at(i)) + " Conditional Fit and " + cut) ;
+            else temp.SetTitle(TString(name_params->at(i)) + " Unconditional Fit and " + cut) ;
+
             temp.Rebin(100);
             temp.Draw();
             c1->Print(OutDir + name +"_pulls.pdf");
@@ -200,7 +203,7 @@ TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name, TString cut="
 
             pulls.GetYaxis()->SetRangeUser(-2,2);
             pulls.SetTitle("");
-
+            c1->Print(OutDir + name +"_pulls.pdf]");
         TFile output(OutDir + name +"_pulls.root", "RECREATE");
         pulls.Write(name+"_pulls");
         sigma1.Write("one_sigma");

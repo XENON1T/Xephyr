@@ -124,7 +124,10 @@ void pdfLikelihood::initialize(){
 		safeGuardParam = new scaleSys("SafeGuard", 0.);
 
 		// this parameter has no additional constraint
-		safeGuardParam->setType(FREE_PARAMETER);  
+		safeGuardParam->setType(FREE_PARAMETER);
+		safeGuardParam->setMinimum(0.);
+		safeGuardParam->setMaximum(0.5);
+		safeGuardParam->setStep(0.001);
 		addParameter(safeGuardParam, AUTO);
 	}
 	else if(numberOfSafeguarded() > 0 ) 
@@ -370,12 +373,16 @@ double pdfLikelihood::computeTheLogLikelihood() {
      if(withSafeGuard) {
 	     // Check if Safeguard is applicable, Ns > Nb*epsilon otherwise you can eat up your signal
 	     // in this case safeguard can bring problem.
-	     double epsilon = safeGuardParam->getCurrentValue() ;
+		 double epsilon = safeGuardParam->getCurrentValue() ;
+			  
+		Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" PoissonTerm %f ",Nobs * log(Ns + Nb ) -Ns - Nb ));
+
 	     if(  epsilon <= 0. ) {
 				 Warning("computeTheLogLikelihood", "safeguard not safe");
 			     return VERY_SMALL; 
 	     }
-    	     LL += LLsafeGuard();
+			 LL += LLsafeGuard();
+		//Info("pdfLikelihood::computeTheLogLikelihood" , Form(" Safeguard %f ", safeGuardParam->getCurrentValue() ));
      }     
    //---------------------------------------------------------------//
 
@@ -587,7 +594,7 @@ double pdfLikelihood::LLsafeGuard(){
 	}
 	*/
 
-
+	Debug("pdfLikelihood::LLSafeguard" , Form("Calibration NEntry %lli", Nentry));
 
      //adding the "additional" component: meant to be for AC which is different
      if(safeguardAdditionalComponent) 
@@ -600,7 +607,8 @@ double pdfLikelihood::LLsafeGuard(){
        double ts1=calibrationData->getS1(event);
        double ts2=calibrationData->getS2(event);
        double tweight=calibrationData->getW(event);
-       
+	   
+	   Debug("pdfLikelihood::LLSafeguard" , Form("Calibration Event: S1 %f ; S2 %f ; weight %f",ts1, ts2, tweight));
 
 	     //loads data TNtuple entry
 	     //	     calibrationData->getEntry(event);

@@ -1169,7 +1169,7 @@ TGraph* ProfileLikelihood::getGraphOfLogLikelihood( int n_points){
 
 }
 
-TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParameter * par){
+TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParameter * par, double mu){
   // warning ! needs first to exclusion->prepareForLimit
   int n = n_points;
 
@@ -1178,7 +1178,7 @@ TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParamet
   double reference=0.;
   LKParameter* sig=getParameter(PAR_SIGMA);
 
-  sig->setCurrentValue(0.); // conditional to no signal!
+  sig->setCurrentValue(0); // conditional fit set to zero for the denominator
 
   double min= par->getMinimum();
   double max = par->getMaximum();
@@ -1187,18 +1187,24 @@ TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParamet
 
   double ll_Denominator = maximize(true); // conditional best fit
 
-    
+  int save_para_type = par->getType();
+  par->setType(FIXED_PARAMETER);
+
+  sig->setCurrentValue(mu); // conditional fit set to mu... Default is zero signal!
+
   for(int i=0;i<n;i++){
     resetParameters();
 
     double value = min + ((double)i)*step;
 
+    sig->setCurrentValue(mu); // conditional fit set to mu... Default is zero signal!
+    
     par->setCurrentValue( value);
 
-    double ll_Numerator = maximize(false); // conditional fit!!!
+    double ll_Numerator = maximize(true); // conditional fit!!!
     printCurrentParameters();
-    double test_stat_q = -1.* ll_Numerator;
-//   double test_stat_q = -2. * (  ll_Numerator - ll_Denominator);
+    //double test_stat_q = -1.* ll_Numerator;
+     double test_stat_q = -2. * (  ll_Numerator - ll_Denominator);
     gr->SetPoint(i,value , test_stat_q);
 
 //   cout << " \t\t\t\t\t\t test val " << test_stat_q  << "  value  "  << value << endl;
@@ -1209,6 +1215,7 @@ TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParamet
   gr->GetXaxis()->SetTitle(TString(par->getName()));
   gr->GetYaxis()->SetTitle("-2Log(L(#sigma)/L(#hat{#sigma})");
 
+  par->setType(save_para_type);
   return gr;
 
 }
@@ -1218,7 +1225,7 @@ TGraph* ProfileLikelihood::getGraphOfParameter( int n_points, int param_index){
   int n = n_points;
 
   TGraph* gr= new TGraph(n);
-  gr->GetXaxis()->SetTitle("#sigma #times 10^{-45} cm^{2}");
+  gr->GetXaxis()->SetTitle("#mu");
   gr->GetYaxis()->SetTitle("param tval");
 
   double reference=0.;
