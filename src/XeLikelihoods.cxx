@@ -125,6 +125,8 @@ void pdfLikelihood::initialize(){
 
 		// this parameter has no additional constraint
 		safeGuardParam->setType(FREE_PARAMETER);
+		safeGuardParam->setInitialValue(0.001);
+		safeGuardParam->setCurrentValue(0.001);
 		safeGuardParam->setMinimum(0.);
 		safeGuardParam->setMaximum(0.5);
 		safeGuardParam->setStep(0.001);

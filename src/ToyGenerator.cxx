@@ -85,16 +85,15 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
             // only safeguarded conponent
             if(!(likeHood->safeguarded_bkg_components[bkgItr])) continue;
             
-            Debug("generateCalibration: loop Active","");
+            Debug("generateCalibration","");
 
             int N_events   = rambo.Poisson(scaleFactor * backgrounds[bkgItr].Integral());
                     
             type = (likeHood->bkg_components[bkgItr])->getName();
 
-            Debug("generateCalibration: Nevents =", TString::Itoa(N_events,10));
+            Debug("generateCalibration", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
             for(int evt =0; evt < N_events; evt++){
         
-                Debug("generateCalibration: inner loop Active","");
                 double temp_cs1 = 0., temp_cs2 = 0.;
                 backgrounds[bkgItr].GetRandom2(temp_cs1,temp_cs2);
                 cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
@@ -108,6 +107,7 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
             (likeHood->safeguardAdditionalComponent !=NULL) ? rambo.Poisson(scaleFactor * likeHood->safeguardAdditionalComponent->Integral()) : 0;
 
         type = "additional";
+        Debug("generateCalibration", TString::Format("Generating %d events for additional component",N_additional));
         for(int evt =0; evt < N_additional; evt++){
             double temp_cs1 = 0., temp_cs2 = 0.; // TODO FIXME this is just for back compatibility cs1 and cs2 must be double
             likeHood->safeguardAdditionalComponent->GetRandom2(temp_cs1,temp_cs2);
