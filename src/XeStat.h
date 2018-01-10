@@ -795,6 +795,8 @@ class ProfileLikelihood : public Likelihood {
   virtual double getSignalMultiplier()=0; 
   virtual void   setSignalMultiplier(double val)=0; 
 
+  virtual void  setTreeIndex( int index )=0;
+
 
   protected : 
 
@@ -848,6 +850,7 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
     double getSignalMultiplier();
     void   setSignalMultiplier(double val); 
 
+    void  setTreeIndex(int index);
 
     /* -------------------------------------------------------------
      *                Internal methods (not for user)

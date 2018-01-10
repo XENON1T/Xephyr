@@ -67,7 +67,7 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
     // actual generation of N toys with poisson fluctuating events.
     for(int toyItr =0; toyItr < N ; toyItr++){
         
-        TString name = treeName + "_Cal" + TString::Itoa(toyItr,10); 
+        TString name = treeName + "_Cal_" + TString::Itoa(toyItr,10); 
         TTree toyTree (name, "generated toy Calibration");
         float cs1 = 0.; 
         float cs2 = 0.;

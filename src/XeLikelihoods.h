@@ -52,6 +52,8 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	void   setSignalMultiplier(double val) { XsecMultiplier = val; } ; 
 
+	void   setTreeIndex(int index);
+
 	void   setSignalDefaultNorm(double val) { siganlDefaultNorm = val; } ; 
 
         double getCurrentNs();

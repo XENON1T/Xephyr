@@ -215,6 +215,13 @@ void dataHandler::fillDataHisto(TH2F *hist){
 
 }
 
+void dataHandler::setTreeIndex( int index ){
+	if( TreePrefix == "" ) Error( "setTreeIndex", "Tree Prefix not set, use setPrefixTree().");
+	
+	TString newTree =  TreePrefix + "_" +TString::Itoa(index, 10);
+	Debug("setTreeIndex", "setting new tree: " + newTree);
+	setDataTree(newTree);
+}
 
 void dataHandler::setFileAndTree(TString PathtoFile, TString nameTree){
 	setFile(PathtoFile);

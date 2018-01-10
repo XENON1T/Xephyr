@@ -16,7 +16,8 @@ ToyFitterExclusion::ToyFitterExclusion(TString CollectionName):errorHandler("Toy
     limit_converged = false;
     testStat_limit  = 0.;
     name_params.clear();
-    DataNameHolder = "ImpossibleNameToMatchAtFirstOneMustBeStupid";
+    CurrentTreeIndex = 0;
+    IndexHolder = -9;
     mu_fit = 0.;
     testStat =0.;
     numberOfParams = 0.;
@@ -26,18 +27,13 @@ ToyFitterExclusion::ToyFitterExclusion(TString CollectionName):errorHandler("Toy
     limit    = 0.;
 }
 
-void ToyFitterExclusion::for_each_tree(TFile *f, TFile *f_cal, double (ToyFitterExclusion::*p2method)(double), TTree *outTree,  double mu, int stopAt){
+void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(double), TTree *outTree,  double mu, int stopAt){
     
-    // TODO FIXME: this won't work for combination.
-    // PROPOSAL: make the loop go through and match the number first, then 
-    // match the name, so that you know the name and how many tree to load from combinedLikelihood,
-    // and they are matchd by number. This way we can just change this function and the rest should 
-    // run out of the box.
 
     // setting up branches on outTree
     mu_fit    = mu;
     testStat = 0.;
-    string inputTreeName = "";
+    int inputTreeIndex = -9;
     numberOfParams =  likeHood->getParameters()->size();
     double mass    =  likeHood->getWimpMass();
     outTree->Branch("mu_fit", &mu_fit, "mu_fit/D");
@@ -51,54 +47,39 @@ void ToyFitterExclusion::for_each_tree(TFile *f, TFile *f_cal, double (ToyFitter
     outTree->Branch("uncond_params", uncond_params,"uncond_params[n_params]/D");
     outTree->Branch("cond_params", cond_params,"cond_params[n_params]/D");
     outTree->Branch("name_params", &name_params);
-    outTree->Branch("inputTreeName", &inputTreeName);
+    outTree->Branch("inputTreeIndex", &inputTreeIndex, "inputTreeIndex/I");
+
     // input tree
-    TTree *readTree = NULL;
+//    TTree *readTree = NULL;
 
     // calibration data
-    dataHandler calData("calibrationData");
-    TTree *calTree = NULL;
+ //   dataHandler calData("calibrationData");
+//    TTree *calTree = NULL;
 
     // Data handler
-    dataHandler data("toyDMData");
-    data.setData(DM_DATA);
+//    dataHandler data("toyDMData");
+//    data.setData(DM_DATA);
 
     // looping over all tree that are prefixed with nameTree
-    TIter next(f->GetListOfKeys());
+/*    TIter next(f->GetListOfKeys());
     TObject *treeKey = NULL;
     int treeNumber =0;
     if(stopAt < 0 ) stopAt = f->GetListOfKeys()->GetSize();
-    while ((treeKey = next()) && (treeNumber < stopAt)) {
+*/    
+    // reset CurrentTreeIndex
+    CurrentTreeIndex = 0;
+
+    while ( CurrentTreeIndex < stopAt ) {
         
-        if(TString(treeKey->GetName()).Contains(treeName)){
-            readTree = (TTree*)f->Get(treeKey->GetName());
-            treeNumber++;
-        }
-        else { 
-            Info("fit", TString::Format("skipping, %s",treeKey->GetName()));
-            continue; 
-        }
+        Info("fit", TString::Format("Fitting tree index, %d", CurrentTreeIndex));
 
-        Info("fit", TString::Format("Matched tree name, %s", treeKey->GetName()));
-
-        inputTreeName = treeKey->GetName();
+        inputTreeIndex = CurrentTreeIndex;
 
         // fill true values from generated tree
-        fillTrueParams(readTree);
+        //fillTrueParams(readTree); // NOWFIX
 
         // set toy data for fit
-        data.setDataTree(readTree);
-        likeHood->setDataHandler(&data);
-
-        // set the new calibration tree
-        if(f_cal){
-            // treeNumber -1 because I did +1 previously above... this maybe done better FIXME 
-            calTree = (TTree*)f_cal->Get(calTreeName + TString::Itoa(treeNumber -1,10));
-            if(calTree == NULL) Error("forEachTree", TString::Format("calibration tree does not exist in file %s",calTree->GetName()) );
-            calData.setDataTree(calTree);
-            likeHood->setCalibrationData(&calData);
-            Info("fit", TString::Format("Calibration tree switched to %s", calTree->GetName()));
-        }
+        likeHood->setTreeIndex(CurrentTreeIndex);
 
         // reset the parameter to their nominal initial value (othrwise takes longer to fit)
         likeHood->resetParameters();
@@ -116,14 +97,13 @@ void ToyFitterExclusion::for_each_tree(TFile *f, TFile *f_cal, double (ToyFitter
 
     }
 
-    if(treeNumber == 0) Error("for_each_tree",TString::Format("tree name %s was not found in file",treeName.Data()));
 
 }
 
 void ToyFitterExclusion::fit(double mu, int stopAt){
     
     // check if the tree is defined
-    if(treeName == "") Error("fit", "You must set a tree name");
+/*    if(treeName == "") Error("fit", "You must set a tree name");
 
     // build filename base on convention of toygenerator
     TString pathToFile = dirPath + treeName + ".root";
@@ -137,19 +117,19 @@ void ToyFitterExclusion::fit(double mu, int stopAt){
         f_cal = TFile::Open(dirPath + calTreeName + ".root");
         if(f_cal == NULL) Error("Fit", TString::Format("file %s does not exist", (dirPath + calTreeName + ".root").Data()));
     }
-
+*/
     TFile f_out(OutDir + "post_fit_" + treeName + Suffix + ".root","RECREATE");
 
     // output tree, here intentionally all out tree will have the same name so we can hadd
     TTree *outTree = new TTree("post_fit_tree", "output tree for a given mu, hadd me");
 
     // read each tree in input file "f" nad applies the computeTS function to it 
-    for_each_tree(f, f_cal, &ToyFitterExclusion::computeTS, outTree, mu, stopAt );
+    for_each_tree( &ToyFitterExclusion::computeTS, outTree, mu, stopAt );
         
     f_out.cd();
     outTree->Write();
     f_out.Close();
-    f->Close();
+    //f->Close();
 
 }
 
@@ -158,7 +138,7 @@ void ToyFitterExclusion::fit(double mu, int stopAt){
 void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int stopAt){
     
     // check if the tree is defined
-    if(treeName == "") Error("fit", "You must set a tree name");
+  /*  if(treeName == "") Error("fit", "You must set a tree name");
 
     // build filename base on convention of toygenerator
     TString pathToFile = dirPath + treeName + ".root";
@@ -172,7 +152,7 @@ void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int s
         f_cal = TFile::Open(dirPath + calTreeName + ".root");
         if(f_cal == NULL) Error("spitTheLimit", TString::Format("file %s does not exist", (dirPath + calTreeName + ".root").Data()));
     }
-
+*/
     TFile f_out(OutDir + "limits_" + treeName + ".root","RECREATE");
 
      graph_of_quantiles = ninety_quantiles;
@@ -189,12 +169,12 @@ void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int s
      outTree->Branch("limit_converged", &limit_converged, "limit_converged/O");
 
      // read each tree in input file "f" and applies the computeTS function to it 
-     for_each_tree(f, f_cal, &ToyFitterExclusion::limitLoop, outTree, -9., stopAt );
+     for_each_tree( &ToyFitterExclusion::limitLoop, outTree, -9., stopAt );
               
      f_out.cd();
      outTree->Write();
      f_out.Close();
-     f->Close();
+    // f->Close();
     
 }
 
@@ -223,7 +203,7 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     limit    = mu_limit * likeHood->getSignalMultiplier() * likeHood->getSignalDefaultNorm();
 
     Info("limitLoop", TString::Format("%s with TS val= %1.3f", (limit_converged ? "CONVERGED" : "NOT - CONVERGED" ), q_stat ) );
-    Info("limitLoop",TString::Format("computed for %s ---> mu_limit= %f (~events) xsec = %E cm^2", likeHood->data->Name.Data(), mu_limit, limit));
+    Info("limitLoop",TString::Format("computed for Tree index %d ---> mu_limit= %f (~events) xsec = %E cm^2", CurrentTreeIndex, mu_limit, limit));
     
     return bm.FValMinimum();
 }
@@ -261,10 +241,10 @@ double ToyFitterExclusion::computeTS(double mu) {
     // this is for limit case, where we are running many fit with different mu_test
     // on the same data tree. In those cases mu_hat is always the same, you don't want
     // to do unconditional fit again.
-    bool DoMaximize  = ( DataNameHolder != likeHood->data->Name );
-    Debug("computeTS", TString::Format("maximize %s --> %s", likeHood->data->Name.Data(), DataNameHolder.Data()));
+    bool DoMaximize  = ( IndexHolder != CurrentTreeIndex );
+    Debug("computeTS", TString::Format("maximize Tree index %d ", CurrentTreeIndex));
     
-    if(DoMaximize) DataNameHolder = likeHood->data->Name;
+    if(DoMaximize) IndexHolder = CurrentTreeIndex;
 
     // performing unconditional fit and saving it in unconditional likelihood  for outTree
     if(DoMaximize)    likelihood_uncond = likeHood->maximize(false) ;
@@ -281,12 +261,12 @@ double ToyFitterExclusion::computeTS(double mu) {
     
     // override denominator in case mu_hat < 0.
     if( mu_hat < 0.){
-        likeHood->POI->setCurrentValue(0.);    
+        likeHood->getParameter(PAR_SIGMA)->setCurrentValue(0.);    
         LL_denominator = likeHood->maximize(true) ;
     }
 
     // perform conditional fit
-    likeHood->POI->setCurrentValue(mu);
+    likeHood->getParameter(PAR_SIGMA)->setCurrentValue(mu);
     double LL_numerator = likeHood->maximize(true) ;
     
     // saving the conditional likelihood for outTree

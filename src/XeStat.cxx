@@ -1521,6 +1521,12 @@ void CombinedProfileLikelihood::setSignalMultiplier(double val){
 
 
 }
+
+void CombinedProfileLikelihood::setTreeIndex( int index ){
+  // put something here
+  
+}
+
 /*
 bool CombinedProfileLikelihood::update(){
   sigToEvents=0;

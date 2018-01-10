@@ -631,8 +631,15 @@ double pdfLikelihood::LLsafeGuard(){
 	     //if(printLevel > 4)    cout<<"....................... - INFO : Safeguard NB*Fb(x)" << NbFb << "  LL for data i " << LL << endl;
      }
      
-     return LL ;
+    return LL ;
 
+}
+
+
+void pdfLikelihood::setTreeIndex(int index){
+
+	data->setTreeIndex(index);
+	if(withSafeGuard) calibrationData->setTreeIndex(index);
 }
 
 

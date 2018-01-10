@@ -57,6 +57,8 @@ class dataHandler : public errorHandler{
 
 	    TString  Name;
 
+		TString  TreePrefix;
+
 	    TH2F    *grid;
 
 	    TString FirstVarName;
@@ -112,6 +114,13 @@ class dataHandler : public errorHandler{
 
 	   //change the  file.
 	   void   setFile(TString PathtoFile); 
+	   
+	   //! \brief set the prefix for the name of the tree collection to iterate on, usefull for neyman construction.
+	   void setPrefixTree( TString prefix ) { TreePrefix = prefix ; } ;
+
+		//! \brief load the tree in file according to the name convention: "TreePrefix"+"index"
+		void setTreeIndex( int index );	
+
 	   //change the  file and tree in one go.
 	   void   setFileAndTree(TString PathtoFile, TString nameTree); 
 
