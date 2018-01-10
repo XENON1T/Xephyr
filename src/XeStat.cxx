@@ -1299,6 +1299,10 @@ void   CombinedProfileLikelihood::combine(ProfileLikelihood* pl) {
 bool CombinedProfileLikelihood::checkPValue(){
  Info("CombinedProfileLikelihood", "Building up combined PL " + getName() );
 
+  // PROPOSAL: change it in initialize, checkPValue is obsolete.
+
+  // PROPOSAL: to combine parameters use the pointer value to check if is the same parameter.
+  
   // first common parameters
   TRAVERSE_EXPERIMENTS(it) {
     ProfileLikelihood *pl=it->second;

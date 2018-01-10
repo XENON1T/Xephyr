@@ -47,25 +47,9 @@ void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(d
     outTree->Branch("uncond_params", uncond_params,"uncond_params[n_params]/D");
     outTree->Branch("cond_params", cond_params,"cond_params[n_params]/D");
     outTree->Branch("name_params", &name_params);
+    outTree->Branch("name_true_params", &name_true_params);
     outTree->Branch("inputTreeIndex", &inputTreeIndex, "inputTreeIndex/I");
 
-    // input tree
-//    TTree *readTree = NULL;
-
-    // calibration data
- //   dataHandler calData("calibrationData");
-//    TTree *calTree = NULL;
-
-    // Data handler
-//    dataHandler data("toyDMData");
-//    data.setData(DM_DATA);
-
-    // looping over all tree that are prefixed with nameTree
-/*    TIter next(f->GetListOfKeys());
-    TObject *treeKey = NULL;
-    int treeNumber =0;
-    if(stopAt < 0 ) stopAt = f->GetListOfKeys()->GetSize();
-*/    
     // reset CurrentTreeIndex
     CurrentTreeIndex = 0;
 
@@ -76,7 +60,7 @@ void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(d
         inputTreeIndex = CurrentTreeIndex;
 
         // fill true values from generated tree
-        //fillTrueParams(readTree); // NOWFIX
+        fillTrueParams(); 
 
         // set toy data for fit
         likeHood->setTreeIndex(CurrentTreeIndex);
@@ -94,7 +78,7 @@ void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(d
         testStat = (this->*p2method)(mu);
         
         outTree->Fill();
-        
+
         CurrentTreeIndex++;
     }
 
@@ -103,22 +87,6 @@ void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(d
 
 void ToyFitterExclusion::fit(double mu, int stopAt){
     
-    // check if the tree is defined
-/*    if(treeName == "") Error("fit", "You must set a tree name");
-
-    // build filename base on convention of toygenerator
-    TString pathToFile = dirPath + treeName + ".root";
-    // open the file and loop over all trees with given name
-    TFile *f = TFile::Open(pathToFile);
-    if(f == NULL) Error("fit", TString::Format("file %s does not exist", pathToFile.Data()));
-    
-    // calibration file
-    TFile *f_cal = NULL;
-    if(calTreeName !="") {
-        f_cal = TFile::Open(dirPath + calTreeName + ".root");
-        if(f_cal == NULL) Error("Fit", TString::Format("file %s does not exist", (dirPath + calTreeName + ".root").Data()));
-    }
-*/
     TFile f_out(OutDir + "post_fit_" + treeName + Suffix + ".root","RECREATE");
 
     // output tree, here intentionally all out tree will have the same name so we can hadd
@@ -130,7 +98,6 @@ void ToyFitterExclusion::fit(double mu, int stopAt){
     f_out.cd();
     outTree->Write();
     f_out.Close();
-    //f->Close();
 
 }
 
@@ -138,22 +105,6 @@ void ToyFitterExclusion::fit(double mu, int stopAt){
 
 void ToyFitterExclusion::spitTheLimit(TGraphAsymmErrors *ninety_quantiles, int stopAt){
     
-    // check if the tree is defined
-  /*  if(treeName == "") Error("fit", "You must set a tree name");
-
-    // build filename base on convention of toygenerator
-    TString pathToFile = dirPath + treeName + ".root";
-    // open the file and loop over all trees with given name
-    TFile *f = TFile::Open(pathToFile);
-    if(f == NULL) Error("spitTheLimit", TString::Format("file %s does not exist", pathToFile.Data()));
-
-    // calibration file
-    TFile *f_cal = NULL;
-    if(calTreeName !="") {
-        f_cal = TFile::Open(dirPath + calTreeName + ".root");
-        if(f_cal == NULL) Error("spitTheLimit", TString::Format("file %s does not exist", (dirPath + calTreeName + ".root").Data()));
-    }
-*/
     TFile f_out(OutDir + "limits_" + treeName + ".root","RECREATE");
 
      graph_of_quantiles = ninety_quantiles;
@@ -298,10 +249,13 @@ void ToyFitterExclusion::saveParameters(double *outParams){
     map <int, LKParameter*> *params = likeHood->getParameters();
     
     int itr = 0;
+    name_params.clear();
+    
     for(ParameterIterator ip=params->begin(); ip!=params->end(); ip++){
         
         LKParameter *param = ip->second;
         outParams[itr] = param->getCurrentValue();
+        name_params.push_back(param->getName().Data()); // this is a bit stupid to do here since it does it twice (for cond and uncond)        
         itr++;
     }    
 }
@@ -322,20 +276,16 @@ void ToyFitterExclusion::saveNames(string *names){
     
 
 
-void ToyFitterExclusion::fillTrueParams(TTree *inputTree){
+void ToyFitterExclusion::fillTrueParams(){
 
-    // retrive the previously saved TList of parameters (done in ToyGenerator)
-    TIter iterateMe(inputTree->GetUserInfo());
+    // retrive the previously saved list of parameters (done in ToyGenerator)
+    name_true_params.clear();
+    name_true_params = likeHood->getTrueParamsNames();
 
-    TParameter<double> *parameter = NULL;
-    name_params.clear();
+    vector<double> par = likeHood->getTrueParams();
 
-    int i = 0;
-    // saving the parameters of the new tree
-    while ((parameter = (TParameter<double>*)iterateMe())) {
-        true_params[i] = parameter->GetVal();
-        name_params.push_back(parameter->GetName());
-        i++;
+    for(unsigned int i=0; i < par.size(); i++){
+        true_params[i] = par[i];
     }
 }
 

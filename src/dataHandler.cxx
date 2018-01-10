@@ -215,6 +215,45 @@ void dataHandler::fillDataHisto(TH2F *hist){
 
 }
 
+vector<double> dataHandler::getTrueParams(){
+
+    // retrive the previously saved TList of parameters (done in ToyGenerator)
+    TIter iterateMe(DMdata->GetUserInfo());
+
+    TParameter<double> *parameter = NULL;
+	vector <double> true_params;
+	true_params.clear();
+
+	// if not MC toys then does not have truth so return empty
+	if(DMdata->GetUserInfo()->IsEmpty()) return true_params;
+
+    // saving the parameters of the tree
+    while ((parameter = (TParameter<double>*)iterateMe())) {
+        true_params.push_back( parameter->GetVal() );
+    }
+	return true_params;
+}
+
+vector<string> dataHandler::getTrueParamsNames(){
+
+    // retrive the previously saved TList of parameters (done in ToyGenerator)
+    TIter iterateMe(DMdata->GetUserInfo());
+
+    TParameter<double> *parameter = NULL;
+	vector <string> true_params;
+	true_params.clear();
+	
+	// if not MC toys then does not have truth so return empty
+	if(DMdata->GetUserInfo()->IsEmpty()) return true_params;
+
+    // saving the parameters of the tree
+    while ((parameter = (TParameter<double>*)iterateMe())) {
+        true_params.push_back( parameter->GetName() );
+    }
+
+	return true_params;
+}
+
 void dataHandler::setTreeIndex( int index ){
 	if( TreePrefix == "" ) Error( "setTreeIndex", "Tree Prefix not set, use setPrefixTree().");
 	

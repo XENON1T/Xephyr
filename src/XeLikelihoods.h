@@ -82,6 +82,10 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	void drawAllOnProjection(bool isS1Projection);
 
+	vector<string> getTrueParamsNames() { return data->getTrueParamsNames(); };
+	
+	vector<double> getTrueParams()      { return data->getTrueParams(); };
+
 	// Get a handler for plotting comparisons between models
         // used by drawAllOnProjection()
 	histoCompare getModelCompare();

@@ -6,6 +6,7 @@
 #include <TString.h>
 #include "TGraph2D.h"
 #include "TNtuple.h"
+#include "TParameter.h"
 #include <cmath>
 #include <csignal>
 #include <iostream>
@@ -125,6 +126,12 @@ class dataHandler : public errorHandler{
 	   void   setFileAndTree(TString PathtoFile, TString nameTree); 
 
 	   void addToDataSet(TH2F *h2pdf, int N);
+	  
+	   //! \brief useful to get the truth generated value of parameter stored in tree
+	   vector<string> getTrueParamsNames();
+
+	   //! \brief useful to get the truth generated value of parameter stored in tree
+	   vector<double> getTrueParams();
 
 
 };

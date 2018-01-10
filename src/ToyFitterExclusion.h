@@ -146,7 +146,7 @@ class ToyFitterExclusion: public errorHandler {
     void saveParameters(double *params);
 
     //! \brief fills the initial paramteres value of true parameter an their name
-    void fillTrueParams( TTree *inputTree);
+    void fillTrueParams( );
 
     //! \brief assign to each parameter a random measured t-value
     void measureParameters();
@@ -175,6 +175,7 @@ class ToyFitterExclusion: public errorHandler {
     bool          limit_converged;      //! if limit finder converged or not
     double        testStat_limit;       //! value of test statistic at limit
     vector<string> name_params;         //! names of parameters
+    vector<string> name_true_params;    //! names of true parameters
     TRandom3      rambo;                //! random handler
     double        mu_fit;               //! mu to be tested, conditional fit
     double        mu_limit;             //! value of the limit in terms of mu

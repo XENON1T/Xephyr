@@ -796,7 +796,10 @@ class ProfileLikelihood : public Likelihood {
   virtual void   setSignalMultiplier(double val)=0; 
 
   virtual void  setTreeIndex( int index )=0;
+  
+  virtual vector<string> getTrueParamsNames() =0;
 
+  virtual vector<double> getTrueParams() =0;
 
   protected : 
 
@@ -851,6 +854,12 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
     void   setSignalMultiplier(double val); 
 
     void  setTreeIndex(int index);
+
+
+	vector<string> getTrueParamsNames() { vector<string> s; return s; };
+	
+	vector<double> getTrueParams()   { vector<double> s; return s; }; 
+
 
     /* -------------------------------------------------------------
      *                Internal methods (not for user)
