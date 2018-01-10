@@ -94,7 +94,8 @@ void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(d
         testStat = (this->*p2method)(mu);
         
         outTree->Fill();
-
+        
+        CurrentTreeIndex++;
     }
 
 

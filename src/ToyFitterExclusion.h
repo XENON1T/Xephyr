@@ -72,7 +72,7 @@ class ToyFitterExclusion: public errorHandler {
     void fit(double mu, int stopAt=-999);
 
     //! \brief set the likelihood to fit
-    void setTheLikelihood(pdfLikelihood *like) { likeHood = like; };
+    void setTheLikelihood(ProfileLikelihood *like) { likeHood = like; };
 
 
     /**
@@ -156,7 +156,7 @@ class ToyFitterExclusion: public errorHandler {
 
     void saveNames(string *names);
 
-    pdfLikelihood *likeHood;
+    ProfileLikelihood *likeHood;
     TString       dirPath;
     TString       treeName;
     TString       OutDir;               //! output dir if not set is current dir
