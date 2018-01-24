@@ -91,6 +91,9 @@ void pdfLikelihood::initialize(){
        //some checks
        checkInputs();
 
+	   // clear the parameters (in case one calls initialize more than once)
+	   clearTheParameters();
+
        //parameter of interest
        addParameter(POI);
 
@@ -269,7 +272,6 @@ double pdfLikelihood::computeTheLogLikelihood() {
     
    //------------- LOAD PDF WITH SYS VARIATION ---------------------//
      TH2F signalPdf(signal_component->getInterpolatedHisto());
-//	signalPdf.Rebin2D(8,2);      //REMOVEME
 
      // get copy of bkg and sum over all, assumes they are normalized.
      TH2F bkgPdf;
@@ -302,7 +304,6 @@ double pdfLikelihood::computeTheLogLikelihood() {
 		    bkgPdf.Add(&temp_bkgPdf);
 
 	    }
-//		bkgPdf.Rebin2D(8,2);      //REMOVEME
 	}
    //---------------------------------------------------------------//
 
@@ -640,6 +641,16 @@ void pdfLikelihood::setTreeIndex(int index){
 
 	data->setTreeIndex(index);
 	if(withSafeGuard) calibrationData->setTreeIndex(index);
+}
+
+pdfComponent* pdfLikelihood::getBkgComponent(TString search_name) {
+
+	for(unsigned int i=0; i < bkg_components.size(); i++){
+		if(bkg_components[i]->getName() == search_name) return bkg_components[i];
+	}
+	Error("getBkgComponent", "component " + search_name + " not found.");
+	
+	return NULL;
 }
 
 

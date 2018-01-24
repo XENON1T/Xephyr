@@ -140,6 +140,11 @@ class pdfComponent :errorHandler{
 	 */
 	void setScaleFactor(double val) {scaleFactor = val;};	
 
+	scaleSys* getScaleSys(TString name);
+	shapeSys* getShapeSys(TString name);
+	void      replaceUncertainty(TString name, scaleSys* newScale);
+	void      replaceUncertainty(TString name, shapeSys* newShape);
+
 	TString getName()  {return pdf_name;};
 
 	vector<scaleSys*> 		myScaleUnc; //! container of scale sys

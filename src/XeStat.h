@@ -856,10 +856,13 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
     void  setTreeIndex(int index);
 
 
-	vector<string> getTrueParamsNames() { vector<string> s; return s; };
+	vector<string> getTrueParamsNames();
 	
-	vector<double> getTrueParams()   { vector<double> s; return s; }; 
+	vector<double> getTrueParams();
 
+    bool    initialize();   
+
+    bool    findParamPointer( LKParameter *p);
 
     /* -------------------------------------------------------------
      *                Internal methods (not for user)
@@ -870,7 +873,6 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
 
   protected:
 
-    bool    checkPValue();   
     map<int,ProfileLikelihood* > exps;
     int                          nCommon;
     double                       sigToEvents;

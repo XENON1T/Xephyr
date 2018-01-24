@@ -596,6 +596,63 @@ void pdfComponent::extendHisto(TH2F &h){
 }
 
 
+
+scaleSys* pdfComponent::getScaleSys(TString search_name){
+	
+	for(unsigned int i=0; i< myScaleUnc.size(); i++){
+		if(myScaleUnc[i]->getName() == search_name ) return myScaleUnc[i];
+	}
+
+	Error("getScaleSys", search_name + " not found.");
+
+	return NULL;
+}
+
+shapeSys* pdfComponent::getShapeSys(TString search_name){
+		
+	for(unsigned int i=0; i< myShapeUnc.size(); i++){
+		if(myShapeUnc[i]->getName() == search_name ) return myShapeUnc[i];
+	}
+
+	Error("getShapeSys", search_name + " not found.");
+
+	return NULL;
+}
+
+void pdfComponent::replaceUncertainty(TString name, scaleSys* newScale){
+	
+	bool found = false;
+
+	for(unsigned int i=0; i< myScaleUnc.size(); i++){
+		if(myScaleUnc[i]->getName() == name ) {	
+			myScaleUnc[i] = newScale;
+			found = true;
+		}
+	}
+
+	if(found == false) Error("replaceUncertainty", name + " not found.");
+
+}
+
+
+void pdfComponent::replaceUncertainty(TString name, shapeSys* newShape){
+
+	bool found = false;
+
+	for(unsigned int i=0; i< myShapeUnc.size(); i++){
+		if(myShapeUnc[i]->getName() == name ) {	
+			myShapeUnc[i] = newShape;
+			found = true;
+		}
+	}
+
+	if(found == false) Error("replaceUncertainty", name + " not found.");
+
+
+}
+
+
+
 /////-------------------  class for comparison   --------//
 
 histoCompare::histoCompare():errorHandler("histoCompare"){
@@ -634,6 +691,8 @@ void histoCompare::compare(){
      
     if(doStack){
 	//Stacked Plot
+		gStyle->SetPalette(91);
+		//gStyle->SetPalette(57);
 
         projectedBase->Draw("PE");
 	
@@ -644,11 +703,15 @@ void histoCompare::compare(){
 	    
    		projectedList[i]->SetLineColor(i+2); 
    		setOptions(projectedList[i], false);
-		projectedList[i]->Draw("histSame");
 	}
+		// draw them in inverse order so can put colors on top of each other
+        for(unsigned int i= 1; i <= projectedList.size(); i++) {
+			unsigned int n = projectedList.size();
+			projectedList[n - i]->Draw("PLC PFC hist Same");
+		}
 
         projectedBase->SetLineColor(1);
-	setOptions(projectedBase, true);
+		setOptions(projectedBase, true);
         projectedBase->Draw("samePE");
         drawLegend(projectedBase, projectedList);
 	
@@ -675,6 +738,7 @@ void histoCompare::compare(){
     if(base_overflow)
 	    cout << "WARNING:: You got " << base_overflow << " data events in overflows -- Check your rebinning! "<< endl;
 
+	gPad->RedrawAxis();	
 }
 
 
@@ -849,6 +913,8 @@ void histoCompare::setNameofComponent(unsigned int i, TString n){
 		cout <<"histoCompare::setNameofComponent - ERROR: no component for index " << i << endl;
 	}
 }
+
+
 
 
 

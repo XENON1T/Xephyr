@@ -441,8 +441,9 @@ void Likelihood::addParameter(LKParameter* param,int id){
 
   //AUTO: case you don't know if parameter exist, if doesn't exist it assign a new ID
   else if(id==AUTO ) {
-	  if( param->getId() == PAR_NOT_ASSIGNED) id  = ++currentId; 
-  	  else                                    id  = param->getId();
+	  id  = ++currentId; 
+	  //if( param->getId() == PAR_NOT_ASSIGNED) id  = ++currentId; 
+  	//  else                                    id  = param->getId();
   }
   cout<<"\tLikelihood::addParameter - Info : Adding parameter "<< 
 	  param->getName() <<"  with ID " << id << "  to PL " << 
@@ -1260,12 +1261,15 @@ CombinedProfileLikelihood::CombinedProfileLikelihood(TString n)
   setExperiment(ALL);
 }
 
+
 CombinedProfileLikelihood::~CombinedProfileLikelihood(){
-  clear();
+  //clear();
+  
   TRAVERSE_EXPERIMENTS(it) {
     ProfileLikelihood *pl=it->second;
     pl->clearTheParameters();
   }
+  
 }
 
 ProfileLikelihood* CombinedProfileLikelihood::getProfile(int ex){
@@ -1296,10 +1300,8 @@ void   CombinedProfileLikelihood::combine(ProfileLikelihood* pl) {
   pl->setCombinedMode();
 }
 
-bool CombinedProfileLikelihood::checkPValue(){
+bool CombinedProfileLikelihood::initialize(){
  Info("CombinedProfileLikelihood", "Building up combined PL " + getName() );
-
-  // PROPOSAL: change it in initialize, checkPValue is obsolete.
 
   // PROPOSAL: to combine parameters use the pointer value to check if is the same parameter.
   
@@ -1312,25 +1314,40 @@ bool CombinedProfileLikelihood::checkPValue(){
       LKParameter *param=ip->second;
       if(param->isCommon()){
         int id=param->getId();
-        if(parameters.find(id)==parameters.end()){
-          if(getPrintLevel() < 2) {
-             cout<<" adding common parameter "<<id<<" ("<<param->getName()
-                 <<")"<<endl;
+
+        // old style common parameter check for backwords compatibility, or we need to rewrite quite some stuff...
+        if(id == PAR_SIGMA) {
+          if(parameters.find(id)==parameters.end()){
+            if(getPrintLevel() < ERROR) {
+                cout<<" adding common parameter "<<id<<" ("<<param->getName()
+                    <<")"<<endl;
+            }
+            addParameter(param);
+            param->setExperiment(ALL);
+          }     
+          else if(param->compares(parameters[id],true)) {
+            if(getPrintLevel() < ERROR) {
+                cout<<" skipping existing common parameter "<<id<<" ("
+                    <<param->getName()<<")"<<endl;
+            }
+            pl->replaceParameter(parameters[id]);
           }
-          addParameter(param);
-          param->setExperiment(ALL);
-        }     
-        else if(param->compares(parameters[id],true)) {
-          if(getPrintLevel() < 2) {
-             cout<<" skipping existing common parameter "<<id<<" ("
-                 <<param->getName()<<")"<<endl;
+          else {
+            cout<<"Inconsistency in common parameter "<<param->getName()<<endl;
+            return false;
           }
-          pl->replaceParameter(parameters[id]);
         }
+        // XEPHYR 2.0 combination, parameter are common if pointer is the same
         else {
-          cout<<"Inconsistency in common parameter "<<param->getName()<<endl;
-          return false;
+            if( findParamPointer(param) ) 
+              cout<<" skipping existing common parameter "<<id<<" (" <<param->getName()<<")"<<endl;
+            else{ 
+              addParameter(param, AUTO);
+              param->setExperiment(ALL);
+              cout<<" adding common parameter "<<id<<" ("<<param->getName()  <<")"<<endl;
+            }
         }
+
       }
     }
   }
@@ -1373,6 +1390,20 @@ bool CombinedProfileLikelihood::checkPValue(){
   }
   if(getPrintLevel() < 2) printInitialParameters();
   return true;
+}
+
+
+
+bool CombinedProfileLikelihood::findParamPointer(LKParameter *testPara){
+
+  bool found = false;
+  
+  TRAVERSE_PARAMETERS(it) {
+    LKParameter *p=it->second; 
+    if(testPara == p) found = true;
+  }
+
+  return found;
 }
 
 double CombinedProfileLikelihood::computeTheLogLikelihood(){
@@ -1526,9 +1557,48 @@ void CombinedProfileLikelihood::setSignalMultiplier(double val){
 
 }
 
+
+vector<string> CombinedProfileLikelihood::getTrueParamsNames() { 
+
+  vector<string> s;
+  s.clear();  
+
+  // this just append all true parameter of all likelihoods
+  TRAVERSE_EXPERIMENTS(it) {
+    ProfileLikelihood* pl=it->second;
+
+    vector<string> temp = pl->getTrueParamsNames();
+    s.insert( s.end(), temp.begin(), temp.end() );
+  }
+
+  return s;
+
+}
+
+vector<double> CombinedProfileLikelihood::getTrueParams()   { 
+
+  vector<double> s; 
+  s.clear();  
+
+  // this just append all true parameter of all likelihoods
+  TRAVERSE_EXPERIMENTS(it) {
+    ProfileLikelihood* pl=it->second;
+
+    vector<double> temp = pl->getTrueParams();
+    s.insert( s.end(), temp.begin(), temp.end() );
+  }
+
+  return s;
+
+} 
+
 void CombinedProfileLikelihood::setTreeIndex( int index ){
-  // put something here
   
+  TRAVERSE_EXPERIMENTS(it) {
+    ProfileLikelihood* pl=it->second;
+    pl->setTreeIndex(index);
+  }
+
 }
 
 /*

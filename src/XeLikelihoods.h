@@ -86,6 +86,8 @@ class pdfLikelihood : public ProfileLikelihood {
 	
 	vector<double> getTrueParams()      { return data->getTrueParams(); };
 
+	pdfComponent* getBkgComponent(TString name);
+
 	// Get a handler for plotting comparisons between models
         // used by drawAllOnProjection()
 	histoCompare getModelCompare();
