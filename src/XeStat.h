@@ -647,6 +647,7 @@ class Likelihood :  public XeStat {
      int      getNParameters(int type);
      void     resetParameters();
      LKParameter* getParameter(int id);
+     LKParameter* getPOI();             //! get Parameter Of Interest
      map<int,LKParameter*>* getParameters();
 
      TH1F     getPullsHisto();  // return a TH1F with current values of all NP

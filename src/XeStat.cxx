@@ -515,6 +515,11 @@ void Likelihood::resetParameters(){
   }
 }
 
+
+LKParameter* Likelihood::getPOI(){
+  return getParameter(PAR_SIGMA);
+}
+
 map<int,LKParameter*>* Likelihood::getParameters(){return & parameters;}
 
 LKParameter* Likelihood::getParameter(int id){
@@ -1388,6 +1393,8 @@ bool CombinedProfileLikelihood::initialize(){
       } 
     }
   }
+
+
   if(getPrintLevel() < 2) printInitialParameters();
   return true;
 }
@@ -1412,8 +1419,15 @@ double CombinedProfileLikelihood::computeTheLogLikelihood(){
 
   if(exps.size() > 0) {
      TRAVERSE_EXPERIMENTS(it) {
+        
         ProfileLikelihood* pl=it->second;
-        ll +=pl->computeTheLogLikelihood();
+        double partial = pl->computeTheLogLikelihood();
+        ll += partial;
+        cout << TString::Format("LL %s = %f", pl->getName().Data(), partial) << endl;
+        pl->printCurrentParameters();
+        Debug("computeTheLogLikelihood", TString::Format("LL %s = %f", pl->getName().Data(), partial) );
+        if(getPrintLevel() == DEBUG) pl->printCurrentParameters();
+
       }
   }
   else { cout << "CombinedProfileLikelihood::computeTheLogLikelihood()::  FATAL ERROR - no likelihood defiend ----> QUIT!"<< endl;

@@ -141,7 +141,6 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	double                 wimp_mass;
 
-	LKParameter            *POI;
 
 	LKParameter            *safeGuardParam;
 

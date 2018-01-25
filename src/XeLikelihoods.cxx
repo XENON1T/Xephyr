@@ -18,7 +18,6 @@ pdfLikelihood::pdfLikelihood(TString nam, double wimpMass) : ProfileLikelihood(n
 
 	wimp_mass = wimpMass;
 
-	POI = new SigmaParameter();
 	
 	signal_component = NULL ;
 
@@ -95,6 +94,7 @@ void pdfLikelihood::initialize(){
 	   clearTheParameters();
 
        //parameter of interest
+	   LKParameter *POI = new SigmaParameter();
        addParameter(POI);
 
        //nuissance parameters  from bkg
@@ -245,14 +245,14 @@ void pdfLikelihood::generateToyDataset(double seed, double mu_prime) { cout << "
 
 
 double pdfLikelihood::getCurrentNs(){
-	return  (POI->getCurrentValue() * getSignalMultiplier() *  signal_component->getNormalizedEvents());
+	return  (getPOI()->getCurrentValue() * getSignalMultiplier() *  signal_component->getNormalizedEvents());
 }
 
 double pdfLikelihood::computeTheLogLikelihood() {
 
    Debug("pdfLikelihood::computeTheLogLikelihood"," ENTER");
   //Retriving Parameter of Interest value
-    double sigma = POI->getCurrentValue();
+    double sigma = getPOI()->getCurrentValue();
 
   //------------------------- CHECK FIT STATUS -----------------------------//
   //Check fit  status: check all parameters value, if any is NaN means the 
@@ -448,7 +448,7 @@ histoCompare pdfLikelihood::getModelCompare(){
      
      printCurrentParameters();
 
-     double sigma = POI->getCurrentValue();
+     double sigma = getPOI()->getCurrentValue();
      double scaleFactorSignal =  sigma * getSignalMultiplier()  ;
      TH2F signalPdf(signal_component->getInterpolatedHisto());
      signalPdf.Scale(scaleFactorSignal);    
