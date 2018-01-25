@@ -347,7 +347,7 @@ class LKParameter :  public XeStat {
     void    setId(int id);
     void    setType(int typ);
     void    setInitialValue(double i);
-    void    setCurrentValue(double c);
+    virtual void    setCurrentValue(double c);
     void    setCurrentValueInMinuitUnits(double c);
 
 
@@ -360,7 +360,7 @@ class LKParameter :  public XeStat {
     double  getT0value() {return t0;};
     void    setMinuitUnit(double s=1.);
     void    setStep(double st);
-    void    setSigma(double sig);
+    virtual void    setSigma(double sig);
     void    setSigmaInMinuitUnits(double sig);
     void    setMinimum(double mi);
     void    setMaximum(double max);
@@ -442,6 +442,23 @@ class SigmaParameter : public LKParameter {
    ~SigmaParameter();
 
      
+} ;
+
+
+/**
+ * parameter for combination
+*/
+class CombinedParameter : public LKParameter{
+    public :
+      CombinedParameter(TString name);
+      ~CombinedParameter();
+    
+      void setCurrentValue(double val); //! overloaded polymorf func
+      void setSigma(double sig);        //! overloaded polymorf func
+      void correlateParameter(LKParameter *p); //!add parameter to list of parame to be correlated
+
+      vector <LKParameter*> paramList; //! list of parameter to be combined
+
 } ;
 
 /**
@@ -545,6 +562,7 @@ class Likelihood :  public XeStat {
  */
 
      virtual  double computeTheLogLikelihood()=0;
+              double computeTheConstraint();
      virtual ~Likelihood();
 
 /**
