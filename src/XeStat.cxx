@@ -150,7 +150,7 @@ double LKParameter::getMaximum()              {return maximum;}
 double LKParameter::getSigma()                {return sigma;}
 
 void   LKParameter::setCurrentValueInMinuitUnits(double v) {
-  currentValue=v*MinuitUnit;
+  setCurrentValue(v*MinuitUnit);
 }
 
 void   LKParameter::setSigmaInMinuitUnits(double si) {
@@ -302,6 +302,39 @@ TString TSystBkgParameter::getTheName(int run){
   return "Syst. bkgd t-Value run"+formatI(run,2) ;
 }
 
+//----------CombinedParameter-------------//
+
+CombinedParameter::~CombinedParameter(){
+
+  paramList.clear();
+
+}
+
+CombinedParameter::CombinedParameter(TString name): LKParameter(PAR_NOT_ASSIGNED, NUISANCE_PARAMETER, name.Data(), 0, 0.01, -5.,5.) { 
+  setExperiment(ALL);
+}
+
+void CombinedParameter::setSigma(double sig){
+
+  sigma = sig;
+
+  for(unsigned int i=0 ; i < paramList.size(); i++){
+    
+    paramList[i]->setSigma(sig);
+  }
+}
+void CombinedParameter::setCurrentValue(double val){
+  currentValue = val;
+  for(unsigned int i=0 ; i < paramList.size(); i++){
+    
+    paramList[i]->setCurrentValue(val);
+  }
+
+}
+void CombinedParameter::correlateParameter(LKParameter *p){
+    p->setCommon(true);     
+    paramList.push_back(p);
+}
 
 //----------TGauss--------///
 TGaussParameter::~TGaussParameter(){}
@@ -697,6 +730,20 @@ void Likelihood::setCurrentValuesInMinuitUnits( const double *v,const double *e)
   }
 }
 
+
+
+double Likelihood::computeTheConstraint(){
+  double LL = 0.;
+
+  TRAVERSE_PARAMETERS(it) {
+	  if( (it->second)->getType() == NUISANCE_PARAMETER || (it->second)->getType() == FIXED_PARAMETER) 
+		LL +=   (it->second)->getLLGausConstraint();
+  }
+
+  return LL;
+
+}
+
 //-- Only external static function could work!!! <-- ALE, THIS IS NOT TRUE! 
 //look here: https://root.cern.ch/how-implement-mathematical-function-inside-framework
 //Functor can call also methods of a class, clean this mess... FIXME.
@@ -710,7 +757,8 @@ double LikelihoodEvaluate (const double * values) {
     cout<<"Evaluating likelihood "<<endl;
     currentLikelihood->printCurrentParameters();
   }
-  double e= -1. * currentLikelihood->computeTheLogLikelihood();
+  double logLikeWithConstraint = currentLikelihood->computeTheLogLikelihood() + currentLikelihood->computeTheConstraint() ;
+  double e= -1. * logLikeWithConstraint;  
   if(errorHandler::globalPrintLevel < 1) {
     cout<<"             .... result:"<<printTools::formatF(e,19,8)<<endl; 
   }
@@ -1337,8 +1385,11 @@ bool CombinedProfileLikelihood::initialize(){
             return false;
           }
         }
-        // XEPHYR 2.0 combination, parameter are common if pointer is the same
+        // XEPHYR 2.0 combination, parameter that are common must be added at definition time with 
+        // CommonParameter 
         else {
+          cout<<" skipping existing common parameter "<<id<<" (" <<param->getName()<<"). Hint: remember to add it via a CombinedParameter."<<endl;
+         /* 
             if( findParamPointer(param) ) 
               cout<<" skipping existing common parameter "<<id<<" (" <<param->getName()<<")"<<endl;
             else{ 
@@ -1346,6 +1397,7 @@ bool CombinedProfileLikelihood::initialize(){
               param->setExperiment(ALL);
               cout<<" adding common parameter "<<id<<" ("<<param->getName()  <<")"<<endl;
             }
+            */
         }
 
       }
@@ -1388,6 +1440,24 @@ bool CombinedProfileLikelihood::initialize(){
       } 
     }
   }
+
+  // some cross check:
+  // 1- Set signal multiplier to smallest between all likelihoods
+  // 2- Check that Default Xsec norm factor is the same for all likelihood
+  // 3- Check that Wimp mass is the same for all likelihood
+  double norm = 9999.;
+  TRAVERSE_EXPERIMENTS(it) {
+    ProfileLikelihood* pl=it->second;
+    if( pl->getSignalMultiplier() < norm ) norm = pl->getSignalMultiplier();
+  }
+  
+  setSignalMultiplier(norm);                    // sets it for all
+  cout << "INFO:: common Signal Multiplier set to  "<< norm << endl;
+
+  double dummy_mass  = getWimpMass();           // check is inside this function
+  double dummy_scale = getSignalDefaultNorm();  // check is inside this function
+
+  // some printing
   if(getPrintLevel() < 2) printInitialParameters();
   return true;
 }

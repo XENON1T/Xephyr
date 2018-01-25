@@ -47,29 +47,24 @@ pdfLikelihood::pdfLikelihood(TString nam, double wimpMass) : ProfileLikelihood(n
 void pdfLikelihood::checkInputs(){
  	//some checks
 	if(bkg_components.size() == 0) {
-		cout << "pdfLikelihood::initialize - ERROR: no bkg components are set. Quit. " << endl;
-		exit(100);
+		Error("checkInputs","no bkg components are set.");
 	}
 
 	if(signal_component == NULL) {
-		cout << "pdfLikelihood::initialize - ERROR: no signal component is set. Quit. " << endl;
-		exit(100);
+		Error("checkInputs"," no signal component is set. Quit. ");
 	}
 
 	if(data == NULL) {
-		cout << "pdfLikelihood::initialize - ERROR: no data are set. Quit. " << endl;
-		exit(100);
+		Warning("checkInputs","no data are set. BETTER YOU KNOW WHAT YOU ARE DOING!");
 	}
 
 
 	if(siganlDefaultNorm == NONE) {
-		cout << "pdfLikelihood::initialize - ERROR: no signal reference cross section is set, use setSignalDefaultNorm(Xsec_value).      Quit. " << endl;
-		exit(100);
+		Error("checkInputs","no signal reference cross section is set, use setSignalDefaultNorm(Xsec_value).");
 	}
 
 	if(withSafeGuard &&  calibrationData == NULL ) {
-		cout << "pdfLikelihood::initialize - ERROR: no calibration sample set, cannot add safeguard.   Quit. " << endl;
-		exit(100);
+		Error("checkInputs","no calibration sample set, cannot add safeguard.");
 	}
 }
 
@@ -391,10 +386,9 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
 
    //----------------------- ADDING NP CONSTRAINTS -----------------//
-     TRAVERSE_PARAMETERS(it) {
-	 if( (it->second)->getType() == NUISANCE_PARAMETER || (it->second)->getType() == FIXED_PARAMETER) 
-		 LL +=   (it->second)->getLLGausConstraint();
-     }
+      // this is now moved at higher level due to combination 
+	  // (in combination one would otherwise consider this term twice)
+	  // it is done in likelihood::LikelihoodEvaluate()
    //---------------------------------------------------------------//
 
 
