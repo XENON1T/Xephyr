@@ -119,12 +119,12 @@ void pdfLikelihood::initialize(){
 
 
 	if(withSafeGuard){
-		safeGuardParam = new scaleSys("SafeGuard", 0.);
+		safeGuardParam = new scaleSys(getName() + "_SG", 0.);
 
 		// this parameter has no additional constraint
 		safeGuardParam->setType(FREE_PARAMETER);
-		safeGuardParam->setInitialValue(0.001);
-		safeGuardParam->setCurrentValue(0.001);
+		safeGuardParam->setInitialValue(0.0);
+		safeGuardParam->setCurrentValue(0.0);
 		safeGuardParam->setMinimum(0.);
 		safeGuardParam->setMaximum(0.5);
 		safeGuardParam->setStep(0.001);
@@ -290,13 +290,16 @@ double pdfLikelihood::computeTheLogLikelihood() {
 		}
      }
      else{
-	 //just sum up components otherwise
+		  Debug("computeTheLikelihood","Adding bkgs:");
+	  	  //just sum up components otherwise
           bkgPdf = (bkg_components[0]->getInterpolatedHisto());
+		  Debug("computeTheLikelihood", TString::Format("\t%s  = %f events",bkgPdf.GetName(), bkgPdf.Integral()));
 
           for(unsigned int k=1; k < bkg_components.size(); k++){
 
 	            TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
-		    bkgPdf.Add(&temp_bkgPdf);
+		    	bkgPdf.Add(&temp_bkgPdf);
+				Debug("computeTheLikelihood", TString::Format("\t%s  = %f events", temp_bkgPdf.GetName(), temp_bkgPdf.Integral()));
 
 	    }
 	}
@@ -321,7 +324,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
    //---------------------------------------------------------------//
 
     Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Ns %f    Nobs %f   Nb %f ", Ns , Nobs,  Nb));
-    Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Sigma %f    sigmaMultiplier %f ", getSignalMultiplier() , signalPdf.Integral() ));
+    Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Sigma %f    sigmaMultiplier %f  SignalHistoIntegral %f", sigma, getSignalMultiplier() , signalPdf.Integral() ));
     Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" PoissonTerm %f ",Nobs * log(Ns + Nb ) -Ns - Nb ));
 
 
@@ -526,6 +529,7 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
      // Adding Nb*epsilon*Fs     
 	 TH2F Fs (signal_component->getInterpolatedHisto());	
 
+	 Debug("getSafeguardedBkgPdfOnly", TString::Format("safeguard_value %f   corresponding to events = %f  and Nb= %f", epsilon, epsilon * Nb_safeguard, Nb_safeguard ));
 	 //bkg_plusSafeguard.Add(&Fs, epsilon * Nb_safeguard / Fs.Integral() ) ;
 	 plotHelpers::addHisto(&bkg_plusSafeguard, &Fs, epsilon * Nb_safeguard / Fs.Integral() );
 
@@ -594,8 +598,10 @@ double pdfLikelihood::LLsafeGuard(){
 	Debug("pdfLikelihood::LLSafeguard" , Form("Calibration NEntry %lli", Nentry));
 
      //adding the "additional" component: meant to be for AC which is different
-     if(safeguardAdditionalComponent) 
+     if(safeguardAdditionalComponent) {
 	     safeguard_only.Add(safeguardAdditionalComponent);
+		 Debug("LLsafeGuard", TString::Format("Additional component integral %f", safeguardAdditionalComponent->Integral()));
+	 }
 
      double safeguard_only_integral=safeguard_only.Integral();
      //if(printLevel > 4)  cout << "safeguard_only_integral=safeguard_only.Integral  = " << safeguard_only_integral << endl;
@@ -605,7 +611,7 @@ double pdfLikelihood::LLsafeGuard(){
        double ts2=calibrationData->getS2(event);
        double tweight=calibrationData->getW(event);
 	   
-	   Debug("pdfLikelihood::LLSafeguard" , Form("Calibration Event: S1 %f ; S2 %f ; weight %f",ts1, ts2, tweight));
+	   // Debug("pdfLikelihood::LLSafeguard" , Form("Calibration Event: S1 %f ; S2 %f ; weight %f",ts1, ts2, tweight));
 
 	     //loads data TNtuple entry
 	     //	     calibrationData->getEntry(event);
@@ -616,7 +622,7 @@ double pdfLikelihood::LLsafeGuard(){
 
 	     // check physical result 
 	     if(NbFb <=0) {	     
-	     	//if(printLevel > 1) cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : safeGuard component <= 0. " << NbFb << endl;
+	     	cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : safeGuard component <= 0. " << NbFb << endl;
 	     	return VERY_SMALL;
 	     }
 
@@ -625,7 +631,8 @@ double pdfLikelihood::LLsafeGuard(){
 
 	     //if(printLevel > 4)    cout<<"....................... - INFO : Safeguard NB*Fb(x)" << NbFb << "  LL for data i " << LL << endl;
      }
-     
+    
+	Debug("LLsafeGuard", TString::Format("LL safeguard term %f", LL));
     return LL ;
 
 }

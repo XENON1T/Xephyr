@@ -168,6 +168,9 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
             int N_events   = rambo.Poisson(scaleFactor * backgrounds[bkgItr].Integral());
             
             type = (likeHood->bkg_components[bkgItr])->getName();
+            
+            Debug("generateData", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
+            
             for(int evt =0; evt < N_events; evt++){
                 double temp_cs1 = 0., temp_cs2 = 0.;
                 backgrounds[bkgItr].GetRandom2(temp_cs1,temp_cs2);
@@ -182,6 +185,8 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
           type = likeHood->signal_component->getName();
           int N_signal  = rambo.Poisson(likeHood->getCurrentNs());
           TH2F signal   = likeHood->signal_component->getInterpolatedHisto();
+          
+          Debug("generateData", TString::Format("Generating %d events for signal, with median %f",N_signal, likeHood->getCurrentNs() ));
           
           for(int evt =0; evt < N_signal; evt++){
             double temp_cs1 = 0., temp_cs2 = 0.;
@@ -265,12 +270,17 @@ double ToyGenerator::getModelIntegralSafeguarded(){
     for (unsigned int i=0; i < n; i++ ){
 
         if(!(likeHood->safeguarded_bkg_components[i]))  continue;
-        Info("---->",(likeHood->bkg_components[i])->getName() );
-        total_integral += (likeHood->bkg_components[i])->getDefaultEvents();
+        
+        double temp_events = (likeHood->bkg_components[i])->getDefaultEvents() ; 
+        total_integral += temp_events;
+        Info("----------->", TString::Format("Adding bkg %s -> %f events", (likeHood->bkg_components[i])->getName().Data(), temp_events));
     }
 
     // adding the integral of additional component
-    total_integral += (likeHood->safeguardAdditionalComponent != NULL) ? likeHood->safeguardAdditionalComponent->Integral() : 0.;
+    if(likeHood->safeguardAdditionalComponent != NULL) {
+        total_integral +=  likeHood->safeguardAdditionalComponent->Integral() ;
+        Info("----------->", TString::Format("Adding additional component -> %f events", likeHood->safeguardAdditionalComponent->Integral()));
+    }
 
     return total_integral;
 }

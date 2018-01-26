@@ -741,8 +741,15 @@ double Likelihood::computeTheConstraint(){
   double LL = 0.;
 
   TRAVERSE_PARAMETERS(it) {
-	  if( (it->second)->getType() == NUISANCE_PARAMETER || (it->second)->getType() == FIXED_PARAMETER) 
-		LL +=   (it->second)->getLLGausConstraint();
+	  if( (it->second)->getType() == NUISANCE_PARAMETER || (it->second)->getType() == FIXED_PARAMETER) {
+      
+      double costraint = (it->second)->getLLGausConstraint();
+      LL +=   costraint;
+      Debug("computeTheConstraint", TString::Format("constraint of param %s is %f for tval=%f",
+                (it->second)->getName().Data(), costraint, (it->second)->getCurrentValue() ));
+    }
+    else 
+      Debug("computeTheConstraint", "skipping costraint on param "+ (it->second)->getName());
   }
 
   return LL;
@@ -1491,8 +1498,7 @@ double CombinedProfileLikelihood::computeTheLogLikelihood(){
         ProfileLikelihood* pl=it->second;
         double partial = pl->computeTheLogLikelihood();
         ll += partial;
-        cout << TString::Format("LL %s = %f", pl->getName().Data(), partial) << endl;
-        pl->printCurrentParameters();
+        
         Debug("computeTheLogLikelihood", TString::Format("LL %s = %f", pl->getName().Data(), partial) );
         if(getPrintLevel() == DEBUG) pl->printCurrentParameters();
 
