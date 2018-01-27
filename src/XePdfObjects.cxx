@@ -364,6 +364,15 @@ double  pdfComponent::getDefaultEvents(){
 
 }
 
+void pdfComponent::setEvents(double events){
+	
+	double integral = getDefaultEvents();
+	
+	if(scaleFactor > 0.)
+		integral = integral / scaleFactor;
+
+	scaleFactor = events / integral;
+}
 
 
 TH2F   pdfComponent::getInterpolatedHisto(){

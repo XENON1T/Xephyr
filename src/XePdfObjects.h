@@ -138,7 +138,10 @@ class pdfComponent :errorHandler{
 	/* getDefaultHisto, getInterpolatedHisto, getNormalizedDensity, 
 	 * getDefaultDensity, getNormalizedEvents, getDefaultEvents
 	 */
-	void setScaleFactor(double val) {scaleFactor = val;};	
+	void setScaleFactor(double val) {scaleFactor = val;};
+
+	//! \brief Normalize the pdf in a way that its integral is nevents
+	void setEvents(double nevents);  	
 
 	scaleSys* getScaleSys(TString name);
 	shapeSys* getShapeSys(TString name);
