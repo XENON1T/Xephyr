@@ -23,6 +23,7 @@ var searchData=
   ['getnormalizeddensity',['getNormalizedDensity',['../classpdfComponent.html#a7f745019a186a0da4b8fd78d985c18a4',1,'pdfComponent']]],
   ['getnormalizedevents',['getNormalizedEvents',['../classpdfComponent.html#a5da2a5a3b58228b571d7fa2e9a9f926c',1,'pdfComponent']]],
   ['getnormmodifier',['getNormModifier',['../classscaleSys.html#ab03e516ce0573ca4b73fb570467f156d',1,'scaleSys']]],
+  ['getparameters',['getParameters',['../classLikelihood.html#af943c6a47508e3efe72a3566c9ccccda',1,'Likelihood']]],
   ['getparamvaluestring',['getParamValueString',['../classpdfComponent.html#aa31c18e19fd8507ca2b8ae97d8e59e29',1,'pdfComponent']]],
   ['getprintlevel',['getPrintLevel',['../classerrorHandler.html#a44e34b712a579e00cfc8e23bceae98b3',1,'errorHandler']]],
   ['getsafeguardedbkgpdf',['getSafeguardedBkgPdf',['../classpdfLikelihood.html#a0c10dda80e5310b48ee510e4697cf9ba',1,'pdfLikelihood']]],
@@ -33,6 +34,8 @@ var searchData=
   ['getsigmamodename',['getSigmaModeName',['../classXeStat.html#a03682bbbe8d2fb4d44c8ad2473f6a921',1,'XeStat']]],
   ['getsigmaunitname',['getSigmaUnitName',['../classXeStat.html#a75a5773797c2faddd8560d8a5aa93240',1,'XeStat']]],
   ['getsystematicmodename',['getSystematicModeName',['../classXeStat.html#a2f44e17eca481675de64bef940ca82af',1,'XeStat']]],
+  ['gettrueparams',['getTrueParams',['../classdataHandler.html#af0036e02cf09e9f81ae1137da3611bd3',1,'dataHandler']]],
+  ['gettrueparamsnames',['getTrueParamsNames',['../classdataHandler.html#a950e05359b34096b8740c880827e3abc',1,'dataHandler']]],
   ['getuppersigmalabel',['getUpperSigmaLabel',['../classXeStat.html#a9f94e021aea3df6ea5a6505c6359c5de',1,'XeStat']]],
   ['globalprintlevel',['globalPrintLevel',['../classerrorHandler.html#aa5abc1d5f2db3898f40c393721d7b123',1,'errorHandler']]]
 ];

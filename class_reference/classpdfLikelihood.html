@@ -140,6 +140,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>getSignalMultiplier
 <tr class="memitem:a4a6cc52b0280ce95f05a3e927a57af11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a6cc52b0280ce95f05a3e927a57af11"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setSignalMultiplier</b> (double val)</td></tr>
 <tr class="separator:a4a6cc52b0280ce95f05a3e927a57af11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae101ce8c0a1c67bdc28fe8ccd0adf677"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae101ce8c0a1c67bdc28fe8ccd0adf677"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setTreeIndex</b> (int index)</td></tr>
+<tr class="separator:ae101ce8c0a1c67bdc28fe8ccd0adf677"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af72423c95b85fee7e71ca53ec29a74ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af72423c95b85fee7e71ca53ec29a74ba"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setSignalDefaultNorm</b> (double val)</td></tr>
 <tr class="separator:af72423c95b85fee7e71ca53ec29a74ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,6 +182,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setWithSafeGuard</b> 
 <tr class="memitem:a767a1280cdb96ee696b033326278ff82"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a767a1280cdb96ee696b033326278ff82"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>drawAllOnProjection</b> (bool isS1Projection)</td></tr>
 <tr class="separator:a767a1280cdb96ee696b033326278ff82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb9e113f8c361886b2a2ccbe5f34988"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1bb9e113f8c361886b2a2ccbe5f34988"></a>
+vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getTrueParamsNames</b> ()</td></tr>
+<tr class="separator:a1bb9e113f8c361886b2a2ccbe5f34988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84ed5ceba7130394fe6d064a6d0001ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84ed5ceba7130394fe6d064a6d0001ef"></a>
+vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getTrueParams</b> ()</td></tr>
+<tr class="separator:a84ed5ceba7130394fe6d064a6d0001ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8642eb699bc6a697596ec2e2eeb773d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8642eb699bc6a697596ec2e2eeb773d"></a>
+<a class="el" href="classpdfComponent.html">pdfComponent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getBkgComponent</b> (TString name)</td></tr>
+<tr class="separator:ae8642eb699bc6a697596ec2e2eeb773d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88d261f9d8b93b1ecf0e7691fc34820a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88d261f9d8b93b1ecf0e7691fc34820a"></a>
 <a class="el" href="classhistoCompare.html">histoCompare</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getModelCompare</b> ()</td></tr>
 <tr class="separator:a88d261f9d8b93b1ecf0e7691fc34820a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,10 +234,13 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>returnLimitHagar</b
 <tr class="separator:ad02960c3b4aafaea0006f6ea5536a111 inherit pub_methods_classProfileLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad06a0e1530623ac3edb0422c13abd7aa inherit pub_methods_classProfileLikelihood"><td class="memItemLeft" align="right" valign="top">TGraph *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProfileLikelihood.html#ad06a0e1530623ac3edb0422c13abd7aa">getGraphOfParameter</a> (int n_points, int param_index)</td></tr>
 <tr class="separator:ad06a0e1530623ac3edb0422c13abd7aa inherit pub_methods_classProfileLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97acbe4ce055c91d273571ff20eba6a3 inherit pub_methods_classProfileLikelihood"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97acbe4ce055c91d273571ff20eba6a3"></a>
-TGraph *&#160;</td><td class="memItemRight" valign="bottom"><b>getLikelihoodScanOfParameter</b> (int n_points, <a class="el" href="classLKParameter.html">LKParameter</a> *par)</td></tr>
-<tr class="separator:a97acbe4ce055c91d273571ff20eba6a3 inherit pub_methods_classProfileLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26ab375a8c3827fc7e20b73d8f3812e0 inherit pub_methods_classProfileLikelihood"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26ab375a8c3827fc7e20b73d8f3812e0"></a>
+TGraph *&#160;</td><td class="memItemRight" valign="bottom"><b>getLikelihoodScanOfParameter</b> (int n_points, <a class="el" href="classLKParameter.html">LKParameter</a> *par, double mu=0)</td></tr>
+<tr class="separator:a26ab375a8c3827fc7e20b73d8f3812e0 inherit pub_methods_classProfileLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classLikelihood"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classLikelihood')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classLikelihood.html">Likelihood</a></td></tr>
+<tr class="memitem:aa539c5b0391fa3182fde365e49bf9308 inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa539c5b0391fa3182fde365e49bf9308"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>computeTheConstraint</b> ()</td></tr>
+<tr class="separator:aa539c5b0391fa3182fde365e49bf9308 inherit pub_methods_classLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab416e172fee8411fd17458bb6abc91ee inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLikelihood.html#ab416e172fee8411fd17458bb6abc91ee">Likelihood</a> (TString name)</td></tr>
 <tr class="separator:ab416e172fee8411fd17458bb6abc91ee inherit pub_methods_classLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a537362f778d8edcb5ead065e03932e08 inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLikelihood.html#a537362f778d8edcb5ead065e03932e08">getSigmaHat</a> ()</td></tr>
@@ -308,8 +323,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>resetParameters</b> (
 <tr class="memitem:a39ad5bb838c6d6b3334ad588be416d59 inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a39ad5bb838c6d6b3334ad588be416d59"></a>
 <a class="el" href="classLKParameter.html">LKParameter</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getParameter</b> (int id)</td></tr>
 <tr class="separator:a39ad5bb838c6d6b3334ad588be416d59 inherit pub_methods_classLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a126a6a3986d9eed23c2943cab9dbea73 inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a126a6a3986d9eed23c2943cab9dbea73"></a>
+<a class="el" href="classLKParameter.html">LKParameter</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getPOI</b> ()</td></tr>
+<tr class="separator:a126a6a3986d9eed23c2943cab9dbea73 inherit pub_methods_classLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af943c6a47508e3efe72a3566c9ccccda inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af943c6a47508e3efe72a3566c9ccccda"></a>
-map&lt; int, <a class="el" href="classLKParameter.html">LKParameter</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>getParameters</b> ()</td></tr>
+map&lt; int, <a class="el" href="classLKParameter.html">LKParameter</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLikelihood.html#af943c6a47508e3efe72a3566c9ccccda">getParameters</a> ()</td></tr>
+<tr class="memdesc:af943c6a47508e3efe72a3566c9ccccda inherit pub_methods_classLikelihood"><td class="mdescLeft">&#160;</td><td class="mdescRight">get Parameter Of Interest <br/></td></tr>
 <tr class="separator:af943c6a47508e3efe72a3566c9ccccda inherit pub_methods_classLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dd3b5dc58318e15f9b8c7b4a2ace210 inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8dd3b5dc58318e15f9b8c7b4a2ace210"></a>
 TH1F&#160;</td><td class="memItemRight" valign="bottom"><b>getPullsHisto</b> ()</td></tr>
@@ -434,9 +453,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>withSafeGuard</b></td
 <tr class="memitem:a35f16e5664b4651a8c388f75e495bd1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35f16e5664b4651a8c388f75e495bd1b"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>wimp_mass</b></td></tr>
 <tr class="separator:a35f16e5664b4651a8c388f75e495bd1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f577cbf03ee504c76884e0b273385ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f577cbf03ee504c76884e0b273385ab"></a>
-<a class="el" href="classLKParameter.html">LKParameter</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>POI</b></td></tr>
-<tr class="separator:a3f577cbf03ee504c76884e0b273385ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f9f95bd1281867afd3690fc065aa4e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f9f95bd1281867afd3690fc065aa4e5"></a>
 <a class="el" href="classLKParameter.html">LKParameter</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>safeGuardParam</b></td></tr>
 <tr class="separator:a3f9f95bd1281867afd3690fc065aa4e5"><td class="memSeparator" colspan="2">&#160;</td></tr>

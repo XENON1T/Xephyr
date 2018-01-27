@@ -170,12 +170,28 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a389811990a9764f2269f6cffe8f25e2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a389811990a9764f2269f6cffe8f25e2e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setFile</b> (TString PathtoFile)</td></tr>
 <tr class="separator:a389811990a9764f2269f6cffe8f25e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfabca707e46be582221815230eeffde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfabca707e46be582221815230eeffde"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdataHandler.html#acfabca707e46be582221815230eeffde">setPrefixTree</a> (TString prefix)</td></tr>
+<tr class="memdesc:acfabca707e46be582221815230eeffde"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the prefix for the name of the tree collection to iterate on, usefull for neyman construction. <br/></td></tr>
+<tr class="separator:acfabca707e46be582221815230eeffde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8ebdb8e546eab8dd06d65e5381f811f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8ebdb8e546eab8dd06d65e5381f811f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdataHandler.html#ad8ebdb8e546eab8dd06d65e5381f811f">setTreeIndex</a> (int index)</td></tr>
+<tr class="memdesc:ad8ebdb8e546eab8dd06d65e5381f811f"><td class="mdescLeft">&#160;</td><td class="mdescRight">load the tree in file according to the name convention: "TreePrefix"+"index" <br/></td></tr>
+<tr class="separator:ad8ebdb8e546eab8dd06d65e5381f811f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef9b44982ac17d4837328226f9383567"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef9b44982ac17d4837328226f9383567"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setFileAndTree</b> (TString PathtoFile, TString nameTree)</td></tr>
 <tr class="separator:aef9b44982ac17d4837328226f9383567"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a368b6e5f76173cd31b10623ccf1f37ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a368b6e5f76173cd31b10623ccf1f37ca"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addToDataSet</b> (TH2F *h2pdf, int N)</td></tr>
 <tr class="separator:a368b6e5f76173cd31b10623ccf1f37ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a950e05359b34096b8740c880827e3abc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a950e05359b34096b8740c880827e3abc"></a>
+vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdataHandler.html#a950e05359b34096b8740c880827e3abc">getTrueParamsNames</a> ()</td></tr>
+<tr class="memdesc:a950e05359b34096b8740c880827e3abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">useful to get the truth generated value of parameter stored in tree <br/></td></tr>
+<tr class="separator:a950e05359b34096b8740c880827e3abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0036e02cf09e9f81ae1137da3611bd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0036e02cf09e9f81ae1137da3611bd3"></a>
+vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdataHandler.html#af0036e02cf09e9f81ae1137da3611bd3">getTrueParams</a> ()</td></tr>
+<tr class="memdesc:af0036e02cf09e9f81ae1137da3611bd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">useful to get the truth generated value of parameter stored in tree <br/></td></tr>
+<tr class="separator:af0036e02cf09e9f81ae1137da3611bd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classerrorHandler"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classerrorHandler')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classerrorHandler.html">errorHandler</a></td></tr>
 <tr class="memitem:a6623a8447ef7ea5fed7aed2f31d19636 inherit pub_methods_classerrorHandler"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a6623a8447ef7ea5fed7aed2f31d19636">errorHandler</a> (TString name)</td></tr>
 <tr class="separator:a6623a8447ef7ea5fed7aed2f31d19636 inherit pub_methods_classerrorHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,6 +232,9 @@ TFile *&#160;</td><td class="memItemRight" valign="bottom"><b>file</b></td></tr>
 <tr class="memitem:a9be911a864a54fc42cccfa410b8d53fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9be911a864a54fc42cccfa410b8d53fe"></a>
 TString&#160;</td><td class="memItemRight" valign="bottom"><b>Name</b></td></tr>
 <tr class="separator:a9be911a864a54fc42cccfa410b8d53fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8e644784fd302e704cf3d1813c4682b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8e644784fd302e704cf3d1813c4682b"></a>
+TString&#160;</td><td class="memItemRight" valign="bottom"><b>TreePrefix</b></td></tr>
+<tr class="separator:ad8e644784fd302e704cf3d1813c4682b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cc6f6a875db009194e2491cc8e9cab8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0cc6f6a875db009194e2491cc8e9cab8"></a>
 TH2F *&#160;</td><td class="memItemRight" valign="bottom"><b>grid</b></td></tr>
 <tr class="separator:a0cc6f6a875db009194e2491cc8e9cab8"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -102,15 +102,16 @@ Inheritance diagram for LKParameter:</div>
 <area href="classXeStat.html" alt="XeStat" shape="rect" coords="72,56,206,80"/>
 <area href="classerrorHandler.html" title="Helper Class to send consistently formatted messages. It allows different levels of severity for the ..." alt="errorHandler" shape="rect" coords="0,0,134,24"/>
 <area href="classprintTools.html" title="printing helpers, probably you wont use this class " alt="printTools" shape="rect" coords="144,0,278,24"/>
-<area href="classscaleSys.html" alt="scaleSys" shape="rect" coords="216,168,350,192"/>
-<area href="classshapeSys.html" title="it represents a Shape Systematic. It inherits from LKParameter. Here you can use the LKParameter func..." alt="shapeSys" shape="rect" coords="216,224,350,248"/>
-<area href="classSigmaParameter.html" alt="SigmaParameter" shape="rect" coords="216,280,350,304"/>
-<area href="classTEfficiencyParameter.html" alt="TEfficiencyParameter" shape="rect" coords="216,336,350,360"/>
-<area href="classTGaussParameter.html" alt="TGaussParameter" shape="rect" coords="216,392,350,416"/>
-<area href="classTLEffParameter.html" alt="TLEffParameter" shape="rect" coords="216,448,350,472"/>
-<area href="classTQyParameter.html" alt="TQyParameter" shape="rect" coords="216,504,350,528"/>
-<area href="classTStatBkgParameter.html" alt="TStatBkgParameter" shape="rect" coords="216,560,350,584"/>
-<area href="classTSystBkgParameter.html" alt="TSystBkgParameter" shape="rect" coords="216,616,350,640"/>
+<area href="classCombinedParameter.html" alt="CombinedParameter" shape="rect" coords="216,168,350,192"/>
+<area href="classscaleSys.html" alt="scaleSys" shape="rect" coords="216,224,350,248"/>
+<area href="classshapeSys.html" title="it represents a Shape Systematic. It inherits from LKParameter. Here you can use the LKParameter func..." alt="shapeSys" shape="rect" coords="216,280,350,304"/>
+<area href="classSigmaParameter.html" alt="SigmaParameter" shape="rect" coords="216,336,350,360"/>
+<area href="classTEfficiencyParameter.html" alt="TEfficiencyParameter" shape="rect" coords="216,392,350,416"/>
+<area href="classTGaussParameter.html" alt="TGaussParameter" shape="rect" coords="216,448,350,472"/>
+<area href="classTLEffParameter.html" alt="TLEffParameter" shape="rect" coords="216,504,350,528"/>
+<area href="classTQyParameter.html" alt="TQyParameter" shape="rect" coords="216,560,350,584"/>
+<area href="classTStatBkgParameter.html" alt="TStatBkgParameter" shape="rect" coords="216,616,350,640"/>
+<area href="classTSystBkgParameter.html" alt="TSystBkgParameter" shape="rect" coords="216,672,350,696"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -136,7 +137,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setType</b> (int typ)
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setInitialValue</b> (double i)</td></tr>
 <tr class="separator:af59ccf182bf55d78790aab02a1dfbcdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a873ac8fcc2534ab566478e5f419d22b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a873ac8fcc2534ab566478e5f419d22b2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCurrentValue</b> (double c)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setCurrentValue</b> (double c)</td></tr>
 <tr class="separator:a873ac8fcc2534ab566478e5f419d22b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a349bbe8df3c0f0cc825ecff4c12c2e74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a349bbe8df3c0f0cc825ecff4c12c2e74"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setCurrentValueInMinuitUnits</b> (double c)</td></tr>
@@ -153,7 +154,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setMinuitUnit</b> (do
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setStep</b> (double st)</td></tr>
 <tr class="separator:a31b7feab9bd6ce0550861ae9f217bbb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19c54723966702e1620bd615493ec642"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19c54723966702e1620bd615493ec642"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSigma</b> (double sig)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setSigma</b> (double sig)</td></tr>
 <tr class="separator:a19c54723966702e1620bd615493ec642"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d8e48ed86b1170c007c2caa0733c251"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d8e48ed86b1170c007c2caa0733c251"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setSigmaInMinuitUnits</b> (double sig)</td></tr>

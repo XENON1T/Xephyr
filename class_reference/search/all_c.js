@@ -1,6 +1,7 @@
 var searchData=
 [
   ['parameterexists',['parameterExists',['../classLikelihood.html#a226de7ab4baca5bea2f47bb936e07f77',1,'Likelihood']]],
+  ['paramlist',['paramList',['../classCombinedParameter.html#accef8aa12ca49b3a0f0cbd39852d3f99',1,'CombinedParameter']]],
   ['pdfcomponent',['pdfComponent',['../classpdfComponent.html',1,'']]],
   ['pdflikelihood',['pdfLikelihood',['../classpdfLikelihood.html',1,'']]],
   ['plotinterpolatedspace',['plotInterpolatedSpace',['../classpdfComponent.html#a4c038ac161d51842244da34f56f88379',1,'pdfComponent']]],

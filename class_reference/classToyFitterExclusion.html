@@ -106,32 +106,51 @@ Inheritance diagram for ToyFitterExclusion:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5d97092251e4cb83c27299446e3bee91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d97092251e4cb83c27299446e3bee91"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a5d97092251e4cb83c27299446e3bee91">ToyFitterExclusion</a> (TString pathToFile)</td></tr>
-<tr class="memdesc:a5d97092251e4cb83c27299446e3bee91"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor, pathToFile is the name of the file including path to fit, by convenction this ia also the name of the file. <br/></td></tr>
-<tr class="separator:a5d97092251e4cb83c27299446e3bee91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c3bf73ca8b66173ed6d444c00782aa1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c3bf73ca8b66173ed6d444c00782aa1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a3c3bf73ca8b66173ed6d444c00782aa1">ToyFitterExclusion</a> (TString CollectionName)</td></tr>
+<tr class="memdesc:a3c3bf73ca8b66173ed6d444c00782aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor, CollectionName is the name of the tree collection to fit, by convention set by <a class="el" href="classToyGenerator.html" title="Helper class to generate toys given an input likelihood. It can generate toys for the calibration dat...">ToyGenerator</a> this is also the name of the file. <br/></td></tr>
+<tr class="separator:a3c3bf73ca8b66173ed6d444c00782aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33f6a1e288728b822eb53a95401ec8df"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a33f6a1e288728b822eb53a95401ec8df">computeTS</a> (double mu)</td></tr>
 <tr class="memdesc:a33f6a1e288728b822eb53a95401ec8df"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the Test Statistic q_tilde(mu) for a value of mu_test.  <a href="#a33f6a1e288728b822eb53a95401ec8df">More...</a><br/></td></tr>
 <tr class="separator:a33f6a1e288728b822eb53a95401ec8df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad492b8177c3f17fac528d108c84e8f27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#ad492b8177c3f17fac528d108c84e8f27">fit</a> (double mu, TString nameTree, bool randomizeMeasure=true, int stopAt=-999)</td></tr>
-<tr class="memdesc:ad492b8177c3f17fac528d108c84e8f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">given as input a file with many data toys, it writes a tree with fit outputs  <a href="#ad492b8177c3f17fac528d108c84e8f27">More...</a><br/></td></tr>
-<tr class="separator:ad492b8177c3f17fac528d108c84e8f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06d59678b970fd3b1878557ad6b3e8f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06d59678b970fd3b1878557ad6b3e8f0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a06d59678b970fd3b1878557ad6b3e8f0">setTheLikelihood</a> (<a class="el" href="classpdfLikelihood.html">pdfLikelihood</a> *like)</td></tr>
-<tr class="memdesc:a06d59678b970fd3b1878557ad6b3e8f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the likelihood to fit <br/></td></tr>
-<tr class="separator:a06d59678b970fd3b1878557ad6b3e8f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a212ea61cb7360c82b998142468f57ceb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a212ea61cb7360c82b998142468f57ceb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a212ea61cb7360c82b998142468f57ceb">setOutputDir</a> (TString path)</td></tr>
-<tr class="memdesc:a212ea61cb7360c82b998142468f57ceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the path to dir in which the fits are stored otherwise is current <br/></td></tr>
-<tr class="separator:a212ea61cb7360c82b998142468f57ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dc5debc49e1a7244d5d6b976228358b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a9dc5debc49e1a7244d5d6b976228358b">fit</a> (double mu, int stopAt=-999)</td></tr>
+<tr class="memdesc:a9dc5debc49e1a7244d5d6b976228358b"><td class="mdescLeft">&#160;</td><td class="mdescRight">given as input a file with many data toys, it writes a tree with fit outputs  <a href="#a9dc5debc49e1a7244d5d6b976228358b">More...</a><br/></td></tr>
+<tr class="separator:a9dc5debc49e1a7244d5d6b976228358b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4bf57dd0e68d8fe9b429db6cee654c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4bf57dd0e68d8fe9b429db6cee654c5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#ad4bf57dd0e68d8fe9b429db6cee654c5">setTheLikelihood</a> (<a class="el" href="classProfileLikelihood.html">ProfileLikelihood</a> *like)</td></tr>
+<tr class="memdesc:ad4bf57dd0e68d8fe9b429db6cee654c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the likelihood to fit <br/></td></tr>
+<tr class="separator:ad4bf57dd0e68d8fe9b429db6cee654c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fa0d6cd555c415b7d94264e5974466a"><td class="memItemLeft" align="right" valign="top">TGraphAsymmErrors&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a3fa0d6cd555c415b7d94264e5974466a">computeTSDistros</a> (TString fileName, double *mu_list, int mu_size)</td></tr>
 <tr class="memdesc:a3fa0d6cd555c415b7d94264e5974466a"><td class="mdescLeft">&#160;</td><td class="mdescRight">produces a TGraph with the 90% quantiles of the alternate Hypothesis.  <a href="#a3fa0d6cd555c415b7d94264e5974466a">More...</a><br/></td></tr>
 <tr class="separator:a3fa0d6cd555c415b7d94264e5974466a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6a7bdea8f1c522c6c79281ee2ca343a"><td class="memItemLeft" align="right" valign="top">TGraphAsymmErrors&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#aa6a7bdea8f1c522c6c79281ee2ca343a">computeTSDistros</a> (TTree *tree, double *mu_list, int mu_size)</td></tr>
 <tr class="memdesc:aa6a7bdea8f1c522c6c79281ee2ca343a"><td class="mdescLeft">&#160;</td><td class="mdescRight">produces a TGraph with the 90% quantiles of the alternate Hypothesis.  <a href="#aa6a7bdea8f1c522c6c79281ee2ca343a">More...</a><br/></td></tr>
 <tr class="separator:aa6a7bdea8f1c522c6c79281ee2ca343a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a452fd9ff9291208972328680f757537e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a452fd9ff9291208972328680f757537e">spitTheLimit</a> (TGraphAsymmErrors *ninety_quantiles, TFile *inputTreeFile)</td></tr>
-<tr class="separator:a452fd9ff9291208972328680f757537e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f93fde9978020f2f3ac11f7c2a2b11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a5f93fde9978020f2f3ac11f7c2a2b11d">spitTheLimit</a> (TGraphAsymmErrors *ninety_quantiles, int sopAt=-999)</td></tr>
+<tr class="separator:a5f93fde9978020f2f3ac11f7c2a2b11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a068fb50544da2d1b5f71903fce5547dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a068fb50544da2d1b5f71903fce5547dd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a068fb50544da2d1b5f71903fce5547dd">setInputDir</a> (TString path)</td></tr>
+<tr class="memdesc:a068fb50544da2d1b5f71903fce5547dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">set path to input file (only dir no file name) <br/></td></tr>
+<tr class="separator:a068fb50544da2d1b5f71903fce5547dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a212ea61cb7360c82b998142468f57ceb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a212ea61cb7360c82b998142468f57ceb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classToyFitterExclusion.html#a212ea61cb7360c82b998142468f57ceb">setOutputDir</a> (TString path)</td></tr>
+<tr class="memdesc:a212ea61cb7360c82b998142468f57ceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the path to dir in which the fits are stored otherwise is current <br/></td></tr>
+<tr class="separator:a212ea61cb7360c82b998142468f57ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33ffed924b2e896939c4b459316eae4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33ffed924b2e896939c4b459316eae4f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setRandomizeMeasure</b> (bool doOrNot)</td></tr>
+<tr class="separator:a33ffed924b2e896939c4b459316eae4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9238f72794cbde20a517f2e8545c85ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9238f72794cbde20a517f2e8545c85ed"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setTreeName</b> (TString newName)</td></tr>
+<tr class="separator:a9238f72794cbde20a517f2e8545c85ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea9af00f5992a3e85ac4052f3c720fd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea9af00f5992a3e85ac4052f3c720fd0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setSeed</b> (ULong_t seed)</td></tr>
+<tr class="separator:aea9af00f5992a3e85ac4052f3c720fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a0b2e12564e6320a58594b7f4db9cb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a0b2e12564e6320a58594b7f4db9cb5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCalibrationTreeName</b> (TString newName)</td></tr>
+<tr class="separator:a4a0b2e12564e6320a58594b7f4db9cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00c7516e7da1655efd6f35d24795d2c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a00c7516e7da1655efd6f35d24795d2c0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setOutputSuffix</b> (TString name)</td></tr>
+<tr class="separator:a00c7516e7da1655efd6f35d24795d2c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classerrorHandler"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classerrorHandler')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classerrorHandler.html">errorHandler</a></td></tr>
 <tr class="memitem:a6623a8447ef7ea5fed7aed2f31d19636 inherit pub_methods_classerrorHandler"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerrorHandler.html#a6623a8447ef7ea5fed7aed2f31d19636">errorHandler</a> (TString name)</td></tr>
 <tr class="separator:a6623a8447ef7ea5fed7aed2f31d19636 inherit pub_methods_classerrorHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,7 +254,7 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
 <p>it is used to compute limits. The TH1F of the test statistic f(q_mu | H_mu) are stored in a root file toghether with the TGraph of 90% quantiles. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fileName</td><td>takes as input the hadded post fit output from <a class="el" href="classToyFitterExclusion.html#ad492b8177c3f17fac528d108c84e8f27" title="given as input a file with many data toys, it writes a tree with fit outputs ">fit()</a> of this class. </td></tr>
+    <tr><td class="paramname">fileName</td><td>takes as input the hadded post fit output from <a class="el" href="classToyFitterExclusion.html#a9dc5debc49e1a7244d5d6b976228358b" title="given as input a file with many data toys, it writes a tree with fit outputs ">fit()</a> of this class. </td></tr>
     <tr><td class="paramname">mu_list</td><td>is the list of true mu hypothesis present in the file tree. </td></tr>
     <tr><td class="paramname">mu_size</td><td>is the size of the previous list. </td></tr>
   </table>
@@ -278,7 +297,7 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
 <p>it is used to compute limits. The TH1F of the test statistic f(q_mu | H_mu) are stored in a root file toghether with the TGraph of 90% quantiles. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fileName</td><td>takes as input the hadded post fit output from <a class="el" href="classToyFitterExclusion.html#ad492b8177c3f17fac528d108c84e8f27" title="given as input a file with many data toys, it writes a tree with fit outputs ">fit()</a> of this class. </td></tr>
+    <tr><td class="paramname">tree</td><td>takes as input the tree of post fit output from <a class="el" href="classToyFitterExclusion.html#a9dc5debc49e1a7244d5d6b976228358b" title="given as input a file with many data toys, it writes a tree with fit outputs ">fit()</a> of this class. </td></tr>
     <tr><td class="paramname">mu_list</td><td>is the list of true mu hypothesis present in the file tree. </td></tr>
     <tr><td class="paramname">mu_size</td><td>is the size of the previous list. </td></tr>
   </table>
@@ -287,7 +306,7 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
 
 </div>
 </div>
-<a class="anchor" id="ad492b8177c3f17fac528d108c84e8f27"></a>
+<a class="anchor" id="a9dc5debc49e1a7244d5d6b976228358b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -296,18 +315,6 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>mu</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">TString&#160;</td>
-          <td class="paramname"><em>nameTree</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>randomizeMeasure</em> = <code>true</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -324,18 +331,11 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
 </div><div class="memdoc">
 
 <p>given as input a file with many data toys, it writes a tree with fit outputs </p>
-<p>Note that it expects a toy file generated with naming convention of <a class="el" href="classToyGenerator.html" title="Helper class to generate toys given an input likelihood. It can generate toys for the calibration dat...">ToyGenerator</a>. The output tree contains: conditional and unconditional nuisance parameter post fit values, and the test statistic. This is supposed to be used for the alternative hypotesis fits, to be able to generate aftewards the graph of 90th percentiles.  mu: the signal strenght of the conditional fit. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">nameTree</td><td>the name prefix of the tree inside the file. </td></tr>
-    <tr><td class="paramname">randomizeMeasure</td><td>if it is going to randomize the measure of the parameter for each toy.  soptAt: optional, the number of toy in file you want to fit. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Note that it expects a toy file generated with naming convention of <a class="el" href="classToyGenerator.html" title="Helper class to generate toys given an input likelihood. It can generate toys for the calibration dat...">ToyGenerator</a>. The output tree contains: conditional and unconditional nuisance parameter post fit values, and the test statistic. This is supposed to be used for the alternative hypotesis fits, to be able to generate aftewards the graph of 90th percentiles.  mu: the signal strenght of the conditional fit.  soptAt: optional, the number of toy in file you want to fit. NOTE: by deafulte this will randomize the NP measures during fit for each toy, setRandomizeMeasure(false) if you don't want. </p>
 
 </div>
 </div>
-<a class="anchor" id="a452fd9ff9291208972328680f757537e"></a>
+<a class="anchor" id="a5f93fde9978020f2f3ac11f7c2a2b11d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -348,8 +348,8 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">TFile *&#160;</td>
-          <td class="paramname"><em>inputTreeFile</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sopAt</em> = <code>-999</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -363,7 +363,7 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>className</b></td>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ninety_quantiles</td><td>graph of 90% quantiles as produced from <a class="el" href="classToyFitterExclusion.html#a3fa0d6cd555c415b7d94264e5974466a" title="produces a TGraph with the 90% quantiles of the alternate Hypothesis. ">computeTSDistros()</a>. </td></tr>
-    <tr><td class="paramname">inputTreeFile</td><td>file containing the input toy tree list or data. </td></tr>
+    <tr><td class="paramname">TreeName</td><td>prefix name of the tree list you fit. To se the input file file use setPathToFile() method.  soptAt: optional, the number of toy in file you want to fit. NOTE: by deafulte this will randomize the NP measures during fit for each toy, setRandomizeMeasure(false) if you don't want. </td></tr>
   </table>
   </dd>
 </dl>
