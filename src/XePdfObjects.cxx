@@ -401,8 +401,9 @@ TH2F   pdfComponent::getInterpolatedHisto(){
 		h_temp.Scale(myScaleUnc[k]->getNormModifier()); 
 	}
 
-	if(h_temp.GetNbinsX() == 63 || doExtend) 
+	/*if(h_temp.GetNbinsX() == 63 || doExtend) 
 		extendHisto(h_temp);
+		*/
 
 	return h_temp;	
 }
@@ -416,9 +417,10 @@ TH2F   pdfComponent::getDefaultHisto(){
 
 	if(scaleFactor > 0.) h_temp.Scale(scaleFactor);
 
-	if(h_temp.GetNbinsX() == 63 || doExtend) 
+	/*if(h_temp.GetNbinsX() == 63 || doExtend) 
 		extendHisto(h_temp);
-
+	*/
+	
 	return h_temp;
 }
 

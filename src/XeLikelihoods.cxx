@@ -119,16 +119,18 @@ void pdfLikelihood::initialize(){
 
 
 	if(withSafeGuard){
-		safeGuardParam = new scaleSys(getName() + "_SG", 0.);
+		safeGuardParam = new scaleSys(getName() + "_SG", 1.);
 
 		// this parameter has no additional constraint
 		safeGuardParam->setType(FREE_PARAMETER);
-		safeGuardParam->setInitialValue(0.0);
-		safeGuardParam->setCurrentValue(0.0);
+		safeGuardParam->setInitialValue(1.0);
+		safeGuardParam->setCurrentValue(1.0);
 		safeGuardParam->setMinimum(0.);
-		safeGuardParam->setMaximum(0.5);
-		safeGuardParam->setStep(0.001);
+		safeGuardParam->setMaximum(5);
+		safeGuardParam->setStep(0.5);
 		addParameter(safeGuardParam, AUTO);
+
+		safeguard_scaling = 1000.;
 	}
 	else if(numberOfSafeguarded() > 0 ) 
 		cout << "\n------ WARNING -------  Safeguard is turned OFF altough you have set components to be safeguarded this is ignored -----\n" << endl;
@@ -374,7 +376,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
      if(withSafeGuard) {
 	     // Check if Safeguard is applicable, Ns > Nb*epsilon otherwise you can eat up your signal
 	     // in this case safeguard can bring problem.
-		 double epsilon = safeGuardParam->getCurrentValue() ;
+		 double epsilon = safeGuardParam->getCurrentValue() / safeguard_scaling;
 			  
 		Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" PoissonTerm %f ",Nobs * log(Ns + Nb ) -Ns - Nb ));
 
@@ -507,7 +509,7 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
 
      float standard_integral = 0. ;
      double Nb_safeguard      = 0. ;
-     double epsilon           = safeGuardParam->getCurrentValue();
+     double epsilon           = safeGuardParam->getCurrentValue() / safeguard_scaling;
     
      //computing Nb(1-epsilon)Fb for the safegurded components 
      for(unsigned int k=0; k < bkg_components.size(); k++){
@@ -516,6 +518,7 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
 
 	     TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
 
+		 Debug("getSafeguardedBkgPdfOnly",TString::Format("component %s  n-events = %f",temp_bkgPdf.GetName(), temp_bkgPdf.Integral()));
 	     standard_integral += temp_bkgPdf.Integral();
 
 	     // Nb_k *(1 -epsilon) Fb_k(x,y)
@@ -557,7 +560,7 @@ TH2F pdfLikelihood::getSafeguardedBkgPdf(){
 	     if(safeguarded_bkg_components[k])  continue;
 
 	     TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
-	
+		 Debug("getSafeguardedBkgPdfOnly",TString::Format("component %s  n-events = %f",temp_bkgPdf.GetName(), temp_bkgPdf.Integral()));
 	     safeguard_only.Add(&temp_bkgPdf);
       }
       

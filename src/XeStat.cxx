@@ -188,7 +188,7 @@ void LKParameter::initialize() {
 
 double LKParameter::getLLGausConstraint(){
 	//no constraint if free
-	if(getType() == FREE_PARAMETER || getType() == FIXED_PARAMETER) return 0.;
+	if(getType() == FREE_PARAMETER ) return 0.;
 
 	double t = getCurrentValue();
 	return ( -1 * (t - t0)  * (t - t0)  /2. );  // t0 is the current measure 
@@ -741,7 +741,7 @@ double Likelihood::computeTheConstraint(){
   double LL = 0.;
 
   TRAVERSE_PARAMETERS(it) {
-	  if( (it->second)->getType() == NUISANCE_PARAMETER || (it->second)->getType() == FIXED_PARAMETER) {
+	  if( (it->second)->getType() == NUISANCE_PARAMETER  || (it->second)->getType() == FIXED_PARAMETER) {
       
       double costraint = (it->second)->getLLGausConstraint();
       LL +=   costraint;

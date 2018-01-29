@@ -144,6 +144,7 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	LKParameter            *safeGuardParam;
 
+	double                  safeguard_scaling;
 
 	//This is needed for compatibility, ancestral xephyr roots.
 	//FIXME: move getWimpMass to Asymptotics
