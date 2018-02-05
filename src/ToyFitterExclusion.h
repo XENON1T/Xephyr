@@ -181,6 +181,7 @@ class ToyFitterExclusion: public errorHandler {
     double        mu_limit;             //! value of the limit in terms of mu
     double        limit;                //! limit scaled in cross section
     double        testStat;             //! value of test statistic
+    double        q_tilde;
     int           numberOfParams;       //! number of likelihood parameter (including POI)
     bool          randomizeMeasure;     //! to random or not the np central value
 };

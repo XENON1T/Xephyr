@@ -798,7 +798,7 @@ class ProfileLikelihood : public Likelihood {
   * @param param_index is the index value of the parameter
 */
 
-    TGraph* getGraphOfParameter(int n_points,  int param_index);
+    vector<TGraph*> getGraphOfParameters(int n_points);
 
     TGraph* getLikelihoodScanOfParameter( int n_points, LKParameter * par, double mu = 0);
 

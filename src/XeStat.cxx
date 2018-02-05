@@ -1281,20 +1281,28 @@ TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParamet
 
 }
 
-TGraph* ProfileLikelihood::getGraphOfParameter( int n_points, int param_index){
+vector <TGraph*> ProfileLikelihood::getGraphOfParameters( int n_points){
   // warning ! needs first to exclusion->prepareForLimit
   int n = n_points;
 
-  TGraph* gr= new TGraph(n);
-  gr->GetXaxis()->SetTitle("#mu");
-  gr->GetYaxis()->SetTitle("param tval");
-
   double reference=0.;
-  LKParameter* par=getParameter(PAR_SIGMA);
-  double min = par->getMinimum();
-  double max = par->getMaximum();
+
+  vector <TGraph*> vec;
+  
+  TRAVERSE_PARAMETERS(it) {
+    LKParameter *p=it->second; 
+    TGraph* gr= new TGraph(n);
+    gr->GetXaxis()->SetTitle("#mu");
+    gr->GetYaxis()->SetTitle(p->getName() + " t-value");
+    vec.push_back(gr);
+  }
+
+    
+  double min = 0.;
+  double max = 15.;  // hard coded max to 15 events
 
   double step = (max - min) / ((double) n);
+
 
   for(int i=0;i<n;i++){
     resetParameters();
@@ -1303,12 +1311,16 @@ TGraph* ProfileLikelihood::getGraphOfParameter( int n_points, int param_index){
     setParameterValue(PAR_SIGMA, value);
     double ll=maximize(true);
      
-   LKParameter *par = getParameter(param_index);
-    double post_fit_val = par->getCurrentValue();
-    gr->SetPoint(i,value , post_fit_val);
+    unsigned int count =0;
+    TRAVERSE_PARAMETERS(it) {
+      LKParameter *p=it->second;
+      double post_fit_val = p->getCurrentValue();
+      vec[count]->SetPoint(i,value , post_fit_val);
+      count++;
+    }
   }
 
-  return gr;
+  return vec;
 }
 
 

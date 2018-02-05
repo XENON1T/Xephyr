@@ -548,11 +548,11 @@ void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double 
 
 		project_temp->SetLineColor(projection_counter+1);
 
-		if( ((int)projection_counter %  (Nsteps+1)) == 0) project_temp->Draw();
-		else     project_temp->Draw("same");
+		if( ((int)projection_counter %  (Nsteps+1)) == 0) project_temp->Draw("hist");
+		else     project_temp->Draw("same hist");
 
 		legends[canvas_counter-1]->AddEntry(project_temp, getParamValueString());
-		legends[canvas_counter-1]->Draw("same");
+		legends[canvas_counter-1]->Draw("hist same");
 
 
 		//storing the projections

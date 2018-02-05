@@ -185,6 +185,7 @@ TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name, TString cut="
             temp.Rebin(100);
             temp.Draw();
             c1->Print(OutDir + name +"_pulls.pdf");
+            c1->Print(OutDir + name + TString(name_params->at(i) + ".png"));
             pulls.SetPoint(i, i + 2, quantiles[1]);
             pulls.SetPointEYhigh(i, quantiles[2] - quantiles[1]);
             pulls.SetPointEYlow(i,  quantiles[1] - quantiles[0] );

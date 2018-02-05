@@ -20,6 +20,7 @@ ToyFitterExclusion::ToyFitterExclusion(TString CollectionName):errorHandler("Toy
     IndexHolder = -9;
     mu_fit = 0.;
     testStat =0.;
+    q_tilde  = 0.;
     numberOfParams = 0.;
     randomizeMeasure = true;
     graph_of_quantiles = NULL;
@@ -33,12 +34,14 @@ void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(d
     // setting up branches on outTree
     mu_fit    = mu;
     testStat = 0.;
+    q_tilde  = 0.;
     int inputTreeIndex = -9;
     numberOfParams =  likeHood->getParameters()->size();
     double mass    =  likeHood->getWimpMass();
     outTree->Branch("mu_fit", &mu_fit, "mu_fit/D");
     outTree->Branch("mass", &mass, "mass/D");
     outTree->Branch("q_mu", &testStat, "q_mu/D");
+    outTree->Branch("q_tilde", &q_tilde, "q_tilde/D");
     outTree->Branch("n_params", &numberOfParams, "n_params/I");
     outTree->Branch("LL_cond", &likelihood_cond, "LL_cond/D");
     outTree->Branch("LL_uncond", &likelihood_uncond, "LL_uncond/D");
@@ -185,8 +188,9 @@ double ToyFitterExclusion::computeTS(double mu) {
     // MAYBE make sense to brake this in two functions conditional and unconditional fit
     // instead of this messy thing here, see fore example above limit_loop (that sucks) FIXME.
     
-    // we use q_tilde from equation 16 of: https://arxiv.org/abs/1007.1727
-    // this is suitable for upper limit in which the parameter of interest must be >0.
+    // we use a twosided TS t_tilde from equation 11 of: https://arxiv.org/abs/1007.1727
+    // furthermore we report also q_tilde from eq. 16.
+    // both are suitable for upper limit in which the parameter of interest must be >0 
     
     double qstat = 0.;
     
@@ -235,7 +239,8 @@ double ToyFitterExclusion::computeTS(double mu) {
 
     // following the q_tilde construction, this could have been put above with just return 0.
     // I just wanted to do the conditional fit anyway to return conditional parameter for study
-    if( mu_hat > mu )  qstat = 0. ;
+    q_tilde = qstat;
+    if( mu_hat > mu )  q_tilde = 0. ;
 
     
 
