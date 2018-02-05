@@ -43,21 +43,6 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
 
     if(!(averageCalEvnt>0)) Error("generateCalibration", "you MUST set averageCalEvnt.");
 
-    // randomize initial 'true' values of NP
-    if(randomizeNP)  randomizeNuissanceParameter();
-        
-    // rescaling to defined Calibration events
-    double default_evnt = getModelIntegralSafeguarded();
-    if(!(default_evnt> 0.)) Error("generateCalibration", "you MUST set Safeguarded components.");
-    
-    Debug("generateCalibration: default_event =", TString::Itoa(default_evnt,10));
-    
-    double scaleFactor  =  averageCalEvnt / default_evnt ;
-
-    Debug("generateCalibration: scaleFactor =", TString::Itoa(scaleFactor,10));
-    
-    // retrive a vector of TH2F of interpolated bkg components
-    vector <TH2F> backgrounds = getTH2OfBkg();
     
     TFile f(dir+treeName+"_Cal.root","RECREATE");
         
@@ -66,6 +51,23 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
     
     // actual generation of N toys with poisson fluctuating events.
     for(int toyItr =0; toyItr < N ; toyItr++){
+
+
+        // randomize initial 'true' values of NP
+        if(randomizeNP)  randomizeNuissanceParameter();
+        
+        // rescaling to defined Calibration events
+        double default_evnt = getModelIntegralSafeguarded();
+        if(!(default_evnt> 0.)) Error("generateCalibration", "you MUST set Safeguarded components.");
+    
+        Debug("generateCalibration: default_event =", TString::Itoa(default_evnt,10));
+    
+        double scaleFactor  =  averageCalEvnt / default_evnt ;
+
+        Debug("generateCalibration: scaleFactor =", TString::Itoa(scaleFactor,10));
+    
+        // retrive a vector of TH2F of interpolated bkg components
+        vector <TH2F> backgrounds = getTH2OfBkg();
         
         TString name = treeName + "_Cal_" + TString::Itoa(toyItr,10); 
         TTree toyTree (name, "generated toy Calibration");
@@ -130,18 +132,6 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
     // Each dataset will contain as average averageDataEvnt events
     // which will be Poisson random distributed.
 
-    // randomize initial 'true' values of NP
-    if(randomizeNP) randomizeNuissanceParameter();
-    // set the parameter of interest to the specified value
-    likeHood->getParameter(PAR_SIGMA)->setCurrentValue(mu);
-
-    // rescaling to defined data events
-    double default_evnt = getModelIntegral();
-    double scaleFactor  = (averageDataEvnt>0.) ? averageDataEvnt / default_evnt : 1.;
-
-    // retrive a vector of TH2F of interpolated bkg components
-    vector <TH2F> backgrounds = getTH2OfBkg();
-
     TFile f(dir+treeName+".root","RECREATE");
     
     // necessary because TH2F::GetRandom uses ROOT::gRandom
@@ -149,6 +139,18 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
 
     // actual generation of N toys with poisson fluctuating events.
     for(int toyItr =0; toyItr < N ; toyItr++){
+
+        // randomize initial 'true' values of NP
+        if(randomizeNP) randomizeNuissanceParameter();
+        // set the parameter of interest to the specified value
+        likeHood->getParameter(PAR_SIGMA)->setCurrentValue(mu);
+
+        // rescaling to defined data events
+        double default_evnt = getModelIntegral();
+        double scaleFactor  = (averageDataEvnt>0.) ? averageDataEvnt / default_evnt : 1.;
+
+        // retrive a vector of TH2F of interpolated bkg components
+        vector <TH2F> backgrounds = getTH2OfBkg();
 
         TString name = treeName + "_" + TString::Itoa(toyItr,10); 
         TTree toyTree (name, "generated toy data");
