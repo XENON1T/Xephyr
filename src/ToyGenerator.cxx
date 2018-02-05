@@ -224,16 +224,17 @@ void ToyGenerator::randomizeNuissanceParameter(){
         
         // if param is Free then sample uniform otherwise gauss
         double random_tvalue = 0.;
-        if(param->getType() == FREE_PARAMETER ){
+       /* if(param->getType() == FREE_PARAMETER ){
             Warning("","Following parameter is FREE and will be extracted from uniform distro. " + param->getName());
             random_tvalue = rambo.Uniform(min,max);
         }
         else{ 
+            */
             random_tvalue = rambo.Gaus(0.,1.);
             // extract again if out of range
             while(random_tvalue > max || random_tvalue < min)
                 random_tvalue = rambo.Gaus(0.,1.);
-        }
+        //}
 
         param->setCurrentValue(random_tvalue);
 
