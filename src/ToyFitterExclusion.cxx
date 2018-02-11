@@ -148,7 +148,7 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     
     
     ROOT::Math::BrentMinimizer1D bm; // this guy does numerical minimization scanning a range, not the fastest but quite robust.
-    bm.SetFunction(func, 0.1 , 15.);   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
+    bm.SetFunction(func, 0.5 , 15.);   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
     bm.SetNpx(3);                    // divide in 3 intervals
     limit_converged = bm.Minimize(10, 0.05, 0.01);     // max 10 iteration absolute error on mu = 0.05 relative error 1% 
 

@@ -38,7 +38,6 @@ TH1F giveQuantiles(TTree *tree, double percent[], double quantiles[], int nquant
 TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TString OutDir, double wimpMass)
 {
     TGraphAsymmErrors *q_mu_90 = new TGraphAsymmErrors(mu_size + 1);
-    q_mu_90->SetPoint(0, 0, 0 ); 
 
     TString mass = TString::Itoa(wimpMass, 10);
 
@@ -63,6 +62,7 @@ TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TSt
         temp.Draw();
         c1->Print(OutDir + "quantiles_m"+ mass+".pdf");
 
+        if(i == 0 )  q_mu_90->SetPoint(0, 0, yq[2] ); // just to set mu =0 to the closest computed value
         q_mu_90->SetPoint(i +1, mu_list[i], yq[2]);
         q_mu_90->SetPointError(i +1, 0., 0., yq[2] - yq[1], yq[3] - yq[2]);
     }

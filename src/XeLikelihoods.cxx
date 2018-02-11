@@ -334,39 +334,39 @@ double pdfLikelihood::computeTheLogLikelihood() {
    //------------------------- PDF TERM ----------------------------//
      double extended_term   = 0.;
 
-     Long64_t Nentry  = data->getEntries();  
+    Long64_t Nentry  = data->getEntries();  
    
-      Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Nentry %lld ", Nentry ));
-     //loop over all data
-      for(Long64_t event = 0; event < Nentry; event++){
-	double ts1=data->getS1(event);
-	double ts2=data->getS2(event);
-	double tweight=data->getW(event);
+    Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Nentry %lld ", Nentry ));
+    //loop over all data
+    for(Long64_t event = 0; event < Nentry; event++){
+		double ts1=data->getS1(event);
+		double ts2=data->getS2(event);
+		double tweight=data->getW(event);
 	     //loads data TNtuple entry
 	     //data->getEntry(event);	
 
 	     //double extended_signal =  data->getValFromPdf(signalPdf) * sigma * getSignalMultiplier();
      	     //double extended_bkg    =  data->getValFromPdf( bkgPdf ) ;
-	//	     double extended_signal =  signalPdf.GetBinContent(signalPdf.GetXaxis()->FindBin(ts1), signalPdf.GetYaxis()->FindBin(ts2)) * sigma * getSignalMultiplier();
-	//    double extended_bkg    =   bkgPdf.GetBinContent(bkgPdf.GetXaxis()->FindBin(ts1), bkgPdf.GetYaxis()->FindBin(ts2));
-	double extended_signal =  signalPdf.GetBinContent(signalPdf.FindBin(ts1,ts2)) * sigma * getSignalMultiplier();
-	double extended_bkg    =   bkgPdf.GetBinContent(bkgPdf.FindBin(ts1,ts2));
+		//	     double extended_signal =  signalPdf.GetBinContent(signalPdf.GetXaxis()->FindBin(ts1), signalPdf.GetYaxis()->FindBin(ts2)) * sigma * getSignalMultiplier();
+		//    double extended_bkg    =   bkgPdf.GetBinContent(bkgPdf.GetXaxis()->FindBin(ts1), bkgPdf.GetYaxis()->FindBin(ts2));
+		double extended_signal =  signalPdf.GetBinContent(signalPdf.FindBin(ts1,ts2)) * sigma * getSignalMultiplier();
+		double extended_bkg    =   bkgPdf.GetBinContent(bkgPdf.FindBin(ts1,ts2));
 
-	//cout << "signalPdf " << signalPdf.GetBinContent(signalPdf.FindBin(ts1,ts2)) << "   sigma  " << sigma << "  getSignalMultiplier  "<<  getSignalMultiplier() << endl;
-	     
-	     // check physical result 
-	     if(extended_signal + extended_bkg <=0) {	     
-	      	Warning("pdfLikelihood::computeTheLogLikelihood" , "NsFs + NbFb <= 0 ");
-	     	//if(printLevel > 0) cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : NsFs + NbFb <= 0. " << extended_signal  << " <-- NsFs  NbFb--> " << extended_bkg << endl;
+	    Debug("computeTheLogLikelihood", TString::Format("S1 %f  --- S2 %f  ---- weight %f  ---- Fs %f  ----- Fb %f", ts1, ts2, tweight,extended_signal, extended_bkg ));
+
+	    // check physical result 
+	    if(extended_signal + extended_bkg < 0) {	     
+	      	Warning("pdfLikelihood::computeTheLogLikelihood" , "NsFs + NbFb < 0 ");
 	     	return VERY_SMALL;
-	     }
+	    }
+		else if( extended_signal + extended_bkg > 0 )  // skipping the case of zero that ahime happens even tough my reccomendations on templates.
+	    	extended_term += tweight * log( (extended_signal + extended_bkg) / (Ns + Nb) ) ; //data weight is 1 for DM data and whatever for asimov
 
-	     extended_term += tweight * log( (extended_signal + extended_bkg) / (Ns + Nb) ) ; //data weight is 1 for DM data and whatever for asimov
+		Debug("computeTheLogLikelihood", TString::Format("Extended term  %f", extended_term ));
 
-	   //  if(printLevel > 0)    cout<<"....................... - INFO : STAGE 3.1  ex_S "<< extended_signal << "   ex_B "<< extended_bkg << "  W " << tweight << " ex-T " << extended_term   <<endl;
-     }
+    }
      
-     LL += extended_term ;
+    LL += extended_term ;
    //---------------------------------------------------------------//
       Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Extended term %f ", extended_term ));
 
