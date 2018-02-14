@@ -174,12 +174,15 @@ class ToyFitterExclusion: public errorHandler {
     double        cond_params[50] = {0.};     //! conditional fit
     bool          limit_converged;      //! if limit finder converged or not
     double        testStat_limit;       //! value of test statistic at limit
+    double        testStat_at0;         //! value of test statistic at mu =0.
     vector<string> name_params;         //! names of parameters
     vector<string> name_true_params;    //! names of true parameters
     TRandom3      rambo;                //! random handler
     double        mu_fit;               //! mu to be tested, conditional fit
     double        mu_limit;             //! value of the limit in terms of mu
+    double        lower_mu_limit;       //! value of the limit in terms of mu
     double        limit;                //! limit scaled in cross section
+    double        lower_limit;          //! Feldman-cousins lower interval in case
     double        testStat;             //! value of test statistic
     double        q_tilde;
     int           numberOfParams;       //! number of likelihood parameter (including POI)
