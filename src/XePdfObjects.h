@@ -132,7 +132,7 @@ class pdfComponent :errorHandler{
 	 * produce a projection given min and max, produce a PDF file for comparison
 	 * of all interpolation and saves also the TH2F to file.
 	 */
-	void plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps);
+	void plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps, bool legend_left = false);
 
 	//! scale the pdf by VAL, this happend for the methods:
 	/* getDefaultHisto, getInterpolatedHisto, getNormalizedDensity, 

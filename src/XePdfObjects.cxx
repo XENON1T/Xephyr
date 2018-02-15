@@ -481,7 +481,7 @@ TString pdfComponent::getParamValueWritable(){
 }
 
 
-void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps){
+void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps, bool legend_left){
 	
 	if(myShapeUnc.size() == 0 )
 		Error("plotInterpolatedSpace","no shape uncertainties, no interpolation, no scan possible... Go home");
@@ -506,8 +506,9 @@ void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double 
 
 			canvas_counter++;
 			canvases.push_back(new TCanvas());
-
-			legends.push_back(new TLegend(0.7,0.9,0.99,0.7));
+			
+			if(legend_left) legends.push_back(new TLegend(0.01,0.9,0.30,0.7));
+			else legends.push_back(new TLegend(0.7,0.9,0.99,0.7));
 		}
 		
 		//set the value of all shape sys to one grid point of hyperspace
@@ -546,13 +547,13 @@ void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double 
 		//set the canvas
 		canvases[canvas_counter -1]->cd();
 
-		project_temp->SetLineColor(projection_counter+1);
+		//project_temp->SetLineColor(projection_counter+1);
 
-		if( ((int)projection_counter %  (Nsteps+1)) == 0) project_temp->Draw("hist");
-		else     project_temp->Draw("same hist");
+		if( ((int)projection_counter %  (Nsteps+1)) == 0) project_temp->Draw("PLC hist");
+		else     project_temp->Draw("same PLC hist");
 
 		legends[canvas_counter-1]->AddEntry(project_temp, getParamValueString());
-		legends[canvas_counter-1]->Draw("hist same");
+		legends[canvas_counter-1]->Draw("hist PLC same");
 
 
 		//storing the projections
