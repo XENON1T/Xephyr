@@ -82,6 +82,11 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	void drawAllOnProjection(bool isS1Projection);
 
+    /** \brief prints a summary of all bkg and signal events with current parameter choice 
+	 * 
+	*/
+	void printEventSummary();
+
 	vector<string> getTrueParamsNames() { return data->getTrueParamsNames(); };
 	
 	vector<double> getTrueParams()      { return data->getTrueParams(); };
