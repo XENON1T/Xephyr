@@ -208,6 +208,10 @@ class histoCompare :errorHandler{
 	    void setNameofComponent(unsigned int i, TString n);
 	    //! draw just a normal comparison plot
 	    void compare();
+		
+		//! print model content in csv format
+		void printModels();
+
 	    //! add a ratio plot to compare()
 	    void compareWithRatio();
 

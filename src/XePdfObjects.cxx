@@ -236,12 +236,13 @@ TString pdfComponent::getNearestHistoName(vector<bool> setOfVal){
 	  //name_histo.Append("_" + sysName );
 	  
 	  //get nearest low or high value to the current one
-	  if(!(setOfVal[j])) sprintf(value_temp,"%.2f%s", myShapeUnc[j]->getNearestLow(),suffix.Data());
-	  else      sprintf(value_temp,"%.2f%s", myShapeUnc[j]->getNearestHigh(), suffix.Data());
+	  if(!(setOfVal[j])) sprintf(value_temp,"%.2f", myShapeUnc[j]->getNearestLow());
+	  else      sprintf(value_temp,"%.2f", myShapeUnc[j]->getNearestHigh());
 
 	  name_histo.Append(value_temp);
    }
 
+   if(suffix != "") name_histo.Append(suffix);
    return name_histo;
 }
 
@@ -260,10 +261,12 @@ TString pdfComponent::getDefaultHistoName(){
 	  //name_histo.Append("_" + sysName );
 
 	  // default value of all sys is zero.
-	  sprintf(value_temp,"%.2f%s", 0.,suffix.Data());
+	  sprintf(value_temp,"%.2f", 0.);
 
 	  name_histo.Append(value_temp);
    }
+
+   if(suffix != "") name_histo.Append(suffix); 
 
    return name_histo;
 
@@ -688,7 +691,38 @@ histoCompare::histoCompare():errorHandler("histoCompare"){
 histoCompare::~histoCompare(){}
 
 
+void histoCompare::printModels(){
+	
+	if(base.GetEntries() == 0) 
+	    Error("draw()","Base histo is not set or empty, use  setBaseHisto(TH2F )");
 
+    if(compareList.size() == 0)
+	    Error("draw()","Compare Histo list  is not set, use addHistoToList(TH2F )");
+
+    // do the projection and fill projectedBase and projectedList
+    project(); 
+    
+	int nbins = projectedBase->GetNbinsX();
+	
+	setOptions(projectedBase, true);
+
+	cout << projectedBase->GetXaxis()->GetTitle() << " " <<projectedBase->GetName()  ;
+	for(unsigned int i=0; i < projectedList.size(); i++) 
+			cout << " " << projectedList[i]->GetName();
+	cout << endl;
+
+	for (int b=1; b<=nbins; b++) {
+		
+		double b_edge = projectedBase->GetXaxis()->GetBinUpEdge(b);
+		cout << TString::Format("%1.5f",b_edge) << " " << TString::Format("%1.10f", projectedBase->GetBinContent(b) );
+
+		for(unsigned int i=0; i < projectedList.size(); i++) {
+			cout << " " << TString::Format("%1.10f",projectedList[i]->GetBinContent(b));
+		}
+		
+		cout << endl;
+	}
+}
 
 void histoCompare::compare(){
 
@@ -898,17 +932,17 @@ void histoCompare:: project(){
 
      // do the projection
      if(projectionX) 
-	     projectedBase = base.ProjectionX("projectBaseX",binMin, binMax);
+	     projectedBase = base.ProjectionX(TString(base.GetName())+"_projectBaseX",binMin, binMax);
      else 
-	     projectedBase = base.ProjectionY("projectBaseY",binMin, binMax);
+	     projectedBase = base.ProjectionY(TString(base.GetName())+"_projectBaseY",binMin, binMax);
 
 
      for(unsigned int i=0; i < compareList.size(); i++) {
 	     compareList[i].Rebin2D(rebinX,rebinY); 
 	     if(projectionX)
-		     projectedList.push_back(compareList[i].ProjectionX(Form("projectCompX_%d",i),binMin, binMax));
+		     projectedList.push_back(compareList[i].ProjectionX(TString(compareList[i].GetName())+Form("_projectCompX_%d",i),binMin, binMax));
 	     else
-		     projectedList.push_back(compareList[i].ProjectionY(Form("projectCompY_%d",i),binMin, binMax));
+		     projectedList.push_back(compareList[i].ProjectionY(TString(compareList[i].GetName())+Form("_projectCompY_%d",i),binMin, binMax));
      }
 
 

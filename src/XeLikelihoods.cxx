@@ -663,10 +663,10 @@ void pdfLikelihood::printEventSummary(){
 	cout << "\n\n--------------Event Summary------------------\nPdfComponent Name \tEvents"<< endl;
 	
 	for(unsigned int i=0; i < bkg_components.size(); i++){
-		cout << TString::Format("%s \t %1.2f",bkg_components[i]->getName().Data(), bkg_components[i]->getNormalizedEvents()) << endl;
+		cout << TString::Format("%s \t %1.4f",bkg_components[i]->getName().Data(), bkg_components[i]->getNormalizedEvents()) << endl;
 	}
 
-    cout << TString::Format("Signal \t %1.2f", signal_component->getNormalizedEvents()) << endl;
+    cout << TString::Format("Signal \t %1.4f", signal_component->getNormalizedEvents()) << endl;
 	data->printSummary();
 
 }

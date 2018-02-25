@@ -205,8 +205,11 @@ double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
     double delta  = graph_of_quantiles->Eval(mu) - qstat;
     
     // the plus 50 is to make it asymmetric with respect to zero, 
-    // it had a lot of difficulties in finding the right minima otherwise
-    // this is a work around, a better solution might be neded FIXME.
+    // it had a lot of difficulties in finding the right minima otherwise for some cases.
+    // The problem might be solved (or at least minimized)  with more than 3 point scan.
+    // The initial scan values might be such that going to lower mu get lower delta, but the crossing, teh zero is actually
+    // for higher mu.
+    // This is a work around, a better solution might be neded FIXME.
     if( delta > 0. ) delta = delta + 50.;   
     
     Debug("limitLoop", TString::Format("current_mu = %f   ;  current_qstat = %f  ;  delta = %f" ,mu, qstat, delta));        
