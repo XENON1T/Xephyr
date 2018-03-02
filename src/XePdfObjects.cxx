@@ -484,7 +484,7 @@ TString pdfComponent::getParamValueWritable(){
 }
 
 
-void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps, bool legend_left){
+void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps, bool legend_left, double y_max){
 	
 	if(myShapeUnc.size() == 0 )
 		Error("plotInterpolatedSpace","no shape uncertainties, no interpolation, no scan possible... Go home");
@@ -551,6 +551,8 @@ void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double 
 		canvases[canvas_counter -1]->cd();
 
 		//project_temp->SetLineColor(projection_counter+1);
+
+		if(y_max > 0.) project_temp->GetYaxis()->SetRangeUser(0., y_max);
 
 		if( ((int)projection_counter %  (Nsteps+1)) == 0) project_temp->Draw("PLC hist");
 		else     project_temp->Draw("same PLC hist");

@@ -12,6 +12,7 @@
 #include <utility>      // std::pair, std::make_pair
 #include "dataHandler.h"
 #include "XeUtils.h"
+#include "TColor.h"
 
 using namespace std;
 
@@ -132,7 +133,7 @@ class pdfComponent :errorHandler{
 	 * produce a projection given min and max, produce a PDF file for comparison
 	 * of all interpolation and saves also the TH2F to file.
 	 */
-	void plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps, bool legend_left = false);
+	void plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps, bool legend_left = false, double y_max = 0.);
 
 	//! scale the pdf by VAL, this happend for the methods:
 	/* getDefaultHisto, getInterpolatedHisto, getNormalizedDensity, 

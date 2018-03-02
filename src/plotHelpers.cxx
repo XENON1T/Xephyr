@@ -24,7 +24,8 @@ TH1F giveQuantiles(TTree *tree, double percent[], double quantiles[], int nquant
     cout << endl
          << "          ";
     for (int i = 0; i < nquanta; i++)
-        cout << TString::Format(" %1.3f \t", quantiles[i]);
+        if(quantiles[i] > 1.E-3) cout << TString::Format(" %1.3f \t", quantiles[i]);
+        else cout << TString::Format(" %.2e \t", quantiles[i]);
     cout << endl;
 
     tree->SetEventList(0); // removing the list
@@ -116,12 +117,12 @@ TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], in
 
         // Filling Limit TGraph
         median_and_one_sigma.SetPoint(massItr, wimpMass[massItr], quantiles[2]);
-        median_and_one_sigma.SetPointEYhigh(massItr, quantiles[3]); // + 1 sigma
-        median_and_one_sigma.SetPointEYlow(massItr, quantiles[1]);  // - 1 sigma
+        median_and_one_sigma.SetPointEYhigh(massItr, quantiles[3] - quantiles[2]); // + 1 sigma
+        median_and_one_sigma.SetPointEYlow(massItr, quantiles[2] - quantiles[1]);  // - 1 sigma
 
         median_and_two_sigma.SetPoint(massItr, wimpMass[massItr], quantiles[2]);
-        median_and_two_sigma.SetPointEYhigh(massItr, quantiles[4]); // + 2 sigma
-        median_and_two_sigma.SetPointEYlow(massItr, quantiles[0]);  // - 2 sigma
+        median_and_two_sigma.SetPointEYhigh(massItr, quantiles[4] - quantiles[2] ); // + 2 sigma
+        median_and_two_sigma.SetPointEYlow(massItr, quantiles[2] - quantiles[0]);  // - 2 sigma
 
         // Limit distro in X section
         temp = giveQuantiles(tree,percents, quantiles, 5, "limit", "mass ==" + mass);
@@ -133,12 +134,12 @@ TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], in
         
         // Filling Limit TGraph
         XS_median_and_one_sigma.SetPoint(massItr, wimpMass[massItr], quantiles[2]);
-        XS_median_and_one_sigma.SetPointEYhigh(massItr, quantiles[3]); // + 1 sigma
-        XS_median_and_one_sigma.SetPointEYlow(massItr, quantiles[1]);  // - 1 sigma
+        XS_median_and_one_sigma.SetPointEYhigh(massItr, quantiles[3] - quantiles[2]); // + 1 sigma
+        XS_median_and_one_sigma.SetPointEYlow(massItr, quantiles[2] - quantiles[1]);  // - 1 sigma
 
         XS_median_and_two_sigma.SetPoint(massItr, wimpMass[massItr], quantiles[2]);
-        XS_median_and_two_sigma.SetPointEYhigh(massItr, quantiles[4]); // + 2 sigma
-        XS_median_and_two_sigma.SetPointEYlow(massItr, quantiles[0]);  // - 2 sigma
+        XS_median_and_two_sigma.SetPointEYhigh(massItr, quantiles[4] - quantiles[2]); // + 2 sigma
+        XS_median_and_two_sigma.SetPointEYlow(massItr, quantiles[2] - quantiles[0]);  // - 2 sigma
     }
 
     fOut->cd();
