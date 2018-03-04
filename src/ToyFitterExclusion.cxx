@@ -68,8 +68,8 @@ void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(d
         // fill true values from generated tree
         fillTrueParams(); 
 
-        // set toy data for fit
-        likeHood->setTreeIndex(CurrentTreeIndex);
+        // set toy data for fit (except case is only one dataset, like you are fitting data)
+        if(stopAt != 1) likeHood->setTreeIndex(CurrentTreeIndex);
 
         // reset the parameter to their nominal initial value (othrwise takes longer to fit)
         likeHood->resetParameters();
@@ -210,7 +210,7 @@ double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
     // The initial scan values might be such that going to lower mu get lower delta, but the crossing, teh zero is actually
     // for higher mu.
     // This is a work around, a better solution might be neded FIXME.
-    if( delta > 0. ) delta = delta + 50.;   
+    if( delta > 0.7 ) delta = delta + 50.;   // 0.7 so that it will be a bit faster and will be symmetric around 0.
     
     Debug("limitLoop", TString::Format("current_mu = %f   ;  current_qstat = %f  ;  delta = %f" ,mu, qstat, delta));        
     
