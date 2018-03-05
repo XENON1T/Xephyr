@@ -34,7 +34,26 @@ TH1F giveQuantiles(TTree *tree, double percent[], double quantiles[], int nquant
     return distro_histo;
 }
 
+double givePval(TTree *tree, double value, TString var, TString cut){
 
+    // filling the list of cuts
+    tree->Draw(">>list", cut);
+    TEventList *list = (TEventList *)gDirectory->Get("list");
+    tree->SetEventList(list);
+    double min = tree->GetMinimum(var.Data());
+    double max = tree->GetMaximum(var.Data());
+
+    TCanvas c1;
+    // making histo with 10'000 bins, enough to make the computation binning independent
+    TH1F distro_histo("distro_histo", var + " :: " + cut, 1000000, min, max);
+    tree->Draw(var + ">>distro_histo");
+    int bin = distro_histo.FindBin(value);
+    double p_val = distro_histo.Integral(bin, -1) / distro_histo.Integral();
+    c1.Print("pval_distro_example.png");
+
+    return p_val;
+
+}
 
 TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TString OutDir, double wimpMass)
 {
