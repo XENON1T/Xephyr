@@ -165,6 +165,15 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     // check if we cross @ low mu
     if(testStat_at0 > graph_of_quantiles->Eval(0.) ) do_interval = true;
 
+    /////////////////// FIND mu region using Asymptotics best guess  /////////////////////////
+    //                                                                                      //
+    double one_over_sigma = computeTS( mu_hat + 1. ) ;
+
+    double mu_asym_best = getBestAsympoticGuessForMu( one_over_sigma, mu_hat, mu_hat, 15.);
+    
+    Info("limitLoop",TString::Format("Asymptotics best guess for mu = %1.2f",mu_asym_best));
+    //                                                                                      //
+    //////////////////////////////////////////////////////////////////////////////////////////
 
     // from ROOT docs:  https://root.cern.ch/root/html/ROOT__Math__BrentMinimizer1D.html
     //                  https://root.cern.ch/numerical-minimization
@@ -183,7 +192,8 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     }
 
     // NORMAL CASE UPPER LIMIT
-    bm.SetFunction(func, mu_hat , 15.);   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
+    double mu_max = ( mu_asym_best + 2.5 < 15. ) ? mu_asym_best + 2.5 : 15.;
+    bm.SetFunction(func, mu_hat , mu_max );   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
     limit_converged = bm.Minimize(10, 0.05, 0.01);     // max 10 iteration absolute error on mu = 0.05 relative error 1% 
 
     double q_stat  =  bm.FValMinimum();  // test stat value at limit
@@ -219,6 +229,26 @@ double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
     return fabs(delta);
 }
 
+
+double ToyFitterExclusion::getBestAsympoticGuessForMu(double one_over_sigma_squared, double mu_hat, double mu_min, double mu_max){
+    
+    double step_size = (mu_max - mu_min) / 1000.;
+    
+    TGraph find_mu(1000);
+    int itr =0 ;
+    for (double mu = mu_min; mu < mu_max; mu = mu + step_size ){
+        double q_asym_guess = one_over_sigma_squared * pow( mu - mu_hat, 2.);
+        double delta = graph_of_quantiles->Eval(mu) - q_asym_guess;
+        
+        Debug("getBestAsympoticGuessForMu", TString::Format("sigma =%1.3f  mu_test =%1.3f   delta=%1.5f",one_over_sigma_squared, mu, delta ));
+        
+        find_mu.SetPoint(itr, delta, mu);
+        
+        itr++;
+    }
+    
+    return find_mu.Eval(0.);  // find the mu for delta = zero!
+}
 
 double ToyFitterExclusion::computeTS(double mu) {
 
