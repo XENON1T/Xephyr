@@ -379,7 +379,7 @@ void AsymptoticExclusion::computeLimits() {
    qTestScanData.Set(0);
 
 
-   mu_limit_nocls = plike->returnLimitHagar(0.1, true);  //COMMENT
+   mu_limit_nocls = plike->returnLimitHagar(cl, true);  //COMMENT
 /*
       //UNCOMMENT
    for(unsigned int i=0; i < muStepsSet.size(); i++){

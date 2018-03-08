@@ -1223,7 +1223,7 @@ TGraph* ProfileLikelihood::getGraphOfLogLikelihood( int n_points){
   cout << "min:  " << min << "   Max:  " << max << "   PostFit:   " << post_fit_sigma  << "  LL max " << ll_Denominator<< endl; 
 
   gr->SetTitle("Log Likelihood Scan on Cross Section");
-  gr->GetXaxis()->SetTitle("#sigma #times 10^{-45} cm^{2}");
+  gr->GetXaxis()->SetTitle("# of events");
   gr->GetYaxis()->SetTitle("-2Log(L(#sigma)/L(#hat{#sigma})");
 
   return gr;
@@ -1239,7 +1239,7 @@ TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParamet
   double reference=0.;
   LKParameter* sig=getParameter(PAR_SIGMA);
 
-  sig->setCurrentValue(0); // conditional fit set to zero for the denominator
+  //sig->setCurrentValue(0); // conditional fit set to zero for the denominator
 
   double min= par->getMinimum();
   double max = par->getMaximum();
@@ -1539,6 +1539,14 @@ void CombinedProfileLikelihood::setData(int dataType){
   TRAVERSE_EXPERIMENTS(it) {
     ProfileLikelihood* pl=it->second;
     pl->setData(dataType);
+  }
+}
+
+void CombinedProfileLikelihood::printEventSummary(){
+
+  TRAVERSE_EXPERIMENTS(it) {
+    ProfileLikelihood* pl=it->second;
+    pl->printEventSummary();
   }
 }
 
