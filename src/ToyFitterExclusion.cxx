@@ -29,6 +29,7 @@ ToyFitterExclusion::ToyFitterExclusion(TString CollectionName):errorHandler("Toy
     lower_limit = -1.;
     lower_mu_limit = -1.; 
     testStat_at0 = 0.;
+    Gen = UNDEFINED_INT;
 }
 
 void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(double), TTree *outTree,  double mu, int stopAt){
@@ -55,6 +56,7 @@ void ToyFitterExclusion::for_each_tree( double (ToyFitterExclusion::*p2method)(d
     outTree->Branch("name_params", &name_params);
     outTree->Branch("name_true_params", &name_true_params);
     outTree->Branch("inputTreeIndex", &inputTreeIndex, "inputTreeIndex/I");
+    outTree->Branch("generation", &Gen, "generation/I");
 
     // reset CurrentTreeIndex
     CurrentTreeIndex = 0;

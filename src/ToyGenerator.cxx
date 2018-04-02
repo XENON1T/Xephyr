@@ -7,6 +7,8 @@ ToyGenerator::ToyGenerator(TString sampleName, TString outDir):errorHandler("Toy
     averageCalEvnt  = -9;
     averageDataEvnt = -9;
     likeHood = NULL;
+    int       Gen = UNDEFINED_INT;
+    int       likelihoodType = UNDEFINED_INT;
 
 }
 
@@ -78,6 +80,9 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
         toyTree.Branch("cs1",&cs1,"cs1/F");
         toyTree.Branch("cs2",&cs2,"cs2/F");
         toyTree.Branch("type",&type);
+        toyTree.Branch("generation",&Gen,"generation/I");
+        toyTree.Branch("likelihoodType",&likelihoodType,"likelihoodType/I");
+        toyTree.Branch("toyItr",&toyItr,"toyItr/I");  
         
         saveParameters(&toyTree);
                        
@@ -161,6 +166,9 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
         toyTree.Branch("cs1",&cs1,"cs1/F");
         toyTree.Branch("cs2",&cs2,"cs2/F");
         toyTree.Branch("type",&type);
+        toyTree.Branch("generation",&Gen,"generation/I");
+        toyTree.Branch("likelihoodType",&likelihoodType,"likelihoodType/I");
+        toyTree.Branch("toyItr",&toyItr,"toyItr/I");    
 
         saveParameters(&toyTree);
     

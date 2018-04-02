@@ -130,6 +130,9 @@ class ToyFitterExclusion: public errorHandler {
 
     // \brief set output file suffix, useful for conditional fit of null 
     void setOutputSuffix(TString name) { Suffix = name; } ;
+
+    //! set the Generation, this info will be available in the generated tree (so that u can hadd them), it is optional and non ncecessary.
+    void setGeneration(int generation) { Gen = generation; };
     
   private:
 
@@ -168,6 +171,7 @@ class ToyFitterExclusion: public errorHandler {
     TString       Suffix;
     int           IndexHolder;
     int           CurrentTreeIndex;
+    int           Gen;
     
     double        likelihood_uncond;    //! value of unconditional fit
     double        likelihood_cond;      //! value of conditional fit

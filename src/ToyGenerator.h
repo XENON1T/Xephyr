@@ -65,6 +65,12 @@ class ToyGenerator: public errorHandler {
 
         //! set the seed for the toy generation. YOU MUST CHANGE THIS for any run.
         void setSeed(int seed);
+        
+        //! set the Generation, this info will be available in the generated tree (so that u can hadd them), it is optional and non ncecessary.
+        void setGeneration(int generation) { Gen = generation; };
+
+        //! set the LikeliHood Type, this info will be available in the generated tree (so that u can hadd them), it is optional and non ncecessary.
+        void setLikeType(int lktype) {likelihoodType = lktype; } ;
 
         //! \brief this will randomize the nominal value of the nuissance parameters, according to their distro.
         //
@@ -96,6 +102,8 @@ class ToyGenerator: public errorHandler {
 
         double    averageCalEvnt;
         double    averageDataEvnt;
+        int       Gen;
+        int       likelihoodType;
         TRandom3  rambo;
         TString   treeName;
         TString   dir;
