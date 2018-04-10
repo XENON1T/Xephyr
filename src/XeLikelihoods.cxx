@@ -39,6 +39,8 @@ pdfLikelihood::pdfLikelihood(TString nam, double wimpMass) : ProfileLikelihood(n
 
 	safeguardAdditionalComponent  = NULL;
 
+	safeguard_fixValue = -9;
+
 }
 
 
@@ -123,9 +125,12 @@ void pdfLikelihood::initialize(){
 
 		// this parameter has no additional constraint
 		safeGuardParam->setType(FREE_PARAMETER);
+			if(safeguard_fixValue > 0. ) safeGuardParam->setType(FIXED_PARAMETER);
 		safeGuardParam->setInitialValue(1.0);
+			if(safeguard_fixValue > 0. ) safeGuardParam->setInitialValue( safeguard_fixValue ); 
 		safeGuardParam->setCurrentValue(1.0);
-		safeGuardParam->setMinimum(0.0001);
+			if(safeguard_fixValue > 0. ) safeGuardParam->setCurrentValue( safeguard_fixValue );
+		safeGuardParam->setMinimum(0.00001);
 		safeGuardParam->setMaximum(5);
 		safeGuardParam->setStep(0.5);
 		addParameter(safeGuardParam, AUTO);

@@ -749,7 +749,7 @@ void histoCompare::compare(){
 	     	//stacking the histos
 	     	if(i != 0) projectedList[i]->Add(projectedList[i-1]);
 	    
-   		projectedList[i]->SetLineColor(i+2); 
+   		//projectedList[i]->SetLineColor(i+2); 
    		setOptions(projectedList[i], false);
 	}
 		// draw them in inverse order so can put colors on top of each other

@@ -124,6 +124,8 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	void setAdditionalSafeGuardComponent(TH2F *h){ safeguardAdditionalComponent = h;};
 
+	void setFixedValueForSafeguard(double fv) { safeguard_fixValue = fv; } ;
+
 	double LLsafeGuard();	
 
 	//! \brief returns the number of bkg components that ask for safeguard
@@ -146,6 +148,7 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	double                 wimp_mass;
 
+	double                 safeguard_fixValue;
 
 	LKParameter            *safeGuardParam;
 
