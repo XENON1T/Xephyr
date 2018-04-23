@@ -194,7 +194,7 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     }
 
     // NORMAL CASE UPPER LIMIT
-    double mu_max = ( mu_asym_best + 2.5 < 15. ) ? mu_asym_best + 2.5 : 15.;
+    double mu_max =  mu_asym_best + mu_asym_best*0.5 + 2.5; // usually mu_asym_best should not be wrong by more than 20% the TS distro are defined between [0, 15], for more we extrapolate
     bm.SetFunction(func, mu_hat , mu_max );   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
     limit_converged = bm.Minimize(10, 0.05, 0.01);     // max 10 iteration absolute error on mu = 0.05 relative error 1% 
 
@@ -215,6 +215,7 @@ double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
     // computing the difference between H0 qstat for a given mu and H_mu qstat.
     double qstat = computeTS(mu);
     double delta  = graph_of_quantiles->Eval(mu) - qstat;
+    if(mu >= 15) delta  = graph_of_quantiles->Eval(15) - qstat; // the graph is defined [0,15] no need to extrapolate
     
     // the plus 50 is to make it asymmetric with respect to zero, 
     // it had a lot of difficulties in finding the right minima otherwise for some cases.
