@@ -1466,16 +1466,18 @@ bool CombinedProfileLikelihood::initialize(){
   }
 
   // some cross check:
-  // 1- Set signal multiplier to smallest between all likelihoods
+  // 1- Set signal multiplier to summ of all Ns, so that mu=1 is 1 event overall
   // 2- Check that Default Xsec norm factor is the same for all likelihood
   // 3- Check that Wimp mass is the same for all likelihood
-  double norm = 9999.;
+  double norm = 0.;
   TRAVERSE_EXPERIMENTS(it) {
     ProfileLikelihood* pl=it->second;
-    if( pl->getSignalMultiplier() < norm ) norm = pl->getSignalMultiplier();
+    if(pl->getSignalMultiplier() > 0. )   norm = norm + 1. / pl->getSignalMultiplier() ;  // sum over all signal events
+    else Error("initialize","One of the likelihoods has signal multiplier <= 0.");
   }
   
-  setSignalMultiplier(norm);                    // sets it for all
+
+  setSignalMultiplier(1. / norm);                    // sets it for all
   cout << "INFO:: common Signal Multiplier set to  "<< norm << endl;
 
   double dummy_mass  = getWimpMass();           // check is inside this function
