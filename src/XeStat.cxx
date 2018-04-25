@@ -1478,7 +1478,7 @@ bool CombinedProfileLikelihood::initialize(){
   
 
   setSignalMultiplier(1. / norm);                    // sets it for all
-  cout << "INFO:: common Signal Multiplier set to  "<< norm << endl;
+  cout << "INFO:: common Signal Multiplier set to  "<< 1. / norm << endl;
 
   double dummy_mass  = getWimpMass();           // check is inside this function
   double dummy_scale = getSignalDefaultNorm();  // check is inside this function
