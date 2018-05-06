@@ -9,6 +9,7 @@
 #include <iostream>
 #include "TDirectory.h"
 #include "TFile.h"
+#include "XeLikelihoods.h"
 
 using namespace std;
 
