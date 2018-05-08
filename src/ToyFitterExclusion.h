@@ -158,7 +158,7 @@ class ToyFitterExclusion: public errorHandler {
     double eval_testStatMinuit( double mu );
 
     //! \brief computes the best approximation using Wilks theorem to the mu @90%
-    double getBestAsympoticGuessForMu(double one_over_sigma_squared, double mu_hat, double mu_min, double mu_max);
+    double getBestAsympoticGuessForMu(double one_over_sigma_squared, double mu_hat );
 
     void saveNames(string *names);
 

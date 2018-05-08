@@ -171,7 +171,7 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     //                                                                                      //
     double one_over_sigma = computeTS( mu_hat + 1. ) ;
 
-    double mu_asym_best = getBestAsympoticGuessForMu( one_over_sigma, mu_hat, mu_hat, 15.);
+    double mu_asym_best = getBestAsympoticGuessForMu( one_over_sigma, mu_hat);
     
     Info("limitLoop",TString::Format("Asymptotics best guess for mu = %1.2f",mu_asym_best));
     //                                                                                      //
@@ -194,7 +194,9 @@ double ToyFitterExclusion::limitLoop(double initial_mu){
     }
 
     // NORMAL CASE UPPER LIMIT
-    double mu_max =  mu_asym_best + mu_asym_best*0.5 + 2.5; // usually mu_asym_best should not be wrong by more than 20% the TS distro are defined between [0, 15], for more we extrapolate
+    double mu_max =  mu_asym_best + mu_asym_best*0.5 + 3.; // usually mu_asym_best should not be wrong by more than 20% 
+    Info("limitLoop",TString::Format("Limit computed in the range of mu [%1.2f, %1.2f]",mu_hat, mu_max ));
+
     bm.SetFunction(func, mu_hat , mu_max );   // interval from [mu_hat,15] in mu (by construction limit should be around 2.3)
     limit_converged = bm.Minimize(10, 0.05, 0.01);     // max 10 iteration absolute error on mu = 0.05 relative error 1% 
 
@@ -215,7 +217,9 @@ double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
     // computing the difference between H0 qstat for a given mu and H_mu qstat.
     double qstat = computeTS(mu);
     double delta  = graph_of_quantiles->Eval(mu) - qstat;
-    if(mu >= 15) delta  = graph_of_quantiles->Eval(15) - qstat; // the graph is defined [0,15] no need to extrapolate
+    double last_mu = (graph_of_quantiles->GetX())[graph_of_quantiles->GetN() - 1];
+     
+    if(mu > last_mu) delta  = graph_of_quantiles->Eval(last_mu) - qstat; // for large value where the graph is not defined  no need to extrapolate
     
     // the plus 50 is to make it asymmetric with respect to zero, 
     // it had a lot of difficulties in finding the right minima otherwise for some cases.
@@ -233,24 +237,17 @@ double ToyFitterExclusion::eval_testStatMinuit( double mu )  {
 }
 
 
-double ToyFitterExclusion::getBestAsympoticGuessForMu(double one_over_sigma_squared, double mu_hat, double mu_min, double mu_max){
+double ToyFitterExclusion::getBestAsympoticGuessForMu(double one_over_sigma_squared, double mu_hat){
     
-    double step_size = (mu_max - mu_min) / 1000.;
-    
-    TGraph find_mu(1000);
-    int itr =0 ;
-    for (double mu = mu_min; mu < mu_max; mu = mu + step_size ){
-        double q_asym_guess = one_over_sigma_squared * pow( mu - mu_hat, 2.);
-        double delta = graph_of_quantiles->Eval(mu) - q_asym_guess;
-        
-        Debug("getBestAsympoticGuessForMu", TString::Format("sigma =%1.3f  mu_test =%1.3f   delta=%1.5f",one_over_sigma_squared, mu, delta ));
-        
-        find_mu.SetPoint(itr, delta, mu);
-        
-        itr++;
-    }
-    
-    return find_mu.Eval(0.);  // find the mu for delta = zero!
+    // according to asymptotic formulae:
+    // mu_lim = mu_hat + sigma * sqrt(90_quantile)
+
+    double quantile_90 = ROOT::Math::chisquared_quantile(0.9, 1);
+    double sigma = sqrt( 1. /  one_over_sigma_squared );
+
+    double asym_limit =  mu_hat + sigma * sqrt(quantile_90) ;
+
+    return asym_limit;
 }
 
 double ToyFitterExclusion::computeTS(double mu) {
