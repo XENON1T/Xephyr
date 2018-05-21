@@ -85,7 +85,7 @@ class pdfLikelihood : public ProfileLikelihood {
     /** \brief prints a summary of all bkg and signal events with current parameter choice 
 	 * 
 	*/
-	void printEventSummary();
+	void printEventSummary(bool isForWiki=false);
 
 	vector<string> getTrueParamsNames() { return data->getTrueParamsNames(); };
 	

@@ -808,7 +808,7 @@ class ProfileLikelihood : public Likelihood {
 
   virtual void generateAsimov(double mu_prime)=0 ;
 
-  virtual void printEventSummary()=0;
+  virtual void printEventSummary(bool isForWiki=false)=0;
 
   virtual void generateToyDataset(double seed, double mu_prime)=0;
 
@@ -874,7 +874,7 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
     double getSignalMultiplier();
     void   setSignalMultiplier(double val); 
 
-    void printEventSummary();
+    void printEventSummary(bool isForWiki=false);
     
     void  setTreeIndex(int index);
 

@@ -663,15 +663,37 @@ pdfComponent* pdfLikelihood::getBkgComponent(TString search_name) {
 }
 
 
-void pdfLikelihood::printEventSummary(){
+void pdfLikelihood::printEventSummary(bool isForWiki){
 	
-	cout << "\n\n--------------Event Summary------------------\nPdfComponent Name \tEvents"<< endl;
+	if(!isForWiki)
+	{
+		cout << "\n\n--------------Event Summary------------------\nPdfComponent Name \tEvents"<< endl;
 	
-	for(unsigned int i=0; i < bkg_components.size(); i++){
-		cout << TString::Format("%s \t %1.4f",bkg_components[i]->getName().Data(), bkg_components[i]->getNormalizedEvents()) << endl;
-	}
+		for(unsigned int i=0; i < bkg_components.size(); i++){
+			cout << TString::Format("%s \t %1.4f",bkg_components[i]->getName().Data(), bkg_components[i]->getNormalizedEvents()) << endl;
+		}
 
-    cout << TString::Format("Signal \t %1.4f", signal_component->getNormalizedEvents()) << endl;
-	data->printSummary();
+    	cout << TString::Format("Signal \t %1.4f", signal_component->getNormalizedEvents()) << endl;
+		data->printSummary();
+	}
+	else {
+
+		cout << "\n\n--------------Event Summary For Wiki------------------\nPdfComponent Name \tEvents"<< endl;
+	
+		cout << "^ ";
+
+		for(unsigned int i=0; i < bkg_components.size(); i++){
+			cout << TString::Format(" %s ^",bkg_components[i]->getName().Data()) ;
+		}
+		cout << " Signal ^ Data ^" << endl;
+		cout << "| ";
+    
+		for(unsigned int i=0; i < bkg_components.size(); i++){
+			cout << TString::Format(" %1.4f |", bkg_components[i]->getNormalizedEvents()) ;
+		}
+
+		int entries = data->getEntries();
+	    cout << TString::Format(" %1.4f | %d |", signal_component->getNormalizedEvents(), entries) << endl;
+	}
 
 }

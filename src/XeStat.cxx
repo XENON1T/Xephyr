@@ -1246,6 +1246,8 @@ TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParamet
 
   double step = (max - min) / ((double) n);
 
+  sig->setCurrentValue(mu); // conditional fit set to mu... Default is zero signal!
+
   double ll_Denominator = maximize(true); // conditional best fit
 
   int save_para_type = par->getType();
@@ -1253,7 +1255,7 @@ TGraph* ProfileLikelihood::getLikelihoodScanOfParameter( int n_points, LKParamet
 
   sig->setCurrentValue(mu); // conditional fit set to mu... Default is zero signal!
 
-  for(int i=0;i<n;i++){
+  for(int i=0;i<=n;i++){
     resetParameters();
 
     double value = min + ((double)i)*step;
@@ -1544,11 +1546,11 @@ void CombinedProfileLikelihood::setData(int dataType){
   }
 }
 
-void CombinedProfileLikelihood::printEventSummary(){
+void CombinedProfileLikelihood::printEventSummary(bool isForWiki){
 
   TRAVERSE_EXPERIMENTS(it) {
     ProfileLikelihood* pl=it->second;
-    pl->printEventSummary();
+    pl->printEventSummary(isForWiki);
   }
 }
 
