@@ -262,6 +262,24 @@ double giveBackgroundLikelihood(pdfLikelihood *likeHood, double s1, double s2) {
 
 }
 
+double giveNb(pdfLikelihood *likeHood) {
+	  	  
+    //just sum up components
+    TH2F bkgPdf = likeHood->bkg_components[0]->getInterpolatedHisto();
+
+    for(unsigned int k=1; k < likeHood->bkg_components.size(); k++){
+
+	    TH2F temp_bkgPdf (likeHood->bkg_components[k]->getInterpolatedHisto());
+	  	bkgPdf.Add(&temp_bkgPdf);
+		//cout << TString::Format("\t%s  = %f events", temp_bkgPdf.GetName(), temp_bkgPdf.Integral()) << endl;
+	}
+
+    return bkgPdf.Integral();
+
+}
+
+
+
 double giveSignalLikelihood(pdfLikelihood *likeHood, double s1, double s2) {
 
     TH2F signalPdf(likeHood->signal_component->getInterpolatedHisto());

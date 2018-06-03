@@ -572,7 +572,18 @@ TH2F pdfLikelihood::getSafeguardedBkgPdf(){
       return safeguard_only;
 }
 
+TH2F pdfLikelihood::getOverallBkgHisto(){
+		
+		TH2F bkgPdf = (bkg_components[0]->getInterpolatedHisto());
+		for(unsigned int k=1; k < bkg_components.size(); k++){
 
+	            TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
+		    	bkgPdf.Add(&temp_bkgPdf);
+	    }
+
+		return bkgPdf;
+		
+}
 
 bool pdfLikelihood::isNegativeAnywhere(TH2F histo){
 

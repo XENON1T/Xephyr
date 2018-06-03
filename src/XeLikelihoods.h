@@ -93,12 +93,17 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	pdfComponent* getBkgComponent(TString name);
 
-	// Get a handler for plotting comparisons between models
-        // used by drawAllOnProjection()
+	//! \brief Get a handler for plotting comparisons between models
+    // used by drawAllOnProjection()
 	histoCompare getModelCompare();
 
-	/**
-	 * returns (1-epsilon)Fb(x,y) + epsilon*Fs(x,y) with all 
+    /**
+	 * returns the current overall background hostogram (with all background added up). Current means that 
+	 * is for the current set of parameters, so each bkg model is interpolated, scaled and then added to the others.
+	*/
+	TH2F getOverallBkgHisto();
+
+	/** returns (1-epsilon)Fb(x,y) + epsilon*Fs(x,y) with all 
 	 * uncertainties interpolated and added.
 	 * this term is a full bkg pdf including also the non safeguarded bkgs
 	 * TO BE USED IN THE "physics" likelihood
@@ -117,7 +122,7 @@ class pdfLikelihood : public ProfileLikelihood {
 	//! \brief says if a bkg component needs to be safeguarded.
 	vector <bool>    safeguarded_bkg_components; 
 
-	// is an additional component to be added in the fit to calibration for
+	//! \brief is an additional component to be added in the fit to calibration for
 	// safeguard. Used in this case for the AC that is different between data and Rn
 	// this component has to be scaled to Bkg_data ---> Nbkg/Ncal
 	TH2F *safeguardAdditionalComponent;

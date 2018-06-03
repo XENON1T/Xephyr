@@ -1193,7 +1193,7 @@ TGraph* ProfileLikelihood::getGraphOfLogLikelihood( int n_points){
   double max = par->getMaximum();
 
 //  par->setMinimum(-5.);
-  min=0;
+  // min=0;
   double step = (max - min) / ((double) n);
 
   double ll_Denominator = maximize(false);  // unconditional fit!!!
