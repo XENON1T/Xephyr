@@ -1,7 +1,14 @@
 #!/bin/bash
 
 cp Xephyr/pacman/CMakeLists.txt .
-python3.4 Xephyr/pacman/check.py
+{ #try
+	python3.4 Xephyr/pacman/check.py
+} || {
+	python3 Xephyr/pacman/check.py
+} || {
+	python Xephyr/pacman/check.py
+}
+
 mkdir -p build
 cd build
 
