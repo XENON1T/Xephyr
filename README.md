@@ -44,11 +44,12 @@
 - Compiling Xephyr
 ```bash
 	cd ..
-	cp Xephyr/pacman/CMakeLists_copyMe.txt CMakeLists.txt   #pacman has a bug for now
-	mkdir build
-	cd build
-	cmake -DCMAKE_C_COMPILER="/usr/bin/gcc" -DCMAKE_CXX_COMPILER="/usr/bin/g++" ..
-	make
-#	source Xephyr/pacman/build.sh        #all the above will in the future be done with this command but give problems now.
+	source Xephyr/pacman/build.sh
+
+	# OR if you are on midway
+	source Xephyr/pacman/build.sh midway
+	
+	# OR in case you need your custom cmake command and you just want the makefile to be build do:
+	source Xephyr/pacman/build.sh stop
 ```
 - 
