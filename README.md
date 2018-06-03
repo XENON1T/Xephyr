@@ -25,8 +25,9 @@
 	module unload ROOT			
 	module load  ROOT/6.06.08		#This is the only version that worked for me because of linking with sys library
 	export XEPHYR_DIR=Your_dir
-#	module unload python                    #this is not neded for the moment
-#	module load  python/3.5.2+gcc-4.8       #this is not neded for the moment
+	module unload python                  
+	module unload  mkl
+	module load  python/3.5.2
 ```
 
 - Cloning your code to compile against the library, in this case is SR1 (here we are only pulling the necessary directories):
