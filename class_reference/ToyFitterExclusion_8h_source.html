@@ -158,58 +158,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="comment">// \brief set output file suffix, useful for conditional fit of null </span></div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordtype">void</span> setOutputSuffix(TString name) { Suffix = name; } ;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">void</span> for_each_tree( <span class="keywordtype">double</span> (<a class="code" href="classToyFitterExclusion.html">ToyFitterExclusion</a>::*p2method)(<span class="keywordtype">double</span>), TTree *outTree, <span class="keywordtype">double</span> mu, <span class="keywordtype">int</span> stopAt = -999);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordtype">double</span> limitLoop(<span class="keywordtype">double</span> initial_mu);</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordtype">void</span> saveParameters(<span class="keywordtype">double</span> *params);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="classToyFitterExclusion.html#ab07743025db7409701affd3c094b6db3">  135</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classToyFitterExclusion.html#ab07743025db7409701affd3c094b6db3">setGeneration</a>(<span class="keywordtype">int</span> generation) { Gen = generation; };</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordtype">void</span> for_each_tree( <span class="keywordtype">double</span> (<a class="code" href="classToyFitterExclusion.html">ToyFitterExclusion</a>::*p2method)(<span class="keywordtype">double</span>), TTree *outTree, <span class="keywordtype">double</span> mu, <span class="keywordtype">int</span> stopAt = -999);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordtype">double</span> limitLoop(<span class="keywordtype">double</span> initial_mu);</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">void</span> fillTrueParams( );</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">void</span> saveParameters(<span class="keywordtype">double</span> *params);</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordtype">void</span> measureParameters();</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordtype">void</span> fillTrueParams( );</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">double</span> eval_testStatMinuit( <span class="keywordtype">double</span> mu );</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">void</span> measureParameters();</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordtype">void</span> saveNames(<span class="keywordtype">string</span> *names);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a> *likeHood;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    TString       dirPath;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    TString       treeName;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    TString       OutDir;               </div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    TGraphAsymmErrors *graph_of_quantiles;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    TString       calTreeName;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    TString       Suffix;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">int</span>           IndexHolder;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordtype">int</span>           CurrentTreeIndex;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordtype">double</span>        likelihood_uncond;    </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordtype">double</span>        likelihood_cond;      </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">double</span>        true_params[50] = {0.} ;    </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordtype">double</span>        measured_params[50] = {0.};  </div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordtype">double</span>        uncond_params[50] = {0.};   </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordtype">double</span>        cond_params[50] = {0.};     </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordtype">bool</span>          limit_converged;      </div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordtype">double</span>        testStat_limit;       </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    vector&lt;string&gt; name_params;         </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    vector&lt;string&gt; name_true_params;    </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    TRandom3      rambo;                </div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordtype">double</span>        mu_fit;               </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordtype">double</span>        mu_limit;             </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordtype">double</span>        limit;                </div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordtype">double</span>        testStat;             </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">int</span>           numberOfParams;       </div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordtype">bool</span>          randomizeMeasure;     </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;};</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordtype">double</span> eval_testStatMinuit( <span class="keywordtype">double</span> mu );</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordtype">double</span> getBestAsympoticGuessForMu(<span class="keywordtype">double</span> one_over_sigma_squared, <span class="keywordtype">double</span> mu_hat );</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordtype">void</span> saveNames(<span class="keywordtype">string</span> *names);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a> *likeHood;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    TString       dirPath;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    TString       treeName;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    TString       OutDir;               </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    TGraphAsymmErrors *graph_of_quantiles;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    TString       calTreeName;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    TString       Suffix;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordtype">int</span>           IndexHolder;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordtype">int</span>           CurrentTreeIndex;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordtype">int</span>           Gen;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordtype">double</span>        likelihood_uncond;    </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordtype">double</span>        likelihood_cond;      </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordtype">double</span>        true_params[50] = {0.} ;    </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordtype">double</span>        measured_params[50] = {0.};  </div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordtype">double</span>        uncond_params[50] = {0.};   </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordtype">double</span>        cond_params[50] = {0.};     </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordtype">bool</span>          limit_converged;      </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordtype">double</span>        testStat_limit;       </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">double</span>        testStat_at0;         </div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    vector&lt;string&gt; name_params;         </div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    vector&lt;string&gt; name_true_params;    </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    TRandom3      rambo;                </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">double</span>        mu_fit;               </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordtype">double</span>        mu_limit;             </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">double</span>        lower_mu_limit;       </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">double</span>        limit;                </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">double</span>        lower_limit;          </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">double</span>        testStat;             </div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordtype">double</span>        q_tilde;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordtype">int</span>           numberOfParams;       </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keywordtype">bool</span>          randomizeMeasure;     </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;};</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="classToyFitterExclusion_html"><div class="ttname"><a href="classToyFitterExclusion.html">ToyFitterExclusion</a></div><div class="ttdoc">Class to handle the fitting of toy dataset for limit production. </div><div class="ttdef"><b>Definition:</b> ToyFitterExclusion.h:43</div></div>
 <div class="ttc" id="classToyFitterExclusion_html_a212ea61cb7360c82b998142468f57ceb"><div class="ttname"><a href="classToyFitterExclusion.html#a212ea61cb7360c82b998142468f57ceb">ToyFitterExclusion::setOutputDir</a></div><div class="ttdeci">void setOutputDir(TString path)</div><div class="ttdoc">set the path to dir in which the fits are stored otherwise is current </div><div class="ttdef"><b>Definition:</b> ToyFitterExclusion.h:116</div></div>
 <div class="ttc" id="classToyFitterExclusion_html_ad4bf57dd0e68d8fe9b429db6cee654c5"><div class="ttname"><a href="classToyFitterExclusion.html#ad4bf57dd0e68d8fe9b429db6cee654c5">ToyFitterExclusion::setTheLikelihood</a></div><div class="ttdeci">void setTheLikelihood(ProfileLikelihood *like)</div><div class="ttdoc">set the likelihood to fit </div><div class="ttdef"><b>Definition:</b> ToyFitterExclusion.h:75</div></div>
 <div class="ttc" id="classerrorHandler_html"><div class="ttname"><a href="classerrorHandler.html">errorHandler</a></div><div class="ttdoc">Helper Class to send consistently formatted messages. It allows different levels of severity for the ...</div><div class="ttdef"><b>Definition:</b> XeUtils.h:22</div></div>
 <div class="ttc" id="classToyFitterExclusion_html_a068fb50544da2d1b5f71903fce5547dd"><div class="ttname"><a href="classToyFitterExclusion.html#a068fb50544da2d1b5f71903fce5547dd">ToyFitterExclusion::setInputDir</a></div><div class="ttdeci">void setInputDir(TString path)</div><div class="ttdoc">set path to input file (only dir no file name) </div><div class="ttdef"><b>Definition:</b> ToyFitterExclusion.h:113</div></div>
+<div class="ttc" id="classToyFitterExclusion_html_ab07743025db7409701affd3c094b6db3"><div class="ttname"><a href="classToyFitterExclusion.html#ab07743025db7409701affd3c094b6db3">ToyFitterExclusion::setGeneration</a></div><div class="ttdeci">void setGeneration(int generation)</div><div class="ttdoc">set the Generation, this info will be available in the generated tree (so that u can hadd them)...</div><div class="ttdef"><b>Definition:</b> ToyFitterExclusion.h:135</div></div>
 <div class="ttc" id="classProfileLikelihood_html"><div class="ttname"><a href="classProfileLikelihood.html">ProfileLikelihood</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:741</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

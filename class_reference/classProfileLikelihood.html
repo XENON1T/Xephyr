@@ -130,8 +130,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>getSigmaAtQval</b> 
 <tr class="memitem:ad02960c3b4aafaea0006f6ea5536a111"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad02960c3b4aafaea0006f6ea5536a111"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>returnLimitHagar</b> (double cl, bool forceMuhatComp=true)</td></tr>
 <tr class="separator:ad02960c3b4aafaea0006f6ea5536a111"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad06a0e1530623ac3edb0422c13abd7aa"><td class="memItemLeft" align="right" valign="top">TGraph *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProfileLikelihood.html#ad06a0e1530623ac3edb0422c13abd7aa">getGraphOfParameter</a> (int n_points, int param_index)</td></tr>
-<tr class="separator:ad06a0e1530623ac3edb0422c13abd7aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a85fc347fdcbab1b587d477ec693260"><td class="memItemLeft" align="right" valign="top">vector&lt; TGraph * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProfileLikelihood.html#a2a85fc347fdcbab1b587d477ec693260">getGraphOfParameters</a> (int n_points)</td></tr>
+<tr class="separator:a2a85fc347fdcbab1b587d477ec693260"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26ab375a8c3827fc7e20b73d8f3812e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26ab375a8c3827fc7e20b73d8f3812e0"></a>
 TGraph *&#160;</td><td class="memItemRight" valign="bottom"><b>getLikelihoodScanOfParameter</b> (int n_points, <a class="el" href="classLKParameter.html">LKParameter</a> *par, double mu=0)</td></tr>
 <tr class="separator:a26ab375a8c3827fc7e20b73d8f3812e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,6 +144,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setData</b> (
 <tr class="memitem:acee37b49784da6420adca4884953b870"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acee37b49784da6420adca4884953b870"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>generateAsimov</b> (double mu_prime)=0</td></tr>
 <tr class="separator:acee37b49784da6420adca4884953b870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fd3e6fe19e497584838bd23a3cbb64d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fd3e6fe19e497584838bd23a3cbb64d"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>printEventSummary</b> (bool isForWiki=false)=0</td></tr>
+<tr class="separator:a4fd3e6fe19e497584838bd23a3cbb64d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e30c429db58c5712b2207f6406fe83c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e30c429db58c5712b2207f6406fe83c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>generateToyDataset</b> (double seed, double mu_prime)=0</td></tr>
 <tr class="separator:a3e30c429db58c5712b2207f6406fe83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -572,26 +575,16 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>analysisMode</b
 
 </div>
 </div>
-<a class="anchor" id="ad06a0e1530623ac3edb0422c13abd7aa"></a>
+<a class="anchor" id="a2a85fc347fdcbab1b587d477ec693260"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">TGraph * ProfileLikelihood::getGraphOfParameter </td>
+          <td class="memname">vector&lt; TGraph * &gt; ProfileLikelihood::getGraphOfParameters </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>n_points</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>n_points</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>param_index</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -159,9 +159,9 @@ TString&#160;</td><td class="memItemRight" valign="bottom"><b>getParamValueWrita
 <tr class="memitem:acd7e63c61838969218c904f846c2d4ca"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfComponent.html#acd7e63c61838969218c904f846c2d4ca">getDefaultPdfIntegral</a> (double s1_min, double s1_max, double s2_min, double s2_max)</td></tr>
 <tr class="memdesc:acd7e63c61838969218c904f846c2d4ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the integral of the square between points (not bins).  <a href="#acd7e63c61838969218c904f846c2d4ca">More...</a><br/></td></tr>
 <tr class="separator:acd7e63c61838969218c904f846c2d4ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c038ac161d51842244da34f56f88379"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfComponent.html#a4c038ac161d51842244da34f56f88379">plotInterpolatedSpace</a> (bool doProjectionX, double min, double max, int Nsteps)</td></tr>
-<tr class="memdesc:a4c038ac161d51842244da34f56f88379"><td class="mdescLeft">&#160;</td><td class="mdescRight">This scans the parameter space given a number of steps for each parameter.  <a href="#a4c038ac161d51842244da34f56f88379">More...</a><br/></td></tr>
-<tr class="separator:a4c038ac161d51842244da34f56f88379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a181072320088088fd8e84a5d970fc847"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfComponent.html#a181072320088088fd8e84a5d970fc847">plotInterpolatedSpace</a> (bool doProjectionX, double min, double max, int Nsteps, bool legend_left=false, double y_max=0.)</td></tr>
+<tr class="memdesc:a181072320088088fd8e84a5d970fc847"><td class="mdescLeft">&#160;</td><td class="mdescRight">This scans the parameter space given a number of steps for each parameter.  <a href="#a181072320088088fd8e84a5d970fc847">More...</a><br/></td></tr>
+<tr class="separator:a181072320088088fd8e84a5d970fc847"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a941209edf4adefa2df0480ed93c59829"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a941209edf4adefa2df0480ed93c59829"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfComponent.html#a941209edf4adefa2df0480ed93c59829">setScaleFactor</a> (double val)</td></tr>
 <tr class="memdesc:a941209edf4adefa2df0480ed93c59829"><td class="mdescLeft">&#160;</td><td class="mdescRight">scale the pdf by VAL, this happend for the methods: <br/></td></tr>
@@ -292,7 +292,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>doExtend</b></td></tr
 
 </div>
 </div>
-<a class="anchor" id="a4c038ac161d51842244da34f56f88379"></a>
+<a class="anchor" id="a181072320088088fd8e84a5d970fc847"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -318,7 +318,19 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>doExtend</b></td></tr
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>Nsteps</em>&#160;</td>
+          <td class="paramname"><em>Nsteps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>legend_left</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>y_max</em> = <code>0.</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

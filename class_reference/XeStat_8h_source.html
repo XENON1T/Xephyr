@@ -672,7 +672,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;    <span class="keywordtype">double</span> returnLimitHagar( <span class="keywordtype">double</span> cl, <span class="keywordtype">bool</span> forceMuhatComp=<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;</div>
 <div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;    <span class="comment">//double getMaximum()</span></div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;<span class="comment"></span>    TGraph* <a class="code" href="classProfileLikelihood.html#ad06a0e1530623ac3edb0422c13abd7aa">getGraphOfParameter</a>(<span class="keywordtype">int</span> n_points,  <span class="keywordtype">int</span> param_index);</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;<span class="comment"></span>    vector&lt;TGraph*&gt; <a class="code" href="classProfileLikelihood.html#a2a85fc347fdcbab1b587d477ec693260">getGraphOfParameters</a>(<span class="keywordtype">int</span> n_points);</div>
 <div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;</div>
 <div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;    TGraph* getLikelihoodScanOfParameter( <span class="keywordtype">int</span> n_points, <a class="code" href="classLKParameter.html">LKParameter</a> * par, <span class="keywordtype">double</span> mu = 0);</div>
 <div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;</div>
@@ -682,95 +682,99 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;</div>
 <div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> generateAsimov(<span class="keywordtype">double</span> mu_prime)=0 ;</div>
 <div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> generateToyDataset(<span class="keywordtype">double</span> seed, <span class="keywordtype">double</span> mu_prime)=0;</div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> printEventSummary(<span class="keywordtype">bool</span> isForWiki=<span class="keyword">false</span>)=0;</div>
 <div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">double</span> getSignalDefaultNorm()=0;</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">double</span> getSignalMultiplier()=0; </div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span>   setSignalMultiplier(<span class="keywordtype">double</span> val)=0; </div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span>  setTreeIndex( <span class="keywordtype">int</span> index )=0;</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;  </div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;  <span class="keyword">virtual</span> vector&lt;string&gt; getTrueParamsNames() =0;</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;  <span class="keyword">virtual</span> vector&lt;double&gt; getTrueParams() =0;</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> generateToyDataset(<span class="keywordtype">double</span> seed, <span class="keywordtype">double</span> mu_prime)=0;</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">double</span> getSignalDefaultNorm()=0;</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">double</span> getSignalMultiplier()=0; </div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span>   setSignalMultiplier(<span class="keywordtype">double</span> val)=0; </div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span>  setTreeIndex( <span class="keywordtype">int</span> index )=0;</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;  </div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;  <span class="keyword">virtual</span> vector&lt;string&gt; getTrueParamsNames() =0;</div>
 <div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;  <span class="keyword">protected</span> : </div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;  <span class="keyword">virtual</span> vector&lt;double&gt; getTrueParams() =0;</div>
 <div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;    <span class="keywordtype">void</span>    <a class="code" href="classProfileLikelihood.html#a397985f1c4bd92e40a9567d5fae17fa7">setup</a>();</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;                 </div>
-<div class="line"><a name="l00830"></a><span class="lineno"><a class="line" href="classProfileLikelihood.html#a0fad223677ef302261cbded74be72ddb">  830</a></span>&#160;    <a class="code" href="classLKParameter.html">LKParameter</a> *<a class="code" href="classProfileLikelihood.html#a0fad223677ef302261cbded74be72ddb">sigPar</a>;  </div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;} ;</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;</div>
-<div class="line"><a name="l00839"></a><span class="lineno"><a class="line" href="classCombinedProfileLikelihood.html">  839</a></span>&#160;<span class="keyword">class </span><a class="code" href="classCombinedProfileLikelihood.html">CombinedProfileLikelihood</a> : <span class="keyword">public</span> <a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a> {</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;  <span class="keyword">public</span> :</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;  <span class="keyword">protected</span> : </div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;    <span class="keywordtype">void</span>    <a class="code" href="classProfileLikelihood.html#a397985f1c4bd92e40a9567d5fae17fa7">setup</a>();</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;                 </div>
+<div class="line"><a name="l00832"></a><span class="lineno"><a class="line" href="classProfileLikelihood.html#a0fad223677ef302261cbded74be72ddb">  832</a></span>&#160;    <a class="code" href="classLKParameter.html">LKParameter</a> *<a class="code" href="classProfileLikelihood.html#a0fad223677ef302261cbded74be72ddb">sigPar</a>;  </div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;} ;</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;</div>
+<div class="line"><a name="l00841"></a><span class="lineno"><a class="line" href="classCombinedProfileLikelihood.html">  841</a></span>&#160;<span class="keyword">class </span><a class="code" href="classCombinedProfileLikelihood.html">CombinedProfileLikelihood</a> : <span class="keyword">public</span> <a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a> {</div>
 <div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;    <span class="comment">/* -------------------------------------------------------------</span></div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;<span class="comment">     *                     Basic methods </span></div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;<span class="comment">     * ------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;                    </div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;           <a class="code" href="classCombinedProfileLikelihood.html">CombinedProfileLikelihood</a>(TString name);</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;          ~<a class="code" href="classCombinedProfileLikelihood.html">CombinedProfileLikelihood</a>();</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;    <span class="keywordtype">void</span>   combine(<a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a>* pl);</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classCombinedProfileLikelihood.html#a024b1ad4e23d42eadafe3747a1c2fad1">computeTheLogLikelihood</a>();</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;    <span class="comment">/* -------------------------------------------------------------</span></div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;<span class="comment">     *                     Advanced methods </span></div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;<span class="comment">     * ------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;                    </div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;    <a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a>* getProfile(<span class="keywordtype">int</span> experiment);</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;    <span class="keywordtype">void</span>               <a class="code" href="classCombinedProfileLikelihood.html#aa3c8afd978e5df882f77299049ac3ecb">printFlagsAndParameters</a>();</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;<span class="comment">//    void               setWimpMass(double);</span></div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;    <span class="keywordtype">double</span>         getWimpMass();</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;    <span class="keywordtype">void</span> setData(<span class="keywordtype">int</span> dataType);</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;  <span class="keyword">public</span> :</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;    <span class="comment">/* -------------------------------------------------------------</span></div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;<span class="comment">     *                     Basic methods </span></div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;<span class="comment">     * ------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;                    </div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;           <a class="code" href="classCombinedProfileLikelihood.html">CombinedProfileLikelihood</a>(TString name);</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;          ~<a class="code" href="classCombinedProfileLikelihood.html">CombinedProfileLikelihood</a>();</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;    <span class="keywordtype">void</span>   combine(<a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a>* pl);</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classCombinedProfileLikelihood.html#a024b1ad4e23d42eadafe3747a1c2fad1">computeTheLogLikelihood</a>();</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;    <span class="comment">/* -------------------------------------------------------------</span></div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;<span class="comment">     *                     Advanced methods </span></div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;<span class="comment">     * ------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;                    </div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;    <a class="code" href="classProfileLikelihood.html">ProfileLikelihood</a>* getProfile(<span class="keywordtype">int</span> experiment);</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;    <span class="keywordtype">void</span>               <a class="code" href="classCombinedProfileLikelihood.html#aa3c8afd978e5df882f77299049ac3ecb">printFlagsAndParameters</a>();</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;<span class="comment">//    void               setWimpMass(double);</span></div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;    <span class="keywordtype">double</span>         getWimpMass();</div>
 <div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;    <span class="keywordtype">void</span> generateAsimov(<span class="keywordtype">double</span> mu_prime) ;</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;    <span class="keywordtype">void</span> setData(<span class="keywordtype">int</span> dataType);</div>
 <div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;    <span class="keywordtype">void</span> generateToyDataset(<span class="keywordtype">double</span> seed, <span class="keywordtype">double</span> mu_prime);</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;    <span class="keywordtype">void</span> generateAsimov(<span class="keywordtype">double</span> mu_prime) ;</div>
 <div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;    <span class="keywordtype">double</span> getSignalDefaultNorm();</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;    <span class="keywordtype">double</span> getSignalMultiplier();</div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;    <span class="keywordtype">void</span>   setSignalMultiplier(<span class="keywordtype">double</span> val); </div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;</div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;    <span class="keywordtype">void</span>  setTreeIndex(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;    <span class="keywordtype">void</span> generateToyDataset(<span class="keywordtype">double</span> seed, <span class="keywordtype">double</span> mu_prime);</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;    <span class="keywordtype">double</span> getSignalDefaultNorm();</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;    <span class="keywordtype">double</span> getSignalMultiplier();</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;    <span class="keywordtype">void</span>   setSignalMultiplier(<span class="keywordtype">double</span> val); </div>
 <div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;    vector&lt;string&gt; getTrueParamsNames();</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;    </div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;    vector&lt;double&gt; getTrueParams();</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;    <span class="keywordtype">void</span> printEventSummary(<span class="keywordtype">bool</span> isForWiki=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;    </div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;    <span class="keywordtype">void</span>  setTreeIndex(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;</div>
 <div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;    <span class="keywordtype">bool</span>    initialize();   </div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;    <span class="keywordtype">bool</span>    findParamPointer( <a class="code" href="classLKParameter.html">LKParameter</a> *p);</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;    vector&lt;string&gt; getTrueParamsNames();</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;    </div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;    vector&lt;double&gt; getTrueParams();</div>
 <div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;    <span class="comment">/* -------------------------------------------------------------</span></div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;<span class="comment">     *                Internal methods (not for user)</span></div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;<span class="comment">     * ------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;             </div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   <span class="comment">// bool    update();</span></div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;    </div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;    map&lt;int,ProfileLikelihood* &gt; exps;</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;    <span class="keywordtype">int</span>                          nCommon;</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;    <span class="keywordtype">double</span>                       sigToEvents;</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;    <span class="keywordtype">bool</span>    initialize();   </div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;    <span class="keywordtype">bool</span>    findParamPointer( <a class="code" href="classLKParameter.html">LKParameter</a> *p);</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;    <span class="comment">/* -------------------------------------------------------------</span></div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;<span class="comment">     *                Internal methods (not for user)</span></div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;<span class="comment">     * ------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;             </div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;   <span class="comment">// bool    update();</span></div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;    </div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;  <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;};</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;<span class="keyword">typedef</span> map&lt;int,ProfileLikelihood*&gt;::iterator expIterator;</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;    map&lt;int,ProfileLikelihood* &gt; exps;</div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;    <span class="keywordtype">int</span>                          nCommon;</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;    <span class="keywordtype">double</span>                       sigToEvents;</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;</div>
 <div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;<span class="preprocessor">#define TRAVERSE_EXPERIMENTS(it) \</span></div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;<span class="preprocessor"> for(expIterator it=exps.begin(); it!=exps.end(); it++) </span></div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;};</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;<span class="keyword">typedef</span> map&lt;int,ProfileLikelihood*&gt;::iterator expIterator;</div>
 <div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;<span class="preprocessor">#define TRAVERSE_EXPERIMENTS(it) \</span></div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;<span class="preprocessor"> for(expIterator it=exps.begin(); it!=exps.end(); it++) </span></div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;</div>
 <div class="ttc" id="classXeStat_html_a9f94e021aea3df6ea5a6505c6359c5de"><div class="ttname"><a href="classXeStat.html#a9f94e021aea3df6ea5a6505c6359c5de">XeStat::getUpperSigmaLabel</a></div><div class="ttdeci">static TString getUpperSigmaLabel(int unit)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:61</div></div>
 <div class="ttc" id="classXeStat_html"><div class="ttname"><a href="classXeStat.html">XeStat</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:180</div></div>
 <div class="ttc" id="classLKParameter_html_aa0bbf23d187498021a7d7d4211433571"><div class="ttname"><a href="classLKParameter.html#aa0bbf23d187498021a7d7d4211433571">LKParameter::LKParameter</a></div><div class="ttdeci">LKParameter(TString name)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:103</div></div>
@@ -793,7 +797,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classLikelihood_html_a8d86ffd2a694c697459499ee52ae7b6e"><div class="ttname"><a href="classLikelihood.html#a8d86ffd2a694c697459499ee52ae7b6e">Likelihood::computeTheLogLikelihood</a></div><div class="ttdeci">virtual double computeTheLogLikelihood()=0</div></div>
 <div class="ttc" id="classXeStat_html_a433561d437164fcea8f3825743b6671d"><div class="ttname"><a href="classXeStat.html#a433561d437164fcea8f3825743b6671d">XeStat::getAnalysisModeName</a></div><div class="ttdeci">static TString getAnalysisModeName()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:16</div></div>
 <div class="ttc" id="classXeStat_html_a8633e455a18ffafa297301d2ccef4197"><div class="ttname"><a href="classXeStat.html#a8633e455a18ffafa297301d2ccef4197">XeStat::getExperiment</a></div><div class="ttdeci">int getExperiment()</div><div class="ttdoc">set the experiment number, usefull for combination </div><div class="ttdef"><b>Definition:</b> XeStat.h:291</div></div>
-<div class="ttc" id="classCombinedProfileLikelihood_html_aa3c8afd978e5df882f77299049ac3ecb"><div class="ttname"><a href="classCombinedProfileLikelihood.html#aa3c8afd978e5df882f77299049ac3ecb">CombinedProfileLikelihood::printFlagsAndParameters</a></div><div class="ttdeci">void printFlagsAndParameters()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:1343</div></div>
+<div class="ttc" id="classCombinedProfileLikelihood_html_aa3c8afd978e5df882f77299049ac3ecb"><div class="ttname"><a href="classCombinedProfileLikelihood.html#aa3c8afd978e5df882f77299049ac3ecb">CombinedProfileLikelihood::printFlagsAndParameters</a></div><div class="ttdeci">void printFlagsAndParameters()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:1357</div></div>
 <div class="ttc" id="classLikelihood_html_a2089d932f9677a69cabdfb556d2a596a"><div class="ttname"><a href="classLikelihood.html#a2089d932f9677a69cabdfb556d2a596a">Likelihood::sigmaHat</a></div><div class="ttdeci">double sigmaHat</div><div class="ttdef"><b>Definition:</b> XeStat.h:719</div></div>
 <div class="ttc" id="classLikelihood_html_a3b0d1ae36bc9c2301136cbe136ee8b69"><div class="ttname"><a href="classLikelihood.html#a3b0d1ae36bc9c2301136cbe136ee8b69">Likelihood::addParameter</a></div><div class="ttdeci">void addParameter(int id, int type, TString nam, double initialVal, double step, double mi, double ma)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:510</div></div>
 <div class="ttc" id="classTSystBkgParameter_html"><div class="ttname"><a href="classTSystBkgParameter.html">TSystBkgParameter</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:467</div></div>
@@ -805,23 +809,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classXeStat_html_a11a8eefbaed533896170701924697bd9"><div class="ttname"><a href="classXeStat.html#a11a8eefbaed533896170701924697bd9">XeStat::setExperiment</a></div><div class="ttdeci">void setExperiment(int exp)</div><div class="ttdoc">set the experiment number, usefull for combination </div><div class="ttdef"><b>Definition:</b> XeStat.h:288</div></div>
 <div class="ttc" id="classXeStat_html_ac509c45ee82ce57aceed0af75105d195"><div class="ttname"><a href="classXeStat.html#ac509c45ee82ce57aceed0af75105d195">XeStat::isCutsBased</a></div><div class="ttdeci">static bool isCutsBased()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:13</div></div>
 <div class="ttc" id="classXeStat_html_a2f44e17eca481675de64bef940ca82af"><div class="ttname"><a href="classXeStat.html#a2f44e17eca481675de64bef940ca82af">XeStat::getSystematicModeName</a></div><div class="ttdeci">static TString getSystematicModeName(int syst)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:18</div></div>
-<div class="ttc" id="classProfileLikelihood_html_ad06a0e1530623ac3edb0422c13abd7aa"><div class="ttname"><a href="classProfileLikelihood.html#ad06a0e1530623ac3edb0422c13abd7aa">ProfileLikelihood::getGraphOfParameter</a></div><div class="ttdeci">TGraph * getGraphOfParameter(int n_points, int param_index)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:1284</div></div>
 <div class="ttc" id="classLikelihood_html_a537362f778d8edcb5ead065e03932e08"><div class="ttname"><a href="classLikelihood.html#a537362f778d8edcb5ead065e03932e08">Likelihood::getSigmaHat</a></div><div class="ttdeci">double getSigmaHat()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:407</div></div>
 <div class="ttc" id="classLikelihood_html_af943c6a47508e3efe72a3566c9ccccda"><div class="ttname"><a href="classLikelihood.html#af943c6a47508e3efe72a3566c9ccccda">Likelihood::getParameters</a></div><div class="ttdeci">map&lt; int, LKParameter * &gt; * getParameters()</div><div class="ttdoc">get Parameter Of Interest </div><div class="ttdef"><b>Definition:</b> XeStat.cxx:556</div></div>
+<div class="ttc" id="classProfileLikelihood_html_a2a85fc347fdcbab1b587d477ec693260"><div class="ttname"><a href="classProfileLikelihood.html#a2a85fc347fdcbab1b587d477ec693260">ProfileLikelihood::getGraphOfParameters</a></div><div class="ttdeci">vector&lt; TGraph * &gt; getGraphOfParameters(int n_points)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:1286</div></div>
 <div class="ttc" id="classProfileLikelihood_html_a2bdf355e50cbcd98eca1b2db912e3f0d"><div class="ttname"><a href="classProfileLikelihood.html#a2bdf355e50cbcd98eca1b2db912e3f0d">ProfileLikelihood::ProfileLikelihood</a></div><div class="ttdeci">ProfileLikelihood(TString name)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:1050</div></div>
 <div class="ttc" id="classLikelihood_html_a41823d2d5c2ab8076d78bad975b8ef9b"><div class="ttname"><a href="classLikelihood.html#a41823d2d5c2ab8076d78bad975b8ef9b">Likelihood::removeParameter</a></div><div class="ttdeci">void removeParameter(LKParameter *param, bool tolerant=false)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:444</div></div>
 <div class="ttc" id="classTLEffParameter_html"><div class="ttname"><a href="classTLEffParameter.html">TLEffParameter</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:514</div></div>
 <div class="ttc" id="classProfileLikelihood_html_ae4c0da54926f0e9a169c53ceffc9e273"><div class="ttname"><a href="classProfileLikelihood.html#ae4c0da54926f0e9a169c53ceffc9e273">ProfileLikelihood::printFlagsAndParameters</a></div><div class="ttdeci">void printFlagsAndParameters()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:1055</div></div>
 <div class="ttc" id="classXeStat_html_a7d77a1517406320f9ef203c1c177a319"><div class="ttname"><a href="classXeStat.html#a7d77a1517406320f9ef203c1c177a319">XeStat::getSigmaLinLog</a></div><div class="ttdeci">static int getSigmaLinLog(int unit)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:69</div></div>
-<div class="ttc" id="classProfileLikelihood_html_a0fad223677ef302261cbded74be72ddb"><div class="ttname"><a href="classProfileLikelihood.html#a0fad223677ef302261cbded74be72ddb">ProfileLikelihood::sigPar</a></div><div class="ttdeci">LKParameter * sigPar</div><div class="ttdef"><b>Definition:</b> XeStat.h:830</div></div>
+<div class="ttc" id="classProfileLikelihood_html_a0fad223677ef302261cbded74be72ddb"><div class="ttname"><a href="classProfileLikelihood.html#a0fad223677ef302261cbded74be72ddb">ProfileLikelihood::sigPar</a></div><div class="ttdeci">LKParameter * sigPar</div><div class="ttdef"><b>Definition:</b> XeStat.h:832</div></div>
 <div class="ttc" id="classLikelihood_html"><div class="ttname"><a href="classLikelihood.html">Likelihood</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:550</div></div>
 <div class="ttc" id="classLikelihood_html_aecfb5359b607232cfac65e3e587da16b"><div class="ttname"><a href="classLikelihood.html#aecfb5359b607232cfac65e3e587da16b">Likelihood::getLogD</a></div><div class="ttdeci">double getLogD()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:409</div></div>
 <div class="ttc" id="classXeStat_html_a03682bbbe8d2fb4d44c8ad2473f6a921"><div class="ttname"><a href="classXeStat.html#a03682bbbe8d2fb4d44c8ad2473f6a921">XeStat::getSigmaModeName</a></div><div class="ttdeci">static TString getSigmaModeName(int mode)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:45</div></div>
 <div class="ttc" id="classLikelihood_html_a5fcf9b9a0f2eacf4a9459d8402f3f10d"><div class="ttname"><a href="classLikelihood.html#a5fcf9b9a0f2eacf4a9459d8402f3f10d">Likelihood::addParameterTolerant</a></div><div class="ttdeci">void addParameterTolerant(LKParameter *param)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:457</div></div>
 <div class="ttc" id="classLikelihood_html_ab416e172fee8411fd17458bb6abc91ee"><div class="ttname"><a href="classLikelihood.html#ab416e172fee8411fd17458bb6abc91ee">Likelihood::Likelihood</a></div><div class="ttdeci">Likelihood(TString name)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:403</div></div>
 <div class="ttc" id="classXeStat_html_a2c42584065f702a3ee41e846c395ab86"><div class="ttname"><a href="classXeStat.html#a2c42584065f702a3ee41e846c395ab86">XeStat::getAnalysisMode</a></div><div class="ttdeci">static int getAnalysisMode()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:15</div></div>
-<div class="ttc" id="classCombinedProfileLikelihood_html_a024b1ad4e23d42eadafe3747a1c2fad1"><div class="ttname"><a href="classCombinedProfileLikelihood.html#a024b1ad4e23d42eadafe3747a1c2fad1">CombinedProfileLikelihood::computeTheLogLikelihood</a></div><div class="ttdeci">double computeTheLogLikelihood()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:1491</div></div>
-<div class="ttc" id="classCombinedProfileLikelihood_html"><div class="ttname"><a href="classCombinedProfileLikelihood.html">CombinedProfileLikelihood</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:839</div></div>
+<div class="ttc" id="classCombinedProfileLikelihood_html_a024b1ad4e23d42eadafe3747a1c2fad1"><div class="ttname"><a href="classCombinedProfileLikelihood.html#a024b1ad4e23d42eadafe3747a1c2fad1">CombinedProfileLikelihood::computeTheLogLikelihood</a></div><div class="ttdeci">double computeTheLogLikelihood()</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:1507</div></div>
+<div class="ttc" id="classCombinedProfileLikelihood_html"><div class="ttname"><a href="classCombinedProfileLikelihood.html">CombinedProfileLikelihood</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:841</div></div>
 <div class="ttc" id="classLKParameter_html_a5b1cbafd5ec98caf27bc97118c46ee4b"><div class="ttname"><a href="classLKParameter.html#a5b1cbafd5ec98caf27bc97118c46ee4b">LKParameter::freeze</a></div><div class="ttdeci">void freeze(bool doFreeze)</div><div class="ttdef"><b>Definition:</b> XeStat.cxx:256</div></div>
 <div class="ttc" id="classCombinedParameter_html_ae2331e6266f8b093fbcd1b12f955513b"><div class="ttname"><a href="classCombinedParameter.html#ae2331e6266f8b093fbcd1b12f955513b">CombinedParameter::correlateParameter</a></div><div class="ttdeci">void correlateParameter(LKParameter *p)</div><div class="ttdoc">overloaded polymorf func </div><div class="ttdef"><b>Definition:</b> XeStat.cxx:334</div></div>
 <div class="ttc" id="classCombinedParameter_html"><div class="ttname"><a href="classCombinedParameter.html">CombinedParameter</a></div><div class="ttdef"><b>Definition:</b> XeStat.h:451</div></div>
