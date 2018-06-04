@@ -44,7 +44,7 @@ then
 	echo
 	echo
 	echo -e "                  ${GREEN}SUCCESS!!!!! :) you are good to go!${NC}"
-	echo -e "Congrats! Now all your compiled code, libraries and executables are in the ./build directory"
+	echo -e "Congrats! Now all your compiled code, libraries and executables are in the ${RED}./build${NC} directory"
 	xe_location=$(pwd)
 	echo
 	echo -e   "${GREEN}But remeber to set this environment variable (and add to your .bashrc), do: "
