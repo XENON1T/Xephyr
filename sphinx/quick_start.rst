@@ -1,9 +1,113 @@
 
-Quick Start
+Quick Start 
 ===========
+This section is for all of those who **"I've got no time, just want to run the stupid thing..."**
 
-To load the library and use it in a macro do:
+There are 3 ways to use XEPHYR library:
+ - Compiling the code as library and link to your own code.
+ - load dynamically xephyr as root library, when using interactive root client.
+ - Using xephyr in a jupyter notebook (only for brave hearts).
+
+
+System Requirements
+-------------------
+
+Before you even start, you need to make sure you've got the following:
+
+
+ - g++ >= 4.8.1
+ - gcc >= 4.8.1
+ - cmake >= 3.9
+ - ROOT >= 6.0.0 but reccomended is >= 6.10.04 to get all latest jupyter notebook features.
+ - python >=3 (used by the package manager)
+
+**:::Warning:::** don't use ROOT installed from **Anaconda**, high are the chances that wont work.
+
+**:::Warning2:::** make sure that your root installation has minuit, you can check it simply by running the following command in a ROOT CLI:
 
 .. code-block:: bash
+
+	$ root -l
+	> ROOT::Math::Factory::CreateMinimizer("Minuit2","Migrad") == 0 ? "ERROR" : "You've got minuit!" 
+
+ 
+ 
+Initial Setup
+------------
+
+First create a Master directory (in this case called "XEPHYR_PKG") where to store Xephyr and your code, then clone Xephyr form github.
+
+.. code-block:: bash
+
+        mkdir XEPHYR_PKG
+        cd XEPHYR_PKG
+        export XEPHYR_DIR=$(pwd)
+        echo "export XEPHYR_DIR=$(pwd)" >> ~/.bashrc
+        git clone git@github.com:XENON1T/Xephyr.git .
+
+You maybe noticed above the "export" of enviroment variable **XEPHYR_DIR** that points to the master dir XEPHYR_PKG, this tells Xephyr where its code is located, it is very important and so I reccomend to add it to your .bashrc (as the snipplet above is doing).
+
+Load the Library Dinamically 
+----------------------------
+
+XEPHYR strongly encourage package structure, so that you can easily share your code and compile it (hopefully) out of the box.
+So, we strongly recommend you to :ref:`create your own package <packages>`, but since this is a "quick start for people in a hurry"  we'll skip that for now, 
+you can always do it later. 
+
+Create a new directory where to store your scripts  (inside the Master dir "XEPHYR_PKG") and copy the xephyr loader in it. 
+
+.. code-block:: bash
+
+        mkdir myAmazingCode
+        cd myAmazingCode
+        cp ../Xephyr/loadXephyr.C .
+
+Now you can load xephyr libraries for **interactive use**, meaning you can run your scripts that use Xephyr classes out of the box (without any include statement).
+To load the library for interactive use do:
+
+.. code-block:: bash
+
+        root -l loadXephyr.C
+
+Or if for some reason you prefer to call it within a script, then add to your script the following:
+
+.. code-block:: c++
+
+        {       
+                // This is the top of your ROOT script 
+                gROOT->ProcessLine(".x loadXephyr.C");
+
+                // Here your code //
+                // here I can use all Xephyr classes for example
+                // pdfLikelihood * p(....)
+        }
+
+
+Compile Your Code With Xephyr
+-----------------------------
+
+Xephyr provides a simple build command to compile any xephyr package automatically, **without writing any makefile** yourself. Again, 
+this is possible only if your package follow the rules described in :ref:`packages` section.
+
+First step, in case you are copying code from someone else (that hopefully is on github), or you made a package yourself, you can just clone the repository in the 
+Master xephyr dir ($XEPHYR_DIR), which as a reminder is the dir that contains the Xephyr package.  Then run the following from the master dir:
+ 
+.. code-block:: bash
+
+       source Xephyr/pacman/build.sh
+
+That's it! (if it worked) this should have created a new directory "build" where you can find all the executables of all your packages.
+This step scans the directory tree and produces a makefile, so it is only needed at the beginning and when you add a new file, 
+for all other small changes you can do:
+
+.. code-block:: bash
+
+       $ cd build
+       $ make
         
-        $ root -l loadXephyr
+
+Jupyter Notebooks
+-----------------
+
+You brave hero! I pray for your soul...
+
