@@ -8,7 +8,7 @@
 - cmake >= 3.9
 - ROOT >= 6.0.0 but reccomended is >= 6.10.04 to get all latest jupyter notebook features.
 - python >=3  (used for the package manager) 
-- if you use Anaconda ROOT, I pray for your soul.
+- if you use Anaconda ROOT, you should pay for your sins :fire:.
 
 # Quick Start:
 ### To load the library simply do: 

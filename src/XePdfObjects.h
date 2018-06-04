@@ -175,7 +175,7 @@ class pdfComponent :errorHandler{
 
 /**
  * \class histoCompare.
- * This class is supposed to compare a "base" histo 
+ * \brief This class is supposed to compare a "base" histo 
  * with a set of other histogram. One can choose for ratio plot,
  * stack plot of different component, one can set the projected axis
  * and the slice on which do the projection, one can also rebin the histo.
