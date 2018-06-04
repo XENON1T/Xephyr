@@ -5,9 +5,10 @@
 # Requirements:
 - g++ >= 4.8.1
 - gcc >= 4.8.1
-- cmake >= 3.0
+- cmake >= 3.9
 - ROOT >= 6.0.0 but reccomended is >= 6.10.04 to get all latest jupyter notebook features.
-- python 3  (used for the package manager) 
+- python >=3  (used for the package manager) 
+- if you use Anaconda ROOT, I pray for your soul.
 
 # Quick Start:
 ### To load the library simply do: 
