@@ -12,5 +12,6 @@ int loadXephyr(){
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/ToyGenerator.cxx+g");
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/plotHelpers.cxx+g");
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/ToyFitterExclusion.cxx+g");
+  gInterpreter->AddIncludePath( xeDir +"/Xephyr/src"); // in this case is just XEPHYR src from next dir.
   return 0;
 }
