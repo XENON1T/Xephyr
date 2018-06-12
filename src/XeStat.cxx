@@ -291,7 +291,7 @@ void LKParameter::printCurrent(bool withError){
 
 SigmaParameter::~SigmaParameter(){}
 SigmaParameter::SigmaParameter() : LKParameter(PAR_SIGMA,PARAMETER_OF_INTEREST
-                ,"Sigma",0.,0.1,0.,50.) {setCommon();}
+                ,"Sigma",0.,0.1,-20.,50.) {setCommon();}
 
 TSystBkgParameter::~TSystBkgParameter(){}
 TSystBkgParameter::TSystBkgParameter(int run) : LKParameter(PAR_SYST_BKG_TVALUE
