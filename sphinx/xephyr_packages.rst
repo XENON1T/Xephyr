@@ -29,8 +29,8 @@ Conventions
 To build a XEPHYR package you must follow a number of conventions, mind that these are case sensitive:
 
   - First define a master dir where all the code is supposed to be. This must be refered with an env variable $XEPHYR_DIR. See the :ref:`Quick Start reference <quickstart>` for detail on how to do it.
-  - The package manager scans the whole master directory in search of a JSON file called **info.json**, each directory that contains that file is considered a XEPHYR package.
-  - Within the packege directory (but not in its subdirectories) all the files that end with **"_main.cxx"** are considered executables, and scheduled for being build.
+  - Package definition: the package manager scans the whole master directory in search of a JSON file called **info.json**, each directory that contains that file is considered a XEPHYR package.
+  - Within the package directory (but not in its subdirectories) all the files that end with **"_main.cxx"** are considered executables, and scheduled for being build.
   - Within each package it will look for a directory called **"src"**, where all the user library are. All the files in this directory that have a **".cxx"** extension are scheduled to be build as library.
   - You can put your scripts anywhere, as long as they are not in "src" nor their name end with "_main.cxx", the package manager will just ignore them.
 

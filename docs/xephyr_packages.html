@@ -143,8 +143,8 @@ for each of your scripts or executables. At compiling time these libraries will 
 <blockquote>
 <div><ul class="simple">
 <li>First define a master dir where all the code is supposed to be. This must be refered with an env variable $XEPHYR_DIR. See the <a class="reference internal" href="quick_start.html#quickstart"><span>Quick Start reference</span></a> for detail on how to do it.</li>
-<li>The package manager scans the whole master directory in search of a JSON file called <strong>info.json</strong>, each directory that contains that file is considered a XEPHYR package.</li>
-<li>Within the packege directory (but not in its subdirectories) all the files that end with <strong>&#8220;_main.cxx&#8221;</strong> are considered executables, and scheduled for being build.</li>
+<li>Package definition: the package manager scans the whole master directory in search of a JSON file called <strong>info.json</strong>, each directory that contains that file is considered a XEPHYR package.</li>
+<li>Within the package directory (but not in its subdirectories) all the files that end with <strong>&#8220;_main.cxx&#8221;</strong> are considered executables, and scheduled for being build.</li>
 <li>Within each package it will look for a directory called <strong>&#8220;src&#8221;</strong>, where all the user library are. All the files in this directory that have a <strong>&#8221;.cxx&#8221;</strong> extension are scheduled to be build as library.</li>
 <li>You can put your scripts anywhere, as long as they are not in &#8220;src&#8221; nor their name end with &#8220;_main.cxx&#8221;, the package manager will just ignore them.</li>
 </ul>

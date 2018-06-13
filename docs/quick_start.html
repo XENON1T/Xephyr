@@ -191,8 +191,7 @@ To load the library for interactive use do:</p>
 <h2>Compile Your Code With Xephyr<a class="headerlink" href="#compile-your-code-with-xephyr" title="Permalink to this headline">¶</a></h2>
 <p>Xephyr provides a simple build command to compile any xephyr package automatically, <strong>without writing any makefile</strong> yourself. Again,
 this is possible only if your package follow the rules described in <a class="reference internal" href="xephyr_packages.html#packages"><span>Xephyr Packages</span></a> section.</p>
-<p>First step, in case you are copying code from someone else (that hopefully is on github), or you made a package yourself, you can just clone the repository in the
-Master xephyr dir ($XEPHYR_DIR), which as a reminder is the dir that contains the Xephyr package.  Then run the following from the master dir:</p>
+<p>First step, the package you want to compile must lie inside the Master xephyr dir (<strong>$XEPHYR_DIR</strong>), which as a reminder is the dir that contains the Xephyr package.  Then run the following from the master dir:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nb">source </span>Xephyr/pacman/build.sh
 </pre></div>
 </div>

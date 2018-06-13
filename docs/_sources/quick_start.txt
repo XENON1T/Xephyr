@@ -34,7 +34,7 @@ Before you even start, you need to make sure you've got the following:
  
  
 Initial Setup
-------------
+---------------
 
 First create a Master directory (in this case called "XEPHYR_PKG") where to store Xephyr and your code, then clone Xephyr form github.
 
@@ -90,8 +90,7 @@ Compile Your Code With Xephyr
 Xephyr provides a simple build command to compile any xephyr package automatically, **without writing any makefile** yourself. Again, 
 this is possible only if your package follow the rules described in :ref:`packages` section.
 
-First step, in case you are copying code from someone else (that hopefully is on github), or you made a package yourself, you can just clone the repository in the 
-Master xephyr dir ($XEPHYR_DIR), which as a reminder is the dir that contains the Xephyr package.  Then run the following from the master dir:
+First step, the package you want to compile must lie inside the Master xephyr dir (**$XEPHYR_DIR**), which as a reminder is the dir that contains the Xephyr package.  Then run the following from the master dir:
  
 .. code-block:: bash
 
