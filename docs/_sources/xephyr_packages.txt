@@ -66,7 +66,7 @@ the important thing is that it is inside $XEPHYR_DIR. Now create the content of 
 	echo  ' // Include your library
 		#include "fancyLib.cxx"
 		
-	       int main(int argc, char \*\*argv) 
+	       int main()
 		{
 		// your code here
 		}
