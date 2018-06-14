@@ -72,6 +72,7 @@ double shapeSys::getNearestHigh(){
 pdfComponent::pdfComponent(TString name, TString filename) : errorHandler("pdfComponent"), pdf_name(name) {
 
   	file = TFile::Open(filename);
+	cout<<" Reading file "<<filename<<endl;
 	if(file == NULL) {
 		cout << "pdfComponent::pdfComponent:: ERROR - can't access file " << filename << endl;
 		exit(100);
@@ -127,7 +128,6 @@ void pdfComponent::loadHistos() {
 	InterpFactors.clear();
 
 	loadDefaultHisto();
-
 	
 	//end here if no shape sys
 	if(myShapeUnc.size() ==0) return;
@@ -208,7 +208,7 @@ void pdfComponent::loadDefaultHisto(){
   if(defaultDistro == NULL) {	
 
        if( file->FindKey(getDefaultHistoName()) == NULL) 
-	Error("loadDefaultHisto","histo name " +getDefaultHistoName() + "  not found");
+	Error("loadDefaultHisto","histo name " +getDefaultHistoName() + "  not found in ");
 
 	defaultDistro    = (TH2F*)file->Get(getDefaultHistoName());
 
@@ -382,7 +382,6 @@ TH2F   pdfComponent::getInterpolatedHisto(){
 
 	//load histogram according to the current value of the parameters
 	loadHistos();
-
 	//clone default
 	TH2F h_temp = getDefaultHisto() ;
 	h_temp.SetName("Interp_" + getParamValueString() );
