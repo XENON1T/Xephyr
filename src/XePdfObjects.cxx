@@ -72,7 +72,7 @@ double shapeSys::getNearestHigh(){
 pdfComponent::pdfComponent(TString name, TString filename) : errorHandler("pdfComponent"), pdf_name(name) {
 
   	file = TFile::Open(filename);
-	cout<<" Reading file "<<filename<<endl;
+	Info("Constructor", "Reading file " + filename ) ;
 	if(file == NULL) {
 		cout << "pdfComponent::pdfComponent:: ERROR - can't access file " << filename << endl;
 		exit(100);
