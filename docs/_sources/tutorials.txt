@@ -1,3 +1,4 @@
+.. _tutorials:
 
 Tutorials Notebook
 ==================
@@ -9,7 +10,7 @@ You can find the HTML version of the following ROOT jupyter notebooks here:
 - `tutorial toy fitting and limits`_
 
 
-.. _`tutorial likelihood`: https://xenon1t.github.io/Xephyr/docs/likelihood_setup_example.html 
-.. _`tutorial toy generation`: https://xenon1t.github.io/Xephyr/docs/ToyGenerator_example.html
-.. _`tutorial toy fitting and limits`: https://xenon1t.github.io/Xephyr/docs/ToyFitter.html
+.. _`tutorial likelihood`: https://github.com/XENON1T/Xephyr/blob/master/notebooks/likelihood_setup_example.ipynb 
+.. _`tutorial toy generation`: https://github.com/XENON1T/Xephyr/blob/master/notebooks/ToyGenerator_example.ipynb
+.. _`tutorial toy fitting and limits`: https://github.com/XENON1T/Xephyr/blob/master/notebooks/ToyFitter.ipynb
 
