@@ -87,6 +87,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">How to get Help</a></li>
 </ul>
 
           
@@ -137,7 +138,20 @@ described in the <a class="reference internal" href="tutorials.html#tutorials"><
 </div></blockquote>
 <div class="section" id="input-handling">
 <span id="id1"></span><h2>Input handling<a class="headerlink" href="#input-handling" title="Permalink to this headline">¶</a></h2>
-<p><strong>(link class)</strong>
+<p>Currently Xephyr supports only 2D inputs (it is possible tough to use Xephyr for 1D likelihood, check out how to do it in <strong>this example</strong> <a href="#id2"><span class="problematic" id="id3">`FIXME`_</span></a>).
+The input handling is done via two classes: <a href="#id4"><span class="problematic" id="id5">`dataHandler`_</span></a>, to handle science data, toy MC and calibration and a class that handles
+inputs from the models as a <a href="#id6"><span class="problematic" id="id7">`pdfComponent`_</span></a>.</p>
+<p>The <strong>dataHandler</strong> is basically just a helper class to handle ROOT Trees and is used to &#8220;fill the likelihood&#8221; with data points.
+You can create a dataHandler in this way:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">dataHandler</span> <span class="nf">data</span><span class="p">(</span><span class="n">TString</span> <span class="n">name</span><span class="p">,</span> <span class="n">TString</span> <span class="n">fileName</span><span class="p">,</span> <span class="n">TString</span> <span class="n">dmTree</span><span class="p">);</span>
+               <span class="c1">// just a name  // ROOT file name and Tree name inside the file</span>
+</pre></div>
+</div>
+<p>Currently the Tree must contain at least two variables (braches), the name of the branches can be set but the default is &#8220;cs1&#8221;, &#8220;cs2&#8221;.
+For neymann construction, when one needs to loop over many toy datasets (where each of them is a separated Tree), one can use the dataHandler to loop
+over all Tree at once using the convenient method <strong>dataHandler::setTreeIndex</strong>.</p>
+<p>You can find a detailed tutorial on how to use these classes for the most common cases in <a href="#id8"><span class="problematic" id="id9">`FIXME`_</span></a></p>
+<p><strong>(link class)</strong> <a href="#id10"><span class="problematic" id="id11">`FIXME`_</span></a>
 <strong>(linking tutorial needed)</strong></p>
 </div>
 <div class="section" id="nuissance-parameter-handling">

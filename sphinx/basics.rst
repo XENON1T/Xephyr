@@ -20,8 +20,27 @@ Xephyr core libraries can be divided into 4 different main areas, for each of th
 Input handling 
 --------------
 
+Currently Xephyr supports only 2D inputs (it is possible tough to use Xephyr for 1D likelihood, check out how to do it in **this example** `FIXME`_).
+The input handling is done via two classes: `dataHandler`_, to handle science data, toy MC and calibration and a class that handles
+inputs from the models as a `pdfComponent`_.
 
-**(link class)**
+The **dataHandler** is basically just a helper class to handle ROOT Trees and is used to "fill the likelihood" with data points.
+You can create a dataHandler in this way:
+
+.. code-block:: c++
+
+        dataHandler data(TString name, TString fileName, TString dmTree);
+                       // just a name  // ROOT file name and Tree name inside the file
+
+Currently the Tree must contain at least two variables (braches), the name of the branches can be set but the default is "cs1", "cs2". 
+For neymann construction, when one needs to loop over many toy datasets (where each of them is a separated Tree), one can use the dataHandler to loop 
+over all Tree at once using the convenient method **dataHandler::setTreeIndex**.
+
+
+
+You can find a detailed tutorial on how to use these classes for the most common cases in `FIXME`_
+
+**(link class)** `FIXME`_
 **(linking tutorial needed)**
 
 
