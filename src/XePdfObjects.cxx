@@ -196,13 +196,13 @@ vector< shapeSys * > pdfComponent::scanFile(TString tag,char dd)
   printf (" Read %d histos representing %ld variables for \"%s\"  ",Nhisto,siglis.size(),pdf_name.Data());
   if (tag!="") printf (", containing tag %s ",tag.Data());
    printf ("\n");
-   float smallestStep=0;
+   double smallestStep=0;
   for (std::pair<TString, std::vector<Float_t>> element : siglis) {
     TString nn = element.first;
     std::vector<Float_t> v= element.second;
     std::sort (v.begin(), v.end());           //(12 32 45 71)26 80 53 33
     //for (int i=0; i<v.size(); i++) cout<<v[i]<<" ";
-    float step=0;
+    double step=0;
     
     std::map <Float_t, Int_t> ValDiff;
     for (uint j=0; j<v.size(); j++)
@@ -224,20 +224,29 @@ vector< shapeSys * > pdfComponent::scanFile(TString tag,char dd)
 	  }
 	}
       }
-    
-    sysa.push_back(new shapeSys(dd+nn+dd));
-    sysa[ns]->setStep(smallestStep);
-    sysa[ns]->setMinimum(v[0]);
-    sysa[ns]->setMaximum(v.size()-1);  
+
+    shapeSys *a=new shapeSys(dd+nn+dd);
+    a->setStep(smallestStep);
+    a->setMinimum(v[0]);
+    a->setMaximum(v[v.size()-1]);
+    a->setCurrentValue(0);
+    sysa.push_back(a);
+    // if (smallestStep==0) smallestStep=1;
+    //sysa[ns]->setStep(smallestStep);
+    //sysa[ns]->setMinimum(v[0]);
+    //sysa[ns]->setMaximum(v[v.size()-1]);
+    //sysa[ns]->setCurrentValue(0);
+    cout<<ns<<" Sanity: "<<sysa[ns]->getMinimum()<<"=min, "<<sysa[ns]->getMaximum()<<"=max"<<" step="<<sysa[ns]->getStep()<<endl;
     //    sys[ns] = new shapeSys(nn); 
     // sys[ns]->setStep(smallestStep);     
     // sys[ns]->setMinimum(v[0]);   
     // sys[ns]->setMaximum(v.size()-1);    
-    printf ("%s  {%f-%f} smallest possible step:%f  {",nn.Data(), v[0],v[v.size()-1],smallestStep);
+    printf ("%s  {%f to %f} smallest possible step:%f  {",nn.Data(), v[0],v[v.size()-1],smallestStep);
     for (uint j=0; j<v.size(); j++) cout<<v[j]<<",";
     cout<<"}"<<endl;
-  }
   ns++;
+  }
+
   //  return (sys[ns]);
   return sysa;
  }
