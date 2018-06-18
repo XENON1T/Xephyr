@@ -1,5 +1,5 @@
 #include "XePdfObjects.h"
-
+#include "TKey.h"
 
 
 scaleSys::scaleSys(TString name, double relativeUncertainty) : LKParameter(PAR_NOT_ASSIGNED, NUISANCE_PARAMETER, name.Data(), 0, 0.01, -5.,5.) {
@@ -116,6 +116,137 @@ pdfComponent::~pdfComponent(){
 	delete file;
 
 }
+
+	
+vector< shapeSys * > pdfComponent::scanFile(TString tag,char dd) 
+{
+  TIter next(file->GetListOfKeys());
+  TKey *key;
+  int Nhisto=0;
+  int c=0;
+  int npar=0;
+  TString name="";
+  std::vector<shapeSys *> sysa;
+  std::map <TString, std::vector<Float_t>> siglis;
+  while ((key = (TKey*)next())) {
+    TClass *cl = gROOT->GetClass(key->GetClassName());
+    if (!cl->InheritsFrom("TH1")) continue;
+    TH1 *h = (TH2*)key->ReadObj();
+    TString hfn=h->GetName(); // Histogram Full Name
+    Debug("PDFAutoReader","Found histogram: "+hfn);
+    int i0=0;
+    int i1=0;
+    if (pdf_name=="") {      
+      pdf_name=hfn(0,hfn.Index(dd));
+      Info("PDFAutoReader","No histogram name given. Will load "+pdf_name);
+    }
+    i0=hfn.Index(pdf_name)+pdf_name.Length();
+    if (i0 == -1)  {
+       Info("PDFAutoReader","histogram "+hfn+" does not start with "+pdf_name);
+      continue;
+    }
+    if (tag!="" && hfn.Index(tag)==-1) {
+      Info("PDFAutoReader","tag "+tag+" not included. continue.");
+      continue;
+    }
+    
+    int itsin=0;
+    // cout<<hfn<<"\n";    
+    while (i0<hfn.Length()-1) {
+      TString p1,p2;
+      float v;
+      i1=hfn.Index(dd,i0+1);
+      if (i1==-1) i1=hfn.Length();
+      p1=hfn(i0+1,i1-i0-1);
+      //      if (i1==hfn.Length()) Warning("PDFAutoReader","histogram "+hfn+" variable "+p1+" has no value given, ignore"); 
+      i0=i1;
+      i1=hfn.Index(dd,i0+1);
+      if (i1==-1) i1=hfn.Length();
+      p2=hfn(i0+1,i1-i0-1);
+      i0=i1;
+      if (p2.IsFloat())   {
+	//cout<<"\t"<<pdf_name<<"\t"<<p1<<"\t"<<p2<<endl;
+	v=p2.Atof();
+      }
+      else continue;
+
+      if (Nhisto==0) {
+	vector<Float_t> temp;
+	siglis[p1];
+	}
+      else if (siglis.find(p1) == siglis.end()){
+	cout<<"problem, new variable ("<<p1<<") on histo "<<hfn<<", not seen before \n";
+	continue;
+      }
+      int newVal=1;
+      itsin++;
+      for (uint i=0; i<siglis[p1].size(); i++) if (siglis[p1][i]==v) newVal=0;
+      if (newVal==1)  siglis[p1].push_back(v);
+
+	
+    }
+    if (itsin!=0) Nhisto++;
+  }
+
+  /* 
+     Now find smallest possible step 
+   */
+
+  int ns=0;
+  printf (" Read %d histos representing %ld variables for \"%s\"  ",Nhisto,siglis.size(),pdf_name.Data());
+  if (tag!="") printf (", containing tag %s ",tag.Data());
+   printf ("\n");
+   float smallestStep=0;
+  for (std::pair<TString, std::vector<Float_t>> element : siglis) {
+    TString nn = element.first;
+    std::vector<Float_t> v= element.second;
+    std::sort (v.begin(), v.end());           //(12 32 45 71)26 80 53 33
+    //for (int i=0; i<v.size(); i++) cout<<v[i]<<" ";
+    float step=0;
+    
+    std::map <Float_t, Int_t> ValDiff;
+    for (uint j=0; j<v.size(); j++)
+      {
+	for (uint jj=j+1; jj<v.size(); jj++) {
+	  step=v[jj]-v[j];
+	  if (ValDiff.find(step) == ValDiff.end()){
+	    Float_t x0=v[0];
+	    int okay=1;
+	    while (x0<v[v.size()-1]) {
+		   if (std::find(v.begin(),v.end(),x0) == v.end()){
+		     okay=0;
+		     //cout<<"problem with "<<x0<<endl;
+		     break;}
+		   x0=x0+step;
+	    }
+	    if (okay==1 && (smallestStep>step || smallestStep==0)) smallestStep=step;
+	    ValDiff[step]=okay;
+	  }
+	}
+      }
+    
+    sysa.push_back(new shapeSys(dd+nn+dd));
+    sysa[ns]->setStep(smallestStep);
+    sysa[ns]->setMinimum(v[0]);
+    sysa[ns]->setMaximum(v.size()-1);  
+    //    sys[ns] = new shapeSys(nn); 
+    // sys[ns]->setStep(smallestStep);     
+    // sys[ns]->setMinimum(v[0]);   
+    // sys[ns]->setMaximum(v.size()-1);    
+    printf ("%s  {%f-%f} smallest possible step:%f  {",nn.Data(), v[0],v[v.size()-1],smallestStep);
+    for (uint j=0; j<v.size(); j++) cout<<v[j]<<",";
+    cout<<"}"<<endl;
+  }
+  ns++;
+  //  return (sys[ns]);
+  return sysa;
+ }
+
+
+
+
+
+
 
 void pdfComponent::loadHistos() {
 	
