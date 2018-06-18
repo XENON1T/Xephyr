@@ -40,6 +40,8 @@ double shapeSys::getNearestLow(){
 		exit(100);
 	}
 
+	// skip case of Sys with step == 0
+	if(getStep() == 0.) return getCurrentValue();
 
 	double nearestLow = ( (int) ( getCurrentValue() / getStep() ) -1 ) * getStep() ;
 
@@ -63,6 +65,9 @@ double shapeSys::getNearestHigh(){
 		cout << "shapeSys::getNearestHigh() : ERROR - sys value outside range " << endl;
 		exit(100);
 	}
+
+	// skip case of Sys with step == 0
+	if(getStep() == 0.) return getCurrentValue();
 
 	return ( getNearestLow()  + getStep() ) ;
 
@@ -271,6 +276,11 @@ void pdfComponent::loadHistos() {
 	
 	//end here if no shape sys
 	if(myShapeUnc.size() ==0) return;
+
+	int sysToSkip = 0;
+	for(unsigned int k =0; k< myShapeUnc.size(); k++){
+		if ( myShapeUnc[k]->getStep() == 0. ) sysToSkip++;
+	}
 	
 	// total number of combination of point needed for 
 	// interpolation, 2^N_parameter. Each parameter can be loaded
@@ -278,6 +288,7 @@ void pdfComponent::loadHistos() {
         // example: to interpolate Leff=0.5 we need to load Leff=0 and Leff=1
 	// histograms.	
 	int N = pow(2, myShapeUnc.size());
+	N = N - sysToSkip;
 	
 	//the idea is to compute the volume of the hypercube in parameter space
 	//corresponding to that grid point and divide by the total volume,
@@ -286,6 +297,10 @@ void pdfComponent::loadHistos() {
 
 	//compute total volume
 	for(unsigned int k =0; k< myShapeUnc.size(); k++){
+
+		// skip ShapeSys with step ==0 
+		if(myShapeUnc[k]->getStep() == 0.) continue;
+
 		total_vol *= fabs( myShapeUnc[k]->getNearestHigh() - 
 				myShapeUnc[k]->getNearestLow() );
 	}
@@ -307,11 +322,14 @@ void pdfComponent::loadHistos() {
 			//of that parameter, the high end otherwise
 			int lowOrHigh = ( i / param_power) % 2 ;
 
-
+			
 			if(lowOrHigh == 0)       grid_point.push_back(false);
 			else if(lowOrHigh == 1)  grid_point.push_back(true);
 
 			else Error("loadHistos","something very wierd happened");
+
+			// skip if Step ==0
+			if( myShapeUnc[k]->getStep() == 0. ) continue;
 
 			//compute the numerator of iterpolation factor 
 			//for this grid point, area of the opposite
@@ -374,9 +392,10 @@ TString pdfComponent::getNearestHistoName(vector<bool> setOfVal){
 	  name_histo.Append( sysName );
 
 	  //name_histo.Append("_" + sysName );
-	  
-	  //get nearest low or high value to the current one
-	  if(!(setOfVal[j])) sprintf(value_temp,"%.2f", myShapeUnc[j]->getNearestLow());
+
+	  //get nearest low or high value to the current one, or set current in case step ==0
+	  if(myShapeUnc[j]->getStep() == 0. ) sprintf(value_temp,"%.2f", myShapeUnc[j]->getCurrentValue());
+	  else if(!(setOfVal[j])) sprintf(value_temp,"%.2f", myShapeUnc[j]->getNearestLow());
 	  else      sprintf(value_temp,"%.2f", myShapeUnc[j]->getNearestHigh());
 
 	  name_histo.Append(value_temp);
