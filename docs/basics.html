@@ -139,8 +139,8 @@ described in the <a class="reference internal" href="tutorials.html#tutorials"><
 <div class="section" id="input-handling">
 <span id="id1"></span><h2>Input handling<a class="headerlink" href="#input-handling" title="Permalink to this headline">¶</a></h2>
 <p>Currently Xephyr supports only 2D inputs (it is possible tough to use Xephyr for 1D likelihood, check out how to do it in <strong>this example</strong> <a href="#id2"><span class="problematic" id="id3">`FIXME`_</span></a>).
-The input handling is done via two classes: <a href="#id4"><span class="problematic" id="id5">`dataHandler`_</span></a>, to handle science data, toy MC and calibration and a class that handles
-inputs from the models as a <a href="#id6"><span class="problematic" id="id7">`pdfComponent`_</span></a>.</p>
+The input handling is done via two classes: <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classdataHandler.html">dataHandler</a>, to handle science data, toy MC and calibration and a class that handles
+inputs from the models as a <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classpdfComponent.html">pdfComponent</a>.</p>
 <p>The <strong>dataHandler</strong> is basically just a helper class to handle ROOT Trees and is used to &#8220;fill the likelihood&#8221; with data points.
 You can create a dataHandler in this way:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="n">dataHandler</span> <span class="nf">data</span><span class="p">(</span><span class="n">TString</span> <span class="n">name</span><span class="p">,</span> <span class="n">TString</span> <span class="n">fileName</span><span class="p">,</span> <span class="n">TString</span> <span class="n">dmTree</span><span class="p">);</span>
@@ -150,13 +150,31 @@ You can create a dataHandler in this way:</p>
 <p>Currently the Tree must contain at least two variables (braches), the name of the branches can be set but the default is &#8220;cs1&#8221;, &#8220;cs2&#8221;.
 For neymann construction, when one needs to loop over many toy datasets (where each of them is a separated Tree), one can use the dataHandler to loop
 over all Tree at once using the convenient method <strong>dataHandler::setTreeIndex</strong>.</p>
-<p>You can find a detailed tutorial on how to use these classes for the most common cases in <a href="#id8"><span class="problematic" id="id9">`FIXME`_</span></a></p>
-<p><strong>(link class)</strong> <a href="#id10"><span class="problematic" id="id11">`FIXME`_</span></a>
-<strong>(linking tutorial needed)</strong></p>
+<p>The <strong>pdfComponent</strong> handels instead the loading of PDF models through histograms. Again, currently this supports only <strong>TH2F</strong> as input, so you can
+do 1D and 2D discriminating space with it but not more.
+It is an object representing a normalized PDF, meaning that is normalized to the total expected number of events for that background or signal,
+This component is designed to interplay with <a class="reference internal" href="#nuissance"><span>nuissance parameter</span></a>, so that the scale (total number of events) and the shape  of the histogram can change
+as a function of the parameters. The pdfComponent implements linear interpolation between any number of Shape parameters. To load models in the
+form of histogram you have to follow a naming convention for the histogram, here an example:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">prefixName_parameterNameA_x</span><span class="p">.</span><span class="n">yz_parameterNameB_x</span><span class="p">.</span><span class="n">yz</span><span class="p">......</span><span class="n">_parameterNameZ_x</span><span class="p">.</span><span class="n">yz</span>
+</pre></div>
+</div>
+<p>where the &#8220;prefixName&#8221; is whatever name for your bkg model, &#8220;parameterName&#8221; is the name of one of your parameters, and &#8220;x.y.z&#8221; are numbers.</p>
+<p>You can find a detailed <strong>tutorial</strong> on how to use these classes for the most common cases in  <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a> and you can find the official class documentation in
+<a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classpdfComponent.html">pdfComponent</a> and <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classdataHandler.html">dataHandler</a></p>
 </div>
 <div class="section" id="nuissance-parameter-handling">
 <span id="nuissance"></span><h2>Nuissance Parameter Handling<a class="headerlink" href="#nuissance-parameter-handling" title="Permalink to this headline">¶</a></h2>
-<p>bla bla bla</p>
+<p>Xephyr comes with two types of nuissance parameter (which in short is a fancy name to say uncertainties), a scale uncertainty, <strong>scaleSys</strong>, that takes
+care of the absolute rate variation for that component, and a shape uncertainty, <strong>shapeSys</strong>, for its shape variation. We use the &#8220;natural&#8221; unit scale
+for the uncertainties: mean zero and sigma one. Each parameter can have three different behaviours: can be just a constant <strong>fixed</strong> parameter, or
+can be a <strong>free</strong> parameter, which is able to vary withouth any contraint, or can be a <strong>nuissance</strong> parameter, which can vary but is constrained by a gaussian
+constrain.</p>
+<p>For a <strong>shapeSys</strong> to be usable we need to load the PDF variations as a function of the parameter value, this is done loading different histogram
+corresponding to specific parameters value, so one need to build a kind of grid in the parameter space, populated with histograms, which aftewards
+is going to be interpolated.</p>
+<p>You can find the class documentation for the paramter handling in <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classshapeSys.html">shapeSys</a> and <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classscaleSys.html">scaleSys</a> reference, while a detailed tutorial on how
+to use them can be found in <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a>.</p>
 </div>
 <div class="section" id="building-the-likelihood">
 <span id="likelihood"></span><h2>Building the Likelihood<a class="headerlink" href="#building-the-likelihood" title="Permalink to this headline">¶</a></h2>
