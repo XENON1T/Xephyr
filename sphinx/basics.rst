@@ -36,7 +36,11 @@ Currently the Tree must contain at least two variables (braches), the name of th
 For neymann construction, when one needs to loop over many toy datasets (where each of them is a separated Tree), one can use the dataHandler to loop 
 over all Tree at once using the convenient method **dataHandler::setTreeIndex**.
 
-
+The **pdfComponent** handels instead the loading of PDF models through histograms. Again, currently this supports only **TH2F** as input, so you can
+do 1D and 2D discriminating space with it but not more. 
+It is an object representing a normalized PDF, meaning that is normalized to the total expected number of events for that background or signal,
+This component is designed to integrate with nuissance parameter, so that the Scale (total number of events) and the shape either shape or scale (see next section).
+You can immagine it as an 
 
 You can find a detailed tutorial on how to use these classes for the most common cases in `FIXME`_
 
