@@ -81,7 +81,7 @@ First, keep a structure (don't write your |pig| |pig|  scripts inside the Xephyr
 (inside the Master dir "XEPHYR_PKG") and copy the xephyr loader in it. 
 Consider later to make a package out of it.
 
-.. |pig| image:: static/pig.svg
+.. |pig| image:: pig.svg
         :width: 14pt       
 
 .. code-block:: bash
