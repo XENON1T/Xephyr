@@ -78,12 +78,22 @@ to use them can be found in :ref:`Tutorials <tutorials>`.
 .. _`shapeSys`: https://xenon1t.github.io/Xephyr/class_reference/classshapeSys.html
 .. _`scaleSys`: https://xenon1t.github.io/Xephyr/class_reference/classscaleSys.html
 
+
+        **Advanced:**
+        Parameter that are used in combination of two likelihoods **combinedParameter** class. Exaplain a bit `FIXME`_
+
 .. _likelihood:
 
 Building the Likelihood
 -------------------------
 
-bla bla bla
+The likelihood classes are intended as a scaffold that collects your inputs and has the ability to run methods on them. The general idea is that a likelihood class
+would be initialized with your inputs, later on it can return the likelihood value for any parameter set. Note that the likelihood structure is predefined and
+cannot be changed at runtime. There are a few types of likelihood classes and they differ based on the implementation of the likelihood function (see below),
+but they all share common infrastructure like: printing parameter values and parameter access, a method called **maximize** that will actually minimize the -log(L),
+methods computing likelihood scans, etc., you can find details on all of this in the :ref:`Tutorials <tutorials>` section.
+
+
 
 
 .. _limit:

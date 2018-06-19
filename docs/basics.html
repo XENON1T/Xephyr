@@ -175,10 +175,17 @@ corresponding to specific parameters value, so one need to build a kind of grid 
 is going to be interpolated.</p>
 <p>You can find the class documentation for the paramter handling in <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classshapeSys.html">shapeSys</a> and <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classscaleSys.html">scaleSys</a> reference, while a detailed tutorial on how
 to use them can be found in <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a>.</p>
+<blockquote>
+<div><strong>Advanced:</strong>
+Parameter that are used in combination of two likelihoods <strong>combinedParameter</strong> class. Exaplain a bit <a href="#id4"><span class="problematic" id="id5">`FIXME`_</span></a></div></blockquote>
 </div>
 <div class="section" id="building-the-likelihood">
 <span id="likelihood"></span><h2>Building the Likelihood<a class="headerlink" href="#building-the-likelihood" title="Permalink to this headline">¶</a></h2>
-<p>bla bla bla</p>
+<p>The likelihood classes are intended as a scaffold that collects your inputs and has the ability to run methods on them. The general idea is that a likelihood class
+would be initialized with your inputs, later on it can return the likelihood value for any parameter set. Note that the likelihood structure is predefined and
+cannot be changed at runtime. There are a few types of likelihood classes and they differ based on the implementation of the likelihood function (see below),
+but they all share common infrastructure like: printing parameter values and parameter access, a method called <strong>maximize</strong> that will actually minimize the -log(L),
+methods computing likelihood scans, etc., you can find details on all of this in the <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a> section.</p>
 </div>
 <div class="section" id="limit-setting">
 <span id="limit"></span><h2>Limit setting<a class="headerlink" href="#limit-setting" title="Permalink to this headline">¶</a></h2>

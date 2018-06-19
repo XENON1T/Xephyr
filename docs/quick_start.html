@@ -67,8 +67,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#initial-setup">Initial Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#load-the-library-dinamically">Load the Library Dinamically</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#compile-your-code-with-xephyr">Compile Your Code With Xephyr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-with-scripts">Usage with Scripts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#jupyter-notebooks">Jupyter Notebooks</a></li>
 </ul>
 </li>
@@ -166,12 +166,30 @@ git clone git@github.com:XENON1T/Xephyr.git .
 </div>
 <p>You maybe noticed above the &#8220;export&#8221; of enviroment variable <strong>XEPHYR_DIR</strong> that points to the master dir XEPHYR_PKG, this tells Xephyr where its code is located, it is very important and so I reccomend to add it to your .bashrc (as the snipplet above is doing).</p>
 </div>
-<div class="section" id="load-the-library-dinamically">
-<h2>Load the Library Dinamically<a class="headerlink" href="#load-the-library-dinamically" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="compile-your-code-with-xephyr">
+<h2>Compile Your Code With Xephyr<a class="headerlink" href="#compile-your-code-with-xephyr" title="Permalink to this headline">¶</a></h2>
 <p>XEPHYR strongly encourage package structure, so that you can easily share your code and compile it (hopefully) out of the box.
 So, we strongly recommend you to <a class="reference internal" href="xephyr_packages.html#packages"><span>create your own package</span></a>, but since this is a &#8220;quick start for people in a hurry&#8221;  we&#8217;ll skip that for now,
 you can always do it later.</p>
-<p>Create a new directory where to store your scripts  (inside the Master dir &#8220;XEPHYR_PKG&#8221;) and copy the xephyr loader in it.</p>
+<p>Xephyr provides a simple build command to compile any xephyr package automatically, <strong>without writing any makefile</strong> yourself.
+First step: the package you want to compile must lie inside the Master xephyr dir (<strong>$XEPHYR_DIR</strong>), which as a reminder is the dir that contains the Xephyr package.  Then run the following from the master dir:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">source </span>Xephyr/pacman/build.sh
+</pre></div>
+</div>
+<p>That&#8217;s it! (if it worked) this should have created a new directory &#8220;build&#8221; where you can find all the executables of all your packages.
+This step scans the directory tree and produces a makefile, so it is only needed at the beginning and when you add a new file,
+for all other small changes you can do:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>build
+<span class="nv">$ </span>make
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage-with-scripts">
+<h2>Usage with Scripts<a class="headerlink" href="#usage-with-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Xephyr provides a simple loader that can be used within a ROOT CLI session (or inside a macro) to load the library dinamically.
+First, keep a structure (don&#8217;t write your <a class="reference internal" href="_images/pig.svg"><img alt="pig" src="_images/pig.svg" width="14pt" /></a> <a class="reference internal" href="_images/pig.svg"><img alt="pig" src="_images/pig.svg" width="14pt" /></a>  scripts inside the Xephyr code dir), create a new directory where to store your scripts
+(inside the Master dir &#8220;XEPHYR_PKG&#8221;) and copy the xephyr loader in it.
+Consider later to make a package out of it.</p>
 <div class="highlight-bash"><div class="highlight"><pre>mkdir myAmazingCode
 <span class="nb">cd </span>myAmazingCode
 cp ../Xephyr/loadXephyr.C .
@@ -179,7 +197,9 @@ cp ../Xephyr/loadXephyr.C .
 </div>
 <p>Now you can load xephyr libraries for <strong>interactive use</strong>, meaning you can run your scripts that use Xephyr classes out of the box (without any include statement).
 To load the library for interactive use do:</p>
-<div class="highlight-bash"><div class="highlight"><pre>root -l loadXephyr.C
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span> <span class="nx">root</span> <span class="o">-</span><span class="nx">l</span> <span class="nx">loadXephyr</span><span class="p">.</span><span class="nx">C</span>
+<span class="c1">// now I can use Xephyr classes in ROOT CLI :)</span>
+<span class="o">&gt;</span> <span class="nx">pdfComponent</span> <span class="nx">p</span><span class="p">(</span><span class="s2">&quot;pippo&quot;</span><span class="p">,</span><span class="s2">&quot;pluto.root&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Or if for some reason you prefer to call it within a script, then add to your script the following:</p>
@@ -194,26 +214,10 @@ To load the library for interactive use do:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="compile-your-code-with-xephyr">
-<h2>Compile Your Code With Xephyr<a class="headerlink" href="#compile-your-code-with-xephyr" title="Permalink to this headline">¶</a></h2>
-<p>Xephyr provides a simple build command to compile any xephyr package automatically, <strong>without writing any makefile</strong> yourself. Again,
-this is possible only if your package follow the rules described in <a class="reference internal" href="xephyr_packages.html#packages"><span>Xephyr Packages</span></a> section.</p>
-<p>First step, the package you want to compile must lie inside the Master xephyr dir (<strong>$XEPHYR_DIR</strong>), which as a reminder is the dir that contains the Xephyr package.  Then run the following from the master dir:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nb">source </span>Xephyr/pacman/build.sh
-</pre></div>
-</div>
-<p>That&#8217;s it! (if it worked) this should have created a new directory &#8220;build&#8221; where you can find all the executables of all your packages.
-This step scans the directory tree and produces a makefile, so it is only needed at the beginning and when you add a new file,
-for all other small changes you can do:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>build
-<span class="nv">$ </span>make
-</pre></div>
-</div>
-</div>
 <div class="section" id="jupyter-notebooks">
 <h2>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">¶</a></h2>
-<p>You brave hero! I pray for your soul...</p>
-</div>
+<p>You brave hero! I pray for your soul... <a href="#id1"><span class="problematic" id="id2">`FIXME: add at least a small comment here`_</span></a></p>
+<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Pig">Pig</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"     title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div></div>
 </div>
 
 
