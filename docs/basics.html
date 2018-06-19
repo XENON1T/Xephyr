@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="xephyr 0.0 documentation" href="index.html"/>
-        <link rel="next" title="Tutorials Notebook" href="tutorials.html"/>
+        <link rel="next" title="Tutorials and Examples" href="tutorials.html"/>
         <link rel="prev" title="Xephyr Packages" href="xephyr_packages.html"/> 
 
   
@@ -67,8 +67,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quick_start.html#system-requirements">System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quick_start.html#initial-setup">Initial Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#load-the-library-dinamically">Load the Library Dinamically</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quick_start.html#compile-your-code-with-xephyr">Compile Your Code With Xephyr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#usage-with-scripts">Usage with Scripts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quick_start.html#jupyter-notebooks">Jupyter Notebooks</a></li>
 </ul>
 </li>
@@ -83,10 +83,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#input-handling">Input handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nuissance-parameter-handling">Nuissance Parameter Handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-likelihood">Building the Likelihood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-safeguard">The Safeguard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#limit-setting">Limit setting</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials and Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#notebook-tutorials">Notebook Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#examples-of-packages">Examples of Packages</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="help.html">How to get Help</a></li>
 </ul>
 
@@ -182,14 +187,50 @@ Parameter that are used in combination of two likelihoods <strong>combinedParame
 <div class="section" id="building-the-likelihood">
 <span id="likelihood"></span><h2>Building the Likelihood<a class="headerlink" href="#building-the-likelihood" title="Permalink to this headline">¶</a></h2>
 <p>The likelihood classes are intended as a scaffold that collects your inputs and has the ability to run methods on them. The general idea is that a likelihood class
-would be initialized with your inputs, later on it can return the likelihood value for any parameter set. Note that the likelihood structure is predefined and
-cannot be changed at runtime. There are a few types of likelihood classes and they differ based on the implementation of the likelihood function (see below),
+would be initialized with your inputs and  later on it can return the likelihood value for any parameter set. Note that the likelihood structure is predefined and
+cannot be changed. There are a few types of likelihood classes and they differ based on the implementation of the likelihood function (see below),
 but they all share common infrastructure like: printing parameter values and parameter access, a method called <strong>maximize</strong> that will actually minimize the -log(L),
 methods computing likelihood scans, etc., you can find details on all of this in the <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a> section.</p>
+<p>Xephyr provides three types of likelihood classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>pdfLikelihood</strong>: implements the standard 2D (S1,S2) unbinned likelihood, it is composed of a poisson term that accounts for the total number of events times an
+extended term that accounts for the shape, additionally each (non-free) nuissance parameter is constrained by a gaussian term.
+This likelihood can be used also for a 1D PDF.</li>
+</ul>
+<ul class="simple">
+<li><strong>binnedLikelihood</strong>: implements a binned likelihood that can be either 1D or 2D, it returns just a product of poissons computed for each bin. TH2F errors
+on the bins are assigned as scale uncertainty to the bin itself.
+Nowadays the trend is to go for a PDF likelihood because is &#8220;more sensitive&#8221;, but remember this comes with high costs, since is harder to introduce uncertainties in a
+PDF shape rather than consider them as scale independent factors on bins. So this type of likelihood is handy for all those search with low rate and large unknow
+uncertainties.</li>
+</ul>
+<ul class="simple">
+<li><strong>myLikelihood</strong>: this is just an empty scheleton, it provides all the functionalities but does not implement the method <strong>computeTheLikelihood</strong>,
+so the developer is free to invent his own. Note that since the input infrastructure accepts 2D only histograms this is not an easy proxy for adding
+a dimension.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="the-safeguard">
+<span id="safeguard"></span><h2>The Safeguard<a class="headerlink" href="#the-safeguard" title="Permalink to this headline">¶</a></h2>
+<p>The idea of the safeguard is to try to address the difficulty of assigning
+uncertainty to the background model, especially when using an unbinned likelihood. This procedure needs a calibration dataset, the <strong>assumption</strong>
+is that the calibration represents exactly the background component of science data that one is trying to model. The science data and the calibration data
+are then simultaneously fitted, so one need to provide the calibration data to the likelihood as well, a signal component (the safeguard) is injected then
+in shape of the background model and constrained by the fit on calibration. To turn On/Off the safeguard computation is quite easy,
+use the <strong>setWithSafeGuard</strong> flag. Currentl Xephyr implement only a positive injection of signal (which for a few reason can be considered more conservative),
+the possibility for a negative safeguard is under scrutiny and may be added in future releases.</p>
+<blockquote>
+<div><strong>WARNING:::</strong> The safeguard is not the holy grail and it comes with a few subtle problems. The main problem is the contamination of your calibration sample
+by other background components (different from the ones you want to model). Xephyr allows you to introduce an additional background component to be
+used only in the calibration fit to mimic the expected &#8220;known&#8221; contamination level. In case there is reason to think that the calibration sample, within the signal region,
+might  suffer of uknown or largely uncertain contamination the safeguard may lead to unwanted feature, hiding a real existing signal (for positive safeguard) or
+even creating a fake signal (for negative safeguard).</div></blockquote>
 </div>
 <div class="section" id="limit-setting">
 <span id="limit"></span><h2>Limit setting<a class="headerlink" href="#limit-setting" title="Permalink to this headline">¶</a></h2>
-<p>bla bla bla</p>
+<p>Xephyr uses the profiled likelihood approach</p>
 </div>
 </div>
 
@@ -199,7 +240,7 @@ methods computing likelihood scans, etc., you can find details on all of this in
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials Notebook">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials and Examples">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="xephyr_packages.html" class="btn btn-neutral" title="Xephyr Packages"><span class="fa fa-arrow-circle-left"></span> Previous</a>

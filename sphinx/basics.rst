@@ -82,18 +82,60 @@ to use them can be found in :ref:`Tutorials <tutorials>`.
         **Advanced:**
         Parameter that are used in combination of two likelihoods **combinedParameter** class. Exaplain a bit `FIXME`_
 
+
 .. _likelihood:
 
 Building the Likelihood
 -------------------------
 
 The likelihood classes are intended as a scaffold that collects your inputs and has the ability to run methods on them. The general idea is that a likelihood class
-would be initialized with your inputs, later on it can return the likelihood value for any parameter set. Note that the likelihood structure is predefined and
-cannot be changed at runtime. There are a few types of likelihood classes and they differ based on the implementation of the likelihood function (see below),
+would be initialized with your inputs and  later on it can return the likelihood value for any parameter set. Note that the likelihood structure is predefined and
+cannot be changed. There are a few types of likelihood classes and they differ based on the implementation of the likelihood function (see below),
 but they all share common infrastructure like: printing parameter values and parameter access, a method called **maximize** that will actually minimize the -log(L),
 methods computing likelihood scans, etc., you can find details on all of this in the :ref:`Tutorials <tutorials>` section.
 
+Xephyr provides three types of likelihood classes: 
+ 
+ - **pdfLikelihood**: implements the standard 2D (S1,S2) unbinned likelihood, it is composed of a poisson term that accounts for the total number of events times an 
+   extended term that accounts for the shape, additionally each (non-free) nuissance parameter is constrained by a gaussian term. 
+   This likelihood can be used also for a 1D PDF.
 
+ .. FIXME formula
+
+ - **binnedLikelihood**: implements a binned likelihood that can be either 1D or 2D, it returns just a product of poissons computed for each bin. TH2F errors
+   on the bins are assigned as scale uncertainty to the bin itself. 
+   Nowadays the trend is to go for a PDF likelihood because is "more sensitive", but remember this comes with high costs, since is harder to introduce uncertainties in a 
+   PDF shape rather than consider them as scale independent factors on bins. So this type of likelihood is handy for all those search with low rate and large unknow
+   uncertainties.
+
+ .. FIXME formula
+ 
+ - **myLikelihood**: this is just an empty scheleton, it provides all the functionalities but does not implement the method **computeTheLikelihood**, 
+   so the developer is free to invent his own. Note that since the input infrastructure accepts 2D only histograms this is not an easy proxy for adding
+   a dimension.
+
+ .. FIXME formula
+
+
+.. _safeguard:
+
+The Safeguard
+--------------
+
+The idea of the safeguard is to try to address the difficulty of assigning 
+uncertainty to the background model, especially when using an unbinned likelihood. This procedure needs a calibration dataset, the **assumption** 
+is that the calibration represents exactly the background component of science data that one is trying to model. The science data and the calibration data
+are then simultaneously fitted, so one need to provide the calibration data to the likelihood as well, a signal component (the safeguard) is injected then 
+in shape of the background model and constrained by the fit on calibration. To turn On/Off the safeguard computation is quite easy, 
+use the **setWithSafeGuard** flag. Currentl Xephyr implement only a positive injection of signal (which for a few reason can be considered more conservative), 
+the possibility for a negative safeguard is under scrutiny and may be added in future releases.
+
+        **WARNING:::** The safeguard is not the holy grail and it comes with a few subtle problems. The main problem is the contamination of your calibration sample
+        by other background components (different from the ones you want to model). Xephyr allows you to introduce an additional background component to be 
+        used only in the calibration fit to mimic the expected "known" contamination level. In case there is reason to think that the calibration sample, within the signal region,
+        might  suffer of uknown or largely uncertain contamination the safeguard may lead to unwanted feature, hiding a real existing signal (for positive safeguard) or  
+        even creating a fake signal (for negative safeguard).
+        
 
 
 .. _limit:
@@ -101,6 +143,7 @@ methods computing likelihood scans, etc., you can find details on all of this in
 Limit setting
 --------------
 
-bla bla bla
+Xephyr uses the profiled likelihood approach
+
 
 
