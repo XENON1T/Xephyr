@@ -54,7 +54,7 @@ double shapeSys::getNearestLow(){
 
 	if( getCurrentValue() == getMaximum() ) 
 		nearestLow = getMaximum() - getStep() ; 
-
+	Debug("ShapeSys::getnearestLow",Form(" nearstlow = %f",nearestLow));
 	return nearestLow ;
 }
 
@@ -68,6 +68,7 @@ double shapeSys::getNearestHigh(){
 
 	// skip case of Sys with step == 0
 	if(getStep() == 0.) return getCurrentValue();
+	Debug("ShapeSys::getnearestHigh",Form(" nearstHigh = %f",getNearestLow()+getStep()));
 
 	return ( getNearestLow()  + getStep() ) ;
 
@@ -198,9 +199,9 @@ vector< shapeSys * > pdfComponent::scanFile(TString tag,char dd)
    */
 
   int ns=0;
-  printf (" Read %d histos representing %ld variables for \"%s\"  ",Nhisto,siglis.size(),pdf_name.Data());
-  if (tag!="") printf (", containing tag %s ",tag.Data());
-   printf ("\n");
+  Info("PDFAutoReader",Form(" Read %d histos representing %ld variables for \"%s\"  ",Nhisto,siglis.size(),pdf_name.Data()));
+  //  if (tag!="") printf (", containing tag %s ",tag.Data());
+  // printf ("\n");
    double smallestStep=0;
   for (std::pair<TString, std::vector<Float_t>> element : siglis) {
     TString nn = element.first;
@@ -214,16 +215,18 @@ vector< shapeSys * > pdfComponent::scanFile(TString tag,char dd)
       {
 	for (uint jj=j+1; jj<v.size(); jj++) {
 	  step=v[jj]-v[j];
+
 	  if (ValDiff.find(step) == ValDiff.end()){
+	  
 	    Float_t x0=v[0];
-	    int okay=1;
-	    while (x0<v[v.size()-1]) {
-		   if (std::find(v.begin(),v.end(),x0) == v.end()){
-		     okay=0;
-		     //cout<<"problem with "<<x0<<endl;
-		     break;}
-		   x0=x0+step;
+	    int okay=0;
+	    while (okay==0) {
+
+	      for (uint vv=0; vv<v.size()-1; vv++) {if (fabs(v[vv]-x0)<1e-3) { okay=1; break;}}
+
+	      x0=x0+step;
 	    }
+	  
 	    if (okay==1 && (smallestStep>step || smallestStep==0)) smallestStep=step;
 	    ValDiff[step]=okay;
 	  }
@@ -236,20 +239,12 @@ vector< shapeSys * > pdfComponent::scanFile(TString tag,char dd)
     a->setMaximum(v[v.size()-1]);
     a->setCurrentValue(0);
     sysa.push_back(a);
-    // if (smallestStep==0) smallestStep=1;
-    //sysa[ns]->setStep(smallestStep);
-    //sysa[ns]->setMinimum(v[0]);
-    //sysa[ns]->setMaximum(v[v.size()-1]);
-    //sysa[ns]->setCurrentValue(0);
-    cout<<ns<<" Sanity: "<<sysa[ns]->getMinimum()<<"=min, "<<sysa[ns]->getMaximum()<<"=max"<<" step="<<sysa[ns]->getStep()<<endl;
-    //    sys[ns] = new shapeSys(nn); 
-    // sys[ns]->setStep(smallestStep);     
-    // sys[ns]->setMinimum(v[0]);   
-    // sys[ns]->setMaximum(v.size()-1);    
-    printf ("%s  {%f to %f} smallest possible step:%f  {",nn.Data(), v[0],v[v.size()-1],smallestStep);
-    for (uint j=0; j<v.size(); j++) cout<<v[j]<<",";
-    cout<<"}"<<endl;
-  ns++;
+   
+    TString so=Form("%s  {%f to %f} smallest possible step:%f  {",nn.Data(), v[0],v[v.size()-1],smallestStep);
+    for (uint j=0; j<v.size(); j++) so=so+Form("%.2f,",v[j]);
+    so=so+"}";
+    Info("PDFAutoReader",so);
+    ns++;
   }
 
   //  return (sys[ns]);
@@ -297,7 +292,7 @@ void pdfComponent::loadHistos() {
 
 	//compute total volume
 	for(unsigned int k =0; k< myShapeUnc.size(); k++){
-
+	  
 		// skip ShapeSys with step ==0 
 		if(myShapeUnc[k]->getStep() == 0.) continue;
 
@@ -538,14 +533,13 @@ void pdfComponent::setEvents(double events){
 
 
 TH2F   pdfComponent::getInterpolatedHisto(){
-
 	//load histogram according to the current value of the parameters
 	loadHistos();
 	//clone default
 	TH2F h_temp = getDefaultHisto() ;
-	h_temp.SetName("Interp_" + getParamValueString() );
 
-
+	Info("pdfcomponent::getinterpolated","Interp_" + getParamValueString());
+	
 	if(myShapeUnc.size() > 0) {
 	    h_temp = *histos[0];
             h_temp.Reset();
@@ -565,6 +559,7 @@ TH2F   pdfComponent::getInterpolatedHisto(){
 	/*if(h_temp.GetNbinsX() == 63 || doExtend) 
 		extendHisto(h_temp);
 		*/
+	h_temp.SetName("Interp_" + getParamValueString() );
 
 	return h_temp;	
 }
