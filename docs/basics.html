@@ -191,7 +191,11 @@ would be initialized with your inputs and  later on it can return the likelihood
 cannot be changed. There are a few types of likelihood classes and they differ based on the implementation of the likelihood function (see below),
 but they all share common infrastructure like: printing parameter values and parameter access, a method called <strong>maximize</strong> that will actually minimize the -log(L),
 methods computing likelihood scans, etc., you can find details on all of this in the <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a> section.</p>
-<p>Xephyr provides three types of likelihood classes:</p>
+<blockquote>
+<div><strong>IMPORTANT NOTES:</strong> the likelihood expects pdfComponents to return models normalized to number of expected events. The likelihood
+rescales internally the parameter of interest (mu) to correspond to the number of &#8220;observed&#8221; signal events, for example, best fit mu=1.5 means
+that you are &#8220;fitting&#8221; 1.5 signal events.</div></blockquote>
+<p>Xephyr provides four types of likelihood classes:</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>pdfLikelihood</strong>: implements the standard 2D (S1,S2) unbinned likelihood, it is composed of a poisson term that accounts for the total number of events times an
@@ -209,6 +213,12 @@ uncertainties.</li>
 <li><strong>myLikelihood</strong>: this is just an empty scheleton, it provides all the functionalities but does not implement the method <strong>computeTheLikelihood</strong>,
 so the developer is free to invent his own. Note that since the input infrastructure accepts 2D only histograms this is not an easy proxy for adding
 a dimension.</li>
+</ul>
+<ul class="simple">
+<li><strong>CombinedProfileLikelihood</strong>: this class contains a list of likelihoods that need to be combined. Just add likelihood istances to its list and
+use same common methods. The combination is done just by multiplying likelihood togheter, sharing the parameter of interest, it takes into account
+the relative exposure using the total signal integral for each likelihood. Nuissance parameter by default are added being considered independent from
+each other, if you want to correlate them then you need to use the <strong>CombinedParameter</strong> class.</li>
 </ul>
 </div></blockquote>
 </div>
@@ -230,7 +240,33 @@ even creating a fake signal (for negative safeguard).</div></blockquote>
 </div>
 <div class="section" id="limit-setting">
 <span id="limit"></span><h2>Limit setting<a class="headerlink" href="#limit-setting" title="Permalink to this headline">¶</a></h2>
-<p>Xephyr uses the profiled likelihood approach</p>
+<p>Xephyr uses the profiled likelihood approach to get rid of nuissance parameter depencency and the likelihood ratio as test statistic.
+The parameter of interest (mu) is bound to be positive and the test statistic can be difined as two-sided or one-sided.
+If you are unfamiliar with this we recommend to have a look for example at <a class="reference external" href="https://arxiv.org/abs/1503.07622">K. Cranmer</a> review.</p>
+<blockquote>
+<div></div></blockquote>
+<p>Sensitivity and limits may be computed in two different way: using asymptotics formulae or Neymann construction (following Feldmann-Cousins approach).
+For the asymptotics approach one can use the class <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classAsymptoticExclusion.html">AsymptoticExclusion</a>, the syntax is simple (either for limit and sensitivity) and you can refer to the tutorials for this (it is basically two lines of code), while for the construction of the test statistic distribution via MC it is worth to outline the procedure here.</p>
+<p><strong>Test statistic distro with MC:</strong> The goal is to compute the graph of the test statistic&#8217;s 90% quantiles as a funtion of
+the parameter of interest, this can be done in a following a few steps.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Choose a list of parameter of interest (POI) values. Given that Xephyr is re-scaling internally the POI this list can be the same for all masses, the
+recommended one is mu = [ 0.5, 1, 2, 2.5, 3, 4, 5, 10, 15 ].</li>
+<li>Generate for each of the hypotheses in the list (and for each mass) MC toys datasets with nuber of signal injected events according to the hypothesis.
+For a final result with reasonable precision one should target 10&#8216;000 datasets per hypothesis. The datasets can be generated using the <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classToyGenerator.html">ToyGenerator</a> class,
+see tutorials.</li>
+<li>Each of the generated dataset must be fitted with a conditional fit mu fixed to the true generated hypothesis. Don&#8217;t worry, there is a class also for this,
+<a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classToyFitterExclusion.html">ToyFitterExclusion</a> that does it semi-automaically, you just need to feed it with a preloaded likelihood. This will loop over a set of datasets
+and store their post-fit parameter values, test statistic and other in a output ROOT Tree.</li>
+<li>Once You&#8217;ve got the post fits test statistic for all the samples (in the form of a ROOT Tree), you can extract their distribution with one of
+the <strong>plotHelpers::makeQuantiles</strong>.</li>
+</ol>
+</div></blockquote>
+<p><strong>Computing limits with MC:</strong> to compute limits for a single dataset you can use again the class <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classToyFitterExclusion.html">ToyFitterExclusion</a> and its method <strong>spitTheLimit</strong>, that will take as input
+the 90% quantile graph generated before. In case you want to compute sensitivity, you need compute limit for a set of null hypothesys datatets, then compute the median and
+1 and 2 sigma quantiles of their distribution. For this, again, there is an helper in <strong>plotHelpers</strong>. Have a look at the <a class="reference internal" href="tutorials.html#tutorials"><span>tutorials</span></a> for more info,
+also you can have a look to a real life example in the  <a class="reference external" href="https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood">SR1</a> repository.</p>
 </div>
 </div>
 

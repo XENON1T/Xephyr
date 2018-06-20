@@ -94,7 +94,11 @@ cannot be changed. There are a few types of likelihood classes and they differ b
 but they all share common infrastructure like: printing parameter values and parameter access, a method called **maximize** that will actually minimize the -log(L),
 methods computing likelihood scans, etc., you can find details on all of this in the :ref:`Tutorials <tutorials>` section.
 
-Xephyr provides three types of likelihood classes: 
+        **IMPORTANT NOTES:** the likelihood expects pdfComponents to return models normalized to number of expected events. The likelihood
+        rescales internally the parameter of interest (mu) to correspond to the number of "observed" signal events, for example, best fit mu=1.5 means
+        that you are "fitting" 1.5 signal events. 
+
+Xephyr provides four types of likelihood classes: 
  
  - **pdfLikelihood**: implements the standard 2D (S1,S2) unbinned likelihood, it is composed of a poisson term that accounts for the total number of events times an 
    extended term that accounts for the shape, additionally each (non-free) nuissance parameter is constrained by a gaussian term. 
@@ -116,6 +120,10 @@ Xephyr provides three types of likelihood classes:
 
  .. FIXME formula
 
+ - **CombinedProfileLikelihood**: this class contains a list of likelihoods that need to be combined. Just add likelihood istances to its list and
+   use same common methods. The combination is done just by multiplying likelihood togheter, sharing the parameter of interest, it takes into account 
+   the relative exposure using the total signal integral for each likelihood. Nuissance parameter by default are added being considered independent from 
+   each other, if you want to correlate them then you need to use the **CombinedParameter** class.
 
 .. _safeguard:
 
@@ -143,7 +151,42 @@ the possibility for a negative safeguard is under scrutiny and may be added in f
 Limit setting
 --------------
 
-Xephyr uses the profiled likelihood approach
+Xephyr uses the profiled likelihood approach to get rid of nuissance parameter depencency and the likelihood ratio as test statistic.
+The parameter of interest (mu) is bound to be positive and the test statistic can be difined as two-sided or one-sided. 
+If you are unfamiliar with this we recommend to have a look for example at `K. Cranmer`_ review.
+
+ .. FIXME: add formula
+
+.. _`k. Cranmer`: https://arxiv.org/abs/1503.07622
+
+Sensitivity and limits may be computed in two different way: using asymptotics formulae or Neymann construction (following Feldmann-Cousins approach). 
+For the asymptotics approach one can use the class `AsymptoticExclusion`_, the syntax is simple (either for limit and sensitivity) and you can refer to the tutorials for this (it is basically two lines of code), while for the construction of the test statistic distribution via MC it is worth to outline the procedure here.
+
+.. _`AsymptoticExclusion`: https://xenon1t.github.io/Xephyr/class_reference/classAsymptoticExclusion.html
+
+**Test statistic distro with MC:** The goal is to compute the graph of the test statistic's 90% quantiles as a funtion of 
+the parameter of interest, this can be done in a following a few steps.
+
+ #. Choose a list of parameter of interest (POI) values. Given that Xephyr is re-scaling internally the POI this list can be the same for all masses, the
+    recommended one is mu = [ 0.5, 1, 2, 2.5, 3, 4, 5, 10, 15 ].
+ #. Generate for each of the hypotheses in the list (and for each mass) MC toys datasets with nuber of signal injected events according to the hypothesis.
+    For a final result with reasonable precision one should target 10'000 datasets per hypothesis. The datasets can be generated using the `ToyGenerator`_ class,
+    see tutorials.
+ #. Each of the generated dataset must be fitted with a conditional fit mu fixed to the true generated hypothesis. Don't worry, there is a class also for this,
+    `ToyFitterExclusion`_ that does it semi-automaically, you just need to feed it with a preloaded likelihood. This will loop over a set of datasets 
+    and store their post-fit parameter values, test statistic and other in a output ROOT Tree.
+ #. Once You've got the post fits test statistic for all the samples (in the form of a ROOT Tree), you can extract their distribution with one of 
+    the **plotHelpers::makeQuantiles**.
+
+.. _`ToyGenerator`: https://xenon1t.github.io/Xephyr/class_reference/classToyGenerator.html
+.. _`ToyFitterExclusion`: https://xenon1t.github.io/Xephyr/class_reference/classToyFitterExclusion.html
+.. _`SR1`: https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood
+
+
+**Computing limits with MC:** to compute limits for a single dataset you can use again the class `ToyFitterExclusion`_ and its method **spitTheLimit**, that will take as input
+the 90% quantile graph generated before. In case you want to compute sensitivity, you need compute limit for a set of null hypothesys datatets, then compute the median and
+1 and 2 sigma quantiles of their distribution. For this, again, there is an helper in **plotHelpers**. Have a look at the :ref:`tutorials <tutorials>` for more info,
+also you can have a look to a real life example in the  `SR1`_ repository.
 
 
 

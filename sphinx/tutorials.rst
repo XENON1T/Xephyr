@@ -21,4 +21,12 @@ You can find the HTML version of the following ROOT jupyter notebooks here:
 Examples of Packages
 ---------------------
 
-some example
+There is a plan to provide several code examples as Xephyr packages, they are under construction and will be posted on this page. 
+If you write a package for your analysis we'd like to post here a link to your code.
+
+**Noticeable code examples:**
+
+- `SR1 Xephyr likelihood package`_
+
+.. _`SR1 Xephyr likelihood package`: https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood
+
