@@ -17,7 +17,7 @@
 # SR1 Example:
 
 you find the SR1 Xephyr package (with some instruction on how to use it) in [here](https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood). 
-However this is a quite complex example, I'd suggest to start from the tutorials in the folder `notebooks`
+However this is a quite complex example, I'd suggest to start from the `docs` and from the tutorials in the folder `notebooks`
 
 
 # Setting Up on Midway2 
