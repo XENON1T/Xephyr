@@ -538,7 +538,7 @@ TH2F   pdfComponent::getInterpolatedHisto(){
 	//clone default
 	TH2F h_temp = getDefaultHisto() ;
 
-	Info("pdfcomponent::getinterpolated","Interp_" + getParamValueString());
+	Debug("getinterpolated","Interp_" + getParamValueString());
 	
 	if(myShapeUnc.size() > 0) {
 	    h_temp = *histos[0];

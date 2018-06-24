@@ -67,7 +67,7 @@ class scaleSys : public LKParameter {
 };
 
 
-class pdfComponent :errorHandler{
+class pdfComponent :public errorHandler{
 
    public:
 
