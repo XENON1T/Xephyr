@@ -67,14 +67,17 @@ class scaleSys : public LKParameter {
 };
 
 
-class pdfComponent :errorHandler{
+class pdfComponent :public errorHandler{
 
    public:
 
          pdfComponent(TString name, TString filename);
 	~pdfComponent();
+	
+        void autoLoad(TString tag="",char dd='_') {myShapeUnc=(scanFile(tag,dd));};
 
-
+	vector< shapeSys * > scanFile(TString tag="",char dd='_');
+	
 	void addScaleSys(scaleSys *addMe) { myScaleUnc.push_back(addMe); };
 
 	void addShapeSys(shapeSys *addMe) { myShapeUnc.push_back(addMe); };
