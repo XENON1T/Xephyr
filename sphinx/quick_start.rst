@@ -42,8 +42,8 @@ First create a Master directory (in this case called "XEPHYR_PKG") where to stor
 
         mkdir XEPHYR_PKG
         cd XEPHYR_PKG
-        export XEPHYR_DIR=$(pwd)
-        echo "export XEPHYR_DIR=$(pwd)" >> ~/.bashrc
+        export XEPHYR_DIR=$(pwd)/
+        echo "export XEPHYR_DIR=$(pwd)/" >> ~/.bashrc
         git clone git@github.com:XENON1T/Xephyr.git .
 
 You maybe noticed above the "export" of enviroment variable **XEPHYR_DIR** that points to the master dir XEPHYR_PKG, this tells Xephyr where its code is located, it is very important and so I reccomend to add it to your .bashrc (as the snipplet above is doing).

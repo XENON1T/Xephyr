@@ -1,10 +1,11 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="c++" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="c++" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Xephyr basic concepts &mdash; xephyr 0.0 documentation</title>
@@ -12,9 +13,10 @@
 
   
   
+  
+  
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -22,34 +24,46 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials and Examples" href="tutorials.html" />
+    <link rel="prev" title="Xephyr Packages" href="xephyr_packages.html" /> 
 
   
-
-  
-    <link rel="top" title="xephyr 0.0 documentation" href="index.html"/>
-        <link rel="next" title="Tutorials and Examples" href="tutorials.html"/>
-        <link rel="prev" title="Xephyr Packages" href="xephyr_packages.html"/> 
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="index.html" class="fa fa-home"> xephyr</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> xephyr
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -57,29 +71,21 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
+            
+            
+              
+            
+            
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#system-requirements">System Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#initial-setup">Initial Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#compile-your-code-with-xephyr">Compile Your Code With Xephyr</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#usage-with-scripts">Usage with Scripts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#jupyter-notebooks">Jupyter Notebooks</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="xephyr_packages.html">Xephyr Packages</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="xephyr_packages.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="xephyr_packages.html#conventions">Conventions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="xephyr_packages.html#setup">Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="xephyr_packages.html#build">Build</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Xephyr basic concepts</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xephyr_packages.html">Xephyr Packages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Xephyr basic concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#input-handling">Input handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nuissance-parameter-handling">Nuissance Parameter Handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-likelihood">Building the Likelihood</a></li>
@@ -87,58 +93,83 @@
 <li class="toctree-l2"><a class="reference internal" href="#limit-setting">Limit setting</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials and Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#notebook-tutorials">Notebook Tutorials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#examples-of-packages">Examples of Packages</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials and Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help.html">How to get Help</a></li>
 </ul>
 
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">xephyr</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">xephyr</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Xephyr basic concepts</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Xephyr basic concepts</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/basics.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/basics.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="xephyr-basic-concepts">
 <span id="basics"></span><h1>Xephyr basic concepts<a class="headerlink" href="#xephyr-basic-concepts" title="Permalink to this headline">¶</a></h1>
 <p>In this section we describe the core component of Xephyr, we wont go trough the implementation details which is
-described in the <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a>, but we&#8217;ll go over the concepts.</p>
+described in the <a class="reference internal" href="tutorials.html#tutorials"><span class="std std-ref">Tutorials</span></a>, but we'll go over the concepts.</p>
 <p>Xephyr core libraries can be divided into 4 different main areas, for each of them there is a c++ class or a group of classes that handle it:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="#input-handling"><span>Input Model/Data Handling</span></a></li>
-<li><a class="reference internal" href="#nuissance"><span>Nuissance Parameter Handling</span></a>, including interpolation.</li>
-<li><a class="reference internal" href="#likelihood"><span>Likelihood building</span></a></li>
-<li><a class="reference internal" href="#limit"><span>Limit setting</span></a>: with Neymann construction and asymptotics.</li>
+<li><a class="reference internal" href="#input-handling"><span class="std std-ref">Input Model/Data Handling</span></a></li>
+<li><a class="reference internal" href="#nuissance"><span class="std std-ref">Nuissance Parameter Handling</span></a>, including interpolation.</li>
+<li><a class="reference internal" href="#likelihood"><span class="std std-ref">Likelihood building</span></a></li>
+<li><a class="reference internal" href="#limit"><span class="std std-ref">Limit setting</span></a>: with Neymann construction and asymptotics.</li>
 </ul>
 </div></blockquote>
 <div class="section" id="input-handling">
@@ -146,32 +177,32 @@ described in the <a class="reference internal" href="tutorials.html#tutorials"><
 <p>Currently Xephyr supports only 2D inputs (it is possible tough to use Xephyr for 1D likelihood, check out how to do it in <strong>this example</strong> <a href="#id2"><span class="problematic" id="id3">`FIXME`_</span></a>).
 The input handling is done via two classes: <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classdataHandler.html">dataHandler</a>, to handle science data, toy MC and calibration and a class that handles
 inputs from the models as a <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classpdfComponent.html">pdfComponent</a>.</p>
-<p>The <strong>dataHandler</strong> is basically just a helper class to handle ROOT Trees and is used to &#8220;fill the likelihood&#8221; with data points.
+<p>The <strong>dataHandler</strong> is basically just a helper class to handle ROOT Trees and is used to &quot;fill the likelihood&quot; with data points.
 You can create a dataHandler in this way:</p>
-<div class="highlight-c++"><div class="highlight"><pre><span class="n">dataHandler</span> <span class="nf">data</span><span class="p">(</span><span class="n">TString</span> <span class="n">name</span><span class="p">,</span> <span class="n">TString</span> <span class="n">fileName</span><span class="p">,</span> <span class="n">TString</span> <span class="n">dmTree</span><span class="p">);</span>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">dataHandler</span> <span class="nf">data</span><span class="p">(</span><span class="n">TString</span> <span class="n">name</span><span class="p">,</span> <span class="n">TString</span> <span class="n">fileName</span><span class="p">,</span> <span class="n">TString</span> <span class="n">dmTree</span><span class="p">);</span>
                <span class="c1">// just a name  // ROOT file name and Tree name inside the file</span>
 </pre></div>
 </div>
-<p>Currently the Tree must contain at least two variables (braches), the name of the branches can be set but the default is &#8220;cs1&#8221;, &#8220;cs2&#8221;.
+<p>Currently the Tree must contain at least two variables (braches), the name of the branches can be set but the default is &quot;cs1&quot;, &quot;cs2&quot;.
 For neymann construction, when one needs to loop over many toy datasets (where each of them is a separated Tree), one can use the dataHandler to loop
 over all Tree at once using the convenient method <strong>dataHandler::setTreeIndex</strong>.</p>
 <p>The <strong>pdfComponent</strong> handels instead the loading of PDF models through histograms. Again, currently this supports only <strong>TH2F</strong> as input, so you can
 do 1D and 2D discriminating space with it but not more.
 It is an object representing a normalized PDF, meaning that is normalized to the total expected number of events for that background or signal,
-This component is designed to interplay with <a class="reference internal" href="#nuissance"><span>nuissance parameter</span></a>, so that the scale (total number of events) and the shape  of the histogram can change
+This component is designed to interplay with <a class="reference internal" href="#nuissance"><span class="std std-ref">nuissance parameter</span></a>, so that the scale (total number of events) and the shape  of the histogram can change
 as a function of the parameters. The pdfComponent implements linear interpolation between any number of Shape parameters. To load models in the
 form of histogram you have to follow a naming convention for the histogram, here an example:</p>
-<div class="highlight-c++"><div class="highlight"><pre><span class="n">prefixName_parameterNameA_x</span><span class="p">.</span><span class="n">yz_parameterNameB_x</span><span class="p">.</span><span class="n">yz</span><span class="p">......</span><span class="n">_parameterNameZ_x</span><span class="p">.</span><span class="n">yz</span>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">prefixName_parameterNameA_x</span><span class="p">.</span><span class="n">yz_parameterNameB_x</span><span class="p">.</span><span class="n">yz</span><span class="p">......</span><span class="n">_parameterNameZ_x</span><span class="p">.</span><span class="n">yz</span>
 </pre></div>
 </div>
-<p>where the &#8220;prefixName&#8221; is whatever name for your bkg model, &#8220;parameterName&#8221; is the name of one of your parameters, and &#8220;x.y.z&#8221; are numbers.</p>
-<p>You can find a detailed <strong>tutorial</strong> on how to use these classes for the most common cases in  <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a> and you can find the official class documentation in
+<p>where the &quot;prefixName&quot; is whatever name for your bkg model, &quot;parameterName&quot; is the name of one of your parameters, and &quot;x.y.z&quot; are numbers.</p>
+<p>You can find a detailed <strong>tutorial</strong> on how to use these classes for the most common cases in  <a class="reference internal" href="tutorials.html#tutorials"><span class="std std-ref">Tutorials</span></a> and you can find the official class documentation in
 <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classpdfComponent.html">pdfComponent</a> and <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classdataHandler.html">dataHandler</a></p>
 </div>
 <div class="section" id="nuissance-parameter-handling">
 <span id="nuissance"></span><h2>Nuissance Parameter Handling<a class="headerlink" href="#nuissance-parameter-handling" title="Permalink to this headline">¶</a></h2>
 <p>Xephyr comes with two types of nuissance parameter (which in short is a fancy name to say uncertainties), a scale uncertainty, <strong>scaleSys</strong>, that takes
-care of the absolute rate variation for that component, and a shape uncertainty, <strong>shapeSys</strong>, for its shape variation. We use the &#8220;natural&#8221; unit scale
+care of the absolute rate variation for that component, and a shape uncertainty, <strong>shapeSys</strong>, for its shape variation. We use the &quot;natural&quot; unit scale
 for the uncertainties: mean zero and sigma one. Each parameter can have three different behaviours: can be just a constant <strong>fixed</strong> parameter, or
 can be a <strong>free</strong> parameter, which is able to vary withouth any contraint, or can be a <strong>nuissance</strong> parameter, which can vary but is constrained by a gaussian
 constrain.</p>
@@ -179,7 +210,7 @@ constrain.</p>
 corresponding to specific parameters value, so one need to build a kind of grid in the parameter space, populated with histograms, which aftewards
 is going to be interpolated.</p>
 <p>You can find the class documentation for the paramter handling in <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classshapeSys.html">shapeSys</a> and <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classscaleSys.html">scaleSys</a> reference, while a detailed tutorial on how
-to use them can be found in <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a>.</p>
+to use them can be found in <a class="reference internal" href="tutorials.html#tutorials"><span class="std std-ref">Tutorials</span></a>.</p>
 <blockquote>
 <div><strong>Advanced:</strong>
 Parameter that are used in combination of two likelihoods <strong>combinedParameter</strong> class. Exaplain a bit <a href="#id4"><span class="problematic" id="id5">`FIXME`_</span></a></div></blockquote>
@@ -190,11 +221,11 @@ Parameter that are used in combination of two likelihoods <strong>combinedParame
 would be initialized with your inputs and  later on it can return the likelihood value for any parameter set. Note that the likelihood structure is predefined and
 cannot be changed. There are a few types of likelihood classes and they differ based on the implementation of the likelihood function (see below),
 but they all share common infrastructure like: printing parameter values and parameter access, a method called <strong>maximize</strong> that will actually minimize the -log(L),
-methods computing likelihood scans, etc., you can find details on all of this in the <a class="reference internal" href="tutorials.html#tutorials"><span>Tutorials</span></a> section.</p>
+methods computing likelihood scans, etc., you can find details on all of this in the <a class="reference internal" href="tutorials.html#tutorials"><span class="std std-ref">Tutorials</span></a> section.</p>
 <blockquote>
 <div><strong>IMPORTANT NOTES:</strong> the likelihood expects pdfComponents to return models normalized to number of expected events. The likelihood
-rescales internally the parameter of interest (mu) to correspond to the number of &#8220;observed&#8221; signal events, for example, best fit mu=1.5 means
-that you are &#8220;fitting&#8221; 1.5 signal events.</div></blockquote>
+rescales internally the parameter of interest (mu) to correspond to the number of &quot;observed&quot; signal events, for example, best fit mu=1.5 means
+that you are &quot;fitting&quot; 1.5 signal events.</div></blockquote>
 <p>Xephyr provides four types of likelihood classes:</p>
 <blockquote>
 <div><ul class="simple">
@@ -205,7 +236,7 @@ This likelihood can be used also for a 1D PDF.</li>
 <ul class="simple">
 <li><strong>binnedLikelihood</strong>: implements a binned likelihood that can be either 1D or 2D, it returns just a product of poissons computed for each bin. TH2F errors
 on the bins are assigned as scale uncertainty to the bin itself.
-Nowadays the trend is to go for a PDF likelihood because is &#8220;more sensitive&#8221;, but remember this comes with high costs, since is harder to introduce uncertainties in a
+Nowadays the trend is to go for a PDF likelihood because is &quot;more sensitive&quot;, but remember this comes with high costs, since is harder to introduce uncertainties in a
 PDF shape rather than consider them as scale independent factors on bins. So this type of likelihood is handy for all those search with low rate and large unknow
 uncertainties.</li>
 </ul>
@@ -234,7 +265,7 @@ the possibility for a negative safeguard is under scrutiny and may be added in f
 <blockquote>
 <div><strong>WARNING:::</strong> The safeguard is not the holy grail and it comes with a few subtle problems. The main problem is the contamination of your calibration sample
 by other background components (different from the ones you want to model). Xephyr allows you to introduce an additional background component to be
-used only in the calibration fit to mimic the expected &#8220;known&#8221; contamination level. In case there is reason to think that the calibration sample, within the signal region,
+used only in the calibration fit to mimic the expected &quot;known&quot; contamination level. In case there is reason to think that the calibration sample, within the signal region,
 might  suffer of uknown or largely uncertain contamination the safeguard may lead to unwanted feature, hiding a real existing signal (for positive safeguard) or
 even creating a fake signal (for negative safeguard).</div></blockquote>
 </div>
@@ -247,39 +278,41 @@ If you are unfamiliar with this we recommend to have a look for example at <a cl
 <div></div></blockquote>
 <p>Sensitivity and limits may be computed in two different way: using asymptotics formulae or Neymann construction (following Feldmann-Cousins approach).
 For the asymptotics approach one can use the class <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classAsymptoticExclusion.html">AsymptoticExclusion</a>, the syntax is simple (either for limit and sensitivity) and you can refer to the tutorials for this (it is basically two lines of code), while for the construction of the test statistic distribution via MC it is worth to outline the procedure here.</p>
-<p><strong>Test statistic distro with MC:</strong> The goal is to compute the graph of the test statistic&#8217;s 90% quantiles as a funtion of
+<p><strong>Test statistic distro with MC:</strong> The goal is to compute the graph of the test statistic's 90% quantiles as a funtion of
 the parameter of interest, this can be done in a following a few steps.</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li>Choose a list of parameter of interest (POI) values. Given that Xephyr is re-scaling internally the POI this list can be the same for all masses, the
 recommended one is mu = [ 0.5, 1, 2, 2.5, 3, 4, 5, 10, 15 ].</li>
 <li>Generate for each of the hypotheses in the list (and for each mass) MC toys datasets with nuber of signal injected events according to the hypothesis.
-For a final result with reasonable precision one should target 10&#8216;000 datasets per hypothesis. The datasets can be generated using the <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classToyGenerator.html">ToyGenerator</a> class,
+For a final result with reasonable precision one should target 10'000 datasets per hypothesis. The datasets can be generated using the <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classToyGenerator.html">ToyGenerator</a> class,
 see tutorials.</li>
-<li>Each of the generated dataset must be fitted with a conditional fit mu fixed to the true generated hypothesis. Don&#8217;t worry, there is a class also for this,
+<li>Each of the generated dataset must be fitted with a conditional fit mu fixed to the true generated hypothesis. Don't worry, there is a class also for this,
 <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classToyFitterExclusion.html">ToyFitterExclusion</a> that does it semi-automaically, you just need to feed it with a preloaded likelihood. This will loop over a set of datasets
 and store their post-fit parameter values, test statistic and other in a output ROOT Tree.</li>
-<li>Once You&#8217;ve got the post fits test statistic for all the samples (in the form of a ROOT Tree), you can extract their distribution with one of
+<li>Once You've got the post fits test statistic for all the samples (in the form of a ROOT Tree), you can extract their distribution with one of
 the <strong>plotHelpers::makeQuantiles</strong>.</li>
 </ol>
 </div></blockquote>
 <p><strong>Computing limits with MC:</strong> to compute limits for a single dataset you can use again the class <a class="reference external" href="https://xenon1t.github.io/Xephyr/class_reference/classToyFitterExclusion.html">ToyFitterExclusion</a> and its method <strong>spitTheLimit</strong>, that will take as input
 the 90% quantile graph generated before. In case you want to compute sensitivity, you need compute limit for a set of null hypothesys datatets, then compute the median and
-1 and 2 sigma quantiles of their distribution. For this, again, there is an helper in <strong>plotHelpers</strong>. Have a look at the <a class="reference internal" href="tutorials.html#tutorials"><span>tutorials</span></a> for more info,
+1 and 2 sigma quantiles of their distribution. For this, again, there is an helper in <strong>plotHelpers</strong>. Have a look at the <a class="reference internal" href="tutorials.html#tutorials"><span class="std std-ref">tutorials</span></a> for more info,
 also you can have a look to a real life example in the  <a class="reference external" href="https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood">SR1</a> repository.</p>
 </div>
 </div>
 
 
+           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials and Examples">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials and Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="xephyr_packages.html" class="btn btn-neutral" title="Xephyr Packages"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="xephyr_packages.html" class="btn btn-neutral" title="Xephyr Packages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -289,12 +322,13 @@ also you can have a look to a real life example in the  <a class="reference exte
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Ale.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -310,9 +344,11 @@ also you can have a look to a real life example in the  <a class="reference exte
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'0.0',
+            LANGUAGE:'c++',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
@@ -321,19 +357,13 @@ also you can have a look to a real life example in the  <a class="reference exte
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

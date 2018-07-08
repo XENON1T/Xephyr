@@ -1,10 +1,11 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="c++" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="c++" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Xephyr Packages &mdash; xephyr 0.0 documentation</title>
@@ -12,9 +13,10 @@
 
   
   
+  
+  
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -22,34 +24,46 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Xephyr basic concepts" href="basics.html" />
+    <link rel="prev" title="Quick Start" href="quick_start.html" /> 
 
   
-
-  
-    <link rel="top" title="xephyr 0.0 documentation" href="index.html"/>
-        <link rel="next" title="Xephyr basic concepts" href="basics.html"/>
-        <link rel="prev" title="Quick Start" href="quick_start.html"/> 
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="index.html" class="fa fa-home"> xephyr</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> xephyr
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -57,94 +71,110 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
+            
+            
+              
+            
+            
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#system-requirements">System Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#initial-setup">Initial Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#compile-your-code-with-xephyr">Compile Your Code With Xephyr</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#usage-with-scripts">Usage with Scripts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#jupyter-notebooks">Jupyter Notebooks</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Xephyr Packages</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Xephyr Packages</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#conventions">Conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#build">Build</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">Xephyr basic concepts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#input-handling">Input handling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#nuissance-parameter-handling">Nuissance Parameter Handling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#building-the-likelihood">Building the Likelihood</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#the-safeguard">The Safeguard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#limit-setting">Limit setting</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials and Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#notebook-tutorials">Notebook Tutorials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#examples-of-packages">Examples of Packages</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Xephyr basic concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials and Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help.html">How to get Help</a></li>
 </ul>
 
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">xephyr</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">xephyr</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Xephyr Packages</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Xephyr Packages</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/xephyr_packages.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/xephyr_packages.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="xephyr-packages">
 <span id="packages"></span><h1>Xephyr Packages<a class="headerlink" href="#xephyr-packages" title="Permalink to this headline">¶</a></h1>
 <p>Xephyr strongly encourages to keep your code organized and easy sharable via a simple package structure. In this section
-we describe the XEPHYR package manager <strong>&#8220;pacman&#8221;</strong>, which basically consist of a python script and some conventions.
+we describe the XEPHYR package manager <strong>&quot;pacman&quot;</strong>, which basically consist of a python script and some conventions.
 The main purpose of this package manager is to make stupid simple to compile your private code and link it to the
 xephyr library, but also helps to keep your code organized.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>We use cmake to build the set of dependency for your code, so that you don&#8217;t have to write a complicated makefile, everything is automatic.
-But still, one need to tell to cmake where the code is and what you want to compile, this is what &#8220;pacman&#8221; is doing, so that following a
+<p>We use cmake to build the set of dependency for your code, so that you don't have to write a complicated makefile, everything is automatic.
+But still, one need to tell to cmake where the code is and what you want to compile, this is what &quot;pacman&quot; is doing, so that following a
 few convention one can compile code written by others, without knowing anything about it.</p>
-<p>The main idea is to split your code into 3 classes, let&#8217;s fix the naming conventions:</p>
+<p>The main idea is to split your code into 3 classes, let's fix the naming conventions:</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>Scripts</strong>, these are all your ROOT scripts that will work only interactively with a ROOT CLI, they will not be compiled.</li>
-<li><strong>Executable</strong>, are all the files that must be compiled and for each one you expect an executable. These files contain &#8220;int main(){...}&#8221;.</li>
-<li><strong>Libraries</strong>, most of the time you want to split your code into re-usable building blocks, for example classes, functions, so that you don&#8217;t have to rewrite them
+<li><strong>Executable</strong>, are all the files that must be compiled and for each one you expect an executable. These files contain &quot;int main(){...}&quot;.</li>
+<li><strong>Libraries</strong>, most of the time you want to split your code into re-usable building blocks, for example classes, functions, so that you don't have to rewrite them
 for each of your scripts or executables. At compiling time these libraries will be linked (togheter with XEPHYR libraries) to your executables. They can also be dinamically loaded from scripts (obviously).</li>
 </ul>
 </div></blockquote>
@@ -154,27 +184,27 @@ for each of your scripts or executables. At compiling time these libraries will 
 <p>To build a XEPHYR package you must follow a number of conventions, mind that these are case sensitive:</p>
 <blockquote>
 <div><ul class="simple">
-<li>First define a master dir where all the code is supposed to be. This must be refered with an env variable $XEPHYR_DIR. See the <a class="reference internal" href="quick_start.html#quickstart"><span>Quick Start reference</span></a> for detail on how to do it.</li>
+<li>First define a master dir where all the code is supposed to be. This must be refered with an env variable $XEPHYR_DIR. See the <a class="reference internal" href="quick_start.html#quickstart"><span class="std std-ref">Quick Start reference</span></a> for detail on how to do it.</li>
 <li>Package definition: the package manager scans the whole master directory in search of a JSON file called <strong>info.json</strong>, each directory that contains that file is considered a XEPHYR package.</li>
-<li>Within the package directory (but not in its subdirectories) all the files that end with <strong>&#8220;_main.cxx&#8221;</strong> are considered executables, and scheduled for being build.</li>
-<li>Within each package it will look for a directory called <strong>&#8220;src&#8221;</strong>, where all the user library are. All the files in this directory that have a <strong>&#8221;.cxx&#8221;</strong> extension are scheduled to be build as library.</li>
-<li>You can put your scripts anywhere, as long as they are not in &#8220;src&#8221; nor their name end with &#8220;_main.cxx&#8221;, the package manager will just ignore them.</li>
+<li>Within the package directory (but not in its subdirectories) all the files that end with <strong>&quot;_main.cxx&quot;</strong> are considered executables, and scheduled for being build.</li>
+<li>Within each package it will look for a directory called <strong>&quot;src&quot;</strong>, where all the user library are. All the files in this directory that have a <strong>&quot;.cxx&quot;</strong> extension are scheduled to be build as library.</li>
+<li>You can put your scripts anywhere, as long as they are not in &quot;src&quot; nor their name end with &quot;_main.cxx&quot;, the package manager will just ignore them.</li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <p>In the master dir make a new directory for your package and initialize it by creating the json file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> <span class="nv">$XEPHYR_DIR</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$XEPHYR_DIR</span>
 mkdir myAwsomePackage
 <span class="nb">echo</span> <span class="s1">&#39;{ &quot;pkg_name&quot;: &quot;package_name&quot;,</span>
 <span class="s1">        &quot;pkg_version&quot; : &quot;0.0&quot;,</span>
 <span class="s1">        &quot;dependencies&quot;: [&quot;ROOT==6.1.0&quot;] }&#39;</span>  &gt; myAwsomePackage/info.json
 </pre></div>
 </div>
-<p>The &#8220;myAwsomePackage&#8221; directory can be also a subdirectory nested in whatever complicated directory tree and it will work anyway,
+<p>The &quot;myAwsomePackage&quot; directory can be also a subdirectory nested in whatever complicated directory tree and it will work anyway,
 the important thing is that it is inside $XEPHYR_DIR. Now create the content of your package:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>myAwsomePackage
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> myAwsomePackage
 mkdir src
 
 <span class="nb">echo</span>  <span class="s1">&#39; // Xephyr includes examples</span>
@@ -194,9 +224,9 @@ mkdir src
 <span class="s1">        &#39;</span>                              &gt; myExe_main.cxx
 </pre></div>
 </div>
-<p><strong>Did you notice that all the includes are global?</strong>  You don&#8217;t need to specify the directory of Xephyr files or library files you want to include!!!
-Note that this feature is not available with scripts, so if you want to load your &#8220;fancyLib.cxx&#8221; from a script you would add to your script:</p>
-<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// in case you want to load the library inside a script</span>
+<p><strong>Did you notice that all the includes are global?</strong>  You don't need to specify the directory of Xephyr files or library files you want to include!!!
+Note that this feature is not available with scripts, so if you want to load your &quot;fancyLib.cxx&quot; from a script you would add to your script:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="c1">// in case you want to load the library inside a script</span>
  <span class="n">gROOT</span><span class="o">-&gt;</span><span class="n">ProcessLine</span><span class="p">(</span><span class="s">&quot;.L PATH_TO_PAKAGE/src/fancyLib.cxx&quot;</span><span class="p">);</span>
 
 <span class="c1">//======================================================//</span>
@@ -211,30 +241,32 @@ Note that this feature is not available with scripts, so if you want to load you
 <div class="section" id="build">
 <h2>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
 <p>Now that you created your pakage is time to compile it and link it. Go back to the master directory and use the pakage manager script:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> <span class="nv">$XEPHYR_DIR</span>
-<span class="nb">source </span>Xephyr/pacman/build.sh
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$XEPHYR_DIR</span>
+<span class="nb">source</span> Xephyr/pacman/build.sh
 </pre></div>
 </div>
-<p>That&#8217;s it! (if it worked) this should have created a new directory &#8220;build&#8221; where you can find all the executables of all your packages.
+<p>That's it! (if it worked) this should have created a new directory &quot;build&quot; where you can find all the executables of all your packages.
 This step scans the directory tree and produces a makefile, so it is only needed at the beginning and when you add a new file,
 for all other small changes you can do:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>build
-<span class="nv">$ </span>make
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> build
+$ make
 </pre></div>
 </div>
 </div>
 </div>
 
 
+           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="basics.html" class="btn btn-neutral float-right" title="Xephyr basic concepts">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="basics.html" class="btn btn-neutral float-right" title="Xephyr basic concepts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="quick_start.html" class="btn btn-neutral" title="Quick Start"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="quick_start.html" class="btn btn-neutral" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -244,12 +276,13 @@ for all other small changes you can do:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Ale.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -265,9 +298,11 @@ for all other small changes you can do:</p>
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'0.0',
+            LANGUAGE:'c++',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
@@ -276,19 +311,13 @@ for all other small changes you can do:</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
