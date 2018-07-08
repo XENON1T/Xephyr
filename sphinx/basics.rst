@@ -20,7 +20,7 @@ Xephyr core libraries can be divided into 4 different main areas, for each of th
 Input handling 
 --------------
 
-Currently Xephyr supports only 2D inputs (it is possible tough to use Xephyr for 1D likelihood, check out how to do it in **this example** `FIXME`_).
+Currently Xephyr supports only 2D inputs (it is possible tough to use Xephyr for 1D likelihood, check out how to do it in `this example`_).
 The input handling is done via two classes: `dataHandler`_, to handle science data, toy MC and calibration and a class that handles
 inputs from the models as a `pdfComponent`_.
 
@@ -54,6 +54,7 @@ You can find a detailed **tutorial** on how to use these classes for the most co
 
 .. _`pdfComponent`: https://xenon1t.github.io/Xephyr/class_reference/classpdfComponent.html
 .. _`dataHandler`: https://xenon1t.github.io/Xephyr/class_reference/classdataHandler.html
+.. _`this example`: https://github.com/XENON1T/Xephyr/tree/master/examples/likelihood1D
 
 
 
