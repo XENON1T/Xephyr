@@ -31,7 +31,7 @@ However this is a quite complex example, I'd suggest to start from the `docs` an
 	module load cmake			#version 3.6.2  
 	module unload ROOT			
 	module load  ROOT/6.06.08		#This is the only version that worked for me because of linking with sys library
-	export XEPHYR_DIR=Your_dir
+	export XEPHYR_DIR=Your_dir/    # the final slash is important
 	module unload python                  
 	module unload  mkl
 	module load  python/3.5.2
