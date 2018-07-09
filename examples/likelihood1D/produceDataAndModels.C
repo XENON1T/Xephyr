@@ -3,8 +3,8 @@
 // Build the directory
 	
  	TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
-	gSystem->Exec("mkdir -p " + xeDir + "likelihood1D/data");
- 	TString inputDir = xeDir + "likelihood1D/data/";
+	gSystem->Exec("mkdir -p " + xeDir + "xephyr_examples/likelihood1D/data");
+ 	TString inputDir = xeDir + "xephyr_examples/likelihood1D/data/";
 
 	gStyle->SetOptTitle(kFALSE);
       	gStyle->SetOptStat(kFALSE);
@@ -15,9 +15,9 @@
 	
 	// BACKGROUND histo definition
 	      // NOTE: X axis with 100 bins (for example S1), Y axis with one dummy bin only
-	TH2F *background =    new TH2F("bkg_sigma_0.00","best guess background", 100, 3., 70., 1, 0., 1.);
-	TH2F *background_p1 = new TH2F("bkg_sigma_1.00","bkg +1 sigma", 100, 3., 70., 1, 0., 1.);
-	TH2F *background_m1 = new TH2F("bkg_sigma_-1.00","bkg -1 sigma", 100, 3., 70., 1, 0., 1.);
+	TH2F *background =    new TH2F("bkg_sigma_0.00","best guess background", 100, 3., 100., 1, 0., 1.);
+	TH2F *background_p1 = new TH2F("bkg_sigma_1.00","bkg +1 sigma", 100, 3., 100., 1, 0., 1.);
+	TH2F *background_m1 = new TH2F("bkg_sigma_-1.00","bkg -1 sigma", 100, 3., 100., 1, 0., 1.);
 
 	double bkg_expected = 600.; // events
 	     
@@ -50,7 +50,7 @@
 	background_p1->ProjectionX("p1")->Draw("same PLC hist");
 
 	// SIGNAL production (without shape uncertainty)
-	TH2F *Signal =    new TH2F("Signal","signal", 100, 3., 70., 1, 0., 1.);
+	TH2F *Signal =    new TH2F("Signal","signal", 100, 3., 100., 1, 0., 1.);
 	double signal_expected = 4.; // events for a given cross section
 
 	double mean_signal = 59.; // S1
@@ -76,7 +76,7 @@
 
 	// Let's produce a dataset made of background with a small signal injection of 2 events
 	int n_bkg = rambo.Poisson( bkg_expected ) ;
-	int n_signal = 2. ; // injection of 2 events
+	int n_signal = 30. ; // injection of 30 events
 
 	// LOOP over bkg events
 	for(int j =0; j < n_bkg; j++) {

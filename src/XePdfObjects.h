@@ -74,7 +74,11 @@ class pdfComponent :public errorHandler{
          pdfComponent(TString name, TString filename);
 	~pdfComponent();
 	
-        void autoLoad(TString tag="",char dd='_') {myShapeUnc=(scanFile(tag,dd));};
+    /** \brief load automatically all histograms and associate them to shape uncertainty
+	 * the "tag" is the histogram prefix, the points in parameter space must be equally 
+	 * separated.
+	 */
+	void autoLoad(TString tag="",char dd='_') {myShapeUnc=(scanFile(tag,dd));};
 
 	vector< shapeSys * > scanFile(TString tag="",char dd='_');
 	
