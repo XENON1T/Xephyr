@@ -188,7 +188,7 @@ class pdfComponent :public errorHandler{
  * and the slice on which do the projection, one can also rebin the histo.
  * the histo are supposed to be TH2F.
  */
-class histoCompare :errorHandler{
+class histoCompare : public errorHandler{
 
     public:
 

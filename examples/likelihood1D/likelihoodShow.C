@@ -26,4 +26,20 @@
 
 
 
+    // class example to compare histograms after fit
+    histoCompare p = pl->getModelCompare();
+    p.setPrintLevel(DEBUG);
+    p.setNameofComponent(1, "background");
+    p.setNameofComponent(2, "Signal");
+    p.rebinX = 2;                     // rebin the axis to make it look nicer ;)
+    p.doStack = true;		      // stack histo on top of each other	
+    p.titleY = "Entries/[PE]";	  
+    p.titleX = "cS1 [PE]";
+    p.projectionMin = 0.;            // minimum Y from which project 
+    p.projectionMax = 1.;	     // maximum Y from which project 
+    p.projectionX = true;            // which axis project X (true) or Y (false)
+    p.compareWithRatio();                     // Draw stuff
+
+    p.printModels();                 // print content of each bin
+
 }

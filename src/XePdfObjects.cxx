@@ -900,7 +900,7 @@ void histoCompare::compare(){
         for(unsigned int i=0; i < projectedList.size(); i++) {
 
 	     	//stacking the histos
-	     	if(i != 0) projectedList[i]->Add(projectedList[i-1]);
+	     	if(i != 0) projectedList[i]->Add(projectedList[i-1]);  // FIXME seems there is a root bug and this doesn't stack properly
 	    
    		//projectedList[i]->SetLineColor(i+2); 
    		setOptions(projectedList[i], false);
