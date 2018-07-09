@@ -11,7 +11,13 @@ This is an example to demonstrate how to generate some sample 1D data and 1D mod
 The example comes as a Xephyr pachage (see the docs to know more about it), there are a couple of executable that need to be compiled.
 To install the example do:
 
-This will copy the content of the example in the "XEPHYR\_DIR". 
+```bash
+cd $XEPHYR_DIR
+source Xephyr/pacman/installExample.sh likelihood1D # this just copies the content
+source Xephyr/pacman/build.sh       # this compiles the executables of the example
+``` 
+
+This will create a directory "xephyr\_examples" in "XEPHYR\_DIR" and copy the code  content in it.  
  
 ### Generated the data and the models 
 
@@ -19,8 +25,17 @@ A script is made available to you to get inspiration, where an example of the pr
 `produceDataAndModels.C`. To produce data simply do:
 
 ```bash
+cd xephyr_examples/likelihood1D
 root -l produceDataAndModels.C
 ``` 
 
+This will create an additionl directory "data" and save the models in it.
 
- 
+### Simple Likelihood Setup 
+
+A simple likelihood setup is provided in the library "src/likelihoodDef.cxx", you can have a look.
+
+### Script and Executables
+
+| maximize.C | A simple example script to just maximize the 1D-Likelihood and report the values of the parameters|
+| toy\_gen\_main.cxx | executable to generate toy samples out of the models |
