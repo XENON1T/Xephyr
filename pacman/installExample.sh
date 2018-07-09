@@ -13,6 +13,7 @@ then
 	mkdir -p xephyr_examples
 	cp -r "$dir" xephyr_examples/.
 	mv xephyr_examples/$1/_pkg.json xephyr_examples/$1/info.json
+	cp Xephyr/loadXephyr.C xephyr_examples/$1/.
 	echo  -e "\n\nExample ${RED}${1} ${NC} installed succesfully.   Now run:"
 	echo -e   "${GREEN} source Xephyr/pacman/build.sh ${NC}\n\n"
 else
