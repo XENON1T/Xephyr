@@ -36,6 +36,7 @@ This will create an additionl directory "data" and save the models in it.
 A simple likelihood setup is provided in the library "src/likelihoodDef.cxx", you can have a look.
 
 ### Script and Executables
-
+| file name | Description |
+|-----------|-------------|
 | maximize.C | A simple example script to just maximize the 1D-Likelihood and report the values of the parameters|
 | toy\_gen\_main.cxx | executable to generate toy samples out of the models |
