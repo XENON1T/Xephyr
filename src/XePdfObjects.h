@@ -67,15 +67,22 @@ class scaleSys : public LKParameter {
 };
 
 
-class pdfComponent :errorHandler{
+class pdfComponent :public errorHandler{
 
    public:
 
          pdfComponent(TString name, TString filename);
          pdfComponent(TString component_name, TString filename, TString hist_name);
 	~pdfComponent();
+	
+    /** \brief load automatically all histograms and associate them to shape uncertainty
+	 * the "tag" is the histogram prefix, the points in parameter space must be equally 
+	 * separated.
+	 */
+	void autoLoad(TString tag="",char dd='_') {myShapeUnc=(scanFile(tag,dd));};
 
-
+	vector< shapeSys * > scanFile(TString tag="",char dd='_');
+	
 	void addScaleSys(scaleSys *addMe) { myScaleUnc.push_back(addMe); };
 
 	void addShapeSys(shapeSys *addMe) { myShapeUnc.push_back(addMe); };
@@ -183,7 +190,7 @@ class pdfComponent :errorHandler{
  * and the slice on which do the projection, one can also rebin the histo.
  * the histo are supposed to be TH2F.
  */
-class histoCompare :errorHandler{
+class histoCompare : public errorHandler{
 
     public:
 

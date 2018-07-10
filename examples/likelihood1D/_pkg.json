@@ -1,0 +1,5 @@
+{
+	"pkg_name"    :"Ex_likelihood1D",
+	"pkg_version" : "0.0",
+	"dependencies": ["ROOT==6.1.0"]
+}

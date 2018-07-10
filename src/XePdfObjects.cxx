@@ -1,5 +1,5 @@
 #include "XePdfObjects.h"
-
+#include "TKey.h"
 
 
 scaleSys::scaleSys(TString name, double relativeUncertainty) : LKParameter(PAR_NOT_ASSIGNED, NUISANCE_PARAMETER, name.Data(), 0, 0.01, -5.,5.) {
@@ -40,6 +40,8 @@ double shapeSys::getNearestLow(){
 		exit(100);
 	}
 
+	// skip case of Sys with step == 0
+	if(getStep() == 0.) return getCurrentValue();
 
 	double nearestLow = ( (int) ( getCurrentValue() / getStep() ) -1 ) * getStep() ;
 
@@ -50,8 +52,10 @@ double shapeSys::getNearestLow(){
 	if( getCurrentValue() == getMinimum() )
 		nearestLow = getMinimum() ;
 
-	if( getCurrentValue() == getMaximum() )
-		nearestLow = getMaximum() - getStep() ;
+
+	if( getCurrentValue() == getMaximum() ) 
+		nearestLow = getMaximum() - getStep() ; 
+	Debug("ShapeSys::getnearestLow",Form(" nearstlow = %f",nearestLow));
 
 	return nearestLow ;
 }
@@ -63,6 +67,10 @@ double shapeSys::getNearestHigh(){
 		cout << "shapeSys::getNearestHigh() : ERROR - sys value outside range " << endl;
 		exit(100);
 	}
+
+	// skip case of Sys with step == 0
+	if(getStep() == 0.) return getCurrentValue();
+	Debug("ShapeSys::getnearestHigh",Form(" nearstHigh = %f",getNearestLow()+getStep()));
 
 	return ( getNearestLow()  + getStep() ) ;
 
@@ -141,6 +149,140 @@ pdfComponent::~pdfComponent(){
 
 }
 
+	
+vector< shapeSys * > pdfComponent::scanFile(TString tag,char dd) 
+{
+  TIter next(file->GetListOfKeys());
+  TKey *key;
+  int Nhisto=0;
+  int c=0;
+  int npar=0;
+  TString name="";
+  std::vector<shapeSys *> sysa;
+  std::map <TString, std::vector<Float_t>> siglis;
+  while ((key = (TKey*)next())) {
+    TClass *cl = gROOT->GetClass(key->GetClassName());
+    if (!cl->InheritsFrom("TH1")) continue;
+    TH1 *h = (TH2*)key->ReadObj();
+    TString hfn=h->GetName(); // Histogram Full Name
+    Debug("PDFAutoReader","Found histogram: "+hfn);
+    int i0=0;
+    int i1=0;
+    if (pdf_name=="") {      
+      pdf_name=hfn(0,hfn.Index(dd));
+      Info("PDFAutoReader","No histogram name given. Will load "+pdf_name);
+    }
+    i0=hfn.Index(pdf_name)+pdf_name.Length();
+    if (i0 == -1)  {
+       Info("PDFAutoReader","histogram "+hfn+" does not start with "+pdf_name);
+      continue;
+    }
+    if (tag!="" && hfn.Index(tag)==-1) {
+      Info("PDFAutoReader","tag "+tag+" not included. continue.");
+      continue;
+    }
+    
+    int itsin=0;
+    // cout<<hfn<<"\n";    
+    while (i0<hfn.Length()-1) {
+      TString p1,p2;
+      float v;
+      i1=hfn.Index(dd,i0+1);
+      if (i1==-1) i1=hfn.Length();
+      p1=hfn(i0+1,i1-i0-1);
+      //      if (i1==hfn.Length()) Warning("PDFAutoReader","histogram "+hfn+" variable "+p1+" has no value given, ignore"); 
+      i0=i1;
+      i1=hfn.Index(dd,i0+1);
+      if (i1==-1) i1=hfn.Length();
+      p2=hfn(i0+1,i1-i0-1);
+      i0=i1;
+      if (p2.IsFloat())   {
+	//cout<<"\t"<<pdf_name<<"\t"<<p1<<"\t"<<p2<<endl;
+	v=p2.Atof();
+      }
+      else continue;
+
+      if (Nhisto==0) {
+	vector<Float_t> temp;
+	siglis[p1];
+	}
+      else if (siglis.find(p1) == siglis.end()){
+	cout<<"problem, new variable ("<<p1<<") on histo "<<hfn<<", not seen before \n";
+	continue;
+      }
+      int newVal=1;
+      itsin++;
+      for (uint i=0; i<siglis[p1].size(); i++) if (siglis[p1][i]==v) newVal=0;
+      if (newVal==1)  siglis[p1].push_back(v);
+
+	
+    }
+    if (itsin!=0) Nhisto++;
+  }
+
+  /* 
+     Now find smallest possible step 
+   */
+
+  int ns=0;
+  Info("PDFAutoReader",Form(" Read %d histos representing %ld variables for \"%s\"  ",Nhisto,siglis.size(),pdf_name.Data()));
+  //  if (tag!="") printf (", containing tag %s ",tag.Data());
+  // printf ("\n");
+   double smallestStep=0;
+  for (std::pair<TString, std::vector<Float_t>> element : siglis) {
+    TString nn = element.first;
+    std::vector<Float_t> v= element.second;
+    std::sort (v.begin(), v.end());           //(12 32 45 71)26 80 53 33
+    //for (int i=0; i<v.size(); i++) cout<<v[i]<<" ";
+    double step=0;
+    
+    std::map <Float_t, Int_t> ValDiff;
+    for (uint j=0; j<v.size(); j++)
+      {
+	for (uint jj=j+1; jj<v.size(); jj++) {
+	  step=v[jj]-v[j];
+
+	  if (ValDiff.find(step) == ValDiff.end()){
+	  
+	    Float_t x0=v[0];
+	    int okay=0;
+	    while (okay==0) {
+
+	      for (uint vv=0; vv<v.size()-1; vv++) {if (fabs(v[vv]-x0)<1e-3) { okay=1; break;}}
+
+	      x0=x0+step;
+	    }
+	  
+	    if (okay==1 && (smallestStep>step || smallestStep==0)) smallestStep=step;
+	    ValDiff[step]=okay;
+	  }
+	}
+      }
+
+    shapeSys *a=new shapeSys(dd+nn+dd);
+    a->setStep(smallestStep);
+    a->setMinimum(v[0]);
+    a->setMaximum(v[v.size()-1]);
+    a->setCurrentValue(0);
+    sysa.push_back(a);
+   
+    TString so=Form("%s  {%f to %f} smallest possible step:%f  {",nn.Data(), v[0],v[v.size()-1],smallestStep);
+    for (uint j=0; j<v.size(); j++) so=so+Form("%.2f,",v[j]);
+    so=so+"}";
+    Info("PDFAutoReader",so);
+    ns++;
+  }
+
+  //  return (sys[ns]);
+  return sysa;
+ }
+
+
+
+
+
+
+
 void pdfComponent::loadHistos() {
 
 	//clear vector of pointers, this does not delete the histo
@@ -156,12 +298,22 @@ void pdfComponent::loadHistos() {
 	//end here if no shape sys
 	if(myShapeUnc.size() ==0) return;
 
-	// total number of combination of point needed for
+
+	int sysToSkip = 0;
+	for(unsigned int k =0; k< myShapeUnc.size(); k++){
+		if ( myShapeUnc[k]->getStep() == 0. ) sysToSkip++;
+	}
+	
+	// total number of combination of point needed for 
+
 	// interpolation, 2^N_parameter. Each parameter can be loaded
 	// with his closest high/low end on the grid of that parameter.
         // example: to interpolate Leff=0.5 we need to load Leff=0 and Leff=1
 	// histograms.
 	int N = pow(2, myShapeUnc.size());
+
+	N = N - sysToSkip;
+	
 
 	//the idea is to compute the volume of the hypercube in parameter space
 	//corresponding to that grid point and divide by the total volume,
@@ -170,7 +322,13 @@ void pdfComponent::loadHistos() {
 
 	//compute total volume
 	for(unsigned int k =0; k< myShapeUnc.size(); k++){
-		total_vol *= fabs( myShapeUnc[k]->getNearestHigh() -
+
+	  
+		// skip ShapeSys with step ==0 
+		if(myShapeUnc[k]->getStep() == 0.) continue;
+
+		total_vol *= fabs( myShapeUnc[k]->getNearestHigh() - 
+
 				myShapeUnc[k]->getNearestLow() );
 	}
 
@@ -191,13 +349,18 @@ void pdfComponent::loadHistos() {
 			//of that parameter, the high end otherwise
 			int lowOrHigh = ( i / param_power) % 2 ;
 
-
+			
 			if(lowOrHigh == 0)       grid_point.push_back(false);
 			else if(lowOrHigh == 1)  grid_point.push_back(true);
 
 			else Error("loadHistos","something very wierd happened");
 
-			//compute the numerator of iterpolation factor
+
+			// skip if Step ==0
+			if( myShapeUnc[k]->getStep() == 0. ) continue;
+
+			//compute the numerator of iterpolation factor 
+      
 			//for this grid point, area of the opposite
 			if(lowOrHigh == 1)
 			    grid_point_vol *= fabs( myShapeUnc[k]->getCurrentValue() -
@@ -259,8 +422,11 @@ TString pdfComponent::getNearestHistoName(vector<bool> setOfVal){
 
 	  //name_histo.Append("_" + sysName );
 
-	  //get nearest low or high value to the current one
-	  if(!(setOfVal[j])) sprintf(value_temp,"%.2f", myShapeUnc[j]->getNearestLow());
+
+	  //get nearest low or high value to the current one, or set current in case step ==0
+	  if(myShapeUnc[j]->getStep() == 0. ) sprintf(value_temp,"%.2f", myShapeUnc[j]->getCurrentValue());
+	  else if(!(setOfVal[j])) sprintf(value_temp,"%.2f", myShapeUnc[j]->getNearestLow());
+
 	  else      sprintf(value_temp,"%.2f", myShapeUnc[j]->getNearestHigh());
 
 	  name_histo.Append(value_temp);
@@ -403,14 +569,13 @@ void pdfComponent::setEvents(double events){
 
 
 TH2F   pdfComponent::getInterpolatedHisto(){
-
 	//load histogram according to the current value of the parameters
 	loadHistos();
 	//clone default
 	TH2F h_temp = getDefaultHisto() ;
-	h_temp.SetName("Interp_" + getParamValueString() );
 
-
+	Debug("getinterpolated","Interp_" + getParamValueString());
+	
 	if(myShapeUnc.size() > 0) {
 	    h_temp = *histos[0];
             h_temp.Reset();
@@ -430,6 +595,7 @@ TH2F   pdfComponent::getInterpolatedHisto(){
 	/*if(h_temp.GetNbinsX() == 63 || doExtend)
 		extendHisto(h_temp);
 		*/
+	h_temp.SetName("Interp_" + getParamValueString() );
 
 	return h_temp;
 }
@@ -770,9 +936,11 @@ void histoCompare::compare(){
         for(unsigned int i=0; i < projectedList.size(); i++) {
 
 	     	//stacking the histos
-	     	if(i != 0) projectedList[i]->Add(projectedList[i-1]);
 
-   		//projectedList[i]->SetLineColor(i+2);
+	     	if(i != 0) projectedList[i]->Add(projectedList[i-1]);  // FIXME seems there is a root bug and this doesn't stack properly
+	    
+   		//projectedList[i]->SetLineColor(i+2); 
+
    		setOptions(projectedList[i], false);
 	}
 		// draw them in inverse order so can put colors on top of each other
