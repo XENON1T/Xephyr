@@ -18,8 +18,8 @@ using namespace std;
 
 
 /**
- * \class shapeSys 
- * \brief it represents a Shape Systematic. 
+ * \class shapeSys
+ * \brief it represents a Shape Systematic.
  * It inherits from LKParameter. Here you can use the LKParameter functions to set initial val,
  * min, max and setp
 */
@@ -27,7 +27,7 @@ class shapeSys : public LKParameter {
 
    public:
 
-	/** 
+	/**
 	 * Constructor for class shapeSys.
 	 * @param name: Name of the sys as appears in histogram name, see pdfComponent for a detailed use case.
 	 */
@@ -35,34 +35,34 @@ class shapeSys : public LKParameter {
 
 
 	//! returns the nearest HISTOGRAM value in the grid, lower edge
-	double getNearestLow(); 
+	double getNearestLow();
 
 	//! returns the nearest HISTOGRAM value in the grid, upper edge
 	double getNearestHigh();
-	
+
 };
 
 
 class scaleSys : public LKParameter {
 
 	public:
-		// relativeUncertainty = 1 sigma relative uncertainty (example 10% uncertainty would be 0.1) 
+		// relativeUncertainty = 1 sigma relative uncertainty (example 10% uncertainty would be 0.1)
 		scaleSys(TString name, double relativeUncertainty);
 ///		~scaleSys();
 
-		// gives the Normalization scale factor according to t-valued uncertainty  --> (1 + t_val * relativeUncertainty ) 
-		// Uses the current t-value which is automatically linked to its pdfLikelihood 
+		// gives the Normalization scale factor according to t-valued uncertainty  --> (1 + t_val * relativeUncertainty )
+		// Uses the current t-value which is automatically linked to its pdfLikelihood
 		double getNormModifier();
 
-		
-		//this case return a sys that is centered in zero, half a gaussian, t-value strictly positive 
+
+		//this case return a sys that is centered in zero, half a gaussian, t-value strictly positive
 		//and for a tvalue=0 have zero events. Histo is supposed to be normalized to 1
 		void setNull(){	isNull = true; setMinimum(0.);};
 
 	private:
 		double relUnc;
 		bool isNull;
-	
+
 
 };
 
@@ -72,6 +72,7 @@ class pdfComponent :errorHandler{
    public:
 
          pdfComponent(TString name, TString filename);
+         pdfComponent(TString component_name, TString filename, TString hist_name);
 	~pdfComponent();
 
 
@@ -86,7 +87,7 @@ class pdfComponent :errorHandler{
 	void loadDefaultHisto();
 
 	//! returns the interpolated pdf over shape sys computed in (s1,s2).
-	/** 
+	/**
 	 * it is normalized to number of events and scale uncertainty are also taken into account
 	 */
 	double getNormalizedDensity(double s1, double s2);
@@ -96,12 +97,12 @@ class pdfComponent :errorHandler{
 
 	//! Returns the total integrated number of events taking into account shape sys and scale sys.
 	double getNormalizedEvents();
-	
+
 	//! returns total integral of the default histo, no shape nor scale sys is applied
 	double getDefaultEvents();
 
 	//!Returns a copy of the interpolated histogram according to the "currentValue" of the shapeSys associated with it.
-	/** 
+	/**
 	 * The current value of each uncertainty can
 	 * be set simply by shapeSys::setCurrentValue(val) method.
 	 */
@@ -129,20 +130,20 @@ class pdfComponent :errorHandler{
 	double getDefaultPdfIntegral(double s1_min, double s1_max, double s2_min, double s2_max);
 
 	//! This scans the parameter space given a number of steps for each parameter
-	/** 
+	/**
 	 * produce a projection given min and max, produce a PDF file for comparison
 	 * of all interpolation and saves also the TH2F to file.
 	 */
 	void plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps, bool legend_left = false, double y_max = 0.);
 
 	//! scale the pdf by VAL, this happend for the methods:
-	/* getDefaultHisto, getInterpolatedHisto, getNormalizedDensity, 
+	/* getDefaultHisto, getInterpolatedHisto, getNormalizedDensity,
 	 * getDefaultDensity, getNormalizedEvents, getDefaultEvents
 	 */
 	void setScaleFactor(double val) {scaleFactor = val;};
 
 	//! \brief Normalize the pdf in a way that its integral is nevents
-	void setEvents(double nevents);  	
+	void setEvents(double nevents);
 
 	scaleSys* getScaleSys(TString name);
 	shapeSys* getShapeSys(TString name);
@@ -150,7 +151,7 @@ class pdfComponent :errorHandler{
 	void      replaceUncertainty(TString name, shapeSys* newShape);
 
 	TString getName()  {return pdf_name;};
-
+  TString getComponentName()  {return component_name;};
 	vector<scaleSys*> 		myScaleUnc; //! container of scale sys
 	vector<shapeSys*> 		myShapeUnc; //! container of shape sys
 
@@ -163,6 +164,7 @@ class pdfComponent :errorHandler{
   	vector<TH2F*>			histos;	       /** contains the 2^N histo for the hyperplane interpolation of shapeSys */
   	vector<double>		InterpFactors;  /** contains the 2^N interpolation factors for the hyperplane interpolation of shapeSys	*/
 	TString 			pdf_name;
+  TString 			component_name;
 	vector<double>			old_t_val;    /** contains the last value interpolated, the interpolation is lazy, doesn't ricompute it if is for the same set of values.*/
 	double                          scaleFactor;
 
@@ -175,7 +177,7 @@ class pdfComponent :errorHandler{
 
 /**
  * \class histoCompare.
- * \brief This class is supposed to compare a "base" histo 
+ * \brief This class is supposed to compare a "base" histo
  * with a set of other histogram. One can choose for ratio plot,
  * stack plot of different component, one can set the projected axis
  * and the slice on which do the projection, one can also rebin the histo.
@@ -188,14 +190,14 @@ class histoCompare :errorHandler{
 	    histoCompare();
 	    ~histoCompare();
 
-      //---------OPTIONS-----------// 
+      //---------OPTIONS-----------//
 	    int      rebinX;
 	    int      rebinY;
 	    bool     projectionX;
 	    double   projectionMin;    /** minimum value on the projected axis */
 	    double   projectionMax;    /** maximum value on the projected axis */
 	    int      binMin;		/** same but in bin nuber */
-	    int      binMax;            
+	    int      binMax;
 	    bool     doStack;   /** True if you want to sum up histo in compareList */
 	    TString  titleX;
 	    TString  titleY;
@@ -209,7 +211,7 @@ class histoCompare :errorHandler{
 	    void setNameofComponent(unsigned int i, TString n);
 	    //! draw just a normal comparison plot
 	    void compare();
-		
+
 		//! print model content in csv format
 		void printModels();
 
@@ -217,13 +219,13 @@ class histoCompare :errorHandler{
 	    void compareWithRatio();
 
 	    void drawLegend(TH1D *baseH, vector <TH1D*> list );
-	    
+
 	    //return a string of info
 	    TString projectionInfo();
 
         //------ histo holders --------//
 	    TH2F               base;
-	    vector <TString>   names;       
+	    vector <TString>   names;
 	    vector <TH2F>      compareList;
 
 	    TH1D               *projectedBase;
@@ -235,7 +237,7 @@ class histoCompare :errorHandler{
 	    void project(); /** push histo into the TH1D*/
 
 
-	   
+
 
 
 };

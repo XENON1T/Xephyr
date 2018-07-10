@@ -1,7 +1,7 @@
+#include "TROOT.h"  // So it can be loaded from macros
 int loadXephyr(){
- 
-  TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
 
+  TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
   gROOT->ProcessLine(".L " + xeDir +"/Xephyr/src/XeVersion.cxx+g");
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/XeUtils.cxx+g");
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/XeStat.cxx+g");
