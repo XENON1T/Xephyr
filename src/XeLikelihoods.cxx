@@ -1,6 +1,6 @@
 #include "XeLikelihoods.h"
 
-pdfLikelihood::~pdfLikelihood(){ 
+pdfLikelihood::~pdfLikelihood(){
 
 	bkg_components.clear();
 	safeguarded_bkg_components.clear();
@@ -10,15 +10,15 @@ pdfLikelihood::~pdfLikelihood(){
 
 }
 
-pdfLikelihood::pdfLikelihood(TString nam, double wimpMass) : ProfileLikelihood(nam) {  
+pdfLikelihood::pdfLikelihood(TString nam, double wimpMass) : ProfileLikelihood(nam) {
 	//setting to a dummy experiment value, this parameter is usefull if you want to combine
-	//likelihoods, in that case you need to override it and make sure the two likelihood 
+	//likelihoods, in that case you need to override it and make sure the two likelihood
 	//have different "experiment" number.
-	setExperiment(1);  
+	setExperiment(1);
 
 	wimp_mass = wimpMass;
 
-	
+
 	signal_component = NULL ;
 
 	data = NULL;
@@ -83,7 +83,7 @@ int pdfLikelihood::numberOfSafeguarded(){
 
 void pdfLikelihood::initialize(){
        cout << "pdfLikelihood::initialize - INFO :  initialize..... " << endl;
-	
+
        //some checks
        checkInputs();
 
@@ -96,7 +96,7 @@ void pdfLikelihood::initialize(){
 
        //nuissance parameters  from bkg
        for(unsigned int k = 0; k < bkg_components.size(); k++){
-              cout << "INFO :  adding sys for BKG component "<< bkg_components[k]->getName() << endl; 
+              cout << "INFO :  adding sys for BKG component "<< bkg_components[k]->getComponentName() << endl;
 
 	       for(unsigned int j=0; j <  bkg_components[k]->myScaleUnc.size() ; j++){
 	       addParameter(  bkg_components[k]->myScaleUnc[j], AUTO );
@@ -109,7 +109,7 @@ void pdfLikelihood::initialize(){
 
 
        //nuissance parameters  from signal
-        cout << "INFO :  adding sys for SIGNAL component "<< signal_component->getName() << endl; 
+        cout << "INFO :  adding sys for SIGNAL component "<< signal_component->getComponentName() << endl;
 	for(unsigned int j=0; j <  signal_component->myScaleUnc.size() ; j++){
 	    addParameter(  signal_component->myScaleUnc[j], AUTO );
       	}
@@ -127,7 +127,7 @@ void pdfLikelihood::initialize(){
 		safeGuardParam->setType(FREE_PARAMETER);
 			if(safeguard_fixValue > 0. ) safeGuardParam->setType(FIXED_PARAMETER);
 		safeGuardParam->setInitialValue(1.0);
-			if(safeguard_fixValue > 0. ) safeGuardParam->setInitialValue( safeguard_fixValue ); 
+			if(safeguard_fixValue > 0. ) safeGuardParam->setInitialValue( safeguard_fixValue );
 		safeGuardParam->setCurrentValue(1.0);
 			if(safeguard_fixValue > 0. ) safeGuardParam->setCurrentValue( safeguard_fixValue );
 		safeGuardParam->setMinimum(0.00001);
@@ -137,7 +137,7 @@ void pdfLikelihood::initialize(){
 
 		safeguard_scaling = 1000.;
 	}
-	else if(numberOfSafeguarded() > 0 ) 
+	else if(numberOfSafeguarded() > 0 )
 		cout << "\n------ WARNING -------  Safeguard is turned OFF altough you have set components to be safeguarded this is ignored -----\n" << endl;
 
 
@@ -153,7 +153,7 @@ void pdfLikelihood::initialize(){
 
 
 
-void pdfLikelihood::setData(int dataType) { 
+void pdfLikelihood::setData(int dataType) {
    switch (dataType) {
 	case DM_DATA:
 	  useDMData();
@@ -190,10 +190,10 @@ int pdfLikelihood::useDMData() {
 
 void pdfLikelihood::addBkgPdfComponent(pdfComponent *addMe , bool Safeguarded){
 
-        // check if component exist ----------------------------------------// 
+        // check if component exist ----------------------------------------//
 	for(unsigned int k=0; k < bkg_components.size(); k++) {
 		if(bkg_components[k] == addMe){
-		       cout << " pdfLikelihood::addBkgPdfComponent - ERROR: bkg component " << bkg_components[k]->getName() << " already exist. Quit" << endl;
+		       cout << " pdfLikelihood::addBkgPdfComponent - ERROR: bkg component " << bkg_components[k]->getComponentName() << " already exist. Quit" << endl;
 		       exit(100);
 		}
 	}
@@ -204,14 +204,14 @@ void pdfLikelihood::addBkgPdfComponent(pdfComponent *addMe , bool Safeguarded){
 
 	bkg_components.push_back(addMe);
 
-	cout << "pdfLikelihood - INFO: bkg component named " << addMe->getName() << " added to " ;//<< getName();
+	cout << "pdfLikelihood - INFO: bkg component named " << addMe->getComponentName() << " added to " ;//<< getName();
 	if    (Safeguarded) cout << "   SAFEGUARDED" << endl;
 	else  cout << "   NOT SAFEGUARDED" << endl;
 
 }
 
 void pdfLikelihood::generateAsimov(double mu_prime) {
-        
+
         delete asimovData;
  	double scaleFactorSignal =  mu_prime * getSignalMultiplier()  ;
 
@@ -227,13 +227,13 @@ void pdfLikelihood::generateAsimov(double mu_prime) {
 		TH2F very_temp_hist(bkg_components[k]->getDefaultHisto());
 		temp_histo.Add(&very_temp_hist);
 	}
-	
+
 	temp_histo.Add(&temp_signal,scaleFactorSignal);
-	
-	//generate a TH2F as fake data	
+
+	//generate a TH2F as fake data
 
 	//	data->generateAsimov(scaleFactorSignal, &temp_signal, &temp_bkg);
-	
+
 	asimovData =new dataHandler(Form("ASIMOV_DATA_%.2f", mu_prime), &temp_histo); //scaleFactorSignal, &temp_signal, &temp_bkg);
 
 
@@ -257,9 +257,9 @@ double pdfLikelihood::computeTheLogLikelihood() {
     double sigma = getPOI()->getCurrentValue();
 
   //------------------------- CHECK FIT STATUS -----------------------------//
-  //Check fit  status: check all parameters value, if any is NaN means the 
+  //Check fit  status: check all parameters value, if any is NaN means the
   //fit is bad. It can happen in case of crazy value of mu, not necessarily
-  //means that the limit is bad. 
+  //means that the limit is bad.
     TRAVERSE_PARAMETERS(it) {
 	double param_value = (it->second)->getCurrentValue();
      	if(std::isnan(param_value)){
@@ -269,9 +269,9 @@ double pdfLikelihood::computeTheLogLikelihood() {
      }
    //---------------------------------------------------------------//
 
-     // LL = log(likelihood) 
+     // LL = log(likelihood)
      double LL = 0;
-    
+
    //------------- LOAD PDF WITH SYS VARIATION ---------------------//
      TH2F signalPdf(signal_component->getInterpolatedHisto());
 
@@ -287,11 +287,11 @@ double pdfLikelihood::computeTheLogLikelihood() {
              bkgPdftemp = (bkg_components[0]->getInterpolatedHisto());
 
      	     for(unsigned int k=1; k < bkg_components.size(); k++){
-       
+
        		TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
        		bkgPdftemp.Add(&temp_bkgPdf);
      	    }
-	
+
             if (fabs(bkgPdf.Integral()-bkgPdftemp.Integral())>1e-2) {
 		    Error("ComputeTheLikelihood", Form("OOOHHHHHHHHHHHH background integral : %f %f \n",bkgPdf.Integral(), bkgPdftemp.Integral()));
 		}
@@ -315,19 +315,19 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
 
 
-   //----------------------- POISSON TERM --------------------------//	
+   //----------------------- POISSON TERM --------------------------//
      double Nb = bkgPdf.Integral();
      double   Ns    = sigma * getSignalMultiplier() *  signalPdf.Integral();
      double   Nobs  = data->getSumOfWeights();    // this is == Nentry in case of data, but is not in case of asimov
 
-     //protection against uphysical values of Ns, this is very common in binned case 
-     //for unbinned should be impossible.	
+     //protection against uphysical values of Ns, this is very common in binned case
+     //for unbinned should be impossible.
      if( Ns + Nb <= 0.)  {
 	      cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : Ns + Nb <= 0." << endl;
 	     return VERY_SMALL;
      }
 
-     LL += Nobs * log(Ns + Nb ) -Ns - Nb ;  
+     LL += Nobs * log(Ns + Nb ) -Ns - Nb ;
    //---------------------------------------------------------------//
 
     Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Ns %f    Nobs %f   Nb %f ", Ns , Nobs,  Nb));
@@ -335,12 +335,12 @@ double pdfLikelihood::computeTheLogLikelihood() {
     Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" PoissonTerm %f ",Nobs * log(Ns + Nb ) -Ns - Nb ));
 
 
-  
+
    //------------------------- PDF TERM ----------------------------//
      double extended_term   = 0.;
 
-    Long64_t Nentry  = data->getEntries();  
-   
+    Long64_t Nentry  = data->getEntries();
+
     Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Nentry %lld ", Nentry ));
     //loop over all data
     for(Long64_t event = 0; event < Nentry; event++){
@@ -348,7 +348,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
 		double ts2=data->getS2(event);
 		double tweight=data->getW(event);
 	     //loads data TNtuple entry
-	     //data->getEntry(event);	
+	     //data->getEntry(event);
 
 	     //double extended_signal =  data->getValFromPdf(signalPdf) * sigma * getSignalMultiplier();
      	     //double extended_bkg    =  data->getValFromPdf( bkgPdf ) ;
@@ -359,8 +359,8 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
 	    Debug("computeTheLogLikelihood", TString::Format("S1 %f  --- S2 %f  ---- weight %f  ---- Fs %f  ----- Fb %f", ts1, ts2, tweight,extended_signal, extended_bkg ));
 
-	    // check physical result 
-	    if(extended_signal + extended_bkg < 0) {	     
+	    // check physical result
+	    if(extended_signal + extended_bkg < 0) {
 	      	Warning("pdfLikelihood::computeTheLogLikelihood" , "NsFs + NbFb < 0 ");
 	     	return VERY_SMALL;
 	    }
@@ -370,7 +370,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
 		Debug("computeTheLogLikelihood", TString::Format("Extended term  %f", extended_term ));
 
     }
-     
+
     LL += extended_term ;
    //---------------------------------------------------------------//
       Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Extended term %f ", extended_term ));
@@ -382,27 +382,27 @@ double pdfLikelihood::computeTheLogLikelihood() {
 	     // Check if Safeguard is applicable, Ns > Nb*epsilon otherwise you can eat up your signal
 	     // in this case safeguard can bring problem.
 		 double epsilon = safeGuardParam->getCurrentValue() / safeguard_scaling;
-			  
+
 		Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" PoissonTerm %f ",Nobs * log(Ns + Nb ) -Ns - Nb ));
 
 	     if(  epsilon <= 0. ) {
 				 Warning("computeTheLogLikelihood", "safeguard not safe");
-			     return VERY_SMALL; 
+			     return VERY_SMALL;
 	     }
 			 LL += LLsafeGuard();
 		//Info("pdfLikelihood::computeTheLogLikelihood" , Form(" Safeguard %f ", safeGuardParam->getCurrentValue() ));
-     }     
+     }
    //---------------------------------------------------------------//
 
 
    //----------------------- ADDING NP CONSTRAINTS -----------------//
-      // this is now moved at higher level due to combination 
+      // this is now moved at higher level due to combination
 	  // (in combination one would otherwise consider this term twice)
 	  // it is done in likelihood::LikelihoodEvaluate()
    //---------------------------------------------------------------//
 
 
-  
+
 	 Debug("computeTheLogLikelihood", Form("LogLike %f", LL));
 
   return LL;
@@ -420,7 +420,7 @@ void  pdfLikelihood::drawAllOnProjection(bool isS1Projection){
    histoCompare comp = getModelCompare();
 
    comp.rebinX = 1;
-   comp.rebinY = 10; 
+   comp.rebinY = 10;
 
    if(isS1Projection) comp.titleX = ("cS1  [PE]");
    else comp.titleX = ("cS2  [PE]");
@@ -429,9 +429,9 @@ void  pdfLikelihood::drawAllOnProjection(bool isS1Projection){
 
    comp.projectionX = isS1Projection;
 
-   comp.compareWithRatio();    
+   comp.compareWithRatio();
 
-  
+
    TLatex latex;
    latex.SetTextSize(0.05);
    TString t = "";
@@ -449,13 +449,13 @@ void  pdfLikelihood::drawAllOnProjection(bool isS1Projection){
 histoCompare pdfLikelihood::getModelCompare(){
 
 
-     
+
      printCurrentParameters();
 
      double sigma = getPOI()->getCurrentValue();
      double scaleFactorSignal =  sigma * getSignalMultiplier()  ;
      TH2F signalPdf(signal_component->getInterpolatedHisto());
-     signalPdf.Scale(scaleFactorSignal);    
+     signalPdf.Scale(scaleFactorSignal);
 
 
      TH2F *dataHisto = (TH2F*)signalPdf.Clone("dataHisto");
@@ -474,27 +474,27 @@ histoCompare pdfLikelihood::getModelCompare(){
 
      	     c.addHistoToList(temp_hist,"Background");
 
-	     bkgIntegral +=temp_hist.Integral();  
+	     bkgIntegral +=temp_hist.Integral();
      }
 
      c.addHistoToList(signalPdf,"WIMP");
 
 
     // Info("Model Comparison", ".....");
-     cout <<"Data   " << dataHisto->Integral() << endl;;     
-     cout <<"Bkg    "  << bkgIntegral << endl;;     
-     if(scaleFactorSignal != 0.) 
+     cout <<"Data   " << dataHisto->Integral() << endl;;
+     cout <<"Bkg    "  << bkgIntegral << endl;;
+     if(scaleFactorSignal != 0.)
               cout <<"Signal "  << signalPdf.Integral()/scaleFactorSignal << " POI " << sigma << "  SignalMultiplier  " << getSignalMultiplier() << endl;
-     else 
+     else
 	     cout <<"Signal "  << 0 << " POI " << sigma << "  SignalMultiplier  " << getSignalMultiplier() << endl;
 
-    cout << "...... That signal scaled is " << signalPdf.Integral() << endl; 
+    cout << "...... That signal scaled is " << signalPdf.Integral() << endl;
 
 
    return c;
 }
 
-    
+
 
 
 
@@ -515,8 +515,8 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
      float standard_integral = 0. ;
      double Nb_safeguard      = 0. ;
      double epsilon           = safeGuardParam->getCurrentValue() / safeguard_scaling;
-    
-     //computing Nb(1-epsilon)Fb for the safegurded components 
+
+     //computing Nb(1-epsilon)Fb for the safegurded components
      for(unsigned int k=0; k < bkg_components.size(); k++){
 	     //adding up only the safeguarded components
 	     if(!safeguarded_bkg_components[k])  continue;
@@ -531,27 +531,27 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
 
              // this is the Nb that will multiply Fs
              Nb_safeguard += temp_bkgPdf.Integral() ;
-	     
+
       }
 
-     // Adding Nb*epsilon*Fs     
-	 TH2F Fs (signal_component->getInterpolatedHisto());	
+     // Adding Nb*epsilon*Fs
+	 TH2F Fs (signal_component->getInterpolatedHisto());
 
 	 Debug("getSafeguardedBkgPdfOnly", TString::Format("safeguard_value %f   corresponding to events = %f  and Nb= %f", epsilon, epsilon * Nb_safeguard, Nb_safeguard ));
 	 //bkg_plusSafeguard.Add(&Fs, epsilon * Nb_safeguard / Fs.Integral() ) ;
 	 plotHelpers::addHisto(&bkg_plusSafeguard, &Fs, epsilon * Nb_safeguard / Fs.Integral() );
 
 	 //cross check:
-     if( fabs(bkg_plusSafeguard.Integral() - standard_integral) > 0.001|| 
-		     bkg_plusSafeguard.Integral() <= 0.) { 
+     if( fabs(bkg_plusSafeguard.Integral() - standard_integral) > 0.001||
+		     bkg_plusSafeguard.Integral() <= 0.) {
 	  cout <<"pdfLikelihood::getSafeguardedBkgPdf - ERROR: probability is not conserved in safeguard." << endl;
 	  cout << bkg_plusSafeguard.Integral() << " !=  " << standard_integral << "\nQuit!. " <<endl;
      	  exit(100);
-	}     
+	}
 
 
-     
-     return bkg_plusSafeguard; 
+
+     return bkg_plusSafeguard;
 }
 
 
@@ -568,12 +568,12 @@ TH2F pdfLikelihood::getSafeguardedBkgPdf(){
 		 Debug("getSafeguardedBkgPdfOnly",TString::Format("component %s  n-events = %f",temp_bkgPdf.GetName(), temp_bkgPdf.Integral()));
 	     safeguard_only.Add(&temp_bkgPdf);
       }
-      
+
       return safeguard_only;
 }
 
 TH2F pdfLikelihood::getOverallBkgHisto(){
-		
+
 		TH2F bkgPdf = (bkg_components[0]->getInterpolatedHisto());
 		for(unsigned int k=1; k < bkg_components.size(); k++){
 
@@ -582,7 +582,7 @@ TH2F pdfLikelihood::getOverallBkgHisto(){
 	    }
 
 		return bkgPdf;
-		
+
 }
 
 bool pdfLikelihood::isNegativeAnywhere(TH2F histo){
@@ -595,7 +595,7 @@ bool pdfLikelihood::isNegativeAnywhere(TH2F histo){
 		}
 	}
 
-	return false; 
+	return false;
 }
 
 
@@ -604,7 +604,7 @@ double pdfLikelihood::LLsafeGuard(){
 
      double LL = 0;
 
-     Long64_t Nentry = calibrationData->getEntries(); 
+     Long64_t Nentry = calibrationData->getEntries();
 
      TH2F safeguard_only = getSafeguardedBkgPdfOnly();
 
@@ -629,7 +629,7 @@ double pdfLikelihood::LLsafeGuard(){
        double ts1=calibrationData->getS1(event);
        double ts2=calibrationData->getS2(event);
        double tweight=calibrationData->getW(event);
-	   
+
 	   // Debug("pdfLikelihood::LLSafeguard" , Form("Calibration Event: S1 %f ; S2 %f ; weight %f",ts1, ts2, tweight));
 
 	     //loads data TNtuple entry
@@ -639,18 +639,18 @@ double pdfLikelihood::LLsafeGuard(){
              //	     double NbFb =  tweight * safeguard_only.GetBinContent(safeguard_only.GetXaxis()->FindBin(ts1), safeguard_only.GetYaxis()->FindBin(ts2));
 	     double NbFb =  tweight * safeguard_only.GetBinContent(safeguard_only.FindBin(ts1,ts2));
 
-	     // check physical result 
-	     if(NbFb <=0) {	     
+	     // check physical result
+	     if(NbFb <=0) {
 	     	cout << "pdfLikelihood::computeTheLogLikelihood - WARNING : safeGuard component <= 0. " << NbFb << endl;
 	     	return VERY_SMALL;
 	     }
 
 	     //	     LL +=  log( NbFb / safeguard_only.Integral() ) ;
-	     LL +=  log( NbFb / safeguard_only_integral ) ; 
+	     LL +=  log( NbFb / safeguard_only_integral ) ;
 
 	     //if(printLevel > 4)    cout<<"....................... - INFO : Safeguard NB*Fb(x)" << NbFb << "  LL for data i " << LL << endl;
      }
-    
+
 	Debug("LLsafeGuard", TString::Format("LL safeguard term %f", LL));
     return LL ;
 
@@ -666,22 +666,22 @@ void pdfLikelihood::setTreeIndex(int index){
 pdfComponent* pdfLikelihood::getBkgComponent(TString search_name) {
 
 	for(unsigned int i=0; i < bkg_components.size(); i++){
-		if(bkg_components[i]->getName() == search_name) return bkg_components[i];
+		if(bkg_components[i]->getComponentName() == search_name) return bkg_components[i];
 	}
 	Error("getBkgComponent", "component " + search_name + " not found.");
-	
+
 	return NULL;
 }
 
 
 void pdfLikelihood::printEventSummary(bool isForWiki){
-	
+
 	if(!isForWiki)
 	{
 		cout << "\n\n--------------Event Summary------------------\nPdfComponent Name \tEvents"<< endl;
-	
+
 		for(unsigned int i=0; i < bkg_components.size(); i++){
-			cout << TString::Format("%s \t %1.4f",bkg_components[i]->getName().Data(), bkg_components[i]->getNormalizedEvents()) << endl;
+			cout << TString::Format("%s \t %1.4f",bkg_components[i]->getComponentName().Data(), bkg_components[i]->getNormalizedEvents()) << endl;
 		}
 
     	cout << TString::Format("Signal \t %1.4f", signal_component->getNormalizedEvents()) << endl;
@@ -690,15 +690,15 @@ void pdfLikelihood::printEventSummary(bool isForWiki){
 	else {
 
 		cout << "\n\n--------------Event Summary For Wiki------------------\nPdfComponent Name \tEvents"<< endl;
-	
+
 		cout << "^ ";
 
 		for(unsigned int i=0; i < bkg_components.size(); i++){
-			cout << TString::Format(" %s ^",bkg_components[i]->getName().Data()) ;
+			cout << TString::Format(" %s ^",bkg_components[i]->getComponentName().Data()) ;
 		}
 		cout << " Signal ^ Data ^" << endl;
 		cout << "| ";
-    
+
 		for(unsigned int i=0; i < bkg_components.size(); i++){
 			cout << TString::Format(" %1.4f |", bkg_components[i]->getNormalizedEvents()) ;
 		}
