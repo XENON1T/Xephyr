@@ -14,6 +14,12 @@
 ### To load the library simply do: 
 <code> root -l loadXephyr.C </code>
 
+# SR1 Example:
+
+you find the SR1 Xephyr package (with some instruction on how to use it) in [here](https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood). 
+However this is a quite complex example, I'd suggest to start from the `docs` and from the tutorials in the folder `notebooks`
+
+
 # Setting Up on Midway2 
 ### I couldn't manage on Midway1, the following works only on Midway2
 
@@ -25,7 +31,7 @@
 	module load cmake			#version 3.6.2  
 	module unload ROOT			
 	module load  ROOT/6.06.08		#This is the only version that worked for me because of linking with sys library
-	export XEPHYR_DIR=Your_dir
+	export XEPHYR_DIR=Your_dir/    # the final slash is important
 	module unload python                  
 	module unload  mkl
 	module load  python/3.5.2
