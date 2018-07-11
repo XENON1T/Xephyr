@@ -673,6 +673,10 @@ pdfComponent* pdfLikelihood::getBkgComponent(TString search_name) {
 	return NULL;
 }
 
+vector<pdfComponent*> pdfLikelihood::getBkgComponents() {
+
+	return bkg_components;
+}
 
 void pdfLikelihood::printEventSummary(bool isForWiki){
 

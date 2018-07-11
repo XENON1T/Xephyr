@@ -70,9 +70,12 @@ class scaleSys : public LKParameter {
 class pdfComponent :errorHandler{
 
    public:
-
+         //! Contructor that uses histogram name as the component name
          pdfComponent(TString name, TString filename);
+
+         //! Contructor for explicitly setting component name that differs from histogram name
          pdfComponent(TString component_name, TString filename, TString hist_name);
+
 	~pdfComponent();
 
 
@@ -150,8 +153,12 @@ class pdfComponent :errorHandler{
 	void      replaceUncertainty(TString name, scaleSys* newScale);
 	void      replaceUncertainty(TString name, shapeSys* newShape);
 
+  //! Returns the histogram name
 	TString getName()  {return pdf_name;};
+
+  //! Returns the component name
   TString getComponentName()  {return component_name;};
+  
 	vector<scaleSys*> 		myScaleUnc; //! container of scale sys
 	vector<shapeSys*> 		myShapeUnc; //! container of shape sys
 
