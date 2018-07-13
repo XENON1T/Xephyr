@@ -34,9 +34,11 @@ the code, without being afraid of compromising Xephyr.
 
 The Xephyr SR1 likelihood is broken into 3 sub-likelihood, corresponding to:
 
-- Inner Egg volume, 
-- The so-called U-volume,
-- Wall volume, 
+- Inner Egg volume, R <= 34.5904 cm, mass 646.157 kg. 
+- The so-called U-volume, 34.59 < R <= 36.48 cm,  mass 360.478 kg. 
+- Wall volume, 36.48 < R <= 41.2396 cm, mass 238.908 kg.
+
+**Total mass 1245.54 kg.**
 
 Each of these sub-volume can be loaded separately, meaning that you can run inference using just one of them,
 but the default configuration in this example is to combine the 3 volumes in a final likelihood.
