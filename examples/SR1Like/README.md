@@ -3,6 +3,8 @@
 This example is supposed to be as close as possible to a template for SR1 like analysis, 
 where you basically just want to swap the signal model with your own and run the rest as the same.
 
+This is a lighter and a bit more self-consistent version of the real [SR1 repository](https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood).
+
 ### What it needs
 
 SR1 data repository [that you find here](https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/inputs_for_likelihood) 
@@ -42,7 +44,7 @@ but the default configuration in this example is to combine the 3 volumes in a f
 ### What shall I modify
 
 There is basically just one line of code that you need to modify to run the SR1 analysis on your signal model 
-and you can find it in the **src/likelihoodDef.cxx"**. Everything is explained in the code itself.
+and you can find it in the **"src/likelihoodDef.cxx"**. Everything is explained in the code itself.
 
 
 ### More info
