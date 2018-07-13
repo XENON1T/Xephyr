@@ -2,7 +2,7 @@ var searchData=
 [
   ['parameterexists',['parameterExists',['../classLikelihood.html#a226de7ab4baca5bea2f47bb936e07f77',1,'Likelihood']]],
   ['paramlist',['paramList',['../classCombinedParameter.html#accef8aa12ca49b3a0f0cbd39852d3f99',1,'CombinedParameter']]],
-  ['pdfcomponent',['pdfComponent',['../classpdfComponent.html',1,'']]],
+  ['pdfcomponent',['pdfComponent',['../classpdfComponent.html',1,'pdfComponent'],['../classpdfComponent.html#ae27cee4b124d55cf9fe70879e67e6e31',1,'pdfComponent::pdfComponent(TString name, TString filename)'],['../classpdfComponent.html#a1787520ad1f676605ae34f3b8d0ee890',1,'pdfComponent::pdfComponent(TString component_name, TString filename, TString hist_name)']]],
   ['pdflikelihood',['pdfLikelihood',['../classpdfLikelihood.html',1,'']]],
   ['plotinterpolatedspace',['plotInterpolatedSpace',['../classpdfComponent.html#a181072320088088fd8e84a5d970fc847',1,'pdfComponent']]],
   ['printeventsummary',['printEventSummary',['../classpdfLikelihood.html#a647819c7bfa55b31bcac946445a1506a',1,'pdfLikelihood']]],
