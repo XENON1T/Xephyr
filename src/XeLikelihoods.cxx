@@ -35,6 +35,8 @@ pdfLikelihood::pdfLikelihood(TString nam, double wimpMass) : ProfileLikelihood(n
 
 	withSafeGuard     = false;
 
+	safeGuardPosDef = true;
+
 	safeGuardParam    = NULL;
 
 	safeguardAdditionalComponent  = NULL;
@@ -130,7 +132,8 @@ void pdfLikelihood::initialize(){
 			if(safeguard_fixValue > 0. ) safeGuardParam->setInitialValue( safeguard_fixValue );
 		safeGuardParam->setCurrentValue(1.0);
 			if(safeguard_fixValue > 0. ) safeGuardParam->setCurrentValue( safeguard_fixValue );
-		safeGuardParam->setMinimum(0.00001);
+
+		if (safeGuardPosDef) safeGuardParam->setMinimum(0.00001);
 		safeGuardParam->setMaximum(5);
 		safeGuardParam->setStep(0.5);
 		addParameter(safeGuardParam, AUTO);
@@ -245,9 +248,12 @@ void pdfLikelihood::generateToyDataset(double seed, double mu_prime) { cout << "
 
 
 
-
 double pdfLikelihood::getCurrentNs(){
 	return  (getPOI()->getCurrentValue() * getSignalMultiplier() *  signal_component->getNormalizedEvents());
+}
+
+double pdfLikelihood::getSafeguardValue(){
+	return safeGuardParam->getCurrentValue() / safeguard_scaling;
 }
 
 double pdfLikelihood::computeTheLogLikelihood() {
@@ -385,7 +391,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
 		Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" PoissonTerm %f ",Nobs * log(Ns + Nb ) -Ns - Nb ));
 
-	     if(  epsilon <= 0. ) {
+	     if(  epsilon <= 0. && safeGuardPosDef ) {
 				 Warning("computeTheLogLikelihood", "safeguard not safe");
 			     return VERY_SMALL;
 	     }
