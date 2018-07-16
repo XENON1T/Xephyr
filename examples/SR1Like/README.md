@@ -45,8 +45,8 @@ but the default configuration in this example is to combine the 3 volumes in a f
 
 ### What shall I modify
 
-There is basically just one line of code that you need to modify to run the SR1 analysis on your signal model 
-and you can find it in the **"src/likelihoodDef.cxx"**. Everything is explained in the code itself.
+There are basically just a couple of functions that you need to modify to run the SR1 analysis on your signal model 
+and you can find it in the **"src/signalDef.cxx"**. Everything is explained in the code itself.
 
 
 ### More info
