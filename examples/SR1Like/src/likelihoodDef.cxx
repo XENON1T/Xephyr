@@ -2,6 +2,7 @@
 #include "XePdfObjects.h"
 #include "dataHandler.h"
 #include "TSystem.h"
+#include "signalDef.cxx"
 #include <vector>
 
 ///---------------     PARAMETERS ------------         ///
@@ -35,6 +36,11 @@ const double calibration_events_outer_SR1 = 1203. ; // events
 const int n_types = 3;
 const double xe_mass[n_types]  = { xe_egg_mass_SR1, xe_inner_mass_SR1, xe_outer_mass_SR1 } ;  // tonne  
 const double exposure[n_types] = { exposure_SR1 , exposure_SR1 , exposure_SR1 } ;
+
+const double exposure_signal[n_types] = { livedays_SR1 *xe_egg_mass_SR1  / year , 
+                                          livedays_SR1 * xe_inner_mass_SR1 / year , 
+                                          livedays_SR1 * xe_outer_mass_SR1 / year } ;
+                                      
 const double livedays[n_types] = { livedays_SR1 , livedays_SR1 , livedays_SR1 } ;
 
 const double er_exp_events[n_types] = { er_events_egg_volume_SR1 , er_events_inner_volume_SR1 , er_events_outer_volume_SR1 };
@@ -44,48 +50,20 @@ const double calibration_events[n_types] = {calibration_events_egg_SR1,  calibra
 const TString LAX = "lax_1.5.1_egg";
 
   // INPUT FILES
-const TString ER_file[n_types] = { "ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root" , 
-                             "ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root",
-                             "ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root"  };
+const TString ER_file =  "ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root" ;
 
-//const TString ER_file[n_types] = { "v1_ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180417.root" , 
-//                             "v1_ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180417.root",
-//                             "v1_ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180417.root"  };
+const TString AC_file =  "Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root";
+
+const TString Radio_file = "RadiogenicNRBackgroundModel_SR1_RunSourceCombined180420.root";
+
+const TString Radio_NX_file =  "RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root";
+
+const TString CNNS_file = "CNNSBackgroundModel_SR1_RunSourceCombinedFit180420.root";
 
 
-const TString AC_file[n_types] = { "Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root", 
-                                   "Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
-                                   "Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root" };
 
-const TString Radio_file[n_types] = { "RadiogenicNRBackgroundModel_SR1_RunSourceCombined180420.root",
-                                      "RadiogenicNRBackgroundModel_SR1_RunSourceCombined180420.root",
-                                      "RadiogenicNRBackgroundModel_SR1_RunSourceCombined180420.root"};
-
-//const TString Radio_file[n_types] = { "v1_RadiogenicNRBackgroundModel_SR1_RunSourceCombinedFit180417.root",
-//                                      "v1_RadiogenicNRBackgroundModel_SR1_RunSourceCombinedFit180417.root",
-//                                      "v1_RadiogenicNRBackgroundModel_SR1_RunSourceCombinedFit180417.root"};
-
-//const TString Radio_NX_file[n_types] = { "v1_RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombinedFit180417.root",
-//                                         "v1_RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombinedFit180417.root",
-//                                         "v1_RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombinedFit180417.root"};
-
-const TString Radio_NX_file[n_types] = { "RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
-                                        "RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
-                                         "RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root"};
-
-const TString CNNS_file[n_types] = { "CNNSBackgroundModel_SR1_RunSourceCombinedFit180420.root",
-                                     "CNNSBackgroundModel_SR1_RunSourceCombinedFit180420.root",  
-                                     "CNNSBackgroundModel_SR1_RunSourceCombinedFit180420.root" };
-
-const TString Signal_file[n_types] = { "SignalModel_SR1_GeV_FromRunSourceCombinedFit180420.root", 
-                                       "SignalModel_SR1_GeV_FromRunSourceCombinedFit180420.root", 
-                                       "SignalModel_SR1_GeV_FromRunSourceCombinedFit180420.root" } ;
-                                 
-//const TString Signal_file[n_types] = { "v1_SignalModel_SR1_GeV_FromRunSourceCombinedFit180417.root", 
-//                                       "v1_SignalModel_SR1_GeV_FromRunSourceCombinedFit180417.root", 
-//                                       "v1_SignalModel_SR1_GeV_FromRunSourceCombinedFit180417.root" } ;
-
-  // HISTO NAMES
+// HISTO NAMES: each volume region has its own set of histograms
+// The ER is special, the names are actually suffixes
 const TString ER_name[n_types] =       { "_yx_r0_f" ,  "_yx_r1_f" , "_yx_r2_f" };
 const TString AC_name[n_types] =       { "acbg_yx_r0_f"      ,  "acbg_yx_r1_f", "acbg_yx_r2_f" };
 const TString AC_rn_name[n_types] =    { "acrn220_yx_r0_f", "acrn220_yx_r1_f", "acrn220_yx_r2_f" };
@@ -94,42 +72,34 @@ const TString Wall_rn_name[n_types] =  { "wallrn_0.00_yx_r0_f" , "wallrn_0.00_yx
 const TString Radio_name[n_types] =    { "hnrbkg_yx_r0_f", "hnrbkg_yx_r1_f" , "hnrbkg_yx_r2_f" };
 const TString Radio_NX_name[n_types] = { "hnrbkg_yx_r0_f", "hnrbkg_yx_r1_f" , "hnrbkg_yx_r2_f" };
 const TString CNNS_name[n_types] =     { "hmc_extruded_yx_r0_f", "hmc_extruded_yx_r1_f" , "hmc_extruded_yx_r2_f" };
-const TString Signal_name[n_types] =   { "hmc_extruded_yx_r0_f", "hmc_extruded_yx_r1_f" , "hmc_extruded_yx_r2_f" } ;
 
 
-  // Uncertainties 
+// Uncertainties, in case the uncertainty would depend on the volume region (egg, U, wall)  
 const double wall_unc[n_types] =  { 1. , 1., 0.5 };
-
 
 /// --------- ///
 
 
-pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
+// This function returns a skeleton likelihood definition, without data.
+pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double other = 0.){
 
  TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
  TString inputDir = xeDir + "SR1/StatisticalAnalyses/inputs_for_likelihood/"+ LAX + "/sliced_2d_templates/";
+
 
  if(type != 1 && type != 0 && type !=2 )  exit(100);
 
  TString type_str = TString::Itoa(type, 10);
  
- pdfComponent *ER = new pdfComponent("hbkg", inputDir + ER_file[type] );
-
-    //Now some settings:
-    /*shapeSys *Eth = new shapeSys("_Eth_");     
-    Eth->setStep(1.);                      // FIXME
-    Eth->setMinimum(-2.);   
-    Eth->setMaximum(2.);    
-    Eth->setType(FIXED_PARAMETER);
-    */
+ pdfComponent *ER = new pdfComponent("hbkg", inputDir + ER_file );
 
     shapeSys *PY = new shapeSys("_py0_");     
-    PY->setStep(1.);                      // FIXME
+    PY->setStep(1.);                     
     PY->setMinimum(-1.);   
     PY->setMaximum(1.);    
     PY->setType(FREE_PARAMETER);
     shapeSys *RF = new shapeSys("_rf0_");
-    RF->setStep(1.);                     // FIXME
+    RF->setStep(1.);                     
     RF->setMinimum(-2.);   
     RF->setMaximum(2.);    
     RF->setType(FREE_PARAMETER);
@@ -139,7 +109,6 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
     s1->setType(FREE_PARAMETER);
     ER->addScaleSys(s1);   
 
-    //ER->addShapeSys(Eth);   
     ER->addShapeSys(PY);   
     ER->addShapeSys(RF);
 
@@ -148,7 +117,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
 
 
   
-  pdfComponent *AC = new pdfComponent(AC_name[type], inputDir + AC_file[type] );
+  pdfComponent *AC = new pdfComponent(AC_name[type], inputDir + AC_file );
 
     scaleSys *sAC = new scaleSys("ACscale"+type_str,0.2);
     sAC->setMinimum(-2.);
@@ -157,7 +126,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
     AC->addScaleSys(sAC);
 
 
-    TFile *f1 = TFile::Open(inputDir + AC_file[type] );
+    TFile *f1 = TFile::Open(inputDir + AC_file );
     TH2F* AC_for_safeguard = (TH2F*) f1->Get( AC_rn_name[type] );
     TH2F* wall_for_safeguard = (TH2F*) f1->Get( Wall_rn_name[type] );
 
@@ -167,7 +136,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
     AC_for_safeguard->Scale( AC_scale_safeguard );  // must be scaled to ER
 
   
-    pdfComponent *Wall = new pdfComponent( Wall_name[type] , inputDir + AC_file[type] );
+    pdfComponent *Wall = new pdfComponent( Wall_name[type] , inputDir + AC_file );
 
     scaleSys *sWall = new scaleSys("Wallscale"+type_str, wall_unc[type] );
     sWall->setMinimum( -1. / wall_unc[type] + 0.001);
@@ -176,7 +145,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
     Wall->addScaleSys(sWall);
 
   
-    pdfComponent *Radio = new pdfComponent( Radio_name[type] , inputDir + Radio_file[type] );
+    pdfComponent *Radio = new pdfComponent( Radio_name[type] , inputDir + Radio_file );
 
     scaleSys *sRadio = new scaleSys("Radioscale"+type_str,0.5 );
     sRadio->setMinimum(-2.);
@@ -187,7 +156,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
     Radio->setScaleFactor( livedays[type] / year );
 
 
-    pdfComponent *RadioNX = new pdfComponent( Radio_NX_name[type] , inputDir + Radio_NX_file[type] );
+    pdfComponent *RadioNX = new pdfComponent( Radio_NX_name[type] , inputDir + Radio_NX_file );
 
     scaleSys *sRadioNX = new scaleSys("RadioscaleNX"+type_str,0.5 );
     sRadioNX->setMinimum(-2.);
@@ -199,7 +168,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
 
 
   
-    pdfComponent *CNNS = new pdfComponent( CNNS_name[type] , inputDir + CNNS_file[type] );
+    pdfComponent *CNNS = new pdfComponent( CNNS_name[type] , inputDir + CNNS_file );
 
     CNNS->setScaleFactor( exposure[type] );  // has been cutted in R after extrusion.
     scaleSys *sCNNS = new scaleSys("CNNSscale"+type_str,0.3);
@@ -209,23 +178,14 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type){
     CNNS->addScaleSys(sCNNS);
 
 
-    
-    //TString Signal_file = "sliced_2d_templates/InelasticWIMPSignalModel_1000GeV_Delta100GeV_FromCombinedFit180212.root" ;
-    //TString Signal_file = "sliced_2d_templates/InelasticWIMPSignalModel_50GeV_Delta100keV_FromCombinedFit180212.root" ;
-    TString signal_file_with_mass = Signal_file[type];
-    TString m = TString::Format("%1.0f", mass);
-    signal_file_with_mass.Insert( signal_file_with_mass.Index("GeV"), m );  // adding the mass to the file name
+    TString Signal_name = getSignalHistoName(mass, type, other);
+    TString signal_file_with_mass = getSignalFile(mass, type, other);
+    double  signal_unc = getSignalUncertainty(mass, type, other);
 
+    pdfComponent *Signal = new pdfComponent( Signal_name , signal_file_with_mass );
+    Signal->setScaleFactor( exposure_signal[type] );
 
-    pdfComponent *Signal = new pdfComponent( Signal_name[type] , inputDir + signal_file_with_mass );
-    Signal->setScaleFactor( exposure[type] );
-
-    TFile f_uncertainty(xeDir + "SR1/StatisticalAnalyses/inputs_for_likelihood/"+LAX+"/models_extended/Acceptance_RunSourceCombined180420_SR1_WIMP.root");
-    //TFile f_uncertainty(xeDir + "SR1/StatisticalAnalyses/inputs_for_likelihood/"+LAX+"/models_extended/v1_Acceptance_RunSourceCombined180417_SR1_WIMP.root");
-    TGraph *signal_unc = (TGraph*)f_uncertainty.Get("Graph");
-    cout << "scale Signal uncertainty: " << signal_unc->Eval(mass) << endl;
-    
-    scaleSys *s2 = new scaleSys("SignalScale"+type_str, signal_unc->Eval(mass));
+    scaleSys *s2 = new scaleSys("SignalScale"+type_str, signal_unc) ;
     Signal->addScaleSys(s2);
     
 
@@ -305,11 +265,10 @@ pdfLikelihood* getTheLikelihoodToFit(TString collection, int mu, double mass, in
   dataHandler *data  = getDataToFit(collection, mu, mass, type, Gen ) ;
   dataHandler *calib = getCalibToFit(collection,mass, type, Gen );
 
-  pdfLikelihood *pl =  getTheLikelihoodByType(mass, type);
+  pdfLikelihood *pl = getTheLikelihood_SR1(mass, type);
   pl->setDataHandler(data);
   pl->setCalibrationData(calib);
   
-  // bool add_safeguard = ( type ==0 ) ;  // not really sure I wanna do this THINK
   pl->setWithSafeGuard(true);
   pl->initialize();
   
@@ -318,9 +277,8 @@ pdfLikelihood* getTheLikelihoodToFit(TString collection, int mu, double mass, in
 
 dataHandler* getDMdata( int type){ 
   TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
-  TString inputDir = xeDir + "SR1/StatisticalAnalyses/inputs_for_likelihood/" + LAX + "/data/";
+  TString inputDir = xeDir + "xephyr_examples/SR1Like/data/";
 
-  //TString data_filename = "xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1.root" ;
   TString data_filename = "xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root" ;
   TString data_treeName = "tree_"+TString::Itoa(type,10);
 
@@ -333,7 +291,7 @@ dataHandler* getDMdata( int type){
 dataHandler* getDMCalibration( int type){ 
   
   TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
-  TString inputDir = xeDir + "SR1/StatisticalAnalyses/inputs_for_likelihood/" + LAX +"/data/";
+  TString inputDir = xeDir + "xephyr_examples/SR1Like/data/";
 
   TString data_filename = "xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root" ;
   TString data_treeName = "tree_"+TString::Itoa(type,10);
@@ -349,7 +307,7 @@ pdfLikelihood* getDMLikelihood( double mass, int type){
   dataHandler *data  = getDMdata(type) ;
   dataHandler *calib = getDMCalibration(type);
 
-  pdfLikelihood *pl =  getTheLikelihoodByType(mass, type);
+  pdfLikelihood *pl = getTheLikelihood_SR1(mass, type);
   pl->setDataHandler(data);
   pl->setCalibrationData(calib);
   pl->setWithSafeGuard(true);
@@ -443,76 +401,3 @@ CombinedProfileLikelihood* getDMCombinedLikelihood( double mass ) {
 }
 
 
-
-pdfLikelihood* getTheLikelihood_SR1_calibration( double mass, TString type){
- 
- TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
- TString inputDir = xeDir + "SR1/StatisticalAnalyses/inputs_for_likelihood/";
-
- if(type != "1" && type != "0" )  exit(100);
-
- int type_int = type.Atoi()  ;
-
- TString ER_file = "lax_1.5.1/sliced_2d_templates/ERBackgroundModel_SR1_FromSourceCombinedFit180212.root";
-
- pdfComponent *ER = new pdfComponent("hbkg_Eth_0.00", inputDir + ER_file);
-    
-    shapeSys *PY = new shapeSys("_py0_");     
-    PY->setStep(1.);                      // FIXME
-    PY->setMinimum(-2.);   
-    PY->setMaximum(2.);    
-    PY->setType(FREE_PARAMETER);
-    shapeSys *RF = new shapeSys("_rf0_");
-    RF->setStep(1.);                     // FIXME
-    RF->setMinimum(-2.);   
-    RF->setMaximum(2.);    
-    RF->setType(FREE_PARAMETER);
-
-    scaleSys *s1 = new scaleSys("ERscale"+type,1.);
-    s1->setMinimum(-0.5);
-    s1->setMaximum(0.5);
-    s1->setType(FREE_PARAMETER);
-    ER->addScaleSys(s1);   
-
-    //ER->addShapeSys(Eth);   
-    ER->addShapeSys(PY);   
-    ER->addShapeSys(RF);
-
-    ER->suffix = "_extruded_yx_r"+type+"_f";
-    ER->setEvents( calibration_events[type_int] ); // Set the normalization factor for ER in events.
-
-
-  TString AC_file = "lax_1.5.1/sliced_2d_templates/Background_wall_ac_templates_v5_SR1_2018-02-28.root";
-  pdfComponent *AC = new pdfComponent("acrn220_yx_r"+type+"_f", inputDir +AC_file );
-
-  TString Wall_file = "lax_1.5.1/sliced_2d_templates/Background_wall_ac_templates_v5_SR1_2018-02-28.root";
-    pdfComponent *Wall = new pdfComponent("wallrn_1.00_yx_r"+type+"_f", inputDir + Wall_file );
-
-    TString Signal_file = TString::Format("lax_1.5.1/sliced_2d_templates/SignalModel_SR1_%1.0fGeV_FromSourceCombinedFit180212.root",mass) ;
-
-    pdfComponent *Signal = new pdfComponent( "hmc_extruded_yx_r"+type+"_f", inputDir + Signal_file);
-    Signal->setScaleFactor( exposure_SR1 );
-
-    TString data_filename = "lax_1.5.1/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root";
-    TString data_treeName = (type == "0") ? "tree_inner" : "tree_outer";
-    dataHandler *data = new dataHandler("calibration",inputDir + data_filename, data_treeName);
-
-  pdfLikelihood *pl = new pdfLikelihood("L_SR1_V"+type, mass);
-    
-      pl->setExperiment(1);
-    pl->addBkgPdfComponent(AC, false);
-        pl->addBkgPdfComponent(Wall, false);
-    pl->addBkgPdfComponent(ER, true);
-    pl->setSignalPdf(Signal);       
-    pl->setSignalDefaultNorm(1.E-45);
-    //pl.setPrintLevel(WARNING);
-    pl->setWithSafeGuard(false);    
-    pl->setDataHandler(data);
-
-    pl->initialize();
-
-    pl->printEventSummary();
-
-  return pl;
-
-}
