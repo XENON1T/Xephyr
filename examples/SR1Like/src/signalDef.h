@@ -26,7 +26,7 @@ TString getSignalHistoName(double primaryParameter, int likelihoodType, double o
     // as a function of the volume type [0=egg_volume, 1=U_volume, 2=Wall_volume]
     // as a function of an additional parameter (not used in SR1) 
 
-    // In SR1 For the signal we use the same histogram (anyway the signal shape in S1S2 doesn't change). 
+    // In SR1 For the signal we use the same histogram for any volume (anyway the signal shape in S1S2 doesn't change). 
     // The number of event rescaling according to the volume is done aftewards in the code. 
     // You just need to change this line with your histo name.
     // In SR1 the histo name does not depend on any of the parameter, these are just for your convenience.

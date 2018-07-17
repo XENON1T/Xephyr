@@ -22,8 +22,6 @@
 	 pl->printEventSummary(false); // print a summary of the event content of the histograms
 	 			       // if the argument is true, will print with wiki format
 
-	 pl->maximize(false);  // maximize the likelihood (remember we injected signal 30 events)
-	 		       
 	
 	 AsymptoticExclusion ae (pl, 0.05); // 95% CL comparison with Knut (this is done with onesided TS)
    
