@@ -2,7 +2,7 @@
 #include "XePdfObjects.h"
 #include "dataHandler.h"
 #include "TSystem.h"
-#include "signalDef.cxx"
+#include "signalDef.h"
 #include <vector>
 
 ///---------------     PARAMETERS ------------         ///
@@ -200,29 +200,12 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
     pl->addBkgPdfComponent(ER, true);
     pl->setSignalPdf(Signal);       
     pl->setSignalDefaultNorm(1.E-45);
-    //pl->setSignalDefaultNorm(2.9627e-38);
     //pl.setPrintLevel(WARNING);
     pl->setWithSafeGuard(false);
     //pl->setFixedValueForSafeguard(0.00001);
     pl->setAdditionalSafeGuardComponent(AC_for_safeguard);
       
     return pl;
-
-}
-
-
-
-pdfLikelihood* getTheLikelihoodByType(double mass, unsigned int type){
-  
-  TString tipo = TString::Itoa(type, 10);
-
-  if(type == 0 || type == 1 || type == 2) {
-    cout << "Likelihood Type: SR1 Volume "+ tipo + ", mass  "<< mass << endl;
-    return getTheLikelihood_SR1(mass, type);
-  }
-  else cout << "ERROR no such a Likelihood Type " << endl;
-  
-  return new pdfLikelihood("DUMMY",999);
 
 }
 
@@ -260,12 +243,12 @@ dataHandler* getCalibToFit( TString collection,  double mass, int type, int Gen 
 }
 
 
-pdfLikelihood* getTheLikelihoodToFit(TString collection, int mu, double mass, int type, int Gen){
+pdfLikelihood* getTheLikelihoodToFit(TString collection, int mu, double mass, double other, int type, int Gen){
   
   dataHandler *data  = getDataToFit(collection, mu, mass, type, Gen ) ;
   dataHandler *calib = getCalibToFit(collection,mass, type, Gen );
 
-  pdfLikelihood *pl = getTheLikelihood_SR1(mass, type);
+  pdfLikelihood *pl = getTheLikelihood_SR1(mass, type, other);
   pl->setDataHandler(data);
   pl->setCalibrationData(calib);
   
@@ -302,12 +285,12 @@ dataHandler* getDMCalibration( int type){
 
 }
 
-pdfLikelihood* getDMLikelihood( double mass, int type){
+pdfLikelihood* getDMLikelihood( double mass, int type, double other = 0.){
   
   dataHandler *data  = getDMdata(type) ;
   dataHandler *calib = getDMCalibration(type);
 
-  pdfLikelihood *pl = getTheLikelihood_SR1(mass, type);
+  pdfLikelihood *pl = getTheLikelihood_SR1(mass, type, other );
   pl->setDataHandler(data);
   pl->setCalibrationData(calib);
   pl->setWithSafeGuard(true);
@@ -374,12 +357,12 @@ CombinedProfileLikelihood* combine(vector <pdfLikelihood*> p) {
   
 }
 
-CombinedProfileLikelihood* getTheCombinedLikelihood(TString collection, int mu, double mass, int Gen) {
+CombinedProfileLikelihood* getTheCombinedLikelihood(TString collection, int mu, double mass, int Gen, double other = 0.) {
 
   vector <pdfLikelihood*> like;
-  like.push_back( getTheLikelihoodToFit(collection, mu, mass, 0, Gen)  );
-  like.push_back( getTheLikelihoodToFit(collection, mu, mass, 1, Gen)  );
-  like.push_back( getTheLikelihoodToFit(collection, mu, mass, 2, Gen)  );
+  like.push_back( getTheLikelihoodToFit(collection, mu, mass, other, 0, Gen)  );
+  like.push_back( getTheLikelihoodToFit(collection, mu, mass, other, 1, Gen)  );
+  like.push_back( getTheLikelihoodToFit(collection, mu, mass, other, 2, Gen)  );
 
   CombinedProfileLikelihood* cpl = combine( like );
 
@@ -388,12 +371,12 @@ CombinedProfileLikelihood* getTheCombinedLikelihood(TString collection, int mu, 
 }
 
 
-CombinedProfileLikelihood* getDMCombinedLikelihood( double mass ) {
+CombinedProfileLikelihood* getDMCombinedLikelihood( double mass , double other = 0.) {
 
   vector <pdfLikelihood*> like;
-  like.push_back( getDMLikelihood(mass, 0) );
-  like.push_back( getDMLikelihood(mass, 1) );
-  like.push_back( getDMLikelihood(mass, 2) );
+  like.push_back( getDMLikelihood(mass, 0, other) );
+  like.push_back( getDMLikelihood(mass, 1, other) );
+  like.push_back( getDMLikelihood(mass, 2, other) );
 
   CombinedProfileLikelihood* cpl = combine( like );
 

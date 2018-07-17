@@ -14,7 +14,12 @@
 
 	 pl->maximize(false);  // maximize the likelihood (remember we injected signal 30 events)
 	 		       
-		 	      
+	
+	 AsymptoticExclusion ae (pl, 0.05); // 95% CL comparison with Knut (this is done with onesided TS)
+   
+	ae.computeLimits();
+
+	
 
 
 
