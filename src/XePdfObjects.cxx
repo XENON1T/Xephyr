@@ -101,7 +101,7 @@ pdfComponent::pdfComponent(TString name, TString filename) : errorHandler("pdfCo
 	doExtend  = false;
 }
 
-pdfComponent::pdfComponent(TString component_name, TString filename, TString hist_name) : errorHandler("pdfComponent"), pdf_name(hist_name), component_name(component_name) {
+pdfComponent::pdfComponent(TString component_name, TString hist_name, TString filename) : errorHandler("pdfComponent"), pdf_name(hist_name), component_name(component_name) {
 
   	file = TFile::Open(filename);
 	Info("Constructor", "Reading file " + filename ) ;
