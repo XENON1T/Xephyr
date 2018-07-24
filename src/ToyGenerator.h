@@ -58,10 +58,10 @@ class ToyGenerator: public errorHandler {
         // The pdfs are taken only from pdfcomponent that are "safeguarded" in the 
         // likelihood, their relative rates are respected. Also the additional 
         // contribution from "AdditionalSafeGuardComponent" is included.
-        void generateCalibration(int N, bool randomizeNP = true);
+        void generateCalibration(int N, bool randomizeNP = false);
 
         //! \brief generate N toys of the 'science data' dataset with injected signal fraction 'mu'.
-        void generateData(double mu, int N, bool randomizeNP = true);
+        void generateData(double mu, int N, bool randomizeNP = false);
 
         //! set the seed for the toy generation. YOU MUST CHANGE THIS for any run.
         void setSeed(int seed);
