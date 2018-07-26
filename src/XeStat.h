@@ -645,6 +645,7 @@ class Likelihood :  public XeStat {
      void     printInitialParameters();
      void     printResultParameters();
      void     printCurrentParameters();
+     void     printCurrentParameters(bool with_err);
      void     ignoreParameter(int id);
      void     setParameterType(int id,int type);
      void     setParameterValue(int id,double v);

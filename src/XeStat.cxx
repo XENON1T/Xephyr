@@ -614,6 +614,13 @@ void Likelihood::printCurrentParameters(){
   }
 }
 
+void Likelihood::printCurrentParameters(bool with_err){
+  printCurrentHeader();
+  TRAVERSE_PARAMETERS(it) {
+    LKParameter *p=it->second;
+    p->printCurrent(with_err);
+  }
+}
 
 TH1F Likelihood::getPullsHisto(){
 
