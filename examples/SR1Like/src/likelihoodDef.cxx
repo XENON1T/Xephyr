@@ -211,10 +211,13 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
 
 
 
-dataHandler* getDataToFit( TString collection, int mu, double mass, int type, int Gen ){ 
+dataHandler* getDataToFit( TString dir, TString collection, int mu, double mass, int type, int Gen ){ 
   TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
-  TString inputDir = xeDir + "build/RESULTS/GENtrees/";
+  TString inputDir = xeDir + dir;
   
+  // CHANGEME NOTE: in case your signal depends on somewhat different number of parameters (mass, mass splitting)
+  // or in case you want to change the naming scheme of the files, you have to change the following
+  // 2 lines accordingly
   TString data_filename = collection + TString::Format("_M%1.0f_mu%d_G%d_V%d.root",mass, mu, Gen, type); 
   TString data_treeName = collection +  TString::Format("_M%1.0f_mu%d_G%d_V%d",mass, mu, Gen, type) ;
    
@@ -230,7 +233,10 @@ dataHandler* getCalibToFit( TString collection,  double mass, int type, int Gen 
   
   TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
   TString inputDir = xeDir + "build/RESULTS/GENtrees/";
-  
+
+  // CHANGEME NOTE: in case your signal depends on somewhat different number of parameters (mass, mass splitting)
+  // or in case you want to change the naming scheme of the files, you have to change the following
+  // 2 lines accordingly
   TString data_filename = collection + TString::Format("_M%1.0f_mu0_G%d_V%d_Cal.root", mass, Gen, type); 
   TString data_treeName = collection +  TString::Format("_M%1.0f_mu0_G%d_V%d_Cal", mass, Gen, type) ;
    
@@ -243,10 +249,10 @@ dataHandler* getCalibToFit( TString collection,  double mass, int type, int Gen 
 }
 
 
-pdfLikelihood* getTheLikelihoodToFit(TString collection, int mu, double mass, double other, int type, int Gen){
+pdfLikelihood* getTheLikelihoodToFit(TString dir, TString collection, int mu, double mass, double other, int type, int Gen){
   
-  dataHandler *data  = getDataToFit(collection, mu, mass, type, Gen ) ;
-  dataHandler *calib = getCalibToFit(collection,mass, type, Gen );
+  dataHandler *data  = getDataToFit(dir, collection, mu, mass, type, Gen ) ;
+  dataHandler *calib = getCalibToFit(dir, collection,mass, type, Gen );
 
   pdfLikelihood *pl = getTheLikelihood_SR1(mass, type, other);
   pl->setDataHandler(data);
