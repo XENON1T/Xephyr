@@ -134,8 +134,9 @@ void pdfLikelihood::initialize(){
 			if(safeguard_fixValue > 0. ) safeGuardParam->setCurrentValue( safeguard_fixValue );
 
 		if (safeGuardPosDef) safeGuardParam->setMinimum(0.00001);
-		safeGuardParam->setMaximum(5);
-		safeGuardParam->setStep(0.5);
+		else safeGuardParam->setMinimum(-20);
+		safeGuardParam->setMaximum(20);
+		safeGuardParam->setStep(0.2);
 		addParameter(safeGuardParam, AUTO);
 
 		safeguard_scaling = 1000.;
