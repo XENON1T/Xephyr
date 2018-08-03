@@ -91,7 +91,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
 
  TString type_str = TString::Itoa(type, 10);
  
- pdfComponent *ER = new pdfComponent("hbkg", inputDir + ER_file );
+ pdfComponent *ER = new pdfComponent("ER","hbkg", inputDir + ER_file );
 
     shapeSys *PY = new shapeSys("_py0_");     
     PY->setStep(1.);                     
@@ -117,7 +117,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
 
 
   
-  pdfComponent *AC = new pdfComponent(AC_name[type], inputDir + AC_file );
+  pdfComponent *AC = new pdfComponent("AC", AC_name[type], inputDir + AC_file );
 
     scaleSys *sAC = new scaleSys("ACscale"+type_str,0.2);
     sAC->setMinimum(-2.);
@@ -136,7 +136,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
     AC_for_safeguard->Scale( AC_scale_safeguard );  // must be scaled to ER
 
   
-    pdfComponent *Wall = new pdfComponent( Wall_name[type] , inputDir + AC_file );
+    pdfComponent *Wall = new pdfComponent( "Wall", Wall_name[type] , inputDir + AC_file );
 
     scaleSys *sWall = new scaleSys("Wallscale"+type_str, wall_unc[type] );
     sWall->setMinimum( -1. / wall_unc[type] + 0.001);
@@ -145,7 +145,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
     Wall->addScaleSys(sWall);
 
   
-    pdfComponent *Radio = new pdfComponent( Radio_name[type] , inputDir + Radio_file );
+    pdfComponent *Radio = new pdfComponent( "Neutrons", Radio_name[type] , inputDir + Radio_file );
 
     scaleSys *sRadio = new scaleSys("Radioscale"+type_str,0.5 );
     sRadio->setMinimum(-2.);
@@ -156,7 +156,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
     Radio->setScaleFactor( livedays[type] / year );
 
 
-    pdfComponent *RadioNX = new pdfComponent( Radio_NX_name[type] , inputDir + Radio_NX_file );
+    pdfComponent *RadioNX = new pdfComponent( "NeutronX", Radio_NX_name[type] , inputDir + Radio_NX_file );
 
     scaleSys *sRadioNX = new scaleSys("RadioscaleNX"+type_str,0.5 );
     sRadioNX->setMinimum(-2.);
@@ -168,7 +168,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
 
 
   
-    pdfComponent *CNNS = new pdfComponent( CNNS_name[type] , inputDir + CNNS_file );
+    pdfComponent *CNNS = new pdfComponent( "CNNS", CNNS_name[type] , inputDir + CNNS_file );
 
     CNNS->setScaleFactor( exposure[type] );  // has been cutted in R after extrusion.
     scaleSys *sCNNS = new scaleSys("CNNSscale"+type_str,0.3);
@@ -182,7 +182,7 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
     TString signal_file_with_mass = getSignalFile(mass, type, other);
     double  signal_unc = getSignalUncertainty(mass, type, other);
 
-    pdfComponent *Signal = new pdfComponent( Signal_name , signal_file_with_mass );
+    pdfComponent *Signal = new pdfComponent("Wimp", Signal_name , signal_file_with_mass );
     Signal->setScaleFactor( exposure_signal[type] );
 
     scaleSys *s2 = new scaleSys("SignalScale"+type_str, signal_unc) ;
@@ -211,15 +211,15 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
 
 
 
-dataHandler* getDataToFit( TString dir, TString collection, int mu, double mass, int type, int Gen ){ 
-  TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
-  TString inputDir = xeDir + dir;
+dataHandler* getDataToFit( TString dir, TString collection ){ 
+
+  TString inputDir =  dir + "/" ;
   
   // CHANGEME NOTE: in case your signal depends on somewhat different number of parameters (mass, mass splitting)
   // or in case you want to change the naming scheme of the files, you have to change the following
   // 2 lines accordingly
-  TString data_filename = collection + TString::Format("_M%1.0f_mu%d_G%d_V%d.root",mass, mu, Gen, type); 
-  TString data_treeName = collection +  TString::Format("_M%1.0f_mu%d_G%d_V%d",mass, mu, Gen, type) ;
+  TString data_filename = collection + ".root"; 
+  TString data_treeName = collection ;
    
   dataHandler *data = new dataHandler("dmData",inputDir + data_filename, data_treeName+ "_0");
   data->setPrefixTree(data_treeName);
@@ -229,16 +229,15 @@ dataHandler* getDataToFit( TString dir, TString collection, int mu, double mass,
 }
    
 
-dataHandler* getCalibToFit( TString collection,  double mass, int type, int Gen ){ 
+dataHandler* getCalibToFit( TString dir, TString collection ){ 
   
-  TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
-  TString inputDir = xeDir + "build/RESULTS/GENtrees/";
+  TString inputDir = dir +"/" ;
 
   // CHANGEME NOTE: in case your signal depends on somewhat different number of parameters (mass, mass splitting)
   // or in case you want to change the naming scheme of the files, you have to change the following
   // 2 lines accordingly
-  TString data_filename = collection + TString::Format("_M%1.0f_mu0_G%d_V%d_Cal.root", mass, Gen, type); 
-  TString data_treeName = collection +  TString::Format("_M%1.0f_mu0_G%d_V%d_Cal", mass, Gen, type) ;
+  TString data_filename = collection + "_Cal.root" ; 
+  TString data_treeName = collection +  "_Cal" ;
    
   dataHandler *data = new dataHandler("calibration",inputDir + data_filename, data_treeName+ "_0");
   data->setPrefixTree(data_treeName);
@@ -249,10 +248,10 @@ dataHandler* getCalibToFit( TString collection,  double mass, int type, int Gen 
 }
 
 
-pdfLikelihood* getTheLikelihoodToFit(TString dir, TString collection, int mu, double mass, double other, int type, int Gen){
+pdfLikelihood* getTheLikelihoodToFit(TString dir, TString collection, double mass, int type, double other = 0){
   
-  dataHandler *data  = getDataToFit(dir, collection, mu, mass, type, Gen ) ;
-  dataHandler *calib = getCalibToFit(dir, collection,mass, type, Gen );
+  dataHandler *data  = getDataToFit(dir, collection ) ;
+  dataHandler *calib = getCalibToFit(dir, collection );
 
   pdfLikelihood *pl = getTheLikelihood_SR1(mass, type, other);
   pl->setDataHandler(data);
@@ -363,12 +362,12 @@ CombinedProfileLikelihood* combine(vector <pdfLikelihood*> p) {
   
 }
 
-CombinedProfileLikelihood* getTheCombinedLikelihood(TString collection, int mu, double mass, int Gen, double other = 0.) {
+CombinedProfileLikelihood* getTheCombinedLikelihood(TString dir, TString collection, int mu, double mass, int Gen, double other = 0.) {
 
   vector <pdfLikelihood*> like;
-  like.push_back( getTheLikelihoodToFit(collection, mu, mass, other, 0, Gen)  );
-  like.push_back( getTheLikelihoodToFit(collection, mu, mass, other, 1, Gen)  );
-  like.push_back( getTheLikelihoodToFit(collection, mu, mass, other, 2, Gen)  );
+  like.push_back( getTheLikelihoodToFit(dir, collection, mass, 0, other)  );
+  like.push_back( getTheLikelihoodToFit(dir, collection, mass, 1, other)  );
+  like.push_back( getTheLikelihoodToFit(dir, collection, mass, 2, other)  );
 
   CombinedProfileLikelihood* cpl = combine( like );
 
