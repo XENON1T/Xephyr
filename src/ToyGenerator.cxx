@@ -96,9 +96,9 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
 
             int N_events   = rambo.Poisson(scaleFactor * backgrounds[bkgItr].Integral());
                     
-            type = (likeHood->bkg_components[bkgItr])->getName();
+            type = (likeHood->bkg_components[bkgItr])->getComponentName();
 
-            Debug("generateCalibration", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
+            Debug("generateCalibration", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getComponentName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
             for(int evt =0; evt < N_events; evt++){
         
                 double temp_cs1 = 0., temp_cs2 = 0.;
@@ -177,9 +177,9 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
         for(unsigned int bkgItr=0; bkgItr < backgrounds.size(); bkgItr++){
             int N_events   = rambo.Poisson(scaleFactor * backgrounds[bkgItr].Integral());
             
-            type = (likeHood->bkg_components[bkgItr])->getName();
+            type = (likeHood->bkg_components[bkgItr])->getComponentName();
             
-            Debug("generateData", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
+            Debug("generateData", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getComponentName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
             
             for(int evt =0; evt < N_events; evt++){
                 double temp_cs1 = 0., temp_cs2 = 0.;
@@ -192,7 +192,7 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
 
         if(mu > 0) {
           // filling signal if any
-          type = likeHood->signal_component->getName();
+          type = likeHood->signal_component->getComponentName();
           int N_signal  = rambo.Poisson(likeHood->getCurrentNs());
           TH2F signal   = likeHood->signal_component->getInterpolatedHisto();
           
@@ -284,7 +284,7 @@ double ToyGenerator::getModelIntegralSafeguarded(){
         
         double temp_events = (likeHood->bkg_components[i])->getDefaultEvents() ; 
         total_integral += temp_events;
-        Info("----------->", TString::Format("Adding bkg %s -> %f events", (likeHood->bkg_components[i])->getName().Data(), temp_events));
+        Info("----------->", TString::Format("Adding bkg %s -> %f events", (likeHood->bkg_components[i])->getComponentName().Data(), temp_events));
     }
 
     // adding the integral of additional component
