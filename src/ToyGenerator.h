@@ -78,6 +78,9 @@ class ToyGenerator: public errorHandler {
         //! for each repetition of this.
         void randomizeNuissanceParameter();
 
+        //! \brief sets a new tree name prefix
+        void setTreeName(TString newname) { treeName = newname;};
+
 
     private:
         

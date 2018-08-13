@@ -936,14 +936,13 @@ void histoCompare::compare(){
         for(unsigned int i=0; i < projectedList.size(); i++) {
 
 	     	//stacking the histos
-			cout << projectedList[i]->GetName() <<" " << projectedList[i]->Integral() << endl;
+
 	     	if(i != 0) projectedList[i]->Add(projectedList[i-1]);  // FIXME seems there is a root bug and this doesn't stack properly
+	    
+   		//projectedList[i]->SetLineColor(i+2); 
 
-			cout << projectedList[i]->GetName() <<"  " << projectedList[i]->Integral() << endl;
-   			//projectedList[i]->SetLineColor(i+2); 
-
-   			setOptions(projectedList[i], false);
-		}
+   		setOptions(projectedList[i], false);
+	}
 		// draw them in inverse order so can put colors on top of each other
         for(unsigned int i= 1; i <= projectedList.size(); i++) {
 			unsigned int n = projectedList.size();
