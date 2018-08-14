@@ -321,10 +321,10 @@ CombinedProfileLikelihood* combine(vector <pdfLikelihood*> p) {
     p[i]->setExperiment(i + 1);
     p[i]->setPrintLevel(INFO);
     
-    PY_sr1->correlateParameter( p[i]->getBkgComponent("hbkg")->getShapeSys("_py0_") );
-    RF_sr1->correlateParameter( p[i]->getBkgComponent("hbkg")->getShapeSys("_rf0_") );
-    ER_sr1->correlateParameter( p[i]->getBkgComponent("hbkg")->getScaleSys("ERscale"+type) );
-    cnns_sr1->correlateParameter( p[i]->getBkgComponent("hmc_extruded_yx_r"+type+"_f")->getScaleSys("CNNSscale"+type) );
+    PY_sr1->correlateParameter( p[i]->getBkgComponent("ER")->getShapeSys("_py0_") );
+    RF_sr1->correlateParameter( p[i]->getBkgComponent("ER")->getShapeSys("_rf0_") );
+    ER_sr1->correlateParameter( p[i]->getBkgComponent("ER")->getScaleSys("ERscale"+type) );
+    cnns_sr1->correlateParameter( p[i]->getBkgComponent("CNNS")->getScaleSys("CNNSscale"+type) );
     signal_sr1->correlateParameter( p[i]->signal_component->getScaleSys("SignalScale"+type) );
 
   }
