@@ -19,14 +19,15 @@ class XeVersion {
  ~XeVersion(){}
   XeVersion(){
     string tab="      ";
-    string XephyrVersion = "6.0";
-    string XephyrDate    = "10-Oct-2017";
+    string XephyrVersion = "2.0";
+    string XephyrDate    = "14-Aug-2018";
     cout<<endl<<endl
-        <<tab<<"=================== Welcome to Xephyr ====================="
-        <<endl
+        <<tab<<"================================ Welcome to Xephyr ================================"
+        <<endl << endl
         <<tab<<" Version "<<XephyrVersion<<" dated "<<XephyrDate
-             <<", compiled with ROOT "<<ROOT_RELEASE<<endl
-        <<tab<<"==========================================================="
+        <<tab<<", compiled with ROOT "<<ROOT_RELEASE<<endl << endl
+	<<tab<<" Intrepidly coded by: D. Lellouche, H. Landsman, J. Mossbacher, A. Manfredini" << endl
+	<<tab<<"=================================================================================="
         <<endl<<endl;
   }
 
