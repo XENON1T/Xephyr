@@ -107,7 +107,7 @@ Xephyr provides four types of likelihood classes:
 
  .. FIXME formula
 
- - **binnedLikelihood**: implements a binned likelihood that can be either 1D or 2D, it returns just a product of poissons computed for each bin. TH2F errors
+ - **binnedLikelihood /!\ under construction**: implements a binned likelihood that can be either 1D or 2D, it returns just a product of poissons computed for each bin. TH2F errors
    on the bins are assigned as scale uncertainty to the bin itself. 
    Nowadays the trend is to go for a PDF likelihood because is "more sensitive", but remember this comes with high costs, since is harder to introduce uncertainties in a 
    PDF shape rather than consider them as scale independent factors on bins. So this type of likelihood is handy for all those search with low rate and large unknow
@@ -115,7 +115,7 @@ Xephyr provides four types of likelihood classes:
 
  .. FIXME formula
  
- - **myLikelihood**: this is just an empty scheleton, it provides all the functionalities but does not implement the method **computeTheLikelihood**, 
+ - **myLikelihood /!\ under construction**: this is just an empty scheleton, it provides all the functionalities but does not implement the method **computeTheLikelihood**, 
    so the developer is free to invent his own. Note that since the input infrastructure accepts 2D only histograms this is not an easy proxy for adding
    a dimension.
 

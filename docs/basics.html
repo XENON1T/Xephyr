@@ -235,14 +235,14 @@ extended term that accounts for the shape, additionally each (non-free) nuissanc
 This likelihood can be used also for a 1D PDF.</li>
 </ul>
 <ul class="simple">
-<li><strong>binnedLikelihood</strong>: implements a binned likelihood that can be either 1D or 2D, it returns just a product of poissons computed for each bin. TH2F errors
+<li><strong>binnedLikelihood /!under construction</strong>: implements a binned likelihood that can be either 1D or 2D, it returns just a product of poissons computed for each bin. TH2F errors
 on the bins are assigned as scale uncertainty to the bin itself.
 Nowadays the trend is to go for a PDF likelihood because is &quot;more sensitive&quot;, but remember this comes with high costs, since is harder to introduce uncertainties in a
 PDF shape rather than consider them as scale independent factors on bins. So this type of likelihood is handy for all those search with low rate and large unknow
 uncertainties.</li>
 </ul>
 <ul class="simple">
-<li><strong>myLikelihood</strong>: this is just an empty scheleton, it provides all the functionalities but does not implement the method <strong>computeTheLikelihood</strong>,
+<li><strong>myLikelihood /!under construction</strong>: this is just an empty scheleton, it provides all the functionalities but does not implement the method <strong>computeTheLikelihood</strong>,
 so the developer is free to invent his own. Note that since the input infrastructure accepts 2D only histograms this is not an easy proxy for adding
 a dimension.</li>
 </ul>
