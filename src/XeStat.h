@@ -86,17 +86,17 @@ enum rejectionFactor { REJECT995
 
 enum  basicParameter { PAR_SIGMA              = -1
 		     , PAR_SYST_BKG_TVALUE    = -2
-                     , PAR_LEFF_TVALUE        = -3 
-                     , PAR_QY_TVALUE          = -4 
+                     , PAR_LEFF_TVALUE        = -3
+                     , PAR_QY_TVALUE          = -4
                      , PAR_EFFICIENCY_TVALUE  = -5
-		     , PAR_SIGN_ACCEPTANCE_TVALUE = -6 
-		     , PAR_NOT_ASSIGNED = -900 
+		     , PAR_SIGN_ACCEPTANCE_TVALUE = -6
+		     , PAR_NOT_ASSIGNED = -900
 		     , PAR_STAT_BKG_TVALUE    = -120 /*  run from -120 to -105*/
 		     , PAR_GAUSS_TVALUE       = -220 /*  run from -220 to -120*/
                      } ;
 
 enum   ciMode        { CI_UP
-                     , CI_LOW	
+                     , CI_LOW
                      , CI_TWO_SIDED
                      , CLS_UP
                      , CLS_LOW
@@ -108,9 +108,9 @@ enum sigmaModes   { ESTIMATED, UPPER_LIMIT };
 enum sigmaUnits   { SIGMA_UNIT     , EVENT_UNIT };
 
 static const  double DEFAULT_CL                    =            0.9 ;
-static const  double DEFAULT_SIMULATED_X0          =            0.1 ;  
-static const  double DEFAULT_SIMULATED_SIGMA       =            0.1 ;  
-static const  double DEFAULT_SIMULATED_MU_GAUSS    =            0.5 ;  
+static const  double DEFAULT_SIMULATED_X0          =            0.1 ;
+static const  double DEFAULT_SIMULATED_SIGMA       =            0.1 ;
+static const  double DEFAULT_SIMULATED_MU_GAUSS    =            0.5 ;
 static const  double DEFAULT_SIMULATED_XMAX_B      =            1.0 ;
 static const  double LOGSQR2PI                     = 0.918938533205 ;
 static const  double DEFAULT_EVENT_UPPER_LIMIT     =           20.0 ;
@@ -127,12 +127,12 @@ static const  double VERY_LARGE =                  1.E19
 
 enum flagType     { VERY_LARGE_INT =  9999999
                   , VERY_SMALL_INT = -VERY_LARGE_INT
-                  , UNDEFINED_INT  
-                  , SAME     
+                  , UNDEFINED_INT
+                  , SAME
                   , NEXT
-                  , AUTO        
+                  , AUTO
                   , ALL
-                  , NONE 
+                  , NONE
                   , GENERAL
                   , LINEAR
                   , LOG
@@ -182,16 +182,16 @@ class XeStat : public errorHandler, public printTools {
   public :
 
     /* -------------------------------------------------------------
-     *                     Basic methods 
+     *                     Basic methods
      * ------------------------------------------------------------*/
-                    
+
     XeStat(TString name);
-    
+
  /**
   * Set the analysis mode
   * @param mode must be either CUTS_ANALYSIS or PL_ANALYSIS
  */
-    static void   setAnalysisMode(int mode); 
+    static void   setAnalysisMode(int mode);
 
 /**
   * Get the analysis mode
@@ -201,30 +201,30 @@ class XeStat : public errorHandler, public printTools {
 
  /**
      * Check the anaylsis mode and set it if neccesary
-     * @param name object name to be printed in case of error 
+     * @param name object name to be printed in case of error
      * @param requested either NO_ANALYSIS, CUTS_ANALYSIS or PL_ANALYSIS
  */
     static bool   checkAnalysisMode(TString name, int requested);
- 
+
 
     /* -------------------------------------------------------------
-     *                     Advanced methods 
+     *                     Advanced methods
      * ------------------------------------------------------------*/
-                    
+
 /**
  * Check wether the AnalysisMethod has been defined
  * @param verbose print a messae if not
  */
     static bool   isAnalysisDefined(bool verbose=false);
- 
+
  /**
  * Is the current analysis cut based?
- */  
+ */
     static bool   isCutsBased();
- 
+
  /**
  * Is the current analysis profile likelihood
- */  
+ */
     static bool   isPL();
 
 
@@ -245,7 +245,7 @@ class XeStat : public errorHandler, public printTools {
  */
     static TString getAnalysisModeName(int mode);
 
-/** 
+/**
  * Return systematic error name
  * @param syst ONE_SIGMA_BELOW, CENTRAL, or ONE_SIGMA_ABOVE
  */
@@ -265,7 +265,7 @@ class XeStat : public errorHandler, public printTools {
 
 /**
  * Return name a given mode (estimated or upper limit)
- * @param mode  ESTIMATED or UPPER_LIMIT 
+ * @param mode  ESTIMATED or UPPER_LIMIT
  */
     static TString getSigmaModeName(int mode);
 
@@ -289,7 +289,7 @@ class XeStat : public errorHandler, public printTools {
 
     //! \brief set the experiment number, usefull for combination
     int getExperiment() { return experiment; };
-    
+
   protected:
 
     static int    analysisMode;
@@ -305,33 +305,33 @@ class XeStat : public errorHandler, public printTools {
 
 
 
- 
+
 /**
    * Description of a likelihood parameter. It is evaluated by the Likelihood class
 */
 class LKParameter :  public XeStat {
 
     /* -------------------------------------------------------------
-     *                     Advanced methods 
+     *                     Advanced methods
      * ------------------------------------------------------------*/
-                    
+
   public  :
 
 
     static TString   getTypeName(int type);
 
     virtual        ~LKParameter();
-   
+
 /**
  * Empry constructor for ROOT
- */    
+ */
    LKParameter(TString name);
 
  /**
-     * Regular Constructor 
+     * Regular Constructor
      * @param id  Its identifier
-     * @param type  Can be PARAMETER_OF_INTEREST 
-     * , NUISANCE_PARAMETER , FIXED_PARAMETER , FROZEN_PARAMETER.  
+     * @param type  Can be PARAMETER_OF_INTEREST
+     * , NUISANCE_PARAMETER , FIXED_PARAMETER , FROZEN_PARAMETER.
      * FROZEN means temporary fixed
      * @param  nam  name
      * @param initial initial value
@@ -383,11 +383,11 @@ class LKParameter :  public XeStat {
 
     //return the gaussian constraint on the t-value
     double getLLGausConstraint();
-    
+
     /* -------------------------------------------------------------
-     *                     Advanced methods 
+     *                     Advanced methods
      * ------------------------------------------------------------*/
-                    
+
 
  /**
      * Set the fact that this parameter is or isn't common to various likelihoods calculators
@@ -403,11 +403,11 @@ class LKParameter :  public XeStat {
      * @param doFreeze   Freeze is or not?
  */
     void    freeze(bool doFreeze);
-                    
+
     /* -------------------------------------------------------------
      *                Internal methods (not for user)
      * ------------------------------------------------------------*/
-                    
+
     bool    compares(LKParameter* par, bool print);
     void    printHeader();
     bool    inCombinedMode();
@@ -420,7 +420,7 @@ class LKParameter :  public XeStat {
     int     type;
     int     id;
     bool    common;
-    bool    combinedMode;     
+    bool    combinedMode;
     double  initialValue;
     double  step;
     double  minimum;
@@ -430,7 +430,7 @@ class LKParameter :  public XeStat {
     double  initialSigma;
     double  MinuitUnit;
 
-     
+
 } ;
 
 /**
@@ -441,7 +441,7 @@ class SigmaParameter : public LKParameter {
     SigmaParameter();
    ~SigmaParameter();
 
-     
+
 } ;
 
 
@@ -452,7 +452,7 @@ class CombinedParameter : public LKParameter{
     public :
       CombinedParameter(TString name);
       ~CombinedParameter();
-    
+
       void setCurrentValue(double val); //! overloaded polymorf func
       void setSigma(double sig);        //! overloaded polymorf func
       void correlateParameter(LKParameter *p); //!add parameter to list of parame to be correlated
@@ -551,11 +551,11 @@ class Likelihood :  public XeStat {
 
 
    public:
-    
+
     /* -------------------------------------------------------------
-     *                     Basic methods 
+     *                     Basic methods
      * ------------------------------------------------------------*/
-                    
+
  /**
      * @return  Pure virtual method returning the log likelihood
      * @param   none  All parameters values set thru LKParameter
@@ -571,12 +571,12 @@ class Likelihood :  public XeStat {
  */
      Likelihood(TString name);
 
- 
+
 /**
      * Method returning current estimated sigma
      * @return  current value of estimated sigma
  */
-     double  getSigmaHat();   
+     double  getSigmaHat();
 
  /**
  * Return the log likelilood for the estimated sigma
@@ -641,10 +641,11 @@ class Likelihood :  public XeStat {
  */
      void     removeParameter(int id, bool tolerant=false);
 
-     void     listParameters(); 
-     void     printInitialParameters(); 
-     void     printResultParameters(); 
-     void     printCurrentParameters(); 
+     void     listParameters();
+     void     printInitialParameters();
+     void     printResultParameters();
+     void     printCurrentParameters();
+     void     printCurrentParameters(bool with_err);
      void     ignoreParameter(int id);
      void     setParameterType(int id,int type);
      void     setParameterValue(int id,double v);
@@ -654,9 +655,9 @@ class Likelihood :  public XeStat {
      double   maximizeNumerically(int numberOfToys , bool freezeParametersOfInterest);
      void     setSeed(double Inputseed) {seed = Inputseed;};
     /* -------------------------------------------------------------
-     *                     Advanced methods 
+     *                     Advanced methods
      * ------------------------------------------------------------*/
-     double   seed;               
+     double   seed;
      int      getNTotalParameters();
      int      getNActiveParameters();
      int      getNParametersOfInterest();
@@ -672,13 +673,13 @@ class Likelihood :  public XeStat {
 
 
  /**
-     * return the shape LL that a set of values comes from a mixture of tabulated 
-     * parent distribution. 
+     * return the shape LL that a set of values comes from a mixture of tabulated
+     * parent distribution.
      * Makes sure that no bin has a negative expetancy!
      * @return Log Likelihood
      * @param bins list of bin number of input values
      * @param nDists number of distributions
-     * @param  dists tabulated distributions 
+     * @param  dists tabulated distributions
      * @param  norm  normalized weights (i.e. normalized to 1.)
  */
      static double shapeLikelihood( vector<int>* bins, int nDist, double** dists
@@ -687,7 +688,7 @@ class Likelihood :  public XeStat {
     /* -------------------------------------------------------------
      *                Internal methods (not for user)
      * ------------------------------------------------------------*/
-                    
+
      void     setCurrentValues(const double* v,const double* ers=NULL);
      void     setCurrentValuesInMinuitUnits(const double*v,const double*e=NULL);
      void     setCombinedMode(bool mode=true);
@@ -702,24 +703,24 @@ class Likelihood :  public XeStat {
 
    protected:
 
-/** 
+/**
  * Technical routine for constructors
  */
      void     setup();
 
-     int                   currentId; 
+     int                   currentId;
      int                   nParametersOfInterest;
      int                   nActiveParameters;
      int                   nNuisanceParameters;
      int                   forcedNParametersOfInterest;
-     bool                  combinedMode;     
+     bool                  combinedMode;
      vector<LKParameter*>  MinuitParameters;
      map<int,LKParameter*> parameters;
-    
+
      double       sigmaHat; /*!< Saved value of estimated sigma */
 
      double       LogD;   /*!< Saved value of Log Likelihood at estimated sigma*/
-     
+
      void                  clear();
      bool                  checkParameter(int p, bool shouldExist);
 
@@ -729,7 +730,7 @@ class Likelihood :  public XeStat {
 typedef map<int,LKParameter*>::iterator ParameterIterator;
 
 #define TRAVERSE_PARAMETERS(it) \
-  for(ParameterIterator it=parameters.begin(); it!=parameters.end(); it++) 
+  for(ParameterIterator it=parameters.begin(); it!=parameters.end(); it++)
 
 
 
@@ -739,15 +740,15 @@ typedef map<int,LKParameter*>::iterator ParameterIterator;
 */
 
 class ProfileLikelihood : public Likelihood {
-    
-  /* virtual class */ 
+
+  /* virtual class */
 
   public :
 
     /* -------------------------------------------------------------
-     *                     Basic methods 
+     *                     Basic methods
      * ------------------------------------------------------------*/
-                    
+
 
 /**
  * Constructor
@@ -756,10 +757,10 @@ class ProfileLikelihood : public Likelihood {
       ProfileLikelihood(TString name);
 
     /* -------------------------------------------------------------
-     *                     Advanced methods 
+     *                     Advanced methods
      * ------------------------------------------------------------*/
-  
- 
+
+
     virtual ~ProfileLikelihood();
 
     /* -------------------------------------------------------------
@@ -774,18 +775,18 @@ class ProfileLikelihood : public Likelihood {
 
 
  /**
-     *  estime cross section and save corresponding likelihood 
+     *  estime cross section and save corresponding likelihood
  */
      void    estimateCrossSection();
      bool  initialize() {return true;}; //FIXME ALE - place holder.
- 
+
 
 /**
   * @return a TGraph of the likelihood for n_points sigma equal steps between min and max
   * @param n_points is the number of scan points for which the likelihood is maximized
 */
     TGraph* getGraphOfLogLikelihood(int n_points);
-    //produce a graph of scan qValues scanning on mu, if forceMuhatComp=true then 
+    //produce a graph of scan qValues scanning on mu, if forceMuhatComp=true then
     //will recompute the minimum even if it was already computed and stored.
     TGraph* getGraphAtQval(double qval, bool forceMuhatComp=true);
     double getSigmaAtQval(double qval, bool forceMuhatComp=true);
@@ -794,7 +795,7 @@ class ProfileLikelihood : public Likelihood {
     //double getMaximum()
 /**
   * @return a TGraph of parameter post fit values for different values of sigma
-  * @param n_points is the number of sigma scan points 
+  * @param n_points is the number of sigma scan points
   * @param param_index is the index value of the parameter
 */
 
@@ -813,22 +814,24 @@ class ProfileLikelihood : public Likelihood {
   virtual void generateToyDataset(double seed, double mu_prime)=0;
 
   virtual double getSignalDefaultNorm()=0;
-  virtual double getSignalMultiplier()=0; 
-  virtual void   setSignalMultiplier(double val)=0; 
+  virtual double getSignalMultiplier()=0;
+  virtual void   setSignalMultiplier(double val)=0;
 
   virtual void  setTreeIndex( int index )=0;
-  
+
   virtual vector<string> getTrueParamsNames() =0;
 
   virtual vector<double> getTrueParams() =0;
 
-  protected : 
+  virtual double getSafeguardValue()=0;
 
-/** 
+  protected :
+
+/**
  * Technical routine for constructors
  */
     void    setup();
-                 
+
     LKParameter *sigPar;  /*!< Pointer to main parameter of interest */
 
 
@@ -843,18 +846,18 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
   public :
 
     /* -------------------------------------------------------------
-     *                     Basic methods 
+     *                     Basic methods
      * ------------------------------------------------------------*/
-                    
+
            CombinedProfileLikelihood(TString name);
           ~CombinedProfileLikelihood();
     void   combine(ProfileLikelihood* pl);
     double computeTheLogLikelihood();
 
     /* -------------------------------------------------------------
-     *                     Advanced methods 
+     *                     Advanced methods
      * ------------------------------------------------------------*/
-                    
+
     ProfileLikelihood* getProfile(int experiment);
 
  /**
@@ -872,27 +875,32 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
 
     double getSignalDefaultNorm();
     double getSignalMultiplier();
-    void   setSignalMultiplier(double val); 
+    void   setSignalMultiplier(double val);
 
     void printEventSummary(bool isForWiki=false);
-    
+
     void  setTreeIndex(int index);
 
 
 	vector<string> getTrueParamsNames();
-	
+
 	vector<double> getTrueParams();
 
-    bool    initialize();   
+
+  double getSafeguardValue(){return -999;};
+
+  double getSafeguardValue(unsigned int exp);
+
+    bool    initialize();
 
     bool    findParamPointer( LKParameter *p);
 
     /* -------------------------------------------------------------
      *                Internal methods (not for user)
      * ------------------------------------------------------------*/
-             
+
    // bool    update();
-    
+
 
   protected:
 
@@ -906,10 +914,7 @@ class CombinedProfileLikelihood : public ProfileLikelihood {
 typedef map<int,ProfileLikelihood*>::iterator expIterator;
 
 #define TRAVERSE_EXPERIMENTS(it) \
- for(expIterator it=exps.begin(); it!=exps.end(); it++) 
+ for(expIterator it=exps.begin(); it!=exps.end(); it++)
 
 
 #endif
-
-
-
