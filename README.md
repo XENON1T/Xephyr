@@ -20,3 +20,19 @@
 
 # Userfriendly documentation, tutorials etc. at: https://xenon1t.github.io/Xephyr/docs/
 # Doxigen style code reference, classes and description at: https://xenon1t.github.io/Xephyr/class_reference/
+
+# Super quick setup
+if you are not the kind who waste time on documentation and like to figure out things then just do:
+
+```bash
+mkdir XEPHYR_PKG
+cd XEPHYR_PKG
+export XEPHYR_DIR=$(pwd)/
+echo "export XEPHYR_DIR=$(pwd)/" >> ~/.bashrc
+git clone git@github.com:XENON1T/Xephyr.git .
+
+# now compile the library
+root -l Xephyr/loadXephyr.C
+
+#That's it, now you can run a script that uses XEPHYR classes.
+```
