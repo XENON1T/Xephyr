@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="How to get Help" href="help.html" />
+    <link rel="next" title="Setting Up on Midway2" href="midway.html" />
     <link rel="prev" title="Xephyr basic concepts" href="basics.html" /> 
 
   
@@ -91,6 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#examples-of-packages">Examples of Packages</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="midway.html">Setting Up on Midway2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help.html">How to get Help</a></li>
 </ul>
 
@@ -162,24 +163,33 @@
 <h2>Notebook Tutorials<a class="headerlink" href="#notebook-tutorials" title="Permalink to this headline">¶</a></h2>
 <p>You can find the HTML version of the following ROOT jupyter notebooks here:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/XENON1T/Xephyr/blob/master/notebooks/likelihood_setup_example.ipynb">tutorial likelihood</a></li>
-<li><a class="reference external" href="https://github.com/XENON1T/Xephyr/blob/master/notebooks/ToyGenerator_example.ipynb">tutorial toy generation</a></li>
-<li><a class="reference external" href="https://github.com/XENON1T/Xephyr/blob/master/notebooks/ToyFitter.ipynb">tutorial toy fitting and limits</a></li>
+<li><a class="reference external" href="https://github.com/XENON1T/Xephyr/blob/master/notebooks/asymptotic_inference.ipynb">tutorial likelihood</a>: tutorial on how to setup a likelihood and run limits with asymptotics.</li>
+<li><a class="reference external" href="https://github.com/XENON1T/Xephyr/blob/master/notebooks/ToyGenerator_example.ipynb">tutorial toy generation</a>: First tutorial on Neymann construction, the generation of toys.</li>
+<li><a class="reference external" href="https://github.com/XENON1T/Xephyr/blob/master/notebooks/ToyFitter.ipynb">tutorial toy fitting and limits</a>: Second tutorial on Neymann construction, generating the limits distributions.</li>
+<li><a class="reference external" href="https://github.com/XENON1T/Xephyr/blob/master/notebooks/Simple_limit_plotting_script.ipynb">simple script on limit plotting</a>: Putting all togheter and plotting limits! (with nice colors).</li>
 </ul>
 </div>
 <div class="section" id="examples-of-packages">
 <h2>Examples of Packages<a class="headerlink" href="#examples-of-packages" title="Permalink to this headline">¶</a></h2>
-<p>There is a plan to provide several code examples as Xephyr packages, they are under construction and will be posted on this page.
-If you write a package for your analysis we'd like to post here a link to your code.</p>
+<p>Togheter with tutorials, XEPHYR offers a list of examples to show you how actually implement things in real life.
+The examples comes as XEPHYR packages and are very easy to install, once you have XEPHYR setup (see <a class="reference internal" href="quick_start.html#quickstart"><span class="std std-ref">quick start</span></a>) do:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">source</span> Xephyr/pacman/installExample.sh name_of_example
+</pre></div>
+</div>
 <p><strong>Xephyr supported Examples</strong></p>
+<p>You find a list of valid examples in the xephyr <a class="reference external" href="https://github.com/XENON1T/Xephyr/tree/master/examples">package itself</a>, here a summary:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/XENON1T/Xephyr/tree/master/examples/likelihood1D">1D likelihood example:</a> how to &quot;hack&quot; Xephyr to feed 1D data and models to a 2D likelihood.</li>
+<li><a class="reference external" href="https://github.com/XENON1T/Xephyr/tree/master/examples/SR1Like">SR1 like example:</a> this is a plug and play version of the SR1 analysis, you can easily plug in your signal model and
+get a result using SR1 bkg models.</li>
 </ul>
 <p><strong>Noticeable code examples (from other authors):</strong></p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood">SR1 Xephyr likelihood package</a></li>
+<li><a class="reference external" href="https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood">OFFICIAL SR1 Xephyr likelihood package</a></li>
 <li><a class="reference external" href="https://github.com/XENON1T/iDM">Inelastic Dark Matter</a></li>
 </ul>
+<p>If you write a package for your analysis we'd like to post here a link to your code.
+More example are under construction and will be posted on this page.</p>
 </div>
 </div>
 
@@ -191,7 +201,7 @@ If you write a package for your analysis we'd like to post here a link to your c
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="help.html" class="btn btn-neutral float-right" title="How to get Help" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="midway.html" class="btn btn-neutral float-right" title="Setting Up on Midway2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="basics.html" class="btn btn-neutral" title="Xephyr basic concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

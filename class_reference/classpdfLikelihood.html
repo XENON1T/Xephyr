@@ -156,8 +156,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setCalibrationData</b
 <tr class="memitem:aaa639f8d9e609ccfa6119056a704a7ca"><td class="memItemLeft" align="right" valign="top"><a id="aaa639f8d9e609ccfa6119056a704a7ca"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setWithSafeGuard</b> (bool b)</td></tr>
 <tr class="separator:aaa639f8d9e609ccfa6119056a704a7ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf02bd8ee76dc10a9d14efffaba846d3"><td class="memItemLeft" align="right" valign="top"><a id="adf02bd8ee76dc10a9d14efffaba846d3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfLikelihood.html#adf02bd8ee76dc10a9d14efffaba846d3">setSafeGuardPosDef</a> (bool b)</td></tr>
+<tr class="memdesc:adf02bd8ee76dc10a9d14efffaba846d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set whether to use safeguard or not. <br /></td></tr>
+<tr class="separator:adf02bd8ee76dc10a9d14efffaba846d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a767a1280cdb96ee696b033326278ff82"><td class="memItemLeft" align="right" valign="top"><a id="a767a1280cdb96ee696b033326278ff82"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>drawAllOnProjection</b> (bool isS1Projection)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfLikelihood.html#a767a1280cdb96ee696b033326278ff82">drawAllOnProjection</a> (bool isS1Projection)</td></tr>
+<tr class="memdesc:a767a1280cdb96ee696b033326278ff82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set whether safeguard should be forced to be possitive. <br /></td></tr>
 <tr class="separator:a767a1280cdb96ee696b033326278ff82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a647819c7bfa55b31bcac946445a1506a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfLikelihood.html#a647819c7bfa55b31bcac946445a1506a">printEventSummary</a> (bool isForWiki=false)</td></tr>
 <tr class="memdesc:a647819c7bfa55b31bcac946445a1506a"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints a summary of all bkg and signal events with current parameter choice  <a href="#a647819c7bfa55b31bcac946445a1506a">More...</a><br /></td></tr>
@@ -168,9 +173,11 @@ vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get
 <tr class="memitem:a84ed5ceba7130394fe6d064a6d0001ef"><td class="memItemLeft" align="right" valign="top"><a id="a84ed5ceba7130394fe6d064a6d0001ef"></a>
 vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getTrueParams</b> ()</td></tr>
 <tr class="separator:a84ed5ceba7130394fe6d064a6d0001ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8642eb699bc6a697596ec2e2eeb773d"><td class="memItemLeft" align="right" valign="top"><a id="ae8642eb699bc6a697596ec2e2eeb773d"></a>
-<a class="el" href="classpdfComponent.html">pdfComponent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfLikelihood.html#ae8642eb699bc6a697596ec2e2eeb773d">getBkgComponent</a> (TString name)</td></tr>
-<tr class="memdesc:ae8642eb699bc6a697596ec2e2eeb773d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer to background component by name, first match is returned. <br /></td></tr>
+<tr class="memitem:a6b74e6f770c9aac0f727bd7810bd7a03"><td class="memItemLeft" align="right" valign="top"><a id="a6b74e6f770c9aac0f727bd7810bd7a03"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getSafeguardValue</b> ()</td></tr>
+<tr class="separator:a6b74e6f770c9aac0f727bd7810bd7a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8642eb699bc6a697596ec2e2eeb773d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpdfComponent.html">pdfComponent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfLikelihood.html#ae8642eb699bc6a697596ec2e2eeb773d">getBkgComponent</a> (TString name)</td></tr>
+<tr class="memdesc:ae8642eb699bc6a697596ec2e2eeb773d"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns current value of safeguard  <a href="#ae8642eb699bc6a697596ec2e2eeb773d">More...</a><br /></td></tr>
 <tr class="separator:ae8642eb699bc6a697596ec2e2eeb773d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32641aabf60f20af57a3253237b23069"><td class="memItemLeft" align="right" valign="top"><a id="a32641aabf60f20af57a3253237b23069"></a>
 vector&lt; <a class="el" href="classpdfComponent.html">pdfComponent</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfLikelihood.html#a32641aabf60f20af57a3253237b23069">getBkgComponents</a> ()</td></tr>
@@ -266,6 +273,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>printResultParameters
 <tr class="memitem:add03b347f56e467baaf54be1dccd0e38 inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top"><a id="add03b347f56e467baaf54be1dccd0e38"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>printCurrentParameters</b> ()</td></tr>
 <tr class="separator:add03b347f56e467baaf54be1dccd0e38 inherit pub_methods_classLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df9eb967c8ea2a420977f2881485604 inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top"><a id="a9df9eb967c8ea2a420977f2881485604"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>printCurrentParameters</b> (bool with_err)</td></tr>
+<tr class="separator:a9df9eb967c8ea2a420977f2881485604 inherit pub_methods_classLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafc188ccd3a9bb8a0b4ee2ba0688c0c0 inherit pub_methods_classLikelihood"><td class="memItemLeft" align="right" valign="top"><a id="aafc188ccd3a9bb8a0b4ee2ba0688c0c0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ignoreParameter</b> (int id)</td></tr>
 <tr class="separator:aafc188ccd3a9bb8a0b4ee2ba0688c0c0 inherit pub_methods_classLikelihood"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -442,8 +452,12 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>XsecMultiplier</b><
 <tr class="memitem:af7f277770e674923388b58c7fa9da422"><td class="memItemLeft" align="right" valign="top"><a id="af7f277770e674923388b58c7fa9da422"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>withSafeGuard</b></td></tr>
 <tr class="separator:af7f277770e674923388b58c7fa9da422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a741efc734cf4a6c28af95599fe681ade"><td class="memItemLeft" align="right" valign="top"><a id="a741efc734cf4a6c28af95599fe681ade"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>safeGuardPosDef</b></td></tr>
+<tr class="separator:a741efc734cf4a6c28af95599fe681ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35f16e5664b4651a8c388f75e495bd1b"><td class="memItemLeft" align="right" valign="top"><a id="a35f16e5664b4651a8c388f75e495bd1b"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>wimp_mass</b></td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpdfLikelihood.html#a35f16e5664b4651a8c388f75e495bd1b">wimp_mass</a></td></tr>
+<tr class="memdesc:a35f16e5664b4651a8c388f75e495bd1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force safeguard parameter to be positive. <br /></td></tr>
 <tr class="separator:a35f16e5664b4651a8c388f75e495bd1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae38decb2c3cc4266e7b24b9b7133e1fc"><td class="memItemLeft" align="right" valign="top"><a id="ae38decb2c3cc4266e7b24b9b7133e1fc"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>safeguard_fixValue</b></td></tr>
@@ -648,6 +662,27 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>analysisMode</b
 </dl>
 
 <p>Implements <a class="el" href="classLikelihood.html#a8d86ffd2a694c697459499ee52ae7b6e">Likelihood</a>.</p>
+
+</div>
+</div>
+<a id="ae8642eb699bc6a697596ec2e2eeb773d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8642eb699bc6a697596ec2e2eeb773d">&#9670;&nbsp;</a></span>getBkgComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classpdfComponent.html">pdfComponent</a> * pdfLikelihood::getBkgComponent </td>
+          <td>(</td>
+          <td class="paramtype">TString&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>returns current value of safeguard </p>
+<p>Returns pointer to background component by name, first match is returned. </p>
 
 </div>
 </div>

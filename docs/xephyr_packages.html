@@ -93,6 +93,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics.html">Xephyr basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midway.html">Setting Up on Midway2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help.html">How to get Help</a></li>
 </ul>
 
@@ -243,6 +244,12 @@ Note that this feature is not available with scripts, so if you want to load you
 <p>Now that you created your pakage is time to compile it and link it. Go back to the master directory and use the pakage manager script:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$XEPHYR_DIR</span>
 <span class="nb">source</span> Xephyr/pacman/build.sh
+
+<span class="c1"># OR if you are on midway</span>
+<span class="nb">source</span> Xephyr/pacman/build.sh midway
+
+<span class="c1"># OR in case you need your custom cmake command and you just want the makefile to be build do:</span>
+<span class="nb">source</span> Xephyr/pacman/build.sh stop
 </pre></div>
 </div>
 <p>That's it! (if it worked) this should have created a new directory &quot;build&quot; where you can find all the executables of all your packages.

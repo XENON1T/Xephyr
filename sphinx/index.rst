@@ -15,6 +15,7 @@ Contents:
    xephyr_packages
    basics
    tutorials
+   midway
    help
 
 

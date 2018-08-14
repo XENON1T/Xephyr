@@ -100,6 +100,12 @@ Now that you created your pakage is time to compile it and link it. Go back to t
 
         cd $XEPHYR_DIR
         source Xephyr/pacman/build.sh
+        
+        # OR if you are on midway
+	source Xephyr/pacman/build.sh midway
+        
+        # OR in case you need your custom cmake command and you just want the makefile to be build do:
+        source Xephyr/pacman/build.sh stop
 
 
 That's it! (if it worked) this should have created a new directory "build" where you can find all the executables of all your packages.

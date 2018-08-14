@@ -1,8 +1,8 @@
 var searchData=
 [
   ['generateandsetasimov',['generateAndSetAsimov',['../classAsymptoticExclusion.html#a6ba9b7a88e4dbbc74936c6c9b7294f03',1,'AsymptoticExclusion']]],
-  ['generatecalibration',['generateCalibration',['../classToyGenerator.html#af611a5ce745cadbd2ca25d5a440de4bf',1,'ToyGenerator']]],
-  ['generatedata',['generateData',['../classToyGenerator.html#a97718d3f884123a9e5f19a8cd9d0fcb3',1,'ToyGenerator']]],
+  ['generatecalibration',['generateCalibration',['../classToyGenerator.html#adf71d3538a5332d691ac934e4167e080',1,'ToyGenerator']]],
+  ['generatedata',['generateData',['../classToyGenerator.html#ac914022a72015fc4b98e4964f35e5054',1,'ToyGenerator']]],
   ['getanalysismode',['getAnalysisMode',['../classXeStat.html#a2c42584065f702a3ee41e846c395ab86',1,'XeStat']]],
   ['getanalysismodename',['getAnalysisModeName',['../classXeStat.html#a433561d437164fcea8f3825743b6671d',1,'XeStat::getAnalysisModeName()'],['../classXeStat.html#ab068eb564a5e626a134670cc35fba80f',1,'XeStat::getAnalysisModeName(int mode)']]],
   ['getbkgcomponent',['getBkgComponent',['../classpdfLikelihood.html#ae8642eb699bc6a697596ec2e2eeb773d',1,'pdfLikelihood']]],
