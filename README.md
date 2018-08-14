@@ -10,15 +10,6 @@
 - python >=3  (used for the package manager) 
 - if you use Anaconda ROOT, you will pay for your sins :fire:.
 
-# Quick Start:
-### To load the library simply do: 
-<code> root -l loadXephyr.C </code>
-
-# SR1 Example:
-
-you find the SR1 Xephyr package (with some instruction on how to use it) in [here](https://github.com/XENON1T/SR1Results/tree/master/StatisticalAnalyses/xephyr_sr1_likelihood). 
-However this is a quite complex example, I'd suggest to start from the `docs` and from the tutorials in the folder `notebooks`
-
 
 # Setting Up on Midway2 
 ### I couldn't manage on Midway1, the following works only on Midway2
