@@ -136,8 +136,7 @@ uncertainty to the background model, especially when using an unbinned likelihoo
 is that the calibration represents exactly the background component of science data that one is trying to model. The science data and the calibration data
 are then simultaneously fitted, so one need to provide the calibration data to the likelihood as well, a signal component (the safeguard) is injected then 
 in shape of the background model and constrained by the fit on calibration. To turn On/Off the safeguard computation is quite easy, 
-use the **setWithSafeGuard** flag. Currentl Xephyr implement only a positive injection of signal (which for a few reason can be considered more conservative), 
-the possibility for a negative safeguard is under scrutiny and may be added in future releases.
+use the **setWithSafeGuard** flag. Currentl Xephyr implement a positive injection of signal (default, since for a few reason can be considered more conservative), but also the possibility for a negative safeguard, that you can turn on easily using **setSafeGuardPosDef(false)** method.
 
         **WARNING:::** The safeguard is not the holy grail and it comes with a few subtle problems. The main problem is the contamination of your calibration sample
         by other background components (different from the ones you want to model). Xephyr allows you to introduce an additional background component to be 
