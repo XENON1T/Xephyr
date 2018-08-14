@@ -20,87 +20,92 @@ void ToyGenerator::setSeed(int seed){
 
 
 void ToyGenerator::saveParameters(TTree *tree){
-    
+
     TList *config = tree->GetUserInfo();
 
     map <int, LKParameter*> *params = likeHood->getParameters();
     for(ParameterIterator ip=params->begin(); ip!=params->end(); ip++){
-            
+
         LKParameter *param = ip->second;
         TParameter<double> *temp_p = new TParameter<double>(param->getName(), param->getCurrentValue());
 
         config->Add(temp_p);
     }
-    
+
 }
 
 void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
 
     // generate calibration like toys, where averageCalEvnt is the poisson median
     // of the number of generated event per toy. N is the number of toy datasets.
-    // The pdfs are taken only from pdfcomponent that are "safeguarded" in the 
-    // likelihood, their relative rates are respected. Also the additional 
+    // The pdfs are taken only from pdfcomponent that are "safeguarded" in the
+    // likelihood, their relative rates are respected. Also the additional
     // contribution from "AdditionalSafeGuardComponent" is included.
 
 
     if(!(averageCalEvnt>0)) Error("generateCalibration", "you MUST set averageCalEvnt.");
 
-    
-    TFile f(dir+treeName+"_Cal.root","RECREATE");
-        
+    TString filename =  dir+treeName+"_Cal.root";
+    if (likelihoodType>-999){
+
+      filename = dir+treeName+"_vol"+TString::Itoa(likelihoodType,10)+"_Cal.root";
+    }
+
+    TFile f(filename, "RECREATE");
+
     // necessary because TH2F::GetRandom uses ROOT::gRandom
     gRandom = &rambo;
-    
+
     // actual generation of N toys with poisson fluctuating events.
     for(int toyItr =0; toyItr < N ; toyItr++){
 
 
         // randomize initial 'true' values of NP
         if(randomizeNP)  randomizeNuissanceParameter();
-        
+
         // rescaling to defined Calibration events
         double default_evnt = getModelIntegralSafeguarded();
         if(!(default_evnt> 0.)) Error("generateCalibration", "you MUST set Safeguarded components.");
-    
+
         Debug("generateCalibration: default_event =", TString::Itoa(default_evnt,10));
-    
+
         double scaleFactor  =  averageCalEvnt / default_evnt ;
 
         Debug("generateCalibration: scaleFactor =", TString::Itoa(scaleFactor,10));
-    
+
         // retrive a vector of TH2F of interpolated bkg components
         vector <TH2F> backgrounds = getTH2OfBkg();
-        
-        TString name = treeName + "_Cal_" + TString::Itoa(toyItr,10); 
+
+        TString name = treeName + "_Cal_" + TString::Itoa(toyItr,10);
         TTree toyTree (name, "generated toy Calibration");
-        float cs1 = 0.; 
+        float cs1 = 0.;
         float cs2 = 0.;
         string type = "DummyLabel";
-        
+
         toyTree.Branch("cs1",&cs1,"cs1/F");
         toyTree.Branch("cs2",&cs2,"cs2/F");
         toyTree.Branch("type",&type);
         toyTree.Branch("generation",&Gen,"generation/I");
         toyTree.Branch("likelihoodType",&likelihoodType,"likelihoodType/I");
-        toyTree.Branch("toyItr",&toyItr,"toyItr/I");  
-        
+        toyTree.Branch("toyItr",&toyItr,"toyItr/I");
+
         saveParameters(&toyTree);
-                       
+
         // loop over each component extract N events and dice s1-s2
         for(unsigned int bkgItr=0; bkgItr < backgrounds.size(); bkgItr++){
-            
+
             // only safeguarded conponent
             if(!(likeHood->safeguarded_bkg_components[bkgItr])) continue;
-            
+
             Debug("generateCalibration","");
 
             int N_events   = rambo.Poisson(scaleFactor * backgrounds[bkgItr].Integral());
-                    
+
             type = (likeHood->bkg_components[bkgItr])->getName();
 
             Debug("generateCalibration", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
             for(int evt =0; evt < N_events; evt++){
-        
+
                 double temp_cs1 = 0., temp_cs2 = 0.;
                 backgrounds[bkgItr].GetRandom2(temp_cs1,temp_cs2);
                 cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
@@ -110,7 +115,7 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
         }
 
         // adding the "additional component" events
-        int N_additional   = 
+        int N_additional   =
             (likeHood->safeguardAdditionalComponent !=NULL) ? rambo.Poisson(scaleFactor * likeHood->safeguardAdditionalComponent->Integral()) : 0;
 
         type = "additional";
@@ -136,9 +141,13 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
     // the idea is to generate N toys with the current seed
     // Each dataset will contain as average averageDataEvnt events
     // which will be Poisson random distributed.
+    TString filename =  dir+treeName+".root";
+    if (likelihoodType>-999){
+      filename = dir+treeName+"_vol"+TString::Itoa(likelihoodType,10)+".root";
+    }
 
-    TFile f(dir+treeName+".root","RECREATE");
-    
+
+    TFile f(filename ,"RECREATE");
     // necessary because TH2F::GetRandom uses ROOT::gRandom
     gRandom = &rambo;
 
@@ -157,9 +166,9 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
         // retrive a vector of TH2F of interpolated bkg components
         vector <TH2F> backgrounds = getTH2OfBkg();
 
-        TString name = treeName + "_" + TString::Itoa(toyItr,10); 
+        TString name = treeName + "_" + TString::Itoa(toyItr,10);
         TTree toyTree (name, "generated toy data");
-        float cs1 = 0.; 
+        float cs1 = 0.;
         float cs2 = 0.;
         string type = "DummyLabel";
 
@@ -168,19 +177,19 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
         toyTree.Branch("type",&type);
         toyTree.Branch("generation",&Gen,"generation/I");
         toyTree.Branch("likelihoodType",&likelihoodType,"likelihoodType/I");
-        toyTree.Branch("toyItr",&toyItr,"toyItr/I");    
+        toyTree.Branch("toyItr",&toyItr,"toyItr/I");
 
         saveParameters(&toyTree);
-    
-        
+
+
         // loop over each bkg extract N events and dice s1-s2
         for(unsigned int bkgItr=0; bkgItr < backgrounds.size(); bkgItr++){
             int N_events   = rambo.Poisson(scaleFactor * backgrounds[bkgItr].Integral());
-            
+
             type = (likeHood->bkg_components[bkgItr])->getName();
-            
+
             Debug("generateData", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
-            
+
             for(int evt =0; evt < N_events; evt++){
                 double temp_cs1 = 0., temp_cs2 = 0.;
                 backgrounds[bkgItr].GetRandom2(temp_cs1,temp_cs2);
@@ -195,9 +204,9 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
           type = likeHood->signal_component->getName();
           int N_signal  = rambo.Poisson(likeHood->getCurrentNs());
           TH2F signal   = likeHood->signal_component->getInterpolatedHisto();
-          
+
           Debug("generateData", TString::Format("Generating %d events for signal, with median %f",N_signal, likeHood->getCurrentNs() ));
-          
+
           for(int evt =0; evt < N_signal; evt++){
             double temp_cs1 = 0., temp_cs2 = 0.;
             signal.GetRandom2(temp_cs1,temp_cs2);
@@ -205,7 +214,7 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
             cs2 = (float) temp_cs2;
             toyTree.Fill();
           }
-        
+
         }
 
         toyTree.Write();
@@ -213,7 +222,7 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
     }
 
     likeHood->printCurrentParameters();
-    
+
     f.Close();
 
 }
@@ -223,22 +232,22 @@ void ToyGenerator::randomizeNuissanceParameter(){
 
     Info("randomizeNuissanceParameter", "Randomizing parameters:");
     for(ParameterIterator ip=params->begin(); ip!=params->end(); ip++){
-        
+
         LKParameter *param = ip->second;
-        if(param->getType() == FIXED_PARAMETER || param->isOfInterest() ) 
+        if(param->getType() == FIXED_PARAMETER || param->isOfInterest() )
             { Info("","Skipping paramater: " + param->getName()); continue; }
-        
+
         // getting range
         double min = param->getMinimum();
         double max = param->getMaximum();
-        
+
         // if param is Free then sample uniform otherwise gauss
         double random_tvalue = 0.;
        /* if(param->getType() == FREE_PARAMETER ){
             Warning("","Following parameter is FREE and will be extracted from uniform distro. " + param->getName());
             random_tvalue = rambo.Uniform(min,max);
         }
-        else{ 
+        else{
             */
             random_tvalue = rambo.Gaus(0.,1.);
             // extract again if out of range
@@ -258,7 +267,7 @@ void ToyGenerator::randomizeNuissanceParameter(){
 
 
 double ToyGenerator::getModelIntegral(){
-    
+
     double total_integral = 0.;
     unsigned int n = likeHood->bkg_components.size();
 
@@ -272,7 +281,7 @@ double ToyGenerator::getModelIntegral(){
 
 
 double ToyGenerator::getModelIntegralSafeguarded(){
-    
+
     double total_integral = 0.;
     unsigned int n = likeHood->bkg_components.size();
 
@@ -281,8 +290,8 @@ double ToyGenerator::getModelIntegralSafeguarded(){
     for (unsigned int i=0; i < n; i++ ){
 
         if(!(likeHood->safeguarded_bkg_components[i]))  continue;
-        
-        double temp_events = (likeHood->bkg_components[i])->getDefaultEvents() ; 
+
+        double temp_events = (likeHood->bkg_components[i])->getDefaultEvents() ;
         total_integral += temp_events;
         Info("----------->", TString::Format("Adding bkg %s -> %f events", (likeHood->bkg_components[i])->getName().Data(), temp_events));
     }
@@ -302,9 +311,9 @@ vector<TH2F> ToyGenerator::getTH2OfBkg(){
 
     vector<TH2F> temp_v;
     unsigned int n = likeHood->bkg_components.size();
-    
+
         for (unsigned int i=0; i < n; i++ ){
-    
+
             temp_v.push_back((likeHood->bkg_components[i])->getInterpolatedHisto());
         }
 
