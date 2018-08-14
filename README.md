@@ -31,7 +31,7 @@ export XEPHYR_DIR=$(pwd)/
 echo "export XEPHYR_DIR=$(pwd)/" >> ~/.bashrc
 git clone git@github.com:XENON1T/Xephyr.git .
 
-# now compile the library
+# now compile and load the library (you need to load this each time)
 root -l Xephyr/loadXephyr.C
 
 #That's it, now you can run a script that uses XEPHYR classes.
