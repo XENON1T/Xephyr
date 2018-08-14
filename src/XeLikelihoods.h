@@ -78,9 +78,11 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	void setCalibrationData(dataHandler *d )     {calibrationData = d; } ;
 
-	void setWithSafeGuard(bool b)  {withSafeGuard = b;} ;
+	void setWithSafeGuard(bool b)  {withSafeGuard = b;} ; //! Set whether to use safeguard or not.
 
-	void drawAllOnProjection(bool isS1Projection);
+  void setSafeGuardPosDef(bool b)  {safeGuardPosDef = b;} ; //! Set whether safeguard should be forced to be possitive
+
+  void drawAllOnProjection(bool isS1Projection);
 
     /** \brief prints a summary of all bkg and signal events with current parameter choice
 	 *
@@ -91,9 +93,12 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	vector<double> getTrueParams()      { return data->getTrueParams(); };
 
+  double getSafeguardValue(); //! returns current value of safeguard
+
+
   //! Returns pointer to background component by name, first match is returned.
 	pdfComponent* getBkgComponent(TString name);
-  
+
   //! Returns vector of all background components.
   vector<pdfComponent *> getBkgComponents();
 
@@ -153,7 +158,10 @@ class pdfLikelihood : public ProfileLikelihood {
 	double                 siganlDefaultNorm;   //corresponding cross section of histos
 
 	double                 XsecMultiplier;   // handy multiplier to keep sigma [0,50]
+
 	bool                   withSafeGuard;
+
+  bool                   safeGuardPosDef; //! Force safeguard parameter to be positive
 
 	double                 wimp_mass;
 
