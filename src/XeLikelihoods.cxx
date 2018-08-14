@@ -696,7 +696,7 @@ void pdfLikelihood::printEventSummary(bool isForWiki){
 		}
 
     	cout << TString::Format("Signal \t %1.4f", signal_component->getNormalizedEvents()) << endl;
-		data->printSummary();
+		if(data !=NULL) data->printSummary();
 	}
 	else {
 
@@ -714,7 +714,8 @@ void pdfLikelihood::printEventSummary(bool isForWiki){
 			cout << TString::Format(" %1.4f |", bkg_components[i]->getNormalizedEvents()) ;
 		}
 
-		int entries = data->getEntries();
+		int entries = 0;
+		if(data != NULL) entries = data->getEntries();
 	    cout << TString::Format(" %1.4f | %d |", signal_component->getNormalizedEvents(), entries) << endl;
 	}
 
