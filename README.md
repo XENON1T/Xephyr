@@ -13,7 +13,7 @@
 ```bash
 ├── Xephyr
     ├── examples    ---> Where all supported examples are, you can install them! have a look at the docs
-    ├── notebooks   ---> Where all tutorials are (as notebooks) you can just run them after setup
+    ├── notebooks   ---> Where all tutorials are (as notebooks) you can just run them after setup (described below)
     ├── pacman      ---> contains all cool scripts for generating makefiles for you
     └── src	    ---> Source code.... Can't touch this! ;)
 ```
@@ -22,7 +22,7 @@
 # Doxigen style code reference, classes and description at: https://xenon1t.github.io/Xephyr/class_reference/
 
 # Super quick setup
-if you are not the kind who waste time on documentation and like to figure out things then just do:
+Setting Up XEPHYR is quite simple, have a look below. However we reccommend you to really go trhough the Docs!!
 
 ```bash
 mkdir XEPHYR_PKG
