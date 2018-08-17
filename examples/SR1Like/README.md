@@ -41,7 +41,7 @@ The Xephyr SR1 likelihood is broken into 3 sub-likelihood, corresponding to:
 **Total mass 1245.54 kg.**
 
 Each of these sub-volume can be loaded separately, meaning that you can run inference using just one of them,
-but the default configuration in this example is to combine the 3 volumes in a final likelihood. The script **asymptotic_limit.C** compute the limits or the actual SR1 data with asymptotics  given the likelihood defined in **src/**.
+but the default configuration in this example is to combine the 3 volumes in a final likelihood. The script **asymptotic_limit.C** compute the limits on the actual SR1 data with asymptotics  given the likelihood defined in **src/**.
 
 ### How to run it
 ```bash
