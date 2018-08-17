@@ -43,6 +43,13 @@ The Xephyr SR1 likelihood is broken into 3 sub-likelihood, corresponding to:
 Each of these sub-volume can be loaded separately, meaning that you can run inference using just one of them,
 but the default configuration in this example is to combine the 3 volumes in a final likelihood.
 
+### How to run it
+```bash
+cd $XEPHYR_DIR/xephyr_examples/SR1Like/
+root -l loadXephyr.C
+> .x 	asymptotic_limit.C
+```
+
 ### What shall I modify
 
 There are basically just a couple of functions that you need to modify to run the SR1 analysis on your signal model 
