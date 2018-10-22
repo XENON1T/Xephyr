@@ -8,7 +8,7 @@ This is an example to demonstrate how to generate some sample 1D data and 1D mod
 
 ### Setup 
 
-The example comes as a Xephyr pachage (see the docs to know more about it), there are a couple of executable that need to be compiled.
+The example comes as a Xephyr package (see the docs to know more about it), there are a couple of executable that need to be compiled.
 To install the example do:
 
 ```bash
