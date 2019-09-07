@@ -26,7 +26,7 @@ class XeVersion {
         <<endl << endl
         <<tab<<" Version "<<XephyrVersion<<" dated "<<XephyrDate
         <<tab<<", compiled with ROOT "<<ROOT_RELEASE<<endl << endl
-	<<tab<<" Intrepidly coded by: D. Lellouche, H. Landsman, J. Mossbacher, A. Manfredini" << endl
+	<<tab<<" Intrepidly coded by: D. Lellouche, H. Landsman, Y. Mosbacher, A. Manfredini" << endl
 	<<tab<<"=================================================================================="
         <<endl<<endl;
   }

@@ -1,4 +1,5 @@
 #include "TROOT.h"  // So it can be loaded from macros
+
 int loadXephyr(){
 
   TString xeDir(gSystem->Getenv("XEPHYR_DIR"));
@@ -11,6 +12,7 @@ int loadXephyr(){
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/AsymptoticExclusion.cxx+g");
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/ToyGenerator.cxx+g");
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/plotHelpers.cxx+g");
+  gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/likelihoodHelpers.cxx+g");
   gROOT->ProcessLine(".L  " + xeDir +"/Xephyr/src/ToyFitterExclusion.cxx+g");
   gInterpreter->AddIncludePath( xeDir +"/Xephyr/src"); // in this case is just XEPHYR src from next dir.
   return 0;
