@@ -7,26 +7,37 @@
             "safeguard": true,
             "posdef_safeguard": false,
             "mass": 50.0,
-            "data":{
+            "datasets":[
+                {
                 "name": "data_sr1_0",
                 "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_0"
-            },
-            "calibration":{
+                },
+                {
                 "name": "calibration_sr1_0",
                 "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_0"
-            },
-            "signal_model":{
-                "name": "Signal_sr1_1",
-                "histogram_file": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
-                "histogram_name": "hmc_extruded_yx_r0_f",
-                "scale_factor": 0.921388,
-                "scale_uncertainty_name": "SignalScale1",
-                "scale_uncertainty_value":0.0230074
-            },
-        
-            "background_models": [
+                }
+            ],
+     
+            "models": [
+                {
+                    "name": "Signal_sr1_0",
+                    "file_path": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
+                    "histogram_name": "hmc_extruded_yx_r0_f",
+                    "scale_factor": 0.921388,
+                    "safeguard":false,
+                    "rate_parameters": [
+                        {
+                            "name": "SignalScale0",
+                            "default_value": 0.0230074,
+                            "lower_limit": -1,
+                            "upper_limit": 1,
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                    ]
+                    
+                },
                 {
                     "name": "ER",
                     "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root",
@@ -203,27 +214,38 @@
             "signal_default_norm": 1e-45,
             "safeguard": true,
             "posdef_safeguard": false,
-            "mass": 500.0,
-            "data":{
+            "mass": 50.0,
+            "datasets":[
+                {
                 "name": "data_sr1_1",
                 "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_1"
-            },
-            "calibration":{
+                },
+                {
                 "name": "calibration_sr1_1",
                 "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_1"
-            },
-            "signal_model":{
-                "name": "Signal_sr1_1",
-                "histogram_file": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
-                "histogram_name": "hmc_extruded_yx_r1_f",
-                "scale_factor": 0.921388,
-                "scale_uncertainty_name": "SignalScale1",
-                "scale_uncertainty_value":0.0230074
-            },
-        
-            "background_models": [
+                }
+            ],
+     
+            "models": [
+                {
+                    "name": "Signal_sr1_1",
+                    "file_path": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
+                    "histogram_name": "hmc_extruded_yx_r1_f",
+                    "scale_factor": 0.921388,
+                    "safeguard":false,
+                    "rate_parameters": [
+                        {
+                            "name": "SignalScale1",
+                            "default_value": 0.0230074,
+                            "lower_limit": -1,
+                            "upper_limit": 1,
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                    ]
+                    
+                },
                 {
                     "name": "ER",
                     "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root",
@@ -404,27 +426,38 @@
             "signal_default_norm": 1e-45,
             "safeguard": true,
             "posdef_safeguard": false,
-            "mass": 500.0,
-            "data":{
+            "mass": 50.0,
+            "datasets":[
+                {
                 "name": "data_sr1_2",
                 "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_2"
-            },
-            "calibration":{
+                },
+                {
                 "name": "calibration_sr1_2",
                 "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_2"
-            },
-            "signal_model":{
-                "name": "Signal_sr1_2",
-                "histogram_file": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
-                "histogram_name": "hmc_extruded_yx_r1_f",
-                "scale_factor": 0.921388,
-                "scale_uncertainty_name": "SignalScale1",
-                "scale_uncertainty_value":0.0230074
-            },
-        
-            "background_models": [
+                }
+            ],
+     
+            "models": [
+                {
+                    "name": "Signal_sr1_2",
+                    "file_path": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
+                    "histogram_name": "hmc_extruded_yx_r2_f",
+                    "scale_factor": 0.921388,
+                    "safeguard":false,
+                    "rate_parameters": [
+                        {
+                            "name": "SignalScale2",
+                            "default_value": 0.0230074,
+                            "lower_limit": -1,
+                            "upper_limit": 1,
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                    ]
+                    
+                },
                 {
                     "name": "ER",
                     "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root",

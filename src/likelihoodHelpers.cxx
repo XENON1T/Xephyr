@@ -17,11 +17,12 @@ pdfComponent* genModel(json model_json) {
     
     TString hist_path = model_def["file_path"].get<std::string>();
     if (hist_path.Index("/") != 0) hist_path = xephyrDir+hist_path;
-
-    pdfComponent *model = new pdfComponent(model_def["name"].get<std::string>(), model_def["histogram_name"].get<std::string>(), hist_path);
+    cout<<hist_path<<endl;
+    pdfComponent *model = new pdfComponent(model_def["name"].get<std::string>(), model_def["histogram_name"].get<std::string>(), hist_path );
+    cout<<"Model initialized."<<endl;
     if (model_def["shape_parameters"].is_null()){
         model->autoLoad();
-    } else {
+    } else if (model_def["shape_parameters"].size()) {
         for (unsigned int i=0; i<model_def["shape_parameters"].size(); i++) {
             json p_def = model_def["shape_parameters"][i];
             shapeSys *p = new shapeSys(p_def["name"].get<std::string>());
@@ -34,7 +35,7 @@ pdfComponent* genModel(json model_json) {
 
     }
     
-
+    cout<<"shape_parameters added"<<endl;
     for (unsigned int i=0; i<model_def["rate_parameters"].size(); i++) {
         json p_def = model_def["rate_parameters"][i];
         scaleSys *scale = new scaleSys(p_def["name"].get<std::string>(),p_def["default_value"].get<double>());
@@ -43,6 +44,7 @@ pdfComponent* genModel(json model_json) {
         scale->setType(parameterTypeMap[p_def["type"].get<std::string>()]);
         model->addScaleSys(scale);
     }
+    cout<<"rate_parameters added"<<endl;
 
     if (not model_def["suffix"].is_null()) 
         model->suffix = (TString) model_def["suffix"].get<std::string>();
@@ -52,8 +54,9 @@ pdfComponent* genModel(json model_json) {
 
     if (not model_def["scale_factor"].is_null())
         model->setScaleFactor(model_def["scale_factor"].get<double>() ); 
+
     return model;
-    }
+}
 
 
 dataHandler* genDataHandler(json dh_json) {
@@ -112,19 +115,22 @@ pdfLikelihood* genLikelihood(json pl_json) {
     }
     else 
         pl_def = pl_json;
-    
+    cout<<pl_def.dump(4)<<endl;
     pdfLikelihood *pl = new pdfLikelihood(pl_def["name"].get<std::string>(), pl_def["mass"].get<double>());
     if (not pl_def["index"].is_null()) pl->setExperiment(pl_def["index"].get<uint>());
-    
+    cout<<"There are "<<pl_def["models"].size()<<" models"<<endl;
     for (unsigned int i=0; i<pl_def["models"].size(); i++) {
         json model_def = pl_def["models"][i];
+        cout<<"Generating \n"<<model_def.dump(4)<<endl;
         pdfComponent* model = genModel(model_def);
-        if (model_def["type"].get<std::string>() == "BACKGROUND"){
-            pl->addBkgPdfComponent(model, model_def["safeguard"].get<bool>());
-        } else if (model_def["type"].get<std::string>() == "SIGNAL")
-        {
+        cout<<"Done. Adding to pl."<<endl;
+
+        if (model_def["type"].get<std::string>() == "SIGNAL"){
             pl->setSignalPdf(model);
+        } else {
+            pl->addBkgPdfComponent(model, model_def["safeguard"].get<bool>());
         }
+        
     }
     
     pl->setSignalDefaultNorm(pl_def["signal_default_norm"].get<double>());
@@ -188,13 +194,12 @@ CombinedProfileLikelihood* genCombinedLikelihood(json cpl_json) {
             json p_def = cp_def["parameters"][k];
             pdfLikelihood* pl = pls[p_def["likelihood"].get<uint>()];
             pdfComponent *model;
-            if (cp_def["model_type"].get<std::string>()=="BACKGROUND") {
-                model = pl->getBkgComponent(p_def["model_name"].get<std::string>());
-            } else if(cp_def["model_type"].get<std::string>()=="SIGNAL") {
+            if(cp_def["model_type"].get<std::string>()=="SIGNAL") {
                 model = pl->signal_component;
             } else {
+                model = pl->getBkgComponent(p_def["model_name"].get<std::string>());
                 // cout<<"ERROR: UNRECOGNIZED MODEL TYPE "<<cp_def["model_type"].get<std::string>()<<endl;
-                Error("genCombinedLikelihood", "UNRECOGNIZED MODEL TYPE");
+                // Error("genCombinedLikelihood", "UNRECOGNIZED MODEL TYPE");
             }
 
             if (cp_def["type"].get<std::string>()=="SHAPE") {
