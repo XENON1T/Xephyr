@@ -1,0 +1,53 @@
+{
+    "name": "LikelihoodExample",
+    "signal_default_norm": 1e-45,
+    "safeguard": false,
+    "posdef_safeguard": false,
+    "mass": 1,
+    "datasets":[
+        {
+        "name": "data",
+        "type":"DATA",
+        "file_path":"xephyr_examples/likelihood1D/data/modelsAndData.root",
+        "histogram_name":"exampleTree"
+        }
+    ],
+    
+    "models": [
+        {
+            "name": "Signal",
+            "type":"SIGNAL",
+            "file_path": "xephyr_examples/likelihood1D/data/modelsAndData.root",
+            "histogram_name": "Signal",
+            "safeguard":false,
+            "scale_factor": 0.921388,
+            "rate_parameters": [
+                {
+                    "name": "SignalScale",
+                    "default_value": 0.2,
+                    "lower_limit": -0.5,
+                    "upper_limit": 0.5,
+                    "type": "NUISANCE_PARAMETER"
+                }
+            ],
+            "shape_parameters":[]
+        },
+        {
+            "name": "bkg",
+            "type":"BACKGROUND",
+            "file_path": "xephyr_examples/likelihood1D/data/modelsAndData.root",
+            "histogram_name": "bkg",
+            "safeguard": false,
+            "rate_parameters": [
+                {
+                    "name": "Scaling",
+                    "default_value": 0.1,
+                    "lower_limit": -0.5,
+                    "upper_limit": 0.5,
+                    "type": "NUISANCE_PARAMETER"
+                }
+                
+            ]
+        }
+    ]
+}
