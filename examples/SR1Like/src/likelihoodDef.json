@@ -1,0 +1,714 @@
+{
+    "name": "SR1Combined",
+    "likelihoods": [
+        {
+            "name": "SR1_egg",
+            "signal_default_norm": 1e-45,
+            "safeguard": true,
+            "posdef_safeguard": false,
+            "mass": 50.0,
+            "data":{
+                "name": "data_sr1_0",
+                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "histogram_name":"tree_0"
+            },
+            "calibration":{
+                "name": "calibration_sr1_0",
+                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "histogram_name":"tree_0"
+            },
+            "signal_model":{
+                "name": "Signal_sr1_1",
+                "histogram_file": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
+                "histogram_name": "hmc_extruded_yx_r0_f",
+                "scale_factor": 0.921388,
+                "scale_uncertainty_name": "SignalScale1",
+                "scale_uncertainty_value":0.0230074
+            },
+        
+            "background_models": [
+                {
+                    "name": "ER",
+                    "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root",
+                    "histogram_name": "hbkg",
+                    "suffix": "_yx_r0_f",
+                    "exp_events": 261.9555,
+                    "safeguard": true,
+                    "shape_parameters": [
+                        {   
+                            
+                            "name": "_py0_",
+                            "step_size": 1.0,
+                            "lower_limit": -1.0,
+                            "upper_limit": 1.0,
+                            "type": "FREE_PARAMETER"
+                            
+                        },
+                        {   
+                            
+                            "name": "_rf0_",
+                            "step_size": 1.0,
+                            "lower_limit": -2.0,
+                            "upper_limit": 2.0,
+                            
+                            "type": "FREE_PARAMETER"
+                        }
+                        
+                    ],
+                    "rate_parameters": [
+                        {
+                            "name": "ERscale0",
+                            "default_value": 1.0,
+                            "lower_limit": -0.5,
+                            "upper_limit": 0.5,
+                            
+                       
+                            "type": "FREE_PARAMETER"
+                        }
+                        
+                    ]
+                },
+                {
+                "name": "AC",
+                    "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                    "histogram_name": "acbg_yx_r0_f",
+                    "safeguard":false,
+                    "shape_parameters": [
+                        
+                    ],
+                    "rate_parameters": [
+                        {
+                            "name": "ACscale0",
+                            "default_value": 0.2,
+                            "lower_limit": -2.0,
+                            "upper_limit": 2.0,
+                     
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                        
+                    ]
+                },
+                {
+                    "name": "Wall",
+                        "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                        "histogram_name": "acbg_yx_r0_f",
+                        
+                        
+                        "safeguard":false,
+                        "shape_parameters": [
+                            
+                        ],
+                        "rate_parameters": [
+                            {
+                                "name": "Wallscale0",
+                                "default_value": 1.0,
+                                "lower_limit": -2.0,
+                                "upper_limit": 2.0,
+                              
+                                "type": "NUISANCE_PARAMETER"
+                            }
+                            
+                        ]
+                    },
+                    {
+                        "name": "Radio",
+                            "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNRBackgroundModel_SR1_RunSourceCombined180420.root",
+                            "histogram_name": "hnrbkg_yx_r0_f",
+                            "scale_factor": 0.676,
+                            
+                            "safeguard": false,
+                            "shape_parameters": [
+                                
+                            ],
+                            "rate_parameters": [
+                                {
+                                    "name": "Radioscale0",
+                                    "default_value": 1.0,
+                                    "lower_limit": -2.0,
+                                    "upper_limit": 2.0,
+                                  
+                                    "type": "NUISANCE_PARAMETER"
+                                }
+                                
+                            ]
+                        },
+                        {
+                            "name": "RadioNX",
+                                "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                                "histogram_name": "hnrbkg_yx_r0_f",
+                                "scale_factor": 0.676,
+                                
+                                "safeguard": false,
+                                "shape_parameters": [
+                                    
+                                ],
+                                "rate_parameters": [
+                                    {
+                                        "name": "RadioNXscale0",
+                                        "default_value": 1.0,
+                                        "lower_limit": -2.0,
+                                        "upper_limit": 2.0,
+                                
+                                        "type": "NUISANCE_PARAMETER"
+                                    }
+                                    
+                                ]
+                            },
+                        {
+                            "name": "CNNS",
+                                "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/CNNSBackgroundModel_SR1_RunSourceCombinedFit180420.root",
+                                "histogram_name": "hmc_extruded_yx_r0_f",
+                                "scale_factor": 0.921388,
+                                "safeguard": false,
+                                "shape_parameters": [
+                                    
+                                ],
+                                "rate_parameters": [
+                                    {
+                                        "name": "CNNSscale0",
+                                        "default_value": 1.0,
+                                        "lower_limit": -2.0,
+                                        "upper_limit": 2.0,
+                                
+                                        "type": "NUISANCE_PARAMETER"
+                                    }
+                                    
+                                ]
+                            }
+
+        
+            ],
+            "additional_safeguard_component": {
+                "histogram_file":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                "histogram_name": "acrn220_yx_r0_f",
+                "extra_histograms": [
+                    {
+                        "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                        "histogram_name": "wallrn_0.00_yx_r0_f",
+                        "multiplier": 1.0
+                    },
+                    {
+                        "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                        "histogram_name": "hnrbkg_yx_r0_f",
+                        "multiplier": 0.0
+                    }
+
+                ],
+                "scale": 0.077181951
+
+            }
+        },
+        {
+            "name": "SR1_inner",
+            "signal_default_norm": 1e-45,
+            "safeguard": true,
+            "posdef_safeguard": false,
+            "mass": 500.0,
+            "data":{
+                "name": "data_sr1_1",
+                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "histogram_name":"tree_1"
+            },
+            "calibration":{
+                "name": "calibration_sr1_1",
+                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "histogram_name":"tree_1"
+            },
+            "signal_model":{
+                "name": "Signal_sr1_1",
+                "histogram_file": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
+                "histogram_name": "hmc_extruded_yx_r1_f",
+                "scale_factor": 0.921388,
+                "scale_uncertainty_name": "SignalScale1",
+                "scale_uncertainty_value":0.0230074
+            },
+        
+            "background_models": [
+                {
+                    "name": "ER",
+                    "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root",
+                    "histogram_name": "hbkg",
+                    "suffix": "_yx_r1_f",
+                    "exp_events": 146.13972973,
+                    "safeguard": true,
+                    "shape_parameters": [
+                        {   
+                            
+                            "name": "_py0_",
+                            "step_size": 1.0,
+                            "lower_limit": -1.0,
+                            "upper_limit": 1.0,
+                            "type": "NUISANCE_PARAMETER"
+                       
+                        },
+                        {   
+                            
+                            "name": "_rf0_",
+                            "step_size": 1.0,
+                            "lower_limit": -2.0,
+                            "upper_limit": 2.0,
+                         
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                        
+                    ],
+                    "rate_parameters": [
+                        {
+                            "name": "ERscale1",
+                            "default_value": 1.0,
+                            "lower_limit": -0.5,
+                            "upper_limit": 0.5,
+                     
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                        
+                    ]
+                },
+                {
+                "name": "AC",
+                    "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                    "histogram_name": "acbg_yx_r1_f",
+                    
+                    
+                    "safeguard":false,
+                    "shape_parameters": [
+                        
+                    ],
+                    "rate_parameters": [
+                        {
+                            "name": "ACscale1",
+                            "default_value": 0.2,
+                            "lower_limit": -2.0,
+                            "upper_limit": 2.0,
+                       
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                        
+                    ]
+                },
+                {
+                    "name": "Wall",
+                        "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                        "histogram_name": "acbg_yx_r1_f",
+                        
+                        
+                        "safeguard":false,
+                        "shape_parameters": [
+                            
+                        ],
+                        "rate_parameters": [
+                            {
+                                "name": "Wallscale1",
+                                "default_value": 1.0,
+                                "lower_limit": -2.0,
+                                "upper_limit": 3.0,
+                         
+                                "type": "NUISANCE_PARAMETER"
+                            }
+                            
+                        ]
+                    },
+                    {
+                        "name": "Radio",
+                            "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNRBackgroundModel_SR1_RunSourceCombined180420.root",
+                            "histogram_name": "hnrbkg_yx_r1_f",
+                            "scale_factor": 0.676,
+                            
+                            "safeguard": false,
+                            "shape_parameters": [
+                                
+                            ],
+                            "rate_parameters": [
+                                {
+                                    "name": "Radioscale1",
+                                    "default_value": 1.0,
+                                    "lower_limit": -2.0,
+                                    "upper_limit": 2.0,
+                       
+                                    "type": "NUISANCE_PARAMETER"
+                                }
+                                
+                            ]
+                        },
+                        {
+                            "name": "RadioNX",
+                                "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                                "histogram_name": "hnrbkg_yx_r1_f",
+                                "scale_factor": 0.676,
+                                
+                                "safeguard": false,
+                                "shape_parameters": [
+                                    
+                                ],
+                                "rate_parameters": [
+                                    {
+                                        "name": "RadioNXscale1",
+                                        "default_value": 1.0,
+                                        "lower_limit": -2.0,
+                                        "upper_limit": 2.0,
+                                     
+                                        "type": "NUISANCE_PARAMETER"
+                                    }
+                                    
+                                ]
+                            },
+                        {
+                            "name": "CNNS",
+                                "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/CNNSBackgroundModel_SR1_RunSourceCombinedFit180420.root",
+                                "histogram_name": "hmc_extruded_yx_r1_f",
+                                "scale_factor": 0.921388,
+                                "safeguard": false,
+                                "shape_parameters": [
+                                    
+                                ],
+                                "rate_parameters": [
+                                    {
+                                        "name": "CNNSscale1",
+                                        "default_value": 1.0,
+                                        "lower_limit": -2.0,
+                                        "upper_limit": 2.0,
+                               
+                                        "type": "NUISANCE_PARAMETER"
+                                    }
+                                    
+                                ]
+                            }
+
+        
+            ],
+            "additional_safeguard_component": {
+                    "histogram_file":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                    "histogram_name": "acrn220_yx_r1_f",
+                    "extra_histograms": [
+                        {
+                            "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                            "histogram_name": "wallrn_0.00_yx_r1_f",
+                            "multiplier": 1.0
+                        },
+                        {
+                            "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                            "histogram_name": "hnrbkg_yx_r1_f",
+                            "multiplier": 0.0
+                        }
+
+                    ],
+                    "scale": 0.077181951
+
+                }
+
+            
+            
+        },
+        {
+            "name": "SR1_outer",
+            "signal_default_norm": 1e-45,
+            "safeguard": true,
+            "posdef_safeguard": false,
+            "mass": 500.0,
+            "data":{
+                "name": "data_sr1_2",
+                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "histogram_name":"tree_2"
+            },
+            "calibration":{
+                "name": "calibration_sr1_2",
+                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "histogram_name":"tree_2"
+            },
+            "signal_model":{
+                "name": "Signal_sr1_2",
+                "histogram_file": "xephyr_examples/SR1Like/data/SignalModel_SR1_50GeV_FromRunSourceCombinedFit180420.root",
+                "histogram_name": "hmc_extruded_yx_r1_f",
+                "scale_factor": 0.921388,
+                "scale_uncertainty_name": "SignalScale1",
+                "scale_uncertainty_value":0.0230074
+            },
+        
+            "background_models": [
+                {
+                    "name": "ER",
+                    "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/ERBackgroundModel_Stitched_SR1_RunSourceCombinedFit180420.root",
+                    "histogram_name": "hbkg",
+                    "suffix": "_yx_r2_f",
+                    "exp_events": 146.13972973,
+                    "safeguard": true,
+                    "shape_parameters": [
+                        {   
+                            
+                            "name": "_py0_",
+                            "step_size": 1.0,
+                            "lower_limit": -1.0,
+                            "upper_limit": 1.0,
+                            "type": "NUISANCE_PARAMETER"
+                       
+                        },
+                        {   
+                            
+                            "name": "_rf0_",
+                            "step_size": 1.0,
+                            "lower_limit": -2.0,
+                            "upper_limit": 2.0,
+                         
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                        
+                    ],
+                    "rate_parameters": [
+                        {
+                            "name": "ERscale2",
+                            "default_value": 1.0,
+                            "lower_limit": -0.5,
+                            "upper_limit": 0.5,
+                     
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                        
+                    ]
+                },
+                {
+                "name": "AC",
+                    "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                    "histogram_name": "acbg_yx_r2_f",
+                    
+                    
+                    "safeguard":false,
+                    "shape_parameters": [
+                        
+                    ],
+                    "rate_parameters": [
+                        {
+                            "name": "ACscale2",
+                            "default_value": 0.2,
+                            "lower_limit": -2.0,
+                            "upper_limit": 2.0,
+                       
+                            "type": "NUISANCE_PARAMETER"
+                        }
+                        
+                    ]
+                },
+                {
+                    "name": "Wall",
+                        "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                        "histogram_name": "acbg_yx_r2_f",
+                        
+                        
+                        "safeguard":false,
+                        "shape_parameters": [
+                            
+                        ],
+                        "rate_parameters": [
+                            {
+                                "name": "Wallscale2",
+                                "default_value": 1.0,
+                                "lower_limit": -2.0,
+                                "upper_limit": 3.0,
+                         
+                                "type": "NUISANCE_PARAMETER"
+                            }
+                            
+                        ]
+                    },
+                    {
+                        "name": "Radio",
+                            "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNRBackgroundModel_SR1_RunSourceCombined180420.root",
+                            "histogram_name": "hnrbkg_yx_r2_f",
+                            "scale_factor": 0.676,
+                            
+                            "safeguard": false,
+                            "shape_parameters": [
+                                
+                            ],
+                            "rate_parameters": [
+                                {
+                                    "name": "Radioscale2",
+                                    "default_value": 1.0,
+                                    "lower_limit": -2.0,
+                                    "upper_limit": 2.0,
+                       
+                                    "type": "NUISANCE_PARAMETER"
+                                }
+                                
+                            ]
+                        },
+                        {
+                            "name": "RadioNX",
+                                "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                                "histogram_name": "hnrbkg_yx_r2_f",
+                                "scale_factor": 0.676,
+                                
+                                "safeguard": false,
+                                "shape_parameters": [
+                                    
+                                ],
+                                "rate_parameters": [
+                                    {
+                                        "name": "RadioNXscale2",
+                                        "default_value": 1.0,
+                                        "lower_limit": -2.0,
+                                        "upper_limit": 2.0,
+                                     
+                                        "type": "NUISANCE_PARAMETER"
+                                    }
+                                    
+                                ]
+                            },
+                        {
+                            "name": "CNNS",
+                                "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/CNNSBackgroundModel_SR1_RunSourceCombinedFit180420.root",
+                                "histogram_name": "hmc_extruded_yx_r2_f",
+                                "scale_factor": 0.921388,
+                                "safeguard": false,
+                                "shape_parameters": [
+                                    
+                                ],
+                                "rate_parameters": [
+                                    {
+                                        "name": "CNNSscale2",
+                                        "default_value": 1.0,
+                                        "lower_limit": -2.0,
+                                        "upper_limit": 2.0,
+                               
+                                        "type": "NUISANCE_PARAMETER"
+                                    }
+                                    
+                                ]
+                            }
+
+        
+            ],
+            "additional_safeguard_component": {
+                    "histogram_file":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                    "histogram_name": "acrn220_yx_r2_f",
+                    "extra_histograms": [
+                        {
+                            "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                            "histogram_name": "wallrn_0.00_yx_r2_f",
+                            "multiplier": 1.0
+                        },
+                        {
+                            "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                            "histogram_name": "hnrbkg_yx_r2_f",
+                            "multiplier": 0.0
+                        }
+
+                    ],
+                    "scale": 0.077181951
+
+                }
+
+            
+            
+        }
+    ],
+    "combined_parameters": [
+        {
+            "name":"CORR_PY_SR1",
+            "model_type": "BACKGROUND",
+            "type": "SHAPE",
+            "parameter_type":"FREE_PARAMETER",
+            "lower_limit": -1.0,
+            "upper_limit": 1.0,
+           
+            "parameters": [
+                {
+                    "likelihood": 0,
+                    "model_name": "ER",
+                    "name":"_py0_"
+                },
+                {
+                    "likelihood": 1,
+                    "model_name": "ER",
+                    "name":"_py0_"
+                }
+            ]
+
+        },
+        {
+            "name":"CORR_RF_SR1",
+            "model_type": "BACKGROUND",
+            "type": "SHAPE",
+            "parameter_type":"FREE_PARAMETER",
+            "lower_limit": -2.0,
+            "upper_limit": 2.0,
+            "parameters": [
+                {
+                    "likelihood": 0,
+                    "model_name": "ER",
+                    "name":"_rf0_"
+                },
+                {
+                    "likelihood": 1,
+                    "model_name": "ER",
+                    "name":"_rf0_"
+                }
+            ]
+
+        },
+        {
+            "name":"CORR_ERscale_SR1",
+            "model_type": "BACKGROUND",
+            "parameter_type":"FREE_PARAMETER",
+            "type": "RATE",
+            "lower_limit": -0.5,
+            "upper_limit": 0.5,
+            
+            "parameters": [
+                {
+                    "likelihood": 0,
+                    "model_name": "ER",
+                    "name":"ERscale0"
+                },
+                {
+                    "likelihood": 1,
+                    "model_name": "ER",
+                    "name":"ERscale1"
+                }
+            ]
+
+        },
+        {
+            "name":"CORR_CNNS_SR1",
+            "model_type": "BACKGROUND",
+            
+            "type": "RATE",
+            "lower_limit": -2.0,
+            "upper_limit": 2.0,
+            
+            "parameters": [
+                {
+                    "likelihood": 0,
+                    "model_name": "CNNS",
+                    "name":"CNNSscale0"
+                },
+                {
+                    "likelihood": 1,
+                    "model_name": "CNNS",
+                    "name":"CNNSscale1"
+                }
+            ]
+
+        },
+        
+        {
+            "name":"CORR_SIGNALscale_SR1",
+            "model_type": "SIGNAL",
+            
+            "type": "RATE",
+            "lower_limit": -2.0,
+            "upper_limit": 2.0,
+            "parameters": [
+                {
+                    "likelihood": 0,
+                    "name":"SignalScale0"
+                },
+                {
+                    "likelihood": 1,
+                    "name":"SignalScale1"
+                }
+            ]
+
+        }
+
+    ]
+}
