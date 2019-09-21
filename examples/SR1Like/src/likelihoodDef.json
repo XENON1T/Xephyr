@@ -10,12 +10,12 @@
             "datasets":[
                 {
                 "name": "data_sr1_0",
-                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "file_path":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_0"
                 },
                 {
                 "name": "calibration_sr1_0",
-                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "file_path":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_0"
                 }
             ],
@@ -190,16 +190,16 @@
         
             ],
             "additional_safeguard_component": {
-                "histogram_file":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                "file_path":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
                 "histogram_name": "acrn220_yx_r0_f",
                 "extra_histograms": [
                     {
-                        "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                        "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
                         "histogram_name": "wallrn_0.00_yx_r0_f",
                         "multiplier": 1.0
                     },
                     {
-                        "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                        "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
                         "histogram_name": "hnrbkg_yx_r0_f",
                         "multiplier": 0.0
                     }
@@ -218,12 +218,12 @@
             "datasets":[
                 {
                 "name": "data_sr1_1",
-                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "file_path":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_1"
                 },
                 {
                 "name": "calibration_sr1_1",
-                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "file_path":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_1"
                 }
             ],
@@ -399,16 +399,16 @@
         
             ],
             "additional_safeguard_component": {
-                    "histogram_file":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                    "file_path":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
                     "histogram_name": "acrn220_yx_r1_f",
                     "extra_histograms": [
                         {
-                            "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                            "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
                             "histogram_name": "wallrn_0.00_yx_r1_f",
                             "multiplier": 1.0
                         },
                         {
-                            "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                            "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
                             "histogram_name": "hnrbkg_yx_r1_f",
                             "multiplier": 0.0
                         }
@@ -430,12 +430,12 @@
             "datasets":[
                 {
                 "name": "data_sr1_2",
-                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "file_path":"xephyr_examples/SR1Like/data/xephyr_none_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_2"
                 },
                 {
                 "name": "calibration_sr1_2",
-                "histogram_file":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
+                "file_path":"xephyr_examples/SR1Like/data/xephyr_Rn220_SR1_pax6.8.0_hax2.4.0_lax1.5.1_cs1LT200_fv1_cuts1_pruned.root",
                 "histogram_name":"tree_2"
                 }
             ],
@@ -611,16 +611,16 @@
         
             ],
             "additional_safeguard_component": {
-                    "histogram_file":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                    "file_path":"SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
                     "histogram_name": "acrn220_yx_r2_f",
                     "extra_histograms": [
                         {
-                            "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
+                            "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/Background_wall_ac_templates_v6_inegg_bin_SR1_2018-04-30.root",
                             "histogram_name": "wallrn_0.00_yx_r2_f",
                             "multiplier": 1.0
                         },
                         {
-                            "histogram_file": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
+                            "file_path": "SR1/StatisticalAnalyses/inputs_for_likelihood/lax_1.5.1_egg/sliced_2d_templates/RadiogenicNeutronXBackgroundModel_SR1_RunSourceCombined180420.root",
                             "histogram_name": "hnrbkg_yx_r2_f",
                             "multiplier": 0.0
                         }

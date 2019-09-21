@@ -68,7 +68,7 @@ dataHandler* genDataHandler(json dh_json) {
     else 
         dh_def = dh_json;
 
-    TString hist_path = dh_def["histogram_file"].get<std::string>();
+    TString hist_path = dh_def["file_path"].get<std::string>();
     if (hist_path.Index("/") != 0) hist_path = xephyrDir+hist_path;
     dataHandler *dh = new dataHandler(dh_def["name"].get<std::string>(), hist_path, 
                                          dh_def["histogram_name"].get<std::string>());
@@ -88,16 +88,16 @@ TH2F* genAdditionalSafeGuardComponent(json comp_json){
     else 
         comp_def = comp_json;
     TString emtpy = "";
-    TString hist_path = emtpy+comp_def["histogram_file"].get<std::string>();
-    if (hist_path.Index("/") != 0) hist_path = xephyrDir + comp_def["histogram_file"].get<std::string>();
+    TString hist_path = emtpy+comp_def["file_path"].get<std::string>();
+    if (hist_path.Index("/") != 0) hist_path = xephyrDir + comp_def["file_path"].get<std::string>();
     TFile *f1 = TFile::Open(hist_path);
     TH2F* comp = (TH2F*) f1->Get( emtpy+comp_def["histogram_name"].get<std::string>() );
 
     for (uint i=0; i<comp_def["extra_histograms"].size(); i++) {
         json extra_def = comp_def["extra_histograms"][i];
         TString emtpy = "";
-        hist_path = emtpy+extra_def["histogram_file"].get<std::string>();
-        if (hist_path.Index("/") != 0) hist_path = xephyrDir + extra_def["histogram_file"].get<std::string>();
+        hist_path = emtpy+extra_def["file_path"].get<std::string>();
+        if (hist_path.Index("/") != 0) hist_path = xephyrDir + extra_def["file_path"].get<std::string>();
         TFile *fextra = TFile::Open(hist_path);
         TH2F* extra_histo = (TH2F*) fextra->Get(emtpy+extra_def["histogram_name"].get<std::string>() );
         comp->Add(extra_histo, extra_def["multiplier"].get<double>() );

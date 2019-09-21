@@ -8,7 +8,7 @@
         {
         "name": "data",
         "type":"DATA",
-        "histogram_file":"xephyr_examples/likelihood1D/data/modelsAndData.root",
+        "file_path":"xephyr_examples/likelihood1D/data/modelsAndData.root",
         "histogram_name":"exampleTree"
         }
     ],
