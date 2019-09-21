@@ -19,15 +19,21 @@ pdfComponent* genModel(json model_json) {
     if (hist_path.Index("/") != 0) hist_path = xephyrDir+hist_path;
 
     pdfComponent *model = new pdfComponent(model_def["name"].get<std::string>(), model_def["histogram_name"].get<std::string>(), hist_path);
-    for (unsigned int i=0; i<model_def["shape_parameters"].size(); i++) {
-        json p_def = model_def["shape_parameters"][i];
-        shapeSys *p = new shapeSys(p_def["name"].get<std::string>());
-        p->setStep(p_def["step_size"].get<double>());                      // FIXME
-        p->setMinimum(p_def["lower_limit"].get<double>());
-        p->setMaximum(p_def["upper_limit"].get<double>());
-        p->setType(parameterTypeMap[p_def["type"].get<std::string>()]);
-        model->addShapeSys(p);
+    if (model_def["shape_parameters"].is_null()){
+        model->autoLoad();
+    } else {
+        for (unsigned int i=0; i<model_def["shape_parameters"].size(); i++) {
+            json p_def = model_def["shape_parameters"][i];
+            shapeSys *p = new shapeSys(p_def["name"].get<std::string>());
+            p->setStep(p_def["step_size"].get<double>());                      // FIXME
+            p->setMinimum(p_def["lower_limit"].get<double>());
+            p->setMaximum(p_def["upper_limit"].get<double>());
+            p->setType(parameterTypeMap[p_def["type"].get<std::string>()]);
+            model->addShapeSys(p);
+        }
+
     }
+    
 
     for (unsigned int i=0; i<model_def["rate_parameters"].size(); i++) {
         json p_def = model_def["rate_parameters"][i];

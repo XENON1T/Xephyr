@@ -6,7 +6,7 @@ This section contains real life code examples. This is still under construction 
 
 ```bash
 ├── likelihood1D    ---> Example that shows how to "hack" Xephyr for 1D unbinned likelihood
-└── SR1Like	    ---> SR1 enhanced example: this not only show how to build a real life 
+└── SR1Like	    ---> SR1 enhanced example: this not only shows how to build a real life 
 		         SR1 likelihood but also allows you to easily plug your own signal model, 
 			 keeping the rest of SR1 models unchanged.
 
@@ -14,7 +14,7 @@ This section contains real life code examples. This is still under construction 
 
 # Installation
 
-These example (although they work from the dir within Xephyr) can be installed, so that you have your own copy (and can mess up with the code)
+These examples (although they work from the dir within Xephyr) can be installed, so that you have your own copy (and can mess up with the code)
 in the workdir. It is very easy, just do:
 
 ```bash

@@ -47,13 +47,17 @@ root -l Xephyr/loadXephyr.C
  Make sure you have Docker [installed](https://docs.docker.com/install/) and working. Then run
 
 ```bash
-docker run --rm -p 8080:8080 yossimo/xephyr:latest
+docker run --rm -p 8080:8080 yossimo/xephyr:notebook
 ```
 You should see the jupyter notebook output, copy the address with the key. 
 
+Alternatively, to get a ROOT terminal with Xephyr libraries loaded you can run
+```bash
+docker run --rm yossimo/xephyr:terminal
+```
 
 You can mount a local directory to the docker image with the -v command
 ```bash
-docker run --rm -p 8080:8080 -v dir_local_path:/home/xephyrian/dir_name_in_docker_image yossimo/xephyr:latest
+docker run --rm -p 8080:8080 -v dir_local_path:/home/xephyrian/dir_name_in_docker_image yossimo/xephyr:notebook
 ```
 Here the local folder was mounted to the /home/xephyrian/ directory in the docker image since that is the default work dir. 
