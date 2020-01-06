@@ -163,7 +163,7 @@ vector< shapeSys * > pdfComponent::scanFile(TString tag,char dd)
   while ((key = (TKey*)next())) {
     TClass *cl = gROOT->GetClass(key->GetClassName());
     if (!cl->InheritsFrom("TH1")) continue;
-    TH1 *h = (TH2*)key->ReadObj();
+    TH3 *h = (TH3*)key->ReadObj();
     TString hfn=h->GetName(); // Histogram Full Name
     Debug("PDFAutoReader","Found histogram: "+hfn);
     int i0=0;
@@ -379,7 +379,7 @@ void pdfComponent::loadHistos() {
 		if( file->FindKey(histName) == NULL)
 			Error("loadHistos","Histogram does not exist in file: "+histName);
 		//store histo pointer
-		histos.push_back((TH2F*)file->Get(histName));
+		histos.push_back((TH3F*)file->Get(histName));
 
 
 		//store the interpolation factor
@@ -397,7 +397,7 @@ void pdfComponent::loadDefaultHisto(){
        if( file->FindKey(getDefaultHistoName()) == NULL)
 	Error("loadDefaultHisto","histo name " +getDefaultHistoName() + "  not found in ");
 
-	defaultDistro    = (TH2F*)file->Get(getDefaultHistoName());
+	defaultDistro    = (TH3F*)file->Get(getDefaultHistoName());
 
   }
 
@@ -465,23 +465,23 @@ TString pdfComponent::getDefaultHistoName(){
 
 
 
-double pdfComponent::getNormalizedDensity(double s1, double s2) {
+double pdfComponent::getNormalizedDensity(double x, double y=0, double z=0) {
 
 	//load histogram according to the current value of the parameters
 	loadHistos();
 
-	int s1_bin = defaultDistro->GetXaxis()->FindBin(s1);
-	int s2_bin = defaultDistro->GetYaxis()->FindBin(s2);
-
+	int x_bin = defaultDistro->GetXaxis()->FindBin(x);
+	int y_bin = defaultDistro->GetYaxis()->FindBin(y);
+	int z_bin = defaultDistro->GetZaxis()->FindBin(z);
 	//use single histo if no shape uncertainties
-	double interpolated_content = defaultDistro->GetBinContent(s1_bin, s2_bin);
+	double interpolated_content = defaultDistro->GetBinContent(x_bin, y_bin, z_bin);
 
 	//use single histo if no shape uncertainties
 	if(myShapeUnc.size() > 0) {
 
             interpolated_content = 0.;
 	    for(unsigned int k=0; k< histos.size(); k++){
-		interpolated_content += histos[k]->GetBinContent(s1_bin, s2_bin) * InterpFactors[k];
+		interpolated_content += histos[k]->GetBinContent(x_bin, y_bin, z_bin) * InterpFactors[k];
 	    }
 
 	 }
@@ -499,14 +499,14 @@ double pdfComponent::getNormalizedDensity(double s1, double s2) {
 
 }
 
-double pdfComponent::getDefaultDensity(double s1, double s2){
+double pdfComponent::getDefaultDensity(double x, double y, double z){
 
 	loadDefaultHisto();
 
-	int s1_bin = defaultDistro->GetXaxis()->FindBin(s1);
-	int s2_bin = defaultDistro->GetYaxis()->FindBin(s2);
-
-	double content =  defaultDistro->GetBinContent(s1_bin,s2_bin);
+	int x_bin = defaultDistro->GetXaxis()->FindBin(x);
+	int y_bin = defaultDistro->GetYaxis()->FindBin(y);
+	int z_bin = defaultDistro->GetZaxis()->FindBin(z);
+	double content =  defaultDistro->GetBinContent(x_bin,y_bin,z_bin);
 
 	if(scaleFactor >0. ) content *= scaleFactor;
 
@@ -568,11 +568,11 @@ void pdfComponent::setEvents(double events){
 }
 
 
-TH2F   pdfComponent::getInterpolatedHisto(){
+TH3F   pdfComponent::getInterpolatedHisto(){
 	//load histogram according to the current value of the parameters
 	loadHistos();
 	//clone default
-	TH2F h_temp = getDefaultHisto() ;
+	TH3F h_temp = getDefaultHisto() ;
 
 	Debug("getinterpolated","Interp_" + getParamValueString());
 	
@@ -600,11 +600,11 @@ TH2F   pdfComponent::getInterpolatedHisto(){
 	return h_temp;
 }
 
-TH2F   pdfComponent::getDefaultHisto(){
+TH3F   pdfComponent::getDefaultHisto(){
 
 	loadDefaultHisto();
 
-	TH2F h_temp(*defaultDistro);   //we don't want to return a pointer to local variable
+	TH3F h_temp(*defaultDistro);   //we don't want to return a pointer to local variable
 	h_temp.SetName("DefaultHisto_" + pdf_name);
 
 	if(scaleFactor > 0.) h_temp.Scale(scaleFactor);
@@ -620,14 +620,15 @@ TH2F   pdfComponent::getDefaultHisto(){
 
 
 
-double pdfComponent::getDefaultPdfIntegral(double s1_min, double s1_max, double s2_min, double s2_max){
+double pdfComponent::getDefaultPdfIntegral(double x_min, double x_max,
+											double y_min=0, double y_max=1,
+											double z_min=0, double z_max=1){
 
 	loadDefaultHisto();
 
-	return dataHandler::integrate(defaultDistro,s1_min,s1_max,s2_min,s2_max);
+	return dataHandler::integrate(defaultDistro,x_min,x_max,y_min,y_max,z_min,z_max);
 
 }
-
 
 
 TString pdfComponent::getParamValueString(){
@@ -679,7 +680,6 @@ void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double 
 		Error("plotInterpolatedSpace","no shape uncertainties, no interpolation, no scan possible... Go home");
 
 
-
 	//the +1 is to scan also the min and max values
 	int nGridPoints = pow(Nsteps + 1,myShapeUnc.size());
 
@@ -716,7 +716,7 @@ void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double 
 			myShapeUnc[k]->setCurrentValue(value_sys);
 		}
 
-		TH2F h_temp(getInterpolatedHisto());
+		TH3F h_temp(getInterpolatedHisto());
 
 		TH1D *project_temp =  NULL;
 
@@ -786,16 +786,20 @@ void pdfComponent::plotInterpolatedSpace(bool doProjectionX, double min, double 
 
 }
 
-void pdfComponent::extendHisto(TH2F &h){
+void pdfComponent::extendHisto(TH3F &h, long nbinx=67, double xmin=3, double xmax=70, 
+										long nbiny=70, double ymin=log10(50), double ymax=log10(8000),
+										long nbinz=1, double zmin=0, double zmax=1  ){
 
-	TH2F h_right(TString(h.GetName())+"_yep","",67,3,70,70,log10(50),log10(8000));
-
-	for(int x=1; x <= h.GetNbinsX(); x++){
+	// TH3F h_right(TString(h.GetName())+"_yep","",67,3,70,70,log10(50),log10(8000),1,0,1);
+	TH3F h_right(TString(h.GetName())+"_yep","",nbinx,xmin,xmax,nbiny,ymin,ymax,nbinz,zmin,zmax);
+	for(int x=1; x <= h_right.GetNbinsX(); x++){
 		for(int y=1; y <= h_right.GetNbinsY(); y++){
-			double content = h.GetBinContent(x,y);
-			if (content <=0 ) content = 1.E-8;
-			h_right.SetBinContent(x,y, h.GetBinContent(x,y));
-		}
+			for(int z=1; z <= h_right.GetNbinsZ(); z++){
+				double content = h.GetBinContent(x,y,z);
+				if (content <=0 ) content = 1.E-8;
+				h_right.SetBinContent(x,y,z, h.GetBinContent(x,y,z));
+			}
+		} 
 	}
 
 	h = h_right;
@@ -866,6 +870,7 @@ histoCompare::histoCompare():errorHandler("histoCompare"){
 
 	    rebinX = 1;
 	    rebinY = 1;
+		rebinZ = 1;
 	    projectionX = true;
 	    doStack      = true;
 	    projectionMin =  UNDEFINED;
@@ -885,10 +890,10 @@ histoCompare::~histoCompare(){}
 void histoCompare::printModels(){
 
 	if(base.GetEntries() == 0)
-	    Error("draw()","Base histo is not set or empty, use  setBaseHisto(TH2F )");
+	    Error("draw()","Base histo is not set or empty, use  setBaseHisto(TH3F )");
 
     if(compareList.size() == 0)
-	    Error("draw()","Compare Histo list  is not set, use addHistoToList(TH2F )");
+	    Error("draw()","Compare Histo list  is not set, use addHistoToList(TH3F )");
 
     // do the projection and fill projectedBase and projectedList
     project();
@@ -918,10 +923,10 @@ void histoCompare::printModels(){
 void histoCompare::compare(){
 
     if(base.GetEntries() == 0)
-	    Error("draw()","Base histo is not set or empty, use  setBaseHisto(TH2F )");
+	    Error("draw()","Base histo is not set or empty, use  setBaseHisto(TH3F )");
 
     if(compareList.size() == 0)
-	    Error("draw()","Compare Histo list  is not set, use addHistoToList(TH2F )");
+	    Error("draw()","Compare Histo list  is not set, use addHistoToList(TH3F )");
 
     // do the projection and fill projectedBase and projectedList
     project();
@@ -984,7 +989,7 @@ void histoCompare::compare(){
 void histoCompare::compareWithRatio(){
 
 
-  TCanvas *c1 = new TCanvas("c1","ratio plot",800,800);
+  TCanvas *x = new TCanvas("x","ratio plot",800,800);
   TPad *pad1 = new TPad("pad1", "The pad 80% of the height",0.0,0.3,1.0,1.0);
   TPad *pad2 = new TPad("pad2", "The pad 20% of the height",0.0,0.0,1.0,0.35 );
   pad1->SetTopMargin(0.05);
@@ -1109,7 +1114,7 @@ void histoCompare:: project(){
      projectedList.clear();
 
      // rebin
-     base.Rebin2D(rebinX,rebinY);
+     base.Rebin3D(rebinX,rebinY,rebinZ);
 
      // finding the bins
      if(projectionX){
@@ -1131,7 +1136,7 @@ void histoCompare:: project(){
 
 
      for(unsigned int i=0; i < compareList.size(); i++) {
-	     compareList[i].Rebin2D(rebinX,rebinY);
+	     compareList[i].Rebin3D(rebinX,rebinY,rebinZ);
 	     if(projectionX)
 		     projectedList.push_back(compareList[i].ProjectionX(TString(compareList[i].GetName())+Form("_projectCompX_%d",i),binMin, binMax));
 	     else

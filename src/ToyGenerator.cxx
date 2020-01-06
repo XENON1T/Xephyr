@@ -53,7 +53,7 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
 
     TFile f(filename, "RECREATE");
 
-    // necessary because TH2F::GetRandom uses ROOT::gRandom
+    // necessary because TH3F::GetRandom uses ROOT::gRandom
     gRandom = &rambo;
 
     // actual generation of N toys with poisson fluctuating events.
@@ -73,17 +73,19 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
 
         Debug("generateCalibration: scaleFactor =", TString::Itoa(scaleFactor,10));
 
-        // retrive a vector of TH2F of interpolated bkg components
-        vector <TH2F> backgrounds = getTH2OfBkg();
+        // retrive a vector of TH3F of interpolated bkg components
+        vector <TH3F> backgrounds = getTH3OfBkg();
 
         TString name = treeName + "_Cal_" + TString::Itoa(toyItr,10);
         TTree toyTree (name, "generated toy Calibration");
-        float cs1 = 0.;
-        float cs2 = 0.;
+        float x = 0.;
+        float y = 0.;
+        float z = 0.;
         string type = "DummyLabel";
 
-        toyTree.Branch("cs1",&cs1,"cs1/F");
-        toyTree.Branch("cs2",&cs2,"cs2/F");
+        toyTree.Branch("x",&x,"x/F");
+        toyTree.Branch("y",&y,"y/F");
+        toyTree.Branch("z",&y,"z/F");
         toyTree.Branch("type",&type);
         toyTree.Branch("generation",&Gen,"generation/I");
         toyTree.Branch("likelihoodType",&likelihoodType,"likelihoodType/I");
@@ -106,10 +108,11 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
             Debug("generateCalibration", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getComponentName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
             for(int evt =0; evt < N_events; evt++){
 
-                double temp_cs1 = 0., temp_cs2 = 0.;
-                backgrounds[bkgItr].GetRandom2(temp_cs1,temp_cs2);
-                cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
-                cs2 = (float) temp_cs2;
+                double temp_x = 0., temp_y = 0., temp_z = 0.;
+                backgrounds[bkgItr].GetRandom3(temp_x,temp_y,temp_z);
+                x = (float) temp_x;// TODO FIXME this is just for back compatibility x and y must be double
+                y = (float) temp_y;
+                z = (float) temp_z;
                 toyTree.Fill();
             }
         }
@@ -121,10 +124,11 @@ void ToyGenerator::generateCalibration(int N, bool randomizeNP ){
         type = "additional";
         Debug("generateCalibration", TString::Format("Generating %d events for additional component",N_additional));
         for(int evt =0; evt < N_additional; evt++){
-            double temp_cs1 = 0., temp_cs2 = 0.; // TODO FIXME this is just for back compatibility cs1 and cs2 must be double
-            likeHood->safeguardAdditionalComponent->GetRandom2(temp_cs1,temp_cs2);
-            cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
-            cs2 = (float) temp_cs2;
+            double temp_x = 0., temp_y = 0., temp_z = 0.; // TODO FIXME this is just for back compatibility x and y must be double
+            likeHood->safeguardAdditionalComponent->GetRandom3(temp_x,temp_y,temp_z);
+            x = (float) temp_x;// TODO FIXME this is just for back compatibility x and y must be double
+            y = (float) temp_y;
+            z = (float) temp_z;
             toyTree.Fill();
         }
 
@@ -148,7 +152,7 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
 
 
     TFile f(filename ,"RECREATE");
-    // necessary because TH2F::GetRandom uses ROOT::gRandom
+    // necessary because TH3F::GetRandom uses ROOT::gRandom
     gRandom = &rambo;
 
     // actual generation of N toys with poisson fluctuating events.
@@ -163,17 +167,19 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
         double default_evnt = getModelIntegral();
         double scaleFactor  = (averageDataEvnt>0.) ? averageDataEvnt / default_evnt : 1.;
 
-        // retrive a vector of TH2F of interpolated bkg components
-        vector <TH2F> backgrounds = getTH2OfBkg();
+        // retrive a vector of TH3F of interpolated bkg components
+        vector <TH3F> backgrounds = getTH3OfBkg();
 
         TString name = treeName + "_" + TString::Itoa(toyItr,10);
         TTree toyTree (name, "generated toy data");
-        float cs1 = 0.;
-        float cs2 = 0.;
+        float x = 0.;
+        float y = 0.;
+        float z = 0.;
         string type = "DummyLabel";
 
-        toyTree.Branch("cs1",&cs1,"cs1/F");
-        toyTree.Branch("cs2",&cs2,"cs2/F");
+        toyTree.Branch("x",&x,"x/F");
+        toyTree.Branch("y",&y,"y/F");
+        toyTree.Branch("z",&z,"z/F");
         toyTree.Branch("type",&type);
         toyTree.Branch("generation",&Gen,"generation/I");
         toyTree.Branch("likelihoodType",&likelihoodType,"likelihoodType/I");
@@ -191,10 +197,11 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
             Debug("generateData", TString::Format("Generating %d events for %s, with median %f",N_events, (likeHood->bkg_components[bkgItr])->getComponentName().Data(), scaleFactor * backgrounds[bkgItr].Integral()));
 
             for(int evt =0; evt < N_events; evt++){
-                double temp_cs1 = 0., temp_cs2 = 0.;
-                backgrounds[bkgItr].GetRandom2(temp_cs1,temp_cs2);
-                cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
-                cs2 = (float) temp_cs2;
+                double temp_x = 0., temp_y = 0., temp_z = 0.;
+                backgrounds[bkgItr].GetRandom3(temp_x,temp_y,temp_z);
+                x = (float) temp_x;// TODO FIXME this is just for back compatibility x and y must be double
+                y = (float) temp_y;
+                z = (float) temp_z;
                 toyTree.Fill();
             }
         }
@@ -203,15 +210,16 @@ void ToyGenerator::generateData(double mu, int N, bool randomizeNP){
           // filling signal if any
           type = likeHood->signal_component->getComponentName();
           int N_signal  = rambo.Poisson(likeHood->getCurrentNs());
-          TH2F signal   = likeHood->signal_component->getInterpolatedHisto();
+          TH3F signal   = likeHood->signal_component->getInterpolatedHisto();
 
           Debug("generateData", TString::Format("Generating %d events for signal, with median %f",N_signal, likeHood->getCurrentNs() ));
 
           for(int evt =0; evt < N_signal; evt++){
-            double temp_cs1 = 0., temp_cs2 = 0.;
-            signal.GetRandom2(temp_cs1,temp_cs2);
-            cs1 = (float) temp_cs1;// TODO FIXME this is just for back compatibility cs1 and cs2 must be double
-            cs2 = (float) temp_cs2;
+            double temp_x = 0., temp_y = 0., temp_z = 0.;
+            signal.GetRandom3(temp_x,temp_y,temp_z);
+            x = (float) temp_x;// TODO FIXME this is just for back compatibility x and y must be double
+            y = (float) temp_y;
+            y = (float) temp_z;
             toyTree.Fill();
           }
 
@@ -307,9 +315,9 @@ double ToyGenerator::getModelIntegralSafeguarded(){
 
 
 
-vector<TH2F> ToyGenerator::getTH2OfBkg(){
+vector<TH3F> ToyGenerator::getTH3OfBkg(){
 
-    vector<TH2F> temp_v;
+    vector<TH3F> temp_v;
     unsigned int n = likeHood->bkg_components.size();
 
         for (unsigned int i=0; i < n; i++ ){

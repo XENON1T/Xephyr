@@ -5,7 +5,7 @@
 #include "TGraphErrors.h"
 #include "TGraph.h"
 #include "TH1F.h"
-#include "TH2F.h"
+#include "TH3F.h"
 #include "TROOT.h"
 #include "TSystem.h"
 #include "TTree.h"

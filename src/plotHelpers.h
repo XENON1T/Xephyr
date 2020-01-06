@@ -1,6 +1,6 @@
 #include "TGraph.h"
 #include "TH1F.h"
-#include "TH2F.h"
+#include "TH3F.h"
 #include "TTree.h"
 #include "TString.h"
 #include "TGraphAsymmErrors.h"
@@ -29,7 +29,7 @@ TGraphAsymmErrors giveTSquantiles(TTree *tree, double *mu_list, int mu_size, TSt
 TGraphAsymmErrors sensitivity(TTree *tree, TString OutDir, double wimpMass[], int N_mass);
 
 
-void addHisto(TH2F *histo, TH2F *h_toBeAdded, double scalefactor );
+void addHisto(TH3F *histo, TH3F *h_toBeAdded, double scalefactor );
 
 }
 #endif

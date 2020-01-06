@@ -1,61 +1,86 @@
 #include "dataHandler.h"
 
-dataHandler::dataHandler(TString name) : errorHandler("dataHandler"), Name(name){
 
+void dataHandler::initialize(){
 	DMdata = NULL;
 	file = NULL;
-	sumOfWeights=0;
-	gs1s2w=0;
-	
-	
-	s1 = 0.;
-	s2 = 0.;
+	sumOfWeights = 0.;
+	weights = NULL;
+
+	x = 0.;
+	y = 0.;
+	z = 0.;
 	weight = 1.;
 
 	dataType = UNSPECIFIED_DATA; 
 
-	FirstVarName   = "cs1";  //default var in data
-	SecondVarName  = "cs2";  //default var name
+	x_name   = "x";  //default var in data
+	y_name  = "y";  //default var name
+	z_name  = "z";  //default var name
 }
 
-dataHandler::dataHandler(TString name, TH2F *h2pdf, int N) : errorHandler("dataHandler"), Name(name){
+dataHandler::dataHandler(TString name) : errorHandler("dataHandler"), Name(name){
+
+	DMdata = NULL;
+	file = NULL;
+	sumOfWeights = 0.;
+	weights = NULL;
+
+	x = 0.;
+	y = 0.;
+	z = 0.;
+	weight = 1.;
+	x_name   = "x";  //default var in data
+	y_name  = "y";  //default var name
+	z_name  = "z";  //default var name
+	weights = new TNtuple("Weights", "Data weights", x_name+":"+y_name+":"+z_name+":weight");
+
+	dataType = UNSPECIFIED_DATA; 
+
+
+
+}
+
+dataHandler::dataHandler(TString name, TH3F *h3pdf, int N) : errorHandler("dataHandler"), Name(name){
 
       	DMdata = NULL;
 
 
-	FirstVarName   = "cs1";  //default var in data
-	SecondVarName  = "cs2";  //default var name
-	
-	s1 = 0.;
-	s2 = 0.;
+	x_name   = "x";  //default var in data
+	y_name  = "y";  //default var name
+	z_name  = "z";
+
+	x = 0.;
+	y = 0.;
+	z = 0.;
 	weight = 1.;
-	gs1s2w=new TGraph2D();
+	weights = new TNtuple("Weights", "Data weights", x_name+":"+y_name+":"+z_name+":weight");
+	sumOfWeights = 0;
+	generateDataSet(h3pdf,N);
+}
+
+
+dataHandler::dataHandler(TString name, TH3F *h3pdf) : errorHandler("dataHandler"), Name(name){
+
+  	DMdata = NULL;
+
+	x_name   = "x";  //default var in data
+	y_name  = "y";  //default var name
+	z_name  = "z";
 	sumOfWeights=0;
-	generateDataSet(h2pdf,N);
+	x = 0.;
+	y = 0.;
+	weight = 1.;
+  
+	weights = new TNtuple("Weights", "Data weights", x_name+":"+y_name+":"+z_name+":weight");
+	dataType = ASIMOV_DATA; 
+
+	generateAsimov(h3pdf);
+
 }
 
-
-dataHandler::dataHandler(TString name, TH2F *h2pdf) : errorHandler("dataHandler"), Name(name){
-
-  DMdata = NULL;
-
-  FirstVarName   = "cs1";  //default var in data
-  SecondVarName  = "cs2";  //default var name
-
-  sumOfWeights=0;
-  s1 = 0.;
-  s2 = 0.;
-  weight = 1.;
-  
-  gs1s2w=new TGraph2D();
-  dataType = ASIMOV_DATA; 
-
-  generateAsimov(h2pdf);
-
-  
-}
-
-dataHandler::dataHandler(TString name, TString fileName, TString dmTree) : errorHandler("dataHandler"), Name(name){
+dataHandler::dataHandler(TString name, TString fileName, TString dmTree, 
+						TString x_name, TString y_name, TString z_name) : errorHandler("dataHandler"), Name(name){
 
 	file = TFile::Open(fileName);
 
@@ -66,27 +91,29 @@ dataHandler::dataHandler(TString name, TString fileName, TString dmTree) : error
 		Error("dataHandler","TTree " + dmTree+ " does not exist in file " 
 			                       + fileName + ". Quit.");
 
-
-	FirstVarName   = "cs1";  //default var in data
-	SecondVarName  = "cs2";  //default var name
-
+	x_name  = x_name;  //default var in data
+	y_name  = y_name;  //default var name
+	z_name  = z_name;
 
 	DMdata = (TTree*) file->Get(dmTree);
 	
-	s1 = 0.;
-	s2 = 0.;
+	x = 0.;
+	y = 0.;
+	z = 0.;
 	weight = 1.;
 	sumOfWeights=0;
-	DMdata->SetBranchAddress(FirstVarName,&s1);
-	DMdata->SetBranchAddress(SecondVarName,&s2);
 	
+	DMdata->SetBranchAddress(x_name,&x);
+	DMdata->SetBranchAddress(y_name,&y);
+	DMdata->SetBranchAddress(y_name,&z);
 	dataType = DM_DATA;
 
-	gs1s2w=new TGraph2D();
+	weights = new TNtuple("Weights", "Data weights",x_name+":"+y_name+":"+z_name+":weight");
+
 	for (int i=0; i< DMdata->GetEntries(); i++) {
 	   weight = 1.;
 	   DMdata->GetEntry(i);
-	   gs1s2w->SetPoint(gs1s2w->GetN(),s1,s2,weight);
+	   weights->Fill(x,y,z,weight);
 	   sumOfWeights+=weight;
 	}
 
@@ -98,109 +125,127 @@ dataHandler::dataHandler(TString name, TString fileName, TString dmTree) : error
 dataHandler::~dataHandler(){
 
 	delete DMdata;
-	delete gs1s2w;
+	delete weights;
 
 }
 
 
 Long64_t dataHandler::getEntries(){
-  return gs1s2w->GetN(); }
+  return weights->GetEntries(); }
 
-double dataHandler::getSumOfWeights(){
+Float_t dataHandler::getSumOfWeights(){
   return sumOfWeights; }
 
 void dataHandler::getEntry(Long64_t entry) {
-  if(DMdata ==NULL)  Error("getEntry","No data is set.");
+  if(DMdata==NULL)  Error("getEntry","No data is set.");
   if(entry > getEntries() )  Error("getEntry"," Entry number outside range");  
-  s1=gs1s2w->GetX()[entry];
-  s2=gs1s2w->GetY()[entry];
-  weight=gs1s2w->GetZ()[entry];
-	
+  weights->GetEntry(entry);
+//   x=GetX()[entry];
+//   y=GetY()[entry];
+//   z=GetZ()[entry];
+//   weight=GetW()[entry];
 }
 
-void dataHandler::generateAsimov( TH2F *background ){
+void dataHandler::generateAsimov( TH3F *background ){
     delete DMdata;
-	delete gs1s2w;
-	double ts1 = 0., ts2 =0., tw = 0.;
+	delete weights;
+	Float_t tx = 0., ty =0., tz =0., tw = 0.;
 	DMdata = new TTree(Name,"FakeData "+Name);
-	DMdata->Branch(FirstVarName,&ts1);
-	DMdata->Branch(SecondVarName,&ts2);
+	DMdata->Branch(x_name,&tx);
+	DMdata->Branch(y_name,&ty);
+	DMdata->Branch(z_name,&tz);
 	DMdata->Branch("weight", &tw); 
-	gs1s2w=new TGraph2D();
+	weights = new TNtuple("Weights", "Data weights", x_name+":"+y_name+":"+z_name+":weight");
     sumOfWeights=0;
 
 	for (int ix=1; ix<=background->GetNbinsX(); ix++) {
 	  for (int iy=1; iy<=background->GetNbinsY(); iy++) {
-	   ts1 = background->GetXaxis()->GetBinCenter(ix);
-	   ts2 = background->GetYaxis()->GetBinCenter(iy);
-	   tw=background->GetBinContent(ix,iy);
+		  for (int iz=1; iz<=background->GetNbinsZ(); iz++) {
+	   tx = background->GetXaxis()->GetBinCenter(ix);
+	   ty = background->GetYaxis()->GetBinCenter(iy);
+	   tz = background->GetZaxis()->GetBinCenter(iz);
+	   tw=background->GetBinContent(ix,iy,iz);
 	   DMdata->Fill();
-	   gs1s2w->SetPoint(gs1s2w->GetN(),ts1,ts2,tw);
+	   weights->Fill(tx,ty,tz,tw);
 	   sumOfWeights+=tw;
+		  }
 	  }
 	}
 }
 
 
-double dataHandler::integrate(TH2F *histo, double s1_min, double s1_max, double s2_min, double s2_max){
-	
-	
-	 TAxis *xaxis = histo->GetXaxis();
-	 TAxis *yaxis = histo->GetYaxis();
+Float_t dataHandler::integrate(TH3F *hist, Float_t xmin, Float_t xmax, 
+									Float_t ymin, Float_t ymax, Float_t zmin, Float_t zmax){
+    	
+	TAxis *xaxis = hist->GetXaxis();
+	TAxis *yaxis = hist->GetYaxis();
+	TAxis *zaxis = hist->GetZaxis();
 
-	  int xmin = xaxis->FindBin(s1_min);
-	  int xmax = xaxis->FindBin(s1_max);
-	  int ymin = yaxis->FindBin(s2_min);
-	  int ymax = yaxis->FindBin(s2_max);
+    int bxmin = xaxis->FindBin(xmin);
+    int bxmax = xaxis->FindBin(xmax);
+    int bymin = yaxis->FindBin(ymin);
+    int bymax = yaxis->FindBin(ymax);
+    int bzmin = zaxis->FindBin(zmin);
+    int bzmax = zaxis->FindBin(zmax);
 	  
-	  
-	  double integral = 0.;
+	Float_t integral = 0.;
+    Float_t dx, dy, dz, dV = 0;
 
- 	 //for each slice in Y we remove the excess in X, since TH2F::Integral() will always over estimate the integral
-	  for(int y = ymin; y <= ymax ; y++){
-		
-		double temp_integral = 0.;
-		temp_integral += histo->Integral(xmin,xmax, y, y);
+    for (int x=bxmin; x<=bxmax; x++){
+        for (int y=bymin; y<=bymax; y++){
+            for (int z=bzmin; z<=bzmax; z++){
+                if (x==bxmin){
+                    dx = abs(xaxis->GetBinUpEdge(x) - xmin)/xaxis->GetBinWidth(x);
+                } else if (x==bxmax){
+                    dx = abs(xmax - xaxis->GetBinLowEdge(x))/xaxis->GetBinWidth(x);
+                } else {
+                    dx = 1.; 
+                }
 
-		// removing x excess		
-	        temp_integral -= histo->GetBinContent(xmin, y)*( s1_min - xaxis->GetBinLowEdge(xmin)) / xaxis->GetBinWidth(xmin);
-		temp_integral -= histo->GetBinContent(xmax, y)*(xaxis->GetBinUpEdge(xmax)-s1_max)/ xaxis->GetBinWidth(xmax);
+                if (y==bymin){
+                    dy = abs(yaxis->GetBinUpEdge(y) - ymin)/yaxis->GetBinWidth(y);
+                } else if (y==bymax){
+                    dy = abs(ymax - yaxis->GetBinLowEdge(y))/yaxis->GetBinWidth(y);
+                } else {
+                    dy = 1.; 
+                }
 
-		//removing y excess
-		if(y == ymin)  
-			temp_integral -= temp_integral * ( s2_min - yaxis->GetBinLowEdge(ymin) ) / 
-					yaxis->GetBinWidth(ymin);
-		if(y == ymax) 
-			temp_integral -= temp_integral * ( yaxis->GetBinUpEdge(ymax) - s2_max ) / 
-					yaxis->GetBinWidth(ymax);
+                if (z==bzmin){
+                    dz = abs(zaxis->GetBinUpEdge(z) - zmin)/zaxis->GetBinWidth(z);
+                } else if (z==bzmax){
+                    dz = abs(zmax - zaxis->GetBinLowEdge(z))/zaxis->GetBinWidth(z);
+                } else {
+                    dz = 1.; 
+                }
 
-		integral += temp_integral;
+                // dV = xaxis->GetBinWidth(x)*yaxis->GetBinWidth(y)*zaxis->GetBinWidth(z);
+                integral += hist->GetBinContent(x,y,z)*dx*dy*dz;
 
-	  }
+             }
 
-	return integral;
+        }
+
+    }
+
+    return integral;
 
 }
 
 
+Float_t dataHandler::getValFromPdf( TH3F &histo ) {
 
-
-
-
-double dataHandler::getValFromPdf( TH2F &histo ) {
-
-	//s1 and s2 are the current values taken from the relative
+	//x and y are the current values taken from the relative
 	//branches of either DMdata or asimovData 
-	int s1_bin = histo.GetXaxis()->FindBin(s1);
-	int s2_bin = histo.GetYaxis()->FindBin(s2);
-
-	return histo.GetBinContent(s1_bin,s2_bin);
+	int x_bin = histo.GetXaxis()->FindBin(x);
+	int y_bin = histo.GetYaxis()->FindBin(y);
+	int z_bin = histo.GetZaxis()->FindBin(z);
+	return histo.GetBinContent(x_bin,y_bin,z_bin);
 }
 
 
 
 
-void dataHandler::fillDataHisto(TH2F *hist){
+void dataHandler::fillDataHisto(TH3F *hist){
 
 	if(hist == NULL)
 		Error("fillDataHisto", "you passed me a NULL pointer, quit.");
@@ -208,10 +253,8 @@ void dataHandler::fillDataHisto(TH2F *hist){
 
 	for(Long64_t entry =0; entry < getEntries(); entry++){
 		getEntry(entry);
-		hist->Fill(s1,s2);
+		hist->Fill(x,y,z);
 	}
-
-
 
 }
 
@@ -291,79 +334,81 @@ void dataHandler::setDataTree(TString nameTree){
 void dataHandler::setDataTree(TTree *tree){
 
 	//delete DMdata;  // no much reason to delete this, since adding from file or existing tree
-	delete gs1s2w;
+	delete weights;
 
 	// changing name to the data handler
 	Name = TString("Data_") + tree->GetName();
 	
-	gs1s2w=new TGraph2D();
+	weights = new TNtuple("Weights", "Data weights", x_name+":"+y_name+":"+z_name+":weight");
 	DMdata = tree;
-	
-	DMdata->SetBranchAddress(FirstVarName,&s1);
-	DMdata->SetBranchAddress(SecondVarName,&s2);
-	
+	float tx,ty,tz = 0.;
+	DMdata->SetBranchAddress(x_name,&tx);
+	DMdata->SetBranchAddress(y_name,&ty);
+	DMdata->SetBranchAddress(z_name,&tz);
 	dataType = DM_DATA;
 	sumOfWeights=0;
+	weight = 1.;
 	for (Long64_t i=0; i< DMdata->GetEntries(); i++) {
-	   weight = 1.;
 	   DMdata->GetEntry(i);
-	   gs1s2w->SetPoint(gs1s2w->GetN(),s1,s2,weight);
+	   weights->Fill(tx,ty,tz,weight);
 	   sumOfWeights+=weight;
 	}
 }
 
-void dataHandler::generateDataSet(TH2F *h2pdf, int N){
+void dataHandler::generateDataSet(TH3F *h3pdf, int N){
   delete DMdata;
-  delete gs1s2w;
+  delete weights;
   sumOfWeights=0;
-  gs1s2w=new TGraph2D();
-  DMdata = new TNtuple(Name,"FakeData "+Name,FirstVarName+":"+SecondVarName+":weight"); 
+  weights = new TNtuple("Weights", "Data weights", x_name+":"+y_name+":"+z_name+":weight");
+  DMdata = new TNtuple(Name,"FakeData "+Name,x_name+":"+y_name+":"+z_name+":weight"); 
   dataType = DM_SIMULATED_DATA;
   Name="Fake data set:";
-  addToDataSet(h2pdf,N);
+  addToDataSet(h3pdf, N);
 }
 
 
-void dataHandler::addToDataSet(TH2F *h2pdf, int N){
+void dataHandler::addToDataSet(TH3F *h3pdf, int N){
 
   dataType = DM_SIMULATED_DATA;
   if(dataType != DM_SIMULATED_DATA)
     Error("addTodataSet","Cannot add fake data to this data set. Use generateDataSet first");
-  double ts1,ts2,tw = 0.;
-  DMdata->SetBranchAddress(FirstVarName,&ts1);
-  DMdata->SetBranchAddress(SecondVarName,&ts2);
-  Name+=Form("%s(%d),",h2pdf->GetName(),N);
+  Float_t tx,ty,tz = 0.;
+  Double_t x,y,z = 0.;
+  Float_t tw = 1;
+  DMdata->SetBranchAddress(x_name,  &tx);
+  DMdata->SetBranchAddress(y_name, &ty);
+  DMdata->SetBranchAddress(z_name,  &tz);
+  Name+=Form("%s(%d),",h3pdf->GetName(),N);
   gRandom->SetSeed(0);
+  
   for (int i=0; i<N; i++) {
-    h2pdf->GetRandom2(ts1,ts2);
-    tw=1;
+    h3pdf->GetRandom3(x,y,z);
     DMdata->Fill();
-    gs1s2w->SetPoint(gs1s2w->GetN(),ts1,ts2,tw);
+	weights->Fill(x,y,z,tw);
     sumOfWeights+=tw;
   }
   
-
 }
 
 
-void dataHandler::drawS1S2(TString opt) {
+void dataHandler::drawxy(TString opt) {
 
   if(DMdata != NULL){
-    DMdata->Draw(FirstVarName+":"+SecondVarName,"","goff");
+    DMdata->Draw(x_name+":"+y_name,"","goff");
     TGraph *gr=new TGraph(DMdata->GetSelectedRows(),
 			  DMdata->GetV1(), DMdata->GetV2());
-    gr->SetTitle(Name+";"+FirstVarName+";"+SecondVarName);
+    gr->SetTitle(Name+";"+x_name+";"+y_name);
     gr->Draw(opt);
   }
 
 
 }
 
-TGraph dataHandler::getS1S2() {
+TGraph dataHandler::getXY() {
   TGraph gr;
- if (DMdata != NULL){
-   gr = TGraph(gs1s2w->GetN(), gs1s2w->GetX(),gs1s2w->GetY());
-   }
+//  if (DMdata != NULL){
+//    gr = TGraph(weights->GetN(), weights->GetX(),weights->GetY());
+//    }
 
 return gr;
 }
@@ -371,7 +416,7 @@ return gr;
 
 void dataHandler::printSummary() {
 
-  printf ("dataHandler:: summary:  name= %s,  N=%d \n", Name.Data(),gs1s2w->GetN());
+  printf ("dataHandler:: summary:  name= %s,  N=%lld \n", Name.Data(),weights->GetEntries());
   return; 
 
 }
@@ -382,8 +427,6 @@ vector<int> dataHandler::getSimulatedInfo(unsigned int size){
 
 	vector<int> out;
 	for(unsigned int k=0; k <size; k++) out.push_back(0.);
-
-	
 	float type = 0.;
 
 	DMdata->SetBranchAddress("type",&type);
@@ -397,9 +440,58 @@ vector<int> dataHandler::getSimulatedInfo(unsigned int size){
 	   }
 	}
 
-
 	return out;
 }
 
+Float_t dataHandler::getX(long N) {
+	 if (N>weights->GetEntries()) {
+		printf ("ERROR %ld larger than Entries (%lld) \n",N,weights->GetEntries());
+		return 0;
+		} else {
+			Float_t x;
+			weights->SetBranchAddress(x_name,&x);
+			weights->GetEntry(N); 
+			return x;
+		}
+	}
+
+
+Float_t dataHandler::getY(long N) {
+	 if (N>weights->GetEntries()) {
+		printf ("ERROR %ld larger than Entries (%lld) \n",N,weights->GetEntries());
+		return 0;
+		} else {
+			Float_t y;
+			weights->SetBranchAddress(y_name,&y);
+			weights->GetEntry(N); 
+			return y;
+		}
+	}
+
+
+Float_t dataHandler::getZ(long N) {
+	 if (N>weights->GetEntries()) {
+		printf ("ERROR %ld larger than Entries (%lld) \n",N,weights->GetEntries());
+		return 0;
+		} else {
+			Float_t z;
+			weights->SetBranchAddress(z_name,&z);
+			weights->GetEntry(N); 
+			return z;
+		}
+	}
+
+
+Float_t dataHandler::getW(long N) {
+	 if (N>weights->GetEntries()) {
+		printf ("ERROR %ld larger than Entries (%lld) \n",N,weights->GetEntries());
+		return 0;
+		} else {
+			Float_t weight;
+			weights->SetBranchAddress("weight",&weight);
+			weights->GetEntry(N); 
+			return weight;
+		}
+	}
 
 

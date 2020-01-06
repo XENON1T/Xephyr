@@ -127,8 +127,8 @@ pdfLikelihood* getTheLikelihood_SR1( double mass, unsigned int type, double othe
 
 
     TFile *f1 = TFile::Open(inputDir + AC_file );
-    TH2F* AC_for_safeguard = (TH2F*) f1->Get( AC_rn_name[type] );
-    TH2F* wall_for_safeguard = (TH2F*) f1->Get( Wall_rn_name[type] );
+    TH3F* AC_for_safeguard = (TH3F*) f1->Get( AC_rn_name[type] );
+    TH3F* wall_for_safeguard = (TH3F*) f1->Get( Wall_rn_name[type] );
 
     double AC_scale_safeguard = er_exp_events[type]  / calibration_events[type];
     

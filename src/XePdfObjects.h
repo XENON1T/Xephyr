@@ -100,10 +100,10 @@ class pdfComponent :public errorHandler{
 	/**
 	 * it is normalized to number of events and scale uncertainty are also taken into account
 	 */
-	double getNormalizedDensity(double s1, double s2);
+	double getNormalizedDensity(double x, double y, double z);
 
 	//! returns the (s1,s2) bin content of the default histo, no shape nor scale sys is applied
-	double getDefaultDensity(double s1, double s2);
+	double getDefaultDensity(double x, double y, double z);
 
 	//! Returns the total integrated number of events taking into account shape sys and scale sys.
 	double getNormalizedEvents();
@@ -116,10 +116,10 @@ class pdfComponent :public errorHandler{
 	 * The current value of each uncertainty can
 	 * be set simply by shapeSys::setCurrentValue(val) method.
 	 */
-	TH2F  getInterpolatedHisto();
+	TH3F  getInterpolatedHisto();
 
 	//! Returns a copy of the default histogram, no shape nor scale sys is applied
-	TH2F  getDefaultHisto();
+	TH3F  getDefaultHisto();
 
 	//! returns the grid points in histogram space that needs to be loaded. this method need to be modified for arbitrary number of shape sys.
 	TString getNearestHistoName(vector<bool> setOfVal);
@@ -137,12 +137,12 @@ class pdfComponent :public errorHandler{
 	 * linearly interpolates the area if desn't correspond to an integer number of bins.
 	 * Uses the default histo, does not consider shape or scale uncertainty.
 	 */
-	double getDefaultPdfIntegral(double s1_min, double s1_max, double s2_min, double s2_max);
+	double getDefaultPdfIntegral(double x_min, double x_max, double y_min, double y_max, double z_min, double z_max );
 
 	//! This scans the parameter space given a number of steps for each parameter
 	/**
 	 * produce a projection given min and max, produce a PDF file for comparison
-	 * of all interpolation and saves also the TH2F to file.
+	 * of all interpolation and saves also the TH3F to file.
 	 */
 	void plotInterpolatedSpace(bool doProjectionX, double min, double max, int Nsteps, bool legend_left = false, double y_max = 0.);
 
@@ -174,8 +174,8 @@ class pdfComponent :public errorHandler{
 
    private:
 	TFile	          		*file;
-	TH2F                            *defaultDistro;
-  	vector<TH2F*>			histos;	       /** contains the 2^N histo for the hyperplane interpolation of shapeSys */
+	TH3F                            *defaultDistro;
+  	vector<TH3F*>			histos;	       /** contains the 2^N histo for the hyperplane interpolation of shapeSys */
   	vector<double>		InterpFactors;  /** contains the 2^N interpolation factors for the hyperplane interpolation of shapeSys	*/
 	TString 			pdf_name;
   TString 			component_name;
@@ -183,7 +183,9 @@ class pdfComponent :public errorHandler{
 	double                          scaleFactor;
 
 
-	void extendHisto(TH2F &h);
+	void extendHisto(TH3F &h, long nbinx, double xmin, double xmax, 
+										long nbiny, double ymin, double ymax,
+										long nbinz, double zmin, double zmax);
 
 };
 
@@ -195,7 +197,7 @@ class pdfComponent :public errorHandler{
  * with a set of other histogram. One can choose for ratio plot,
  * stack plot of different component, one can set the projected axis
  * and the slice on which do the projection, one can also rebin the histo.
- * the histo are supposed to be TH2F.
+ * the histo are supposed to be TH3F.
  */
 class histoCompare : public errorHandler{
 
@@ -207,6 +209,7 @@ class histoCompare : public errorHandler{
       //---------OPTIONS-----------//
 	    int      rebinX;
 	    int      rebinY;
+		int      rebinZ;
 	    bool     projectionX;
 	    double   projectionMin;    /** minimum value on the projected axis */
 	    double   projectionMax;    /** maximum value on the projected axis */
@@ -215,12 +218,13 @@ class histoCompare : public errorHandler{
 	    bool     doStack;   /** True if you want to sum up histo in compareList */
 	    TString  titleX;
 	    TString  titleY;
+		TString  titleZ;
        //---------------------------//
 
 	    //! set histo with wich one one to compare the rest
-	    void setBaseHisto(TH2F b, TString n=""){base = b; names[0] = n;};
+	    void setBaseHisto(TH3F b, TString n=""){base = b; names[0] = n;};
 	    //! set the comparison histos
-	    void addHistoToList(TH2F h, TString n ="") {compareList.push_back(h); names.push_back(n);};
+	    void addHistoToList(TH3F h, TString n ="") {compareList.push_back(h); names.push_back(n);};
 	    //! set Name of component
 	    void setNameofComponent(unsigned int i, TString n);
 	    //! draw just a normal comparison plot
@@ -238,9 +242,9 @@ class histoCompare : public errorHandler{
 	    TString projectionInfo();
 
         //------ histo holders --------//
-	    TH2F               base;
+	    TH3F               base;
 	    vector <TString>   names;
-	    vector <TH2F>      compareList;
+	    vector <TH3F>      compareList;
 
 	    TH1D               *projectedBase;
 	    vector <TH1D*>      projectedList;

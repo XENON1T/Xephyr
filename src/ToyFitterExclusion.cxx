@@ -308,9 +308,6 @@ double ToyFitterExclusion::computeTS(double mu) {
     // I just wanted to do the conditional fit anyway to return conditional parameter for study
     q_tilde = qstat;
     if( mu_hat > mu )  q_tilde = 0. ;
-
-    
-
     return qstat;
 }
 

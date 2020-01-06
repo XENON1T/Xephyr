@@ -25,7 +25,7 @@ namespace likelihoodHelpers  {
     const double year         = 365. ;   // days
     const TString xephyrDir(gSystem->Getenv("XEPHYR_DIR"));
 
-    TH2F* genAdditionalSafeGuardComponent(json comp_json);
+    TH3F* genAdditionalSafeGuardComponent(json comp_json);
     dataHandler* genDataHandler(json dh_json);
     pdfComponent* genModel(json model_json);
     pdfLikelihood* genLikelihood(json pl_json);

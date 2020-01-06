@@ -74,7 +74,7 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	int useDMData();
 
-	bool isNegativeAnywhere(TH2F histo);
+	bool isNegativeAnywhere(TH3F histo);
 
 	void setCalibrationData(dataHandler *d )     {calibrationData = d; } ;
 
@@ -110,21 +110,21 @@ class pdfLikelihood : public ProfileLikelihood {
 	 * returns the current overall background hostogram (with all background added up). Current means that
 	 * is for the current set of parameters, so each bkg model is interpolated, scaled and then added to the others.
 	*/
-	TH2F getOverallBkgHisto();
+	TH3F getOverallBkgHisto();
 
 	/** returns (1-epsilon)Fb(x,y) + epsilon*Fs(x,y) with all
 	 * uncertainties interpolated and added.
 	 * this term is a full bkg pdf including also the non safeguarded bkgs
 	 * TO BE USED IN THE "physics" likelihood
 	*/
-	TH2F getSafeguardedBkgPdf();
+	TH3F getSafeguardedBkgPdf();
 
 	/**
 	 *  returns (1-epsilon)Fb(x,y) + epsilon*Fs(x,y) for all bkg components that
 	 * are considered for dafeguard, with all uncertainties
 	 * interpolated and added. TO BE USED in the fit to calibration
 	 */
-	TH2F getSafeguardedBkgPdfOnly();
+	TH3F getSafeguardedBkgPdfOnly();
 
 	vector <pdfComponent*> bkg_components;
 
@@ -134,9 +134,9 @@ class pdfLikelihood : public ProfileLikelihood {
 	//! \brief is an additional component to be added in the fit to calibration for
 	// safeguard. Used in this case for the AC that is different between data and Rn
 	// this component has to be scaled to Bkg_data ---> Nbkg/Ncal
-	TH2F *safeguardAdditionalComponent;
+	TH3F *safeguardAdditionalComponent;
 
-	void setAdditionalSafeGuardComponent(TH2F *h){ safeguardAdditionalComponent = h;};
+	void setAdditionalSafeGuardComponent(TH3F *h){ safeguardAdditionalComponent = h;};
 
 	void setFixedValueForSafeguard(double fv) { safeguard_fixValue = fv; } ;
 

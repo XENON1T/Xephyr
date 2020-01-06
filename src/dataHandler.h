@@ -13,6 +13,7 @@
 #include <vector>
 #include <utility>      // std::pair, std::make_pair
 
+
 enum DATA_TYPE { 
 
   UNSPECIFIED_DATA = - 1
@@ -32,27 +33,28 @@ using namespace std;
 
 
 
-
 class dataHandler : public errorHandler{
 
     public:
-	    dataHandler( TString name, TString fileName, TString dmTree);
+	    dataHandler( TString name, TString fileName, TString dmTree,
+					 TString x_name="x", TString y_name="y", TString z_name="z");
 
 	    // if you just want to run Sensitivity
 	    dataHandler( TString name); 
 
 	    //If you want to run with asimov as data
-	    dataHandler( TString name, TH2F *h2pdf); 
+	    dataHandler( TString name, TH3F *h3pdf); 
 
 	    // if you want ro run with fake data as data.
-	    dataHandler( TString name, TH2F *h2pdf, int N); 
+	    dataHandler( TString name, TH3F *h3pdf, int N); 
 
 	    ~dataHandler();
 	    
+		void initialize();
+
 	    TTree *DMdata;
 
-	    
-	    //	    TH2F    *asimovData;
+	    //	    TH3F    *asimovData;
 
 	    TFile   *file;
 
@@ -60,52 +62,52 @@ class dataHandler : public errorHandler{
 
 		TString  TreePrefix;
 
-	    TH2F    *grid;
+	    TH3F    *grid;
 
-	    TString FirstVarName;
-	    TString SecondVarName;
+	    TString x_name;
+	    TString y_name;
+		TString z_name;
 
-
-		float s1;
-	    float s2;
-	    float weight;
+		Float_t x;
+	    Float_t y;
+		Float_t z;
+	    Float_t weight;
+		TNtuple *weights;
+	    Float_t sumOfWeights;
 
 	    int dataType;
 
-	    void  drawS1S2(TString opt="");
-
-	    TGraph2D *gs1s2w;
-
-	    double sumOfWeights;
+	    void  drawxy(TString opt="");
+	    
 
 	    vector<int> getSimulatedInfo(unsigned int size);
 	    
-	    double getS1(int N) { if (N>gs1s2w->GetN()) {printf ("ERROR %d larger than Entries (%d) \n",N,gs1s2w->GetN()); return 0;} else return (gs1s2w->GetX()[N]); }
-	    double getS2(int N) { if (N>gs1s2w->GetN()) {printf ("ERROR %d larger than Entries (%d) \n",N,gs1s2w->GetN()); return 0;} else return (gs1s2w->GetY()[N]); }
-	    double getW(int N) { if (N>gs1s2w->GetN()) {printf ("ERROR %d larger than Entries (%d) \n",N,gs1s2w->GetN()); return 0;} else return (gs1s2w->GetZ()[N]); }
+	    Float_t getX(long N);
+	    Float_t getY(long N);
+		Float_t getZ(long N);
+		Float_t getW(long N);
 	    
-	    TGraph getS1S2();
+	    TGraph getXY();
 		
 	    Long64_t getEntries();
 
-	    double getSumOfWeights();
+	    Float_t getSumOfWeights();
 
 	    void printSummary();
 
 	    void     getEntry(Long64_t entry);
 
-	    void     generateAsimov( TH2F *background);
+	    void     generateAsimov( TH3F *background);
 
-	    void generateDataSet(TH2F *h2pdf, int N);
+	    void generateDataSet(TH3F *h3pdf, int N);
 	
-	    static double   integrate(TH2F *histo, double s1_min, double s1_max, double s2_min, double s2_max);
+	    static Float_t   integrate(TH3F *histo, Float_t x_min, Float_t x_max, Float_t y_min, Float_t y_max, Float_t z_min, Float_t z_max);
+	   
 	    void setData(int Type) {dataType = Type; };
 
+	    void fillDataHisto(TH3F *hist); 
 
-
-	    void fillDataHisto(TH2F *hist); 
-
-	   double getValFromPdf( TH2F &histo );	   
+	   Float_t getValFromPdf( TH3F &histo );	   
 	   
 	   //change the tree pointer to data, assumed to be in same file.
 	   void   setDataTree(TString nameTree); 
@@ -115,7 +117,11 @@ class dataHandler : public errorHandler{
 
 	   //change the  file.
 	   void   setFile(TString PathtoFile); 
-	   
+
+	   void setXname(TString name) {x_name = name;};
+	   void setYname(TString name) {y_name = name;};
+	   void setZname(TString name) {z_name = name;};
+
 	   //! \brief set the prefix for the name of the tree collection to iterate on, usefull for neyman construction.
 	   void setPrefixTree( TString prefix ) { TreePrefix = prefix ; } ;
 
@@ -125,7 +131,7 @@ class dataHandler : public errorHandler{
 	   //change the  file and tree in one go.
 	   void   setFileAndTree(TString PathtoFile, TString nameTree); 
 
-	   void addToDataSet(TH2F *h2pdf, int N);
+	   void addToDataSet(TH3F *h3pdf, int N);
 	  
 	   //! \brief useful to get the truth generated value of parameter stored in tree
 	   vector<string> getTrueParamsNames();

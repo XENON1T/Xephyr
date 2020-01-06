@@ -100,7 +100,7 @@ class ToyGenerator: public errorHandler {
         double getModelIntegralSafeguarded();
 
         //! \brief returns a vector of sys interpolated TH2F of each bkg
-        vector<TH2F> getTH2OfBkg();
+        vector<TH3F> getTH3OfBkg();
 
 
         double    averageCalEvnt;

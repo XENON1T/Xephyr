@@ -220,21 +220,21 @@ void pdfLikelihood::generateAsimov(double mu_prime) {
  	double scaleFactorSignal =  mu_prime * getSignalMultiplier()  ;
 
 	// get copy of Histo signal default
-	TH2F temp_signal( signal_component->getDefaultHisto() )	;
+	TH3F temp_signal( signal_component->getDefaultHisto() )	;
 
 	// get copy of bkg and sum over all, assumes they are normalized.
 	// NOTE: safeguard is irrelevant for Asimov dataset
-	TH2F temp_histo  (bkg_components[0]->getDefaultHisto());
+	TH3F temp_histo  (bkg_components[0]->getDefaultHisto());
 
 	for(unsigned int k=1; k < bkg_components.size(); k++){
 		//important to avoid returning pointers to local variables
-		TH2F very_temp_hist(bkg_components[k]->getDefaultHisto());
+		TH3F very_temp_hist(bkg_components[k]->getDefaultHisto());
 		temp_histo.Add(&very_temp_hist);
 	}
 
 	temp_histo.Add(&temp_signal,scaleFactorSignal);
 
-	//generate a TH2F as fake data
+	//generate a TH3F as fake data
 
 	//	data->generateAsimov(scaleFactorSignal, &temp_signal, &temp_bkg);
 
@@ -280,22 +280,22 @@ double pdfLikelihood::computeTheLogLikelihood() {
      double LL = 0;
 
    //------------- LOAD PDF WITH SYS VARIATION ---------------------//
-     TH2F signalPdf(signal_component->getInterpolatedHisto());
+     TH3F signalPdf(signal_component->getInterpolatedHisto());
 
      // get copy of bkg and sum over all, assumes they are normalized.
-     TH2F bkgPdf;
+     TH3F bkgPdf;
 
 
      if(withSafeGuard)  {
 	     bkgPdf = getSafeguardedBkgPdf() ;
 
              // MOSHE check here the safeguard implementation
-	     TH2F bkgPdftemp;
+	     TH3F bkgPdftemp;
              bkgPdftemp = (bkg_components[0]->getInterpolatedHisto());
 
      	     for(unsigned int k=1; k < bkg_components.size(); k++){
 
-       		TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
+       		TH3F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
        		bkgPdftemp.Add(&temp_bkgPdf);
      	    }
 
@@ -311,7 +311,7 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
           for(unsigned int k=1; k < bkg_components.size(); k++){
 
-	            TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
+	            TH3F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
 		    	bkgPdf.Add(&temp_bkgPdf);
 				Debug("computeTheLikelihood", TString::Format("\t%s  = %f events", temp_bkgPdf.GetName(), temp_bkgPdf.Integral()));
 
@@ -351,20 +351,21 @@ double pdfLikelihood::computeTheLogLikelihood() {
     Debug("pdfLikelihood::computeTheLogLikelihood" , Form(" Nentry %lld ", Nentry ));
     //loop over all data
     for(Long64_t event = 0; event < Nentry; event++){
-		double ts1=data->getS1(event);
-		double ts2=data->getS2(event);
+		double tx=data->getX(event);
+		double ty=data->getY(event);
+		double tz=data->getZ(event);
 		double tweight=data->getW(event);
 	     //loads data TNtuple entry
 	     //data->getEntry(event);
 
 	     //double extended_signal =  data->getValFromPdf(signalPdf) * sigma * getSignalMultiplier();
      	     //double extended_bkg    =  data->getValFromPdf( bkgPdf ) ;
-		//	     double extended_signal =  signalPdf.GetBinContent(signalPdf.GetXaxis()->FindBin(ts1), signalPdf.GetYaxis()->FindBin(ts2)) * sigma * getSignalMultiplier();
-		//    double extended_bkg    =   bkgPdf.GetBinContent(bkgPdf.GetXaxis()->FindBin(ts1), bkgPdf.GetYaxis()->FindBin(ts2));
-		double extended_signal =  signalPdf.GetBinContent(signalPdf.FindBin(ts1,ts2)) * sigma * getSignalMultiplier();
-		double extended_bkg    =   bkgPdf.GetBinContent(bkgPdf.FindBin(ts1,ts2));
+		//	     double extended_signal =  signalPdf.GetBinContent(signalPdf.GetXaxis()->FindBin(tx), signalPdf.GetYaxis()->FindBin(ty)) * sigma * getSignalMultiplier();
+		//    double extended_bkg    =   bkgPdf.GetBinContent(bkgPdf.GetXaxis()->FindBin(tx), bkgPdf.GetYaxis()->FindBin(ty));
+		double extended_signal =  signalPdf.GetBinContent(signalPdf.FindBin(tx,ty,tz)) * sigma * getSignalMultiplier();
+		double extended_bkg    =   bkgPdf.GetBinContent(bkgPdf.FindBin(tx,ty,tz));
 
-	    Debug("computeTheLogLikelihood", TString::Format("S1 %f  --- S2 %f  ---- weight %f  ---- Fs %f  ----- Fb %f", ts1, ts2, tweight,extended_signal, extended_bkg ));
+	    Debug("computeTheLogLikelihood", TString::Format("X %f  --- Y %f --- Z %f  ---- weight %f  ---- Fs %f  ----- Fb %f", tx, ty,tz, tweight,extended_signal, extended_bkg ));
 
 	    // check physical result
 	    if(extended_signal + extended_bkg < 0) {
@@ -418,23 +419,19 @@ double pdfLikelihood::computeTheLogLikelihood() {
 
 
 
-
-
-
-
-void  pdfLikelihood::drawAllOnProjection(bool isS1Projection){
+void  pdfLikelihood::drawAllOnProjection(bool isXProjection){
 
    histoCompare comp = getModelCompare();
 
    comp.rebinX = 1;
    comp.rebinY = 10;
 
-   if(isS1Projection) comp.titleX = ("cS1  [PE]");
-   else comp.titleX = ("cS2  [PE]");
+   if(isXProjection) comp.titleX = ("cX  [PE]");
+   else comp.titleX = ("cY  [PE]");
 
    comp.doStack =  true;
 
-   comp.projectionX = isS1Projection;
+   comp.projectionX = isXProjection;
 
    comp.compareWithRatio();
 
@@ -461,11 +458,11 @@ histoCompare pdfLikelihood::getModelCompare(){
 
      double sigma = getPOI()->getCurrentValue();
      double scaleFactorSignal =  sigma * getSignalMultiplier()  ;
-     TH2F signalPdf(signal_component->getInterpolatedHisto());
+     TH3F signalPdf(signal_component->getInterpolatedHisto());
      signalPdf.Scale(scaleFactorSignal);
 
 
-     TH2F *dataHisto = (TH2F*)signalPdf.Clone("dataHisto");
+     TH3F *dataHisto = (TH3F*)signalPdf.Clone("dataHisto");
      dataHisto->Reset();
      data->fillDataHisto(dataHisto);
 
@@ -477,7 +474,7 @@ histoCompare pdfLikelihood::getModelCompare(){
      double bkgIntegral = 0.;
 
      for(unsigned int k=0; k < bkg_components.size(); k++){
-	     TH2F temp_hist(bkg_components[k]->getInterpolatedHisto());
+	     TH3F temp_hist(bkg_components[k]->getInterpolatedHisto());
 
      	     c.addHistoToList(temp_hist,"Background");
 
@@ -507,7 +504,7 @@ histoCompare pdfLikelihood::getModelCompare(){
 
 
 
-TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
+TH3F pdfLikelihood::getSafeguardedBkgPdfOnly(){
 
    	if(numberOfSafeguarded() == 0) {
 	     cout << "pdfLikelihood::getSafeguardedBkgPdf - ERROR: none of the bkg component is safeguarded " << endl;
@@ -515,7 +512,7 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
      	     exit(100);
      }
 
-     TH2F bkg_plusSafeguard = bkg_components[0]->getInterpolatedHisto();
+     TH3F bkg_plusSafeguard = bkg_components[0]->getInterpolatedHisto();
      bkg_plusSafeguard.Reset(); // just to take the skeleton
 
 
@@ -528,7 +525,7 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
 	     //adding up only the safeguarded components
 	     if(!safeguarded_bkg_components[k])  continue;
 
-	     TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
+	     TH3F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
 
 		 Debug("getSafeguardedBkgPdfOnly",TString::Format("component %s  n-events = %f",temp_bkgPdf.GetName(), temp_bkgPdf.Integral()));
 	     standard_integral += temp_bkgPdf.Integral();
@@ -542,7 +539,7 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
       }
 
      // Adding Nb*epsilon*Fs
-	 TH2F Fs (signal_component->getInterpolatedHisto());
+	 TH3F Fs (signal_component->getInterpolatedHisto());
 
 	 Debug("getSafeguardedBkgPdfOnly", TString::Format("safeguard_value %f   corresponding to events = %f  and Nb= %f", epsilon, epsilon * Nb_safeguard, Nb_safeguard ));
 	 //bkg_plusSafeguard.Add(&Fs, epsilon * Nb_safeguard / Fs.Integral() ) ;
@@ -563,15 +560,15 @@ TH2F pdfLikelihood::getSafeguardedBkgPdfOnly(){
 
 
 
-TH2F pdfLikelihood::getSafeguardedBkgPdf(){
+TH3F pdfLikelihood::getSafeguardedBkgPdf(){
 
-     TH2F safeguard_only = getSafeguardedBkgPdfOnly();
+     TH3F safeguard_only = getSafeguardedBkgPdfOnly();
 
      //adding up all the other non safeguarded components
      for(unsigned int k=0; k < bkg_components.size(); k++){
 	     if(safeguarded_bkg_components[k])  continue;
 
-	     TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
+	     TH3F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
 		 Debug("getSafeguardedBkgPdfOnly",TString::Format("component %s  n-events = %f",temp_bkgPdf.GetName(), temp_bkgPdf.Integral()));
 	     safeguard_only.Add(&temp_bkgPdf);
       }
@@ -579,12 +576,12 @@ TH2F pdfLikelihood::getSafeguardedBkgPdf(){
       return safeguard_only;
 }
 
-TH2F pdfLikelihood::getOverallBkgHisto(){
+TH3F pdfLikelihood::getOverallBkgHisto(){
 
-		TH2F bkgPdf = (bkg_components[0]->getInterpolatedHisto());
+		TH3F bkgPdf = (bkg_components[0]->getInterpolatedHisto());
 		for(unsigned int k=1; k < bkg_components.size(); k++){
 
-	            TH2F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
+	            TH3F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
 		    	bkgPdf.Add(&temp_bkgPdf);
 	    }
 
@@ -592,7 +589,7 @@ TH2F pdfLikelihood::getOverallBkgHisto(){
 
 }
 
-bool pdfLikelihood::isNegativeAnywhere(TH2F histo){
+bool pdfLikelihood::isNegativeAnywhere(TH3F histo){
 
 
 	for(int k=1; k <= histo.GetNcells(); k++){
@@ -613,7 +610,7 @@ double pdfLikelihood::LLsafeGuard(){
 
      Long64_t Nentry = calibrationData->getEntries();
 
-     TH2F safeguard_only = getSafeguardedBkgPdfOnly();
+     TH3F safeguard_only = getSafeguardedBkgPdfOnly();
 
      //Check that the PDF is positive everywhere, gives trouble otherwise.
      /*if(isNegativeAnywhere(safeguard_only)){
@@ -633,18 +630,18 @@ double pdfLikelihood::LLsafeGuard(){
      //if(printLevel > 4)  cout << "safeguard_only_integral=safeguard_only.Integral  = " << safeguard_only_integral << endl;
      //loop over all data
      for(Long64_t event = 0; event < Nentry; event++){
-       double ts1=calibrationData->getS1(event);
-       double ts2=calibrationData->getS2(event);
+       double tx=calibrationData->getX(event);
+       double ty=calibrationData->getY(event);
        double tweight=calibrationData->getW(event);
 
-	   // Debug("pdfLikelihood::LLSafeguard" , Form("Calibration Event: S1 %f ; S2 %f ; weight %f",ts1, ts2, tweight));
+	   // Debug("pdfLikelihood::LLSafeguard" , Form("Calibration Event: X %f ; Y %f ; weight %f",tx, ty, tweight));
 
 	     //loads data TNtuple entry
 	     //	     calibrationData->getEntry(event);
 	     //Nb*Fb(1-epsilon) + epsilon*Nb*Fs
 	     //	     double NbFb =  calibrationData->getValFromPdf(safeguard_only);
-             //	     double NbFb =  tweight * safeguard_only.GetBinContent(safeguard_only.GetXaxis()->FindBin(ts1), safeguard_only.GetYaxis()->FindBin(ts2));
-	     double NbFb =  tweight * safeguard_only.GetBinContent(safeguard_only.FindBin(ts1,ts2));
+             //	     double NbFb =  tweight * safeguard_only.GetBinContent(safeguard_only.GetXaxis()->FindBin(tx), safeguard_only.GetYaxis()->FindBin(ty));
+	     double NbFb =  tweight * safeguard_only.GetBinContent(safeguard_only.FindBin(tx,ty));
 
 	     // check physical result
 	     if(NbFb <=0) {

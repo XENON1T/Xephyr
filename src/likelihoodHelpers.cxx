@@ -79,7 +79,7 @@ dataHandler* genDataHandler(json dh_json) {
     
 }
 
-TH2F* genAdditionalSafeGuardComponent(json comp_json){
+TH3F* genAdditionalSafeGuardComponent(json comp_json){
     json comp_def;
     if (comp_json.is_string()) {
         std::ifstream comp_file(comp_json.get<std::string>());
@@ -91,7 +91,7 @@ TH2F* genAdditionalSafeGuardComponent(json comp_json){
     TString hist_path = emtpy+comp_def["file_path"].get<std::string>();
     if (hist_path.Index("/") != 0) hist_path = xephyrDir + comp_def["file_path"].get<std::string>();
     TFile *f1 = TFile::Open(hist_path);
-    TH2F* comp = (TH2F*) f1->Get( emtpy+comp_def["histogram_name"].get<std::string>() );
+    TH3F* comp = (TH3F*) f1->Get( emtpy+comp_def["histogram_name"].get<std::string>() );
 
     for (uint i=0; i<comp_def["extra_histograms"].size(); i++) {
         json extra_def = comp_def["extra_histograms"][i];
@@ -99,7 +99,7 @@ TH2F* genAdditionalSafeGuardComponent(json comp_json){
         hist_path = emtpy+extra_def["file_path"].get<std::string>();
         if (hist_path.Index("/") != 0) hist_path = xephyrDir + extra_def["file_path"].get<std::string>();
         TFile *fextra = TFile::Open(hist_path);
-        TH2F* extra_histo = (TH2F*) fextra->Get(emtpy+extra_def["histogram_name"].get<std::string>() );
+        TH3F* extra_histo = (TH3F*) fextra->Get(emtpy+extra_def["histogram_name"].get<std::string>() );
         comp->Add(extra_histo, extra_def["multiplier"].get<double>() );
     }
     
@@ -148,7 +148,7 @@ pdfLikelihood* genLikelihood(json pl_json) {
     }
     
     if (not pl_def["additional_safeguard_component"].is_null()){
-        TH2F *comp = genAdditionalSafeGuardComponent(pl_def["additional_safeguard_component"]);
+        TH3F *comp = genAdditionalSafeGuardComponent(pl_def["additional_safeguard_component"]);
         pl->setAdditionalSafeGuardComponent(comp);
     }
     

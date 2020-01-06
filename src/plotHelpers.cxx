@@ -234,42 +234,45 @@ TGraphAsymmErrors pulls(TTree *tree, TString OutDir, TString name, TString cut="
         // TH1F giveQuantiles(TTree *tree, double percent[], double quantiles[], int nquanta, TString var, TString cut)
 }
 
-void addHisto(TH2F *histo, TH2F *h_toBeAdded, double scalefactor ){
+void addHisto(TH3F *histo, TH3F *h_toBeAdded, double scalefactor ){
       int Nx = histo->GetNbinsX();
       int Ny = histo->GetNbinsY();
+      int Nz = histo->GetNbinsZ();
       for (int x=1; x <= Nx ; x++){
         for (int y=1; y <= Ny; y++){
-          double new_content = histo->GetBinContent(x,y)  + h_toBeAdded->GetBinContent(x,y) * scalefactor;
-         histo->SetBinContent(x,y, new_content ) ;
-        }
+            for (int z=1; z <= Nz; z++){
+                double new_content = histo->GetBinContent(x,y,z)  + h_toBeAdded->GetBinContent(x,y,z) * scalefactor;
+                histo->SetBinContent(x,y,z, new_content ) ;
+            }
+       }
       }
 }
 
 
-double giveBackgroundLikelihood(pdfLikelihood *likeHood, double s1, double s2) {
+double giveBackgroundLikelihood(pdfLikelihood *likeHood, double x, double y, double z) {
 	  	  
     //just sum up components
-    TH2F bkgPdf = likeHood->bkg_components[0]->getInterpolatedHisto();
+    TH3F bkgPdf = likeHood->bkg_components[0]->getInterpolatedHisto();
 
     for(unsigned int k=1; k < likeHood->bkg_components.size(); k++){
 
-	    TH2F temp_bkgPdf (likeHood->bkg_components[k]->getInterpolatedHisto());
+	    TH3F temp_bkgPdf (likeHood->bkg_components[k]->getInterpolatedHisto());
 	  	bkgPdf.Add(&temp_bkgPdf);
 		//cout << TString::Format("\t%s  = %f events", temp_bkgPdf.GetName(), temp_bkgPdf.Integral()) << endl;
 	}
 
-    return bkgPdf.GetBinContent(bkgPdf.FindBin(s1,s2));
+    return bkgPdf.GetBinContent(bkgPdf.FindBin(x,y,z));
 
 }
 
 double giveNb(pdfLikelihood *likeHood) {
 	  	  
     //just sum up components
-    TH2F bkgPdf = likeHood->bkg_components[0]->getInterpolatedHisto();
+    TH3F bkgPdf = likeHood->bkg_components[0]->getInterpolatedHisto();
 
     for(unsigned int k=1; k < likeHood->bkg_components.size(); k++){
 
-	    TH2F temp_bkgPdf (likeHood->bkg_components[k]->getInterpolatedHisto());
+	    TH3F temp_bkgPdf (likeHood->bkg_components[k]->getInterpolatedHisto());
 	  	bkgPdf.Add(&temp_bkgPdf);
 		//cout << TString::Format("\t%s  = %f events", temp_bkgPdf.GetName(), temp_bkgPdf.Integral()) << endl;
 	}
@@ -280,12 +283,12 @@ double giveNb(pdfLikelihood *likeHood) {
 
 
 
-double giveSignalLikelihood(pdfLikelihood *likeHood, double s1, double s2) {
+double giveSignalLikelihood(pdfLikelihood *likeHood, double x, double y, double z) {
 
-    TH2F signalPdf(likeHood->signal_component->getInterpolatedHisto());
+    TH3F signalPdf(likeHood->signal_component->getInterpolatedHisto());
     double sigma = likeHood->getPOI()->getCurrentValue();
 
-    return signalPdf.GetBinContent(signalPdf.FindBin(s1,s2)) * sigma * likeHood->getSignalMultiplier();
+    return signalPdf.GetBinContent(signalPdf.FindBin(x,y,z)) * sigma * likeHood->getSignalMultiplier();
 }
 
 
