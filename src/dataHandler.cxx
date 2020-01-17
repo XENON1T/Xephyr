@@ -80,7 +80,8 @@ dataHandler::dataHandler(TString name, TH3F *h3pdf) : errorHandler("dataHandler"
 }
 
 dataHandler::dataHandler(TString name, TString fileName, TString dmTree, 
-						TString x_name, TString y_name, TString z_name) : errorHandler("dataHandler"), Name(name){
+						TString x_name, TString y_name, TString z_name) : errorHandler("dataHandler"), 
+						Name(name), x_name(x_name), y_name(y_name), z_name(z_name){
 
 	file = TFile::Open(fileName);
 
@@ -91,9 +92,9 @@ dataHandler::dataHandler(TString name, TString fileName, TString dmTree,
 		Error("dataHandler","TTree " + dmTree+ " does not exist in file " 
 			                       + fileName + ". Quit.");
 
-	x_name  = x_name;  //default var in data
-	y_name  = y_name;  //default var name
-	z_name  = z_name;
+	// x_name  = x_name;  //default var in data
+	// y_name  = y_name;  //default var name
+	// z_name  = z_name;
 
 	DMdata = (TTree*) file->Get(dmTree);
 	
