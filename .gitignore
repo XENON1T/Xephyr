@@ -8,3 +8,4 @@ SOURCE/*
 **/.ipynb_checkpoints/*
 **/Untitled*
 .vscode/*
+**/*.cxx_tmp*
