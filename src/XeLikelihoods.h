@@ -56,7 +56,7 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	void   setSignalDefaultNorm(double val) { siganlDefaultNorm = val; } ;
 
-        double getCurrentNs();
+    double getCurrentNs();
 
 	void   checkInputs();
 
@@ -161,7 +161,7 @@ class pdfLikelihood : public ProfileLikelihood {
 
 	bool                   withSafeGuard;
 
-  bool                   safeGuardPosDef; //! Force safeguard parameter to be positive
+    bool                   safeGuardPosDef; //! Force safeguard parameter to be positive
 
 	double                 wimp_mass;
 
@@ -175,8 +175,6 @@ class pdfLikelihood : public ProfileLikelihood {
 	//FIXME: move getWimpMass to Asymptotics
   	double getWimpMass() {return wimp_mass;};
      //------------------------------//
-
-
 
 };
 

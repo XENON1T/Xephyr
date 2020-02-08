@@ -286,14 +286,14 @@ double pdfLikelihood::computeTheLogLikelihood() {
      TH3F bkgPdf;
 
 
-     if(withSafeGuard)  {
+     if(withSafeGuard){
 	     bkgPdf = getSafeguardedBkgPdf() ;
 
              // MOSHE check here the safeguard implementation
 	     TH3F bkgPdftemp;
-             bkgPdftemp = (bkg_components[0]->getInterpolatedHisto());
+            bkgPdftemp = (bkg_components[0]->getInterpolatedHisto());
 
-     	     for(unsigned int k=1; k < bkg_components.size(); k++){
+     	    for(unsigned int k=1; k < bkg_components.size(); k++){
 
        		TH3F temp_bkgPdf (bkg_components[k]->getInterpolatedHisto());
        		bkgPdftemp.Add(&temp_bkgPdf);
